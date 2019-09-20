@@ -25,11 +25,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/js/adminlte.js" afterPath="$PROJECT_DIR$/adminlte/js/adminlte.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/js/adminlte.min.js" afterPath="$PROJECT_DIR$/adminlte/js/adminlte.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/colorbox/colorbox.css" afterPath="$PROJECT_DIR$/colorbox/colorbox.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Text.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Text.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewcfg14.php" afterPath="$PROJECT_DIR$/ewcfg14.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmenu.php" afterPath="$PROJECT_DIR$/ewmenu.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/header.php" afterPath="$PROJECT_DIR$/header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery-3.2.1.min.js" afterPath="$PROJECT_DIR$/jquery/jquery-3.2.1.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery-migrate-3.0.0.js" afterPath="$PROJECT_DIR$/jquery/jquery-migrate-3.0.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery.fileDownload.js" afterPath="$PROJECT_DIR$/jquery/jquery.fileDownload.js" />
@@ -211,6 +212,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpmailer605/src/PHPMailer.php" afterPath="$PROJECT_DIR$/phpmailer605/src/PHPMailer.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpmailer605/src/POP3.php" afterPath="$PROJECT_DIR$/phpmailer605/src/POP3.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpmailer605/src/SMTP.php" afterPath="$PROJECT_DIR$/phpmailer605/src/SMTP.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptinc/footer.php" afterPath="$PROJECT_DIR$/phprptinc/footer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptinc/header.php" afterPath="$PROJECT_DIR$/phprptinc/header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptlang/english.xml" afterPath="$PROJECT_DIR$/phprptlang/english.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rcfg11.php" afterPath="$PROJECT_DIR$/rcfg11.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rphpfn11.php" afterPath="$PROJECT_DIR$/rphpfn11.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -229,7 +235,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1378" />
@@ -303,20 +309,20 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="891000" />
+    <option name="totallyTimeSpent" value="1655000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.52118003" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.52118003" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head><base href="http://localhost/beneficiarios/beneficiarios/">
+	<title>Inderbo</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="bootstrap3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="adminlte/css/AdminLTE.css">
+<link rel="stylesheet" type="text/css" href="adminlte/css/font-awesome.min.css"><!-- Optional font -->
+<link rel="stylesheet" type="text/css" href="phpcss/jquery.fileupload.css">
+<link rel="stylesheet" type="text/css" href="phpcss/jquery.fileupload-ui.css">
+<link rel="stylesheet" type="text/css" href="colorbox/colorbox.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="phpcss/beneficiarios.css">
+<script type="text/javascript" src="jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">jQuery.migrateMute = true;</script>
+<script type="text/javascript" src="jquery/jquery-migrate-3.0.0.js"></script>
+<script type="text/javascript" src="jquery/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="jquery/jquery.storageapi.min.js"></script>
+<script type="text/javascript" src="jquery/pGenerator.jquery.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="adminlte/js/adminlte.js"></script>
+<script type="text/javascript" src="jquery/jquery.fileDownload.min.js"></script>
+<script type="text/javascript" src="jquery/load-image.all.min.js"></script>
+<script type="text/javascript" src="jquery/jqueryfileupload.min.js"></script>
+<script type="text/javascript" src="phpjs/typeahead.jquery.js"></script>
+<script type="text/javascript" src="colorbox/jquery.colorbox-min.js"></script>
+<script type="text/javascript" src="phpjs/mobile-detect.min.js"></script>
+<script type="text/javascript" src="moment/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="phpcss/bootstrap-datetimepicker.css">
+<script type="text/javascript" src="phpjs/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="phpjs/ewdatetimepicker.js"></script>
+<script type="text/javascript">
+var EW_LANGUAGE_ID = "en";
+var EW_DATE_SEPARATOR = "/"; // Date separator
+var EW_TIME_SEPARATOR = ":"; // Time separator
+var EW_DATE_FORMAT = "mm/dd/yyyy"; // Default date format
+var EW_DATE_FORMAT_ID = 6; // Default date format ID
+var EW_DECIMAL_POINT = ".";
+var EW_THOUSANDS_SEP = ",";
+var EW_GENERATE_PASSWORD_LENGTH = 16;
+var EW_GENERATE_PASSWORD_UPPERCASE = true;
+var EW_GENERATE_PASSWORD_LOWERCASE = true;
+var EW_GENERATE_PASSWORD_NUMBER = true;
+var EW_GENERATE_PASSWORD_SPECIALCHARS = false;
+var EW_SESSION_TIMEOUT = 0; // Session timeout time (seconds)
+var EW_SESSION_TIMEOUT_COUNTDOWN = 60; // Count down time to session timeout (seconds)
+var EW_SESSION_KEEP_ALIVE_INTERVAL = 0; // Keep alive interval (seconds)
+var EW_RELATIVE_PATH = ""; // Relative path
+var EW_SESSION_URL = EW_RELATIVE_PATH + "ewsession14.php"; // Session URL
+var EW_IS_LOGGEDIN = true; // Is logged in
+var EW_IS_SYS_ADMIN = true; // Is sys admin
+var EW_CURRENT_USER_NAME = "Administrator"; // Current user name
+var EW_IS_AUTOLOGIN = false; // Is logged in with option "Auto login until I logout explicitly"
+var EW_TIMEOUT_URL = EW_RELATIVE_PATH + "logout.php"; // Timeout URL
+var EW_LOOKUP_FILE_NAME = "ewlookup14.php"; // Lookup file name
+var EW_LOOKUP_FILTER_VALUE_SEPARATOR = ","; // Lookup filter value separator
+var EW_MODAL_LOOKUP_FILE_NAME = "ewmodallookup14.php"; // Modal lookup file name
+var EW_AUTO_SUGGEST_MAX_ENTRIES = 10; // Auto-Suggest max entries
+var EW_DISABLE_BUTTON_ON_SUBMIT = true;
+var EW_IMAGE_FOLDER = "phpimages/"; // Image folder
+var EW_UPLOAD_URL = "ewupload14.php"; // Upload URL
+var EW_UPLOAD_TYPE = "POST"; // Upload type
+var EW_UPLOAD_THUMBNAIL_WIDTH = 200; // Upload thumbnail width
+var EW_UPLOAD_THUMBNAIL_HEIGHT = 0; // Upload thumbnail height
+var EW_MULTIPLE_UPLOAD_SEPARATOR = ","; // Upload multiple separator
+var EW_USE_COLORBOX = true;
+var EW_USE_JAVASCRIPT_MESSAGE = false;
+var EW_MOBILE_DETECT = new MobileDetect(window.navigator.userAgent);
+var EW_IS_MOBILE = !!EW_MOBILE_DETECT.mobile();
+var EW_PROJECT_STYLESHEET_FILENAME = "phpcss/beneficiarios.css"; // Project style sheet
+var EW_PDF_STYLESHEET_FILENAME = "phpcss/ewpdf.css"; // PDF style sheet
+var EW_TOKEN = "";
+var EW_CSS_FLIP = false;
+var EW_LAZY_LOAD = true;
+var EW_RESET_HEIGHT = true;
+var EW_DEBUG_ENABLED = false;
+var EW_CONFIRM_CANCEL = true;
+var EW_SEARCH_FILTER_OPTION = "Client";
+</script>
+<script type="text/javascript" src="phpjs/jsrender.min.js"></script>
+<script type="text/javascript">
+$.views.settings.debugMode(EW_DEBUG_ENABLED);
+</script>
+<script type="text/javascript" src="phpjs/ewp14.js"></script>
+<script type="text/javascript" src="jquery/jquery.ewjtable.min.js"></script>
+<script type="text/javascript">
+var ewLanguage = new ew_Language({"addbtn":"Add","cancelbtn":"Cancel","clickrecaptcha":"Please click reCAPTCHA","closebtn":"Close","confirmbtn":"Confirm","confirmcancel":"Do you want to cancel?","lightboxtitle":" ","lightboxcurrent":"image {current} of {total}","lightboxprevious":"previous","lightboxnext":"next","lightboxclose":"close","lightboxxhrerror":"This content failed to load.","lightboximgerror":"This image failed to load.","countselected":"%s selected","currentpassword":"Current password: ","deleteconfirmmsg":"Are you sure you want to delete?","deletefilterconfirm":"Delete filter %s?","editbtn":"Edit","enterfiltername":"Enter filter name","enternewpassword":"Please enter new password","enteroldpassword":"Please enter old password","enterpassword":"Please enter password","enterpwd":"Please enter password","enterusername":"Please enter username","entervalidatecode":"Enter the validation code shown","entersenderemail":"Please enter sender email","enterpropersenderemail":"Exceed maximum sender email count or email address incorrect","enterrecipientemail":"Please enter recipient email","enterproperrecipientemail":"Exceed maximum recipient email count or email address incorrect","enterproperccemail":"Exceed maximum cc email count or email address incorrect","enterproperbccemail":"Exceed maximum bcc email count or email address incorrect","entersubject":"Please enter subject","enteruid":"Please enter user ID","entervalidemail":"Please enter valid Email Address","exporting":"Exporting, please wait...","exporttoemailtext":"Email","failedtoexport":"Failed to Export","filtername":"Filter name","overwritebtn":"Overwrite","incorrectemail":"Incorrect email","incorrectfield":"Incorrect field","incorrectfloat":"Incorrect floating point number","incorrectguid":"Incorrect GUID","incorrectinteger":"Incorrect integer","incorrectphone":"Incorrect phone number","incorrectregexp":"Regular expression not matched","incorrectrange":"Number must be between %1 and %2","incorrectssn":"Incorrect social security number","incorrectzip":"Incorrect ZIP code","insertfailed":"Insert failed","invalidrecord":"Invalid Record! Key is null","loading":"Loading...","maxfilesize":"Max. file size (%s bytes) exceeded.","messageok":"OK","mismatchpassword":"Mismatch Password","more":"More","next":"Next","noaddrecord":"No records to be added","nofieldselected":"No field selected for update","norecord":"No records found","norecordselected":"No records selected","of":"of","page":"Page","passwordstrength":"Strength: %p","passwordtoosimple":"Your password is too simple","permissionaddcopy":"Add/Copy","permissiondelete":"Delete","permissionedit":"Edit","permissionlistsearchview":"List/Search/View","permissionlist":"List","permissionsearch":"Search","permissionview":"View","pleaseselect":"Please select","pleasewait":"Please wait...","prev":"Prev","quicksearchauto":"Auto","quicksearchautoshort":"","quicksearchall":"All keywords","quicksearchallshort":"All","quicksearchany":"Any keywords","quicksearchanyshort":"Any","quicksearchexact":"Exact match","quicksearchexactshort":"Exact","record":"Records","recordsperpage":"Page size","reloadbtn":"Reload","savebtn":"Save","search":"Search","searchbtn":"Search","selectbtn":"Select","sendemailsuccess":"Email sent successfully","sessionwillexpire":"Your session will expire in %s seconds. Click OK to continue your session.","sessionexpired":"Your session has expired.","updatebtn":"Update","uploading":"Uploading...","uploadstart":"Start","uploadcancel":"Cancel","uploaddelete":"Delete","uploadoverwrite":"Overwrite old file?","uploaderrmsgmaxfilesize":"File is too big","uploaderrmsgminfilesize":"File is too small","uploaderrmsgacceptfiletypes":"File type not allowed","uploaderrmsgmaxnumberoffiles":"Maximum number of files exceeded","uploaderrmsgmaxfilelength":"Total length of file names exceeds field length","useradministrator":"Administrator","useranonymous":"Anonymous","userdefault":"Default","userleveladministratorname":"User level name for user level -1 must be 'Administrator'","userlevelanonymousname":"User level name for user level -2 must be 'Anonymous'","userlevelidinteger":"User Level ID must be integer","userleveldefaultname":"User level name for user level 0 must be 'Default'","userlevelidincorrect":"User defined User Level ID must be larger than 0","userlevelnameincorrect":"User defined User Level name cannot be 'Administrator' or 'Default'","valuenotexist":"Value does not exist","wrongfiletype":"File type is not allowed.","tableorview":"Tables"});var ewVar = {"languages":{"languages":[]},"login":{"isLoggedIn":true,"currentUserName":"Administrator","logoutUrl":"logout.php","logoutText":"Logout","loginUrl":"login.php","loginText":"Login","canLogin":false,"canLogout":true}};
+</script>
+<script type="text/javascript" src="phpjs/userfn14.js"></script>
+<script type="text/javascript">
+
+// Write your client script here, no need to add script tags.
+</script>
+<meta name="generator" content="PHPMaker v2018.0.7">
+</head>
+<body class="hold-transition skin-purple" dir="ltr">
+<script type="text/javascript">
+var EWR_RELATIVE_PATH = "";
+
+function ewr_GetScript(url) { document.write("<" + "script type=\"text/javascript\" src=\"" + EWR_RELATIVE_PATH + url + "\"><" + "/script>"); }
+
+function ewr_GetCss(url) { document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + EWR_RELATIVE_PATH + url + "\">"); }
+var EWR_LANGUAGE_ID = "en";
+var EWR_DATE_SEPARATOR = "/"; // Date separator
+var EWR_TIME_SEPARATOR = ":"; // Time separator
+var EWR_DATE_FORMAT = "mm/dd/yyyy"; // Default date format
+var EWR_DATE_FORMAT_ID = 6; // Default date format ID
+var EWR_DECIMAL_POINT = ".";
+var EWR_THOUSANDS_SEP = ",";
+var EWR_SESSION_TIMEOUT = 0; // Session timeout time (seconds)
+var EWR_SESSION_TIMEOUT_COUNTDOWN = 60; // Count down time to session timeout (seconds)
+var EWR_SESSION_KEEP_ALIVE_INTERVAL = 0; // Keep alive interval (seconds)
+var EWR_SESSION_URL = EWR_RELATIVE_PATH + "rsession11.php"; // Session URL
+var EWR_IS_LOGGEDIN = true; // Is logged in
+var EWR_IS_AUTOLOGIN = false; // Is logged in with option "Auto login until I logout explicitly"
+var EWR_TIMEOUT_URL = EWR_RELATIVE_PATH + "logout.php"; // Timeout URL
+var EWR_MAX_EMAIL_RECIPIENT = 3;
+var EWR_DISABLE_BUTTON_ON_SUBMIT = true;
+var EWR_IMAGE_FOLDER = "phprptimages/"; // Image folder
+var EWR_LOOKUP_FILE_NAME = "rajax11.php"; // Lookup file name
+var EWR_LOOKUP_FILTER_VALUE_SEPARATOR = ","; // Lookup filter value separator
+var EWR_MODAL_LOOKUP_FILE_NAME = "rmodallookup11.php"; // Modal lookup file name
+var EWR_AUTO_SUGGEST_MAX_ENTRIES = 10; // Auto-Suggest max entries
+var EWR_USE_JAVASCRIPT_MESSAGE = false;
+var EWR_PROJECT_STYLESHEET_FILENAME = "phprptcss/beneficiarios.css"; // Project style sheet
+var EWR_PDF_STYLESHEET_FILENAME = "phprptcss/ewrpdf.css"; // Export PDF style sheet
+var EWR_TOKEN = "qz5zLNL2aDtldLxTuH-jHQ..";
+var EWR_CSS_FLIP = false;
+var EWR_RESET_HEIGHT = true;
+</script>
+<script type="text/javascript">
+if (!window.jQuery || !jQuery.fn.alert) {
+	ewr_GetCss("bootstrap3/css/bootstrap.css");
+	ewr_GetCss("adminlte/css/AdminLTE.css");
+	ewr_GetCss("adminlte/css/font-awesome.min.css"); // Optional font
+}
+ewr_GetCss("colorbox/colorbox.css");
+ewr_GetCss("phprptcss/beneficiarios.css");
+</script>
+<script type="text/javascript">if (!window.jQuery) ewr_GetScript("jquery/jquery-3.2.1.min.js");</script>
+<script type="text/javascript">if (window.jQuery && !window.jQuery.widget) ewr_GetScript("jquery/jquery.ui.widget.js");</script>
+<script type="text/javascript">if (window.jQuery && !window.jQuery.localStorage) ewr_GetScript("jquery/jquery.storageapi.min.js");</script>
+<script type="text/javascript">if (!window.moment) ewr_GetScript("moment/moment.min.js");</script>
+<script type="text/javascript" src="FusionChartsTrial/js/fusioncharts.js"></script>
+<script type="text/javascript" src="FusionChartsTrial/js/fusioncharts.ssgrid.js"></script>
+<script type="text/javascript" src="FusionChartsTrial/js/themes/fusioncharts.theme.ocean.js"></script>
+<script type="text/javascript" src="FusionChartsTrial/js/themes/fusioncharts.theme.carbon.js"></script>
+<script type="text/javascript" src="FusionChartsTrial/js/themes/fusioncharts.theme.zune.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+var EWR_CHART_EXPORT_HANDLER = "http://localhost/beneficiarios/beneficiarios/chartexporter11.php";
+</script>
+<script type="text/javascript">if (window.jQuery && typeof MobileDetect === 'undefined') ewr_GetScript("phprptjs/mobile-detect.min.js");</script>
+<script type="text/javascript">ewr_GetScript("phprptjs/clipboard.min.js");</script>
+<script type="text/javascript">ewr_GetScript("phprptjs/ewr11.js");</script>
+<script type="text/javascript">if (window.jQuery && !window.jQuery.views) ewr_GetScript("phprptjs/jsrender.min.js");</script>
+<script type="text/javascript">
+if (window.jQuery && !jQuery.fn.alert) ewr_GetScript("bootstrap3/js/bootstrap.min.js");
+if (window.jQuery && !window.jQuery.fileDownload) ewr_GetScript("jquery/jquery.fileDownload.min.js");
+if (window.jQuery && !jQuery.typeahead) ewr_GetScript("phprptjs/typeahead.jquery.js");
+</script>
+<script type="text/javascript">
+var EWR_MOBILE_DETECT = new MobileDetect(window.navigator.userAgent);
+var EWR_IS_MOBILE = !!EWR_MOBILE_DETECT.mobile();
+var ewLanguage = new ewr_Language({"browsernoflashsupport":"Your browser does not support Flash player.","cancel":"Cancel","cancelbtn":"Cancel","clickrecaptcha":"Please click reCAPTCHA","closebtn":"Close","countselected":"%s selected","deletefilterconfirm":"Delete filter %s?","enterfiltername":"Enter filter name","entersenderemail":"Please enter sender email","enterpropersenderemail":"Exceed maximum sender email count or email address incorrect","enterrecipientemail":"Please enter recipient email","enterproperrecipientemail":"Exceed maximum recipient email count or email address incorrect","enterproperccemail":"Exceed maximum cc email count or email address incorrect","enterproperbccemail":"Exceed maximum bcc email count or email address incorrect","entersubject":"Please enter subject","enterpassword":"Please enter password","enterpwd":"Please enter password","enteruid":"Please enter user ID","entervalidatecode":"Please enter the validation code shown","exportchart":"Exporting chart: ","exportchartdata":"Exporting chart data","exportcharterror":"Failed to export chart: ","exporting":"Exporting, please wait...","exportingchart":"Exporting chart (%c of %t), please wait...","exporttoemail":"Email","failedtoexport":"Failed to Export","filtername":"Filter name","generate":"Generate","generatereporturl":"Generate Report URL","incorrectcreditcard":"Incorrect credit card number","incorrectemail":"Incorrect email","incorrectfield":"Incorrect field","incorrectfloat":"Incorrect floating point number","incorrectguid":"Incorrect GUID","incorrectinteger":"Incorrect integer","incorrectphone":"Incorrect phone number","incorrectrange":"Number must be between %1 and %2","incorrectregexp":"Regular expression not matched","incorrectssn":"Incorrect Social Security Number","incorrecttime":"Incorrect time (hh:mm:ss)","incorrectzip":"Incorrect ZIP code","loading":"Loading%s...","messageok":"OK","more":"More","norecord":"No records found","of":"of","page":"Page","pleaseselect":"Please select","popupall":"(All)","popupfrom":"From","popupnovalue":"No value selected!","popupselect":"Please Select","popupto":"To","record":"Records","recordsperpage":"Page size","search":"Search","selectbtn":"Select","sendemailbtn":"Send","sendemailsuccess":"Email sent successfully","sessionwillexpire":"Your session will expire in %s seconds. Click OK to continue your session.","sessionexpired":"Your session has expired.","useradministrator":"Administrator","useranonymous":"Anonymous","userdefault":"Default","valuenotexist":"Value does not exist"});var ewrVar = {"languages":{"languages":[]}};
+</script>
+<script type="text/javascript">ewr_GetScript("phprptjs/rusrfn11.js");</script>
+<script type="text/javascript">if (window.jQuery && !jQuery.fn.layout) ewr_GetScript("adminlte/js/adminlte.js");</script>
+<script type="text/javascript">
+
+// Write your client script here, no need to add script tags.
+</script>
+<script type="text/javascript">
+
+// Create page object
+var viewestudiante_rpt = new ewr_Page("viewestudiante_rpt");
+
+// Page properties
+viewestudiante_rpt.PageID = "rpt"; // Page ID
+var EWR_PAGE_ID = viewestudiante_rpt.PageID;
+</script>
+<a id="top"></a>
+<div class="ewToolbar">
+</div>
+<div class="ewMessageDialog"><div class="alert alert-warning ewWarning"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter search criteria</div></div><!-- Summary Report begins -->
+<div id="report_summary">
+</div>
+<!-- Summary Report Ends -->
+</body>
+</html>

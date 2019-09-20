@@ -768,12 +768,6 @@
     <menu id="121">
       <phrase id="menutext" value="Reportes" />
     </menu>
-    <menu id="122">
-      <phrase id="menutext" value="Filtros Report Neonatal" />
-    </menu>
-    <menu id="71">
-      <phrase id="menutext" value="Reporte Neontal" />
-    </menu>
     <menu id="10001">
       <phrase id="menutext" value="actividad" />
     </menu>
@@ -905,6 +899,15 @@
     </menu>
     <menu id="10044">
       <phrase id="menutext" value="usuario" />
+    </menu>
+    <menu id="10047">
+      <phrase id="menutext" value="Reportes" />
+    </menu>
+    <menu id="10045">
+      <phrase id="menutext" value="ESTUDIANTES" />
+    </menu>
+    <menu id="10046">
+      <phrase id="menutext" value="Report Estudiantes" />
     </menu>
     <table id="apoderado">
       <phrase id="tblcaption" value="Apoderado" />
@@ -2129,158 +2132,6 @@
       </field>
       <field id="nombre">
         <phrase id="fldcaption" value="nombre" />
-      </field>
-    </table>
-    <table id="report_neonatal">
-      <phrase id="tblcaption" value="Filtros Report Neonatal" />
-      <field id="id_neonato">
-        <phrase id="fldcaption" value="NEONATO" />
-      </field>
-      <field id="apellidopaterno">
-        <phrase id="fldcaption" value="APELLIDO PATERNO" />
-      </field>
-      <field id="apellidomaterno">
-        <phrase id="fldcaption" value="APELLIDO MATERNO" />
-      </field>
-      <field id="nombre">
-        <phrase id="fldcaption" value="NOMBRES" />
-      </field>
-      <field id="ci">
-        <phrase id="fldcaption" value="CI" />
-      </field>
-      <field id="fecha_nacimiento">
-        <phrase id="fldcaption" value="FECHA NACIMIENTO" />
-      </field>
-      <field id="dias">
-        <phrase id="fldcaption" value="DIAS" />
-      </field>
-      <field id="semanas">
-        <phrase id="fldcaption" value="SEMANA" />
-      </field>
-      <field id="meses">
-        <phrase id="fldcaption" value="MESES" />
-      </field>
-      <field id="discapacidad">
-        <phrase id="fldcaption" value="DISCAPACIDAD" />
-      </field>
-      <field id="resultado">
-        <phrase id="fldcaption" value="RESULTADO" />
-      </field>
-      <field id="observaciones">
-        <phrase id="fldcaption" value="OBSERVACIONES" />
-      </field>
-      <field id="tipoprueba">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="resultadprueba">
-        <phrase id="fldcaption" value="resultado" />
-      </field>
-      <field id="recomendacion">
-        <phrase id="fldcaption" value="recomendacion" />
-      </field>
-      <field id="id_tipodiagnosticoaudiologia">
-        <phrase id="fldcaption" value="tipodiagnosticoaudiologia" />
-      </field>
-      <field id="nombrediagnotico">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="resultadodiagnostico">
-        <phrase id="fldcaption" value="resultado" />
-      </field>
-      <field id="tipotratamiento">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="tipoderivacion">
-        <phrase id="fldcaption" value="tipoderivacion" />
-        <phrase id="fldtagvalue1" value="INTERNA" />
-        <phrase id="fldtagcaption1" value="INTERNA" />
-        <phrase id="fldtagvalue2" value="EXTERNA" />
-        <phrase id="fldtagcaption2" value="EXTERNA" />
-      </field>
-      <field id="nombreespcialidad">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="observaciones1">
-        <phrase id="fldcaption" value="OBSERVACIONES" />
-      </field>
-      <field id="fecha">
-        <phrase id="fldcaption" value="FECHA" />
-      </field>
-    </table>
-    <table id="reporte_neontal">
-      <phrase id="tblcaption" value="Reporte Neontal" />
-      <field id="id_neonato">
-        <phrase id="fldcaption" value="NEONATO" />
-      </field>
-      <field id="apellidopaterno">
-        <phrase id="fldcaption" value="APELLIDO PATERNO" />
-      </field>
-      <field id="apellidomaterno">
-        <phrase id="fldcaption" value="APELLIDO MATERNO" />
-      </field>
-      <field id="nombre">
-        <phrase id="fldcaption" value="NOMBRES" />
-      </field>
-      <field id="ci">
-        <phrase id="fldcaption" value="CI" />
-      </field>
-      <field id="fecha_nacimiento">
-        <phrase id="fldcaption" value="FECHA NACIMIENTO" />
-      </field>
-      <field id="dias">
-        <phrase id="fldcaption" value="DIAS" />
-      </field>
-      <field id="semanas">
-        <phrase id="fldcaption" value="SEMANA" />
-      </field>
-      <field id="meses">
-        <phrase id="fldcaption" value="MESES" />
-      </field>
-      <field id="discapacidad">
-        <phrase id="fldcaption" value="DISCAPACIDAD" />
-      </field>
-      <field id="resultado">
-        <phrase id="fldcaption" value="RESULTADO" />
-      </field>
-      <field id="observaciones">
-        <phrase id="fldcaption" value="OBSERVACIONES" />
-      </field>
-      <field id="tipoprueba">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="resultadprueba">
-        <phrase id="fldcaption" value="resultado" />
-      </field>
-      <field id="recomendacion">
-        <phrase id="fldcaption" value="recomendacion" />
-      </field>
-      <field id="id_tipodiagnosticoaudiologia">
-        <phrase id="fldcaption" value="tipodiagnosticoaudiologia" />
-      </field>
-      <field id="nombrediagnotico">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="resultadodiagnostico">
-        <phrase id="fldcaption" value="resultado" />
-      </field>
-      <field id="tipotratamiento">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="tipoderivacion">
-        <phrase id="fldcaption" value="tipoderivacion" />
-        <phrase id="fldtagvalue1" value="INTERNA" />
-        <phrase id="fldtagcaption1" value="INTERNA" />
-        <phrase id="fldtagvalue2" value="EXTERNA" />
-        <phrase id="fldtagcaption2" value="EXTERNA" />
-      </field>
-      <field id="nombreespcialidad">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="observaciones1">
-        <phrase id="fldcaption" value="OBSERVACIONES" />
-      </field>
-      <field id="fecha">
-        <phrase id="fldcaption" value="FECHA" />
       </field>
     </table>
   </project>
