@@ -1,0 +1,1552 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<ew-language date="2019/9/20" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+  <!-- 
+	*** Important Notes:
+	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
+	2. Locale settings are placed in a separate locale files under the "locales" folder,
+	3. Locale files must be named with language ID of language file (and converted to lowercase), e.g. en.json,
+	4. Locale files are ALWAYS used, regardless of whether the project is single language or multiple language.
+-->
+  <global>
+    <phrase id="aggregatecolon" value=": " />
+    <!-- v10 -->
+    <phrase id="aggregateequal" value="=" />
+    <!-- v10 -->
+    <phrase id="allrecords" value="All" />
+    <phrase id="alwaysask" value="Always ask for my user name and password" />
+    <!-- Deprecated since v11 -->
+    <phrase id="autologin" value="Auto login until I logout explicitly" />
+    <!-- Deprecated since v11 -->
+    <phrase id="backtologin" value="Back to Login Page" />
+    <phrase id="booleanno" value="No" />
+    <phrase id="booleanyes" value="Yes" />
+    <phrase id="breadcrumbdivider" value="/" />
+    <phrase id="browsernoflashsupport" value="Your browser does not support Flash player." client="1" />
+    <phrase id="buttonexport" value="Export" class="icon-export ewIcon" />
+    <!-- v8 -->
+    <phrase id="cancel" value="Cancel" client="1" />
+    <!-- v8 -->
+    <phrase id="cancelbtn" value="Cancel" client="1" />
+    <!-- v10 -->
+    <phrase id="chartorder" value="Order by" />
+    <phrase id="chartorderxasc" value="Labels Ascending" />
+    <phrase id="chartorderxdesc" value="Labels Descending" />
+    <phrase id="chartorderyasc" value="Values Ascending" />
+    <phrase id="chartorderydesc" value="Values Descending" />
+    <phrase id="clickrecaptcha" value="Please click reCAPTCHA" client="1" />
+    <!-- v9 -->
+    <phrase id="clicktodrilldown" value="Click to drill down" />
+    <phrase id="closebtn" value="Close" client="1" />
+    <!-- v10 -->
+    <phrase id="copytoclipboard" value="Copy to clipboard" />
+    <!-- v10 -->
+    <phrase id="countselected" value="%s selected" client="1" />
+    <!-- v9 -->
+    <phrase id="ctbsumhead" value="Summary" />
+    <!-- v10 -->
+    <phrase id="currentfilters" value="Current filters:" />
+    <phrase id="deletefilter" value="Delete filter" />
+    <!-- v8 -->
+    <phrase id="deletefilterconfirm" value="Delete filter %s?" client="1" />
+    <!-- v8 -->
+    <phrase id="drilldownallrecords" value="All records" />
+    <phrase id="drilldownfilters" value="Drill down filters:" />
+    <phrase id="enterfiltername" value="Enter filter name" client="1" />
+    <!-- v8 -->
+    <phrase id="entersenderemail" value="Please enter sender email" client="1" />
+    <phrase id="enterpropersenderemail" value="Exceed maximum sender email count or email address incorrect" client="1" />
+    <phrase id="enterrecipientemail" value="Please enter recipient email" client="1" />
+    <phrase id="enterproperrecipientemail" value="Exceed maximum recipient email count or email address incorrect" client="1" />
+    <phrase id="enterproperccemail" value="Exceed maximum cc email count or email address incorrect" client="1" />
+    <phrase id="enterproperbccemail" value="Exceed maximum bcc email count or email address incorrect" client="1" />
+    <phrase id="entersubject" value="Please enter subject" client="1" />
+    <phrase id="emailformsender" value="From" />
+    <phrase id="emailformrecipient" value="To" />
+    <phrase id="emailformcc" value="Cc" />
+    <phrase id="emailformbcc" value="Bcc" />
+    <phrase id="emailformsubject" value="Subject" />
+    <phrase id="emailformmessage" value="Message" />
+    <phrase id="emailformcontenttype" value="Send as" />
+    <phrase id="emailformcontenttypeurl" value="URL" />
+    <phrase id="emailformcontenttypehtml" value="HTML" />
+    <phrase id="emptylabel" value="(Empty)" />
+    <phrase id="enterpassword" value="Please enter password" client="1" />
+    <phrase id="enterpwd" value="Please enter password" client="1" />
+    <phrase id="entersearchcriteria" value="Please enter search criteria" />
+    <phrase id="enteruid" value="Please enter user ID" client="1" />
+    <phrase id="entervalidatecode" value="Please enter the validation code shown" client="1" />
+    <phrase id="exceedmaxemailexport" value="Exceed maximum export email count. Please try again later." />
+    <phrase id="exportchart" value="Exporting chart: " client="1" />
+    <phrase id="exportchartdata" value="Exporting chart data" client="1" />
+    <phrase id="exportcharterror" value="Failed to export chart: " client="1" />
+    <phrase id="exporting" value="Exporting, please wait..." client="1" />
+    <!-- v11 -->
+    <phrase id="exportingchart" value="Exporting chart (%c of %t), please wait..." client="1" />
+    <phrase id="exporttoemail" value="Email" class="icon-email ewIcon" client="1" />
+    <!-- v8 -->
+    <phrase id="exporttoexcel" value="Export to Excel" class="icon-excel ewIcon" />
+    <!-- v8 -->
+    <phrase id="exporttopdf" value="Export to PDF" class="icon-pdf ewIcon" />
+    <!-- v8 -->
+    <phrase id="exporttoword" value="Export to Word" class="icon-word ewIcon" />
+    <!-- v8 -->
+    <phrase id="failedtoexport" value="Failed to Export" client="1" />
+    <!-- v11 -->
+    <phrase id="fieldrequiredindicator" value="&lt;span class=&quot;ewRequired&quot;&gt;&amp;nbsp;*&lt;/span&gt;" />
+    <phrase id="filter" value="Filter" />
+    <!-- v8 -->
+    <phrase id="filtername" value="Filter name" client="1" />
+    <!-- v8 -->
+    <phrase id="filters" value="Filters" class="icon-filter ewIcon" />
+    <!-- v8 -->
+    <phrase id="generate" value="Generate" client="1" />
+    <!-- v10 -->
+    <phrase id="generatereporturl" value="Generate Report URL" client="1" />
+    <!-- v10 -->
+    <phrase id="generatesuccess" value="Success" />
+    <!-- v10 -->
+    <phrase id="homepage" value="Home" class="glyphicon glyphicon-home ewIcon" />
+    <!-- v8 -->
+    <phrase id="incorrectcreditcard" value="Incorrect credit card number" client="1" />
+    <phrase id="incorrectdate" value="Incorrect date (%s)" />
+    <!-- v10 -->
+    <phrase id="incorrectdateymd" value="Incorrect date, format = yyyy%smm%sdd" />
+    <phrase id="incorrectdatemdy" value="Incorrect date, format = mm%sdd%syyyy" />
+    <phrase id="incorrectdatedmy" value="Incorrect date, format = dd%smm%syyyy" />
+    <phrase id="incorrectshortdateymd" value="Incorrect date, format = yy%smm%sdd" />
+    <phrase id="incorrectshortdatemdy" value="Incorrect date, format = mm%sdd%syy" />
+    <phrase id="incorrectshortdatedmy" value="Incorrect date, format = dd%smm%syy" />
+    <phrase id="incorrectemail" value="Incorrect email" client="1" />
+    <phrase id="incorrectfield" value="Incorrect field" client="1" />
+    <phrase id="incorrectfloat" value="Incorrect floating point number" client="1" />
+    <phrase id="incorrectguid" value="Incorrect GUID" client="1" />
+    <phrase id="incorrectinteger" value="Incorrect integer" client="1" />
+    <phrase id="incorrectphone" value="Incorrect phone number" client="1" />
+    <phrase id="incorrectrange" value="Number must be between %1 and %2" client="1" />
+    <phrase id="incorrectregexp" value="Regular expression not matched" client="1" />
+    <phrase id="incorrectssn" value="Incorrect Social Security Number" client="1" />
+    <phrase id="incorrecttime" value="Incorrect time (hh:mm:ss)" client="1" />
+    <phrase id="incorrectzip" value="Incorrect ZIP code" client="1" />
+    <phrase id="invalidpostrequest" value="Invalid post request" />
+    <!-- v8 -->
+    <phrase id="invaliduidpwd" value="Incorrect user ID or password" />
+    <phrase id="language" value="Language" />
+    <phrase id="loading" value="Loading%s..." client="1" />
+    <phrase id="login" value="Login" />
+    <phrase id="loginfacebook" value="Login with Facebook" />
+    <!-- v11 -->
+    <phrase id="loginfailed" value="Login with %p failed" />
+    <!-- v11 -->
+    <phrase id="logingoogle" value="Login with Google" />
+    <!-- v11 -->
+    <phrase id="loginoptions" value="Options" />
+    <!-- v8 -->
+    <phrase id="loginor" value="- OR -" />
+    <!-- v11 -->
+    <phrase id="loginpage" value="Login Page" />
+    <phrase id="logout" value="Logout" />
+    <phrase id="lookuplink" value="Lookup - %s" class="glyphicon glyphicon-search ewIcon" />
+    <!-- v10 -->
+    <phrase id="messageok" value="OK" client="1" />
+    <!-- v9 -->
+    <phrase id="midnight" value="midnight" />
+    <!-- v10 -->
+    <phrase id="mobilemenu" value="Menu" />
+    <phrase id="monthjan" value="Jan" />
+    <phrase id="monthfeb" value="Feb" />
+    <phrase id="monthmar" value="Mar" />
+    <phrase id="monthapr" value="Apr" />
+    <phrase id="monthmay" value="May" />
+    <phrase id="monthjun" value="Jun" />
+    <phrase id="monthjul" value="Jul" />
+    <phrase id="monthaug" value="Aug" />
+    <phrase id="monthsep" value="Sep" />
+    <phrase id="monthoct" value="Oct" />
+    <phrase id="monthnov" value="Nov" />
+    <phrase id="monthdec" value="Dec" />
+    <phrase id="more" value="More" client="1" />
+    <!-- v11 -->
+    <phrase id="next" value="Next" />
+    <phrase id="noon" value="noon" />
+    <!-- v10 -->
+    <phrase id="nopermission" value="You do not have permission to access the page." />
+    <phrase id="norecord" value="No records found" client="1" />
+    <!-- v10 -->
+    <phrase id="noreportorcharts" value="No report or charts is selected for generation. Please check your report/charts settings." />
+    <phrase id="nodistinctcolvals" value="No distinct column values for SQL: " />
+    <phrase id="nulllabel" value="(Null)" />
+    <phrase id="of" value="of" client="1" />
+    <!-- v10 -->
+    <phrase id="page" value="Page" client="1" />
+    <!-- v10 -->
+    <phrase id="pagerfirst" value="First" />
+    <phrase id="pagerlast" value="Last" />
+    <phrase id="pagernext" value="Next" />
+    <phrase id="pagerprevious" value="Previous" />
+    <phrase id="password" value="Password" />
+    <phrase id="pleaseselect" value="Please select" client="1" />
+    <!-- v9 -->
+    <phrase id="popupall" value="(All)" client="1" />
+    <phrase id="popupfrom" value="From" client="1" />
+    <phrase id="popupnovalue" value="No value selected!" client="1" />
+    <phrase id="popupselect" value="Please Select" client="1" />
+    <phrase id="popupto" value="To" client="1" />
+    <phrase id="prev" value="Prev" />
+    <phrase id="primarykeyunspecified" value="Primary key unspecified" />
+    <phrase id="printerfriendly" value="Printer Friendly" class="icon-print ewIcon" />
+    <!-- v8 -->
+    <phrase id="group" value="Groups" />
+    <phrase id="groupsperpage" value="Groups per page" />
+    <phrase id="qtr1" value="1st Quarter" />
+    <phrase id="qtr2" value="2nd Quarter" />
+    <phrase id="qtr3" value="3rd Quarter" />
+    <phrase id="qtr4" value="4th Quarter" />
+    <phrase id="record" value="Records" client="1" />
+    <!-- v10 -->
+    <phrase id="recordsperpage" value="Page size" client="1" />
+    <!-- v10 -->
+    <phrase id="rememberme" value="Remember me" />
+    <phrase id="report" value="Reports" />
+    <phrase id="reportformtype" value="Report type" />
+    <!-- v10 -->
+    <phrase id="reportformprint" value="Print" />
+    <!-- v10 -->
+    <phrase id="reportformword" value="Word" />
+    <!-- v10 -->
+    <phrase id="reportformexcel" value="Excel" />
+    <!-- v10 -->
+    <phrase id="reportformpdf" value="PDF" />
+    <!-- v10 -->
+    <phrase id="reportformemail" value="Email" />
+    <!-- v10 -->
+    <phrase id="reportformusername" value="User name" />
+    <!-- v10 -->
+    <phrase id="reportformuserdefault" value="Administrator" />
+    <!-- v10 -->
+    <phrase id="reportformfiltername" value="Filter name" />
+    <!-- v10 -->
+    <phrase id="reportformfilternone" value="None" />
+    <!-- v10 -->
+    <phrase id="reportformfiltercurrent" value="Current" />
+    <!-- v10 -->
+    <phrase id="reportformpageoption" value="Pages" />
+    <!-- v10 -->
+    <phrase id="reportformallpages" value="All" />
+    <!-- v10 -->
+    <phrase id="reportformfirstpage" value="First" />
+    <!-- v10 -->
+    <phrase id="reportformsender" value="From" />
+    <!-- v10 -->
+    <phrase id="reportformrecipient" value="To" />
+    <!-- v10 -->
+    <phrase id="reportformcc" value="Cc" />
+    <!-- v10 -->
+    <phrase id="reportformbcc" value="Bcc" />
+    <!-- v10 -->
+    <phrase id="reportformsubject" value="Subject" />
+    <!-- v10 -->
+    <phrase id="reportformresponsetype" value="Response type" />
+    <!-- v10 -->
+    <phrase id="reportformresponsetypejson" value="JSON" />
+    <!-- v10 -->
+    <phrase id="reportformresponsetypefile" value="File" />
+    <!-- v10 -->
+    <phrase id="reportformshowcurrentfilter" value="Show filters" />
+    <!-- v10 -->
+    <phrase id="reportformurl" value="URL" />
+    <!-- v10 -->
+    <phrase id="reportgenerateddate" value="Report generated at " />
+    <!-- v10 -->
+    <phrase id="reset" value="Reset" />
+    <phrase id="resetallfilter" value="Reset all filters" class="icon-reset-search ewIcon" />
+    <!-- v8 -->
+    <phrase id="resetsearch" value="Reset search criteria" />
+    <phrase id="rptavg" value="AVG" />
+    <phrase id="rptcnt" value="COUNT" />
+    <phrase id="rptdtlrec" value=" detail records" />
+    <phrase id="rptgrandsummary" value="Grand Summary" />
+    <phrase id="rptmax" value="MAX" />
+    <phrase id="rptmin" value="MIN" />
+    <phrase id="rptpagesummary" value="Page Summary" />
+    <phrase id="rptsum" value="SUM" />
+    <phrase id="rptsumhead" value="Summary for %c: %v" />
+    <!-- v9 -->
+    <phrase id="savecurrentfilter" value="Save current filter" />
+    <phrase id="saveusername" value="Save my user name" />
+    <!-- Deprecated since v11 -->
+    <phrase id="search" value="Search" client="1" />
+    <!-- v10 -->
+    <phrase id="searchbtn" value="Filter Panel" class="glyphicon glyphicon-search ewIcon" />
+    <phrase id="selectall" value="(All)" />
+    <phrase id="selectbtn" value="Select" client="1" />
+    <!-- v10 -->
+    <phrase id="sendemailbtn" value="Send" client="1" />
+    <phrase id="sendemailsuccess" value="Email sent successfully" client="1" />
+    <phrase id="servercommunicationerror" value="An error occured while communicating to the server." />
+    <!-- v10 -->
+    <phrase id="sessionwillexpire" value="Your session will expire in %s seconds. Click OK to continue your session." client="1" />
+    <!-- v9 -->
+    <phrase id="sessionexpired" value="Your session has expired." client="1" />
+    <!-- v9 -->
+    <phrase id="showall" value="Show all" />
+    <phrase id="summary" value="Summary" />
+    <phrase id="summarycolon" value=": " />
+    <!-- v10 -->
+    <phrase id="tasks" value="Tasks" />
+    <phrase id="to" value="to" />
+    <phrase id="top" value="Top" />
+    <phrase id="total" value="Total" />
+    <phrase id="useradministrator" value="Administrator" client="1" />
+    <!-- v9 -->
+    <phrase id="useranonymous" value="Anonymous" client="1" />
+    <!-- v9 -->
+    <phrase id="userdefault" value="Default" client="1" />
+    <!-- v9 -->
+    <phrase id="username" value="User name" />
+    <phrase id="usernotfound" value="User '%u' not found" />
+    <!-- v11 -->
+    <phrase id="valuenotexist" value="Value does not exist" client="1" />
+    <!-- v8 -->
+    <phrase id="viewimage" value="Click to view image" />
+    <!-- v8 -->
+    <phrase id="week" value="Week" />
+    <phrase id="year" value="Year" />
+    <!-- Search Operators -->
+    <phrase id="=" value="&amp;nbsp;" />
+    <!-- v9 -->
+    <phrase id="equal" value="=" />
+    <!-- v9 -->
+    <phrase id="&lt;&gt;" value="&amp;lt;&amp;gt;" />
+    <phrase id="&lt;" value="&amp;lt;" />
+    <phrase id="&lt;=" value="&amp;lt;=" />
+    <phrase id="&gt;" value="&amp;gt;" />
+    <phrase id="&gt;=" value="&amp;gt;=" />
+    <phrase id="like" value="contains" />
+    <phrase id="not like" value="not contains" />
+    <phrase id="starts with" value="starts with" />
+    <phrase id="ends with" value="ends with" />
+    <phrase id="is null" value="is null" />
+    <phrase id="is not null" value="is not null" />
+    <phrase id="between" value="between" />
+    <phrase id="and" value="and" />
+    <phrase id="or" value="or" />
+    <phrase id="am" value="AM" />
+    <!-- v10 -->
+    <phrase id="pm" value="PM" />
+    <!-- v10 -->
+    <!-- Menu Prefix/Suffix -->
+    <phrase id="simplereportmenuitemprefix" value="" />
+    <phrase id="simplereportmenuitemsuffix" value="" />
+    <phrase id="detailsummaryreportmenuitemprefix" value="" />
+    <phrase id="detailsummaryreportmenuitemsuffix" value="" />
+    <phrase id="crosstabreportmenuitemprefix" value="" />
+    <phrase id="crosstabreportmenuitemsuffix" value="" />
+    <phrase id="chartreportmenuitemprefix" value="" />
+    <phrase id="chartreportmenuitemsuffix" value="" />
+    <!-- Advanced Filter -->
+    <phrase id="future" value="Future" />
+    <phrase id="past" value="Past" />
+    <phrase id="last14days" value="Last 14 days" />
+    <phrase id="last30days" value="Last 30 days" />
+    <phrase id="last7days" value="Last 7 days" />
+    <phrase id="next14days" value="Next 14 days" />
+    <phrase id="next30days" value="Next 30 days" />
+    <phrase id="next7days" value="Next 7 days" />
+    <phrase id="today" value="Today" />
+    <phrase id="tomorrow" value="Tomorrow" />
+    <phrase id="yesterday" value="Yesterday" />
+    <phrase id="lastmonth" value="Last month" />
+    <phrase id="nextmonth" value="Next month" />
+    <phrase id="thismonth" value="This month" />
+    <phrase id="lasttwoweeks" value="Last two weeks" />
+    <phrase id="lastweek" value="Last week" />
+    <phrase id="nexttwoweeks" value="Next two weeks" />
+    <phrase id="nextweek" value="Next week" />
+    <phrase id="thisweek" value="This week" />
+    <phrase id="lastyear" value="Last year" />
+    <phrase id="nextyear" value="Next year" />
+    <phrase id="thisyear" value="This year" />
+  </global>
+  <project>
+    <phrase id="footertext" value="&amp;copy;2018 e.World Technology Ltd. All rights reserved." />
+    <menu id="1">
+      <phrase id="menutext" value="actividad" />
+    </menu>
+    <menu id="2">
+      <phrase id="menutext" value="apoderado" />
+    </menu>
+    <menu id="3">
+      <phrase id="menutext" value="atencion" />
+    </menu>
+    <menu id="4">
+      <phrase id="menutext" value="atencionescolaraudiologia" />
+    </menu>
+    <menu id="5">
+      <phrase id="menutext" value="atencionneonatoaudiologia" />
+    </menu>
+    <menu id="6">
+      <phrase id="menutext" value="atencionotrosaudiologia" />
+    </menu>
+    <menu id="7">
+      <phrase id="menutext" value="audiologia" />
+    </menu>
+    <menu id="8">
+      <phrase id="menutext" value="categoria" />
+    </menu>
+    <menu id="9">
+      <phrase id="menutext" value="centros" />
+    </menu>
+    <menu id="10">
+      <phrase id="menutext" value="ciudad" />
+    </menu>
+    <menu id="11">
+      <phrase id="menutext" value="departamento" />
+    </menu>
+    <menu id="12">
+      <phrase id="menutext" value="derivacion" />
+    </menu>
+    <menu id="13">
+      <phrase id="menutext" value="diagnosticoaudiologia" />
+    </menu>
+    <menu id="14">
+      <phrase id="menutext" value="discapacidad" />
+    </menu>
+    <menu id="15">
+      <phrase id="menutext" value="docente" />
+    </menu>
+    <menu id="16">
+      <phrase id="menutext" value="escolar" />
+    </menu>
+    <menu id="17">
+      <phrase id="menutext" value="especialista" />
+    </menu>
+    <menu id="18">
+      <phrase id="menutext" value="estudiante" />
+    </menu>
+    <menu id="19">
+      <phrase id="menutext" value="institucionesdesalud" />
+    </menu>
+    <menu id="20">
+      <phrase id="menutext" value="medio" />
+    </menu>
+    <menu id="21">
+      <phrase id="menutext" value="municipio" />
+    </menu>
+    <menu id="22">
+      <phrase id="menutext" value="neonatal" />
+    </menu>
+    <menu id="23">
+      <phrase id="menutext" value="otrasorganizaciones" />
+    </menu>
+    <menu id="24">
+      <phrase id="menutext" value="otros" />
+    </menu>
+    <menu id="25">
+      <phrase id="menutext" value="participante" />
+    </menu>
+    <menu id="26">
+      <phrase id="menutext" value="persona" />
+    </menu>
+    <menu id="27">
+      <phrase id="menutext" value="provincia" />
+    </menu>
+    <menu id="28">
+      <phrase id="menutext" value="pruebasaudiologia" />
+    </menu>
+    <menu id="29">
+      <phrase id="menutext" value="referencia" />
+    </menu>
+    <menu id="30">
+      <phrase id="menutext" value="sector" />
+    </menu>
+    <menu id="31">
+      <phrase id="menutext" value="tapon" />
+    </menu>
+    <menu id="32">
+      <phrase id="menutext" value="tipoactividad" />
+    </menu>
+    <menu id="33">
+      <phrase id="menutext" value="tipocentro" />
+    </menu>
+    <menu id="34">
+      <phrase id="menutext" value="tipodiagnosticoaudiologia" />
+    </menu>
+    <menu id="35">
+      <phrase id="menutext" value="tipodiscapacidad" />
+    </menu>
+    <menu id="36">
+      <phrase id="menutext" value="tipoespecialidad" />
+    </menu>
+    <menu id="37">
+      <phrase id="menutext" value="tipoprueba" />
+    </menu>
+    <menu id="38">
+      <phrase id="menutext" value="tipopruebasaudiologia" />
+    </menu>
+    <menu id="39">
+      <phrase id="menutext" value="tipotratamientoaudiologia" />
+    </menu>
+    <menu id="40">
+      <phrase id="menutext" value="tratamiento" />
+    </menu>
+    <menu id="41">
+      <phrase id="menutext" value="unidadeducativa" />
+    </menu>
+    <menu id="42">
+      <phrase id="menutext" value="userlevelpermissions" />
+    </menu>
+    <menu id="43">
+      <phrase id="menutext" value="userlevels" />
+    </menu>
+    <menu id="44">
+      <phrase id="menutext" value="usuario" />
+    </menu>
+    <table id="actividad">
+      <phrase id="tblcaption" value="actividad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_sector">
+        <phrase id="fldcaption" value="id sector" />
+      </field>
+      <field id="id_tipoactividad">
+        <phrase id="fldcaption" value="id tipoactividad" />
+      </field>
+      <field id="organizador">
+        <phrase id="fldcaption" value="organizador" />
+      </field>
+      <field id="nombreactividad">
+        <phrase id="fldcaption" value="nombreactividad" />
+      </field>
+      <field id="nombrelocal">
+        <phrase id="fldcaption" value="nombrelocal" />
+      </field>
+      <field id="direccionlocal">
+        <phrase id="fldcaption" value="direccionlocal" />
+      </field>
+      <field id="fecha_inicio">
+        <phrase id="fldcaption" value="fecha inicio" />
+      </field>
+      <field id="fecha_fin">
+        <phrase id="fldcaption" value="fecha fin" />
+      </field>
+      <field id="horasprogramadas">
+        <phrase id="fldcaption" value="horasprogramadas" />
+      </field>
+      <field id="id_persona">
+        <phrase id="fldcaption" value="id persona" />
+      </field>
+      <field id="contenido">
+        <phrase id="fldcaption" value="contenido" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="apoderado">
+      <phrase id="tblcaption" value="apoderado" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="parentesco">
+        <phrase id="fldcaption" value="parentesco" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="direccif3n">
+        <phrase id="fldcaption" value="dirección" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="ocupacif3n">
+        <phrase id="fldcaption" value="ocupación" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="atencion">
+      <phrase id="tblcaption" value="atencion" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_neonato">
+        <phrase id="fldcaption" value="id neonato" />
+      </field>
+      <field id="id_otros">
+        <phrase id="fldcaption" value="id otros" />
+      </field>
+      <field id="id_escolar">
+        <phrase id="fldcaption" value="id escolar" />
+      </field>
+      <field id="id_especialista">
+        <phrase id="fldcaption" value="id especialista" />
+      </field>
+    </table>
+    <table id="atencionescolaraudiologia">
+      <phrase id="tblcaption" value="atencionescolaraudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_escolar">
+        <phrase id="fldcaption" value="id escolar" />
+      </field>
+      <field id="id_especialista">
+        <phrase id="fldcaption" value="id especialista" />
+      </field>
+    </table>
+    <table id="atencionneonatoaudiologia">
+      <phrase id="tblcaption" value="atencionneonatoaudiologia" />
+      <field id="id1">
+        <phrase id="fldcaption" value="id 1" />
+      </field>
+      <field id="id_neonato">
+        <phrase id="fldcaption" value="id neonato" />
+      </field>
+      <field id="id_especialista">
+        <phrase id="fldcaption" value="id especialista" />
+      </field>
+    </table>
+    <table id="atencionotrosaudiologia">
+      <phrase id="tblcaption" value="atencionotrosaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_otros">
+        <phrase id="fldcaption" value="id otros" />
+      </field>
+      <field id="id_especialista">
+        <phrase id="fldcaption" value="id especialista" />
+      </field>
+    </table>
+    <table id="audiologia">
+      <phrase id="tblcaption" value="audiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_especialista">
+        <phrase id="fldcaption" value="id especialista" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="id_escolar">
+        <phrase id="fldcaption" value="id escolar" />
+      </field>
+      <field id="id_neonato">
+        <phrase id="fldcaption" value="id neonato" />
+      </field>
+      <field id="id_atencion">
+        <phrase id="fldcaption" value="id atencion" />
+      </field>
+      <field id="id_otros">
+        <phrase id="fldcaption" value="id otros" />
+      </field>
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="categoria">
+      <phrase id="tblcaption" value="categoria" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="centros">
+      <phrase id="tblcaption" value="centros" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="ciudad">
+        <phrase id="fldcaption" value="ciudad" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="direccion" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="id_persona">
+        <phrase id="fldcaption" value="id persona" />
+      </field>
+    </table>
+    <table id="ciudad">
+      <phrase id="tblcaption" value="ciudad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="departamento">
+      <phrase id="tblcaption" value="departamento" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="derivacion">
+      <phrase id="tblcaption" value="derivacion" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_audiologia">
+        <phrase id="fldcaption" value="id audiologia" />
+      </field>
+      <field id="id_tipoespecialidad">
+        <phrase id="fldcaption" value="id tipoespecialidad" />
+      </field>
+      <field id="tipoderivacion">
+        <phrase id="fldcaption" value="tipoderivacion" />
+      </field>
+    </table>
+    <table id="diagnosticoaudiologia">
+      <phrase id="tblcaption" value="diagnosticoaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_audiologia">
+        <phrase id="fldcaption" value="id audiologia" />
+      </field>
+      <field id="id_tipodiagnosticoaudiologia">
+        <phrase id="fldcaption" value="id tipodiagnosticoaudiologia" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+    </table>
+    <table id="discapacidad">
+      <phrase id="tblcaption" value="discapacidad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="docente">
+      <phrase id="tblcaption" value="docente" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_departamento">
+        <phrase id="fldcaption" value="id departamento" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="materias">
+        <phrase id="fldcaption" value="materias" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapacidad">
+        <phrase id="fldcaption" value="tipodiscapacidad" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="escolar">
+      <phrase id="tblcaption" value="escolar" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="codigorude">
+        <phrase id="fldcaption" value="codigorude" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="id_departamento">
+        <phrase id="fldcaption" value="id departamento" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="id_discapacidad">
+        <phrase id="fldcaption" value="id discapacidad" />
+      </field>
+      <field id="id_tipodiscapacidad">
+        <phrase id="fldcaption" value="id tipodiscapacidad" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="tapon">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="tapodonde">
+        <phrase id="fldcaption" value="tapodonde" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetirprueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_apoderado">
+        <phrase id="fldcaption" value="id apoderado" />
+      </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="id referencia" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="especialista">
+      <phrase id="tblcaption" value="especialista" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="id_departamento">
+        <phrase id="fldcaption" value="id departamento" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="matricula">
+        <phrase id="fldcaption" value="matricula" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="nombreespecialidad">
+        <phrase id="fldcaption" value="nombreespecialidad" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="estudiante">
+      <phrase id="tblcaption" value="estudiante" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="provincisa">
+        <phrase id="fldcaption" value="provincisa" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapacidad">
+        <phrase id="fldcaption" value="tipodiscapacidad" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="codigorude">
+        <phrase id="fldcaption" value="codigorude" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="institucionesdesalud">
+      <phrase id="tblcaption" value="institucionesdesalud" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="direccion" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="id_persona">
+        <phrase id="fldcaption" value="id persona" />
+      </field>
+    </table>
+    <table id="medio">
+      <phrase id="tblcaption" value="medio" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="municipio">
+      <phrase id="tblcaption" value="municipio" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="descripcion">
+        <phrase id="fldcaption" value="descripcion" />
+      </field>
+      <field id="id_provincia">
+        <phrase id="fldcaption" value="id provincia" />
+      </field>
+    </table>
+    <table id="neonatal">
+      <phrase id="tblcaption" value="neonatal" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="fecha_tamizaje">
+        <phrase id="fldcaption" value="fecha tamizaje" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="dias">
+        <phrase id="fldcaption" value="dias" />
+      </field>
+      <field id="semanas">
+        <phrase id="fldcaption" value="semanas" />
+      </field>
+      <field id="meses">
+        <phrase id="fldcaption" value="meses" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="id_tipodiscapacidad">
+        <phrase id="fldcaption" value="id tipodiscapacidad" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="tapon">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="tipo">
+        <phrase id="fldcaption" value="tipo" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetirprueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_apoderado">
+        <phrase id="fldcaption" value="id apoderado" />
+      </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="id referencia" />
+      </field>
+    </table>
+    <table id="otrasorganizaciones">
+      <phrase id="tblcaption" value="otrasorganizaciones" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="ciudad">
+        <phrase id="fldcaption" value="ciudad" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="direccion" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="id_persona">
+        <phrase id="fldcaption" value="id persona" />
+      </field>
+    </table>
+    <table id="otros">
+      <phrase id="tblcaption" value="otros" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_actividad">
+        <phrase id="fldcaption" value="id actividad" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="nivelestudio">
+        <phrase id="fldcaption" value="nivelestudio" />
+      </field>
+      <field id="id_discapacidad">
+        <phrase id="fldcaption" value="id discapacidad" />
+      </field>
+      <field id="id_tipodiscapacidad">
+        <phrase id="fldcaption" value="id tipodiscapacidad" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="tapon">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="tipo">
+        <phrase id="fldcaption" value="tipo" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetirprueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_apoderado">
+        <phrase id="fldcaption" value="id apoderado" />
+      </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="id referencia" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="participante">
+      <phrase id="tblcaption" value="participante" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_sector">
+        <phrase id="fldcaption" value="id sector" />
+      </field>
+      <field id="id_actividad">
+        <phrase id="fldcaption" value="id actividad" />
+      </field>
+      <field id="id_categoria">
+        <phrase id="fldcaption" value="id categoria" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="direcciondomicilio">
+        <phrase id="fldcaption" value="direcciondomicilio" />
+      </field>
+      <field id="ocupacion">
+        <phrase id="fldcaption" value="ocupacion" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="cargo">
+        <phrase id="fldcaption" value="cargo" />
+      </field>
+      <field id="nivelestudio">
+        <phrase id="fldcaption" value="nivelestudio" />
+      </field>
+      <field id="id_institucion">
+        <phrase id="fldcaption" value="id institucion" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="persona">
+      <phrase id="tblcaption" value="persona" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="tipopersona">
+        <phrase id="fldcaption" value="tipopersona" />
+      </field>
+    </table>
+    <table id="provincia">
+      <phrase id="tblcaption" value="provincia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="descripcion">
+        <phrase id="fldcaption" value="descripcion" />
+      </field>
+      <field id="id_departamento">
+        <phrase id="fldcaption" value="id departamento" />
+      </field>
+    </table>
+    <table id="pruebasaudiologia">
+      <phrase id="tblcaption" value="pruebasaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_audiologia">
+        <phrase id="fldcaption" value="id audiologia" />
+      </field>
+      <field id="id_tipopruebasaudiologia">
+        <phrase id="fldcaption" value="id tipopruebasaudiologia" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="recomendacion">
+        <phrase id="fldcaption" value="recomendacion" />
+      </field>
+    </table>
+    <table id="referencia">
+      <phrase id="tblcaption" value="referencia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_medio">
+        <phrase id="fldcaption" value="id medio" />
+      </field>
+      <field id="nombrescompleto">
+        <phrase id="fldcaption" value="nombrescompleto" />
+      </field>
+      <field id="nombrescentromedico">
+        <phrase id="fldcaption" value="nombrescentromedico" />
+      </field>
+      <field id="direccif3n">
+        <phrase id="fldcaption" value="dirección" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="sector">
+      <phrase id="tblcaption" value="sector" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tapon">
+      <phrase id="tblcaption" value="tapon" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipoactividad">
+      <phrase id="tblcaption" value="tipoactividad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipocentro">
+      <phrase id="tblcaption" value="tipocentro" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="descripcion">
+        <phrase id="fldcaption" value="descripcion" />
+      </field>
+    </table>
+    <table id="tipodiagnosticoaudiologia">
+      <phrase id="tblcaption" value="tipodiagnosticoaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipodiscapacidad">
+      <phrase id="tblcaption" value="tipodiscapacidad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipoespecialidad">
+      <phrase id="tblcaption" value="tipoespecialidad" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipoprueba">
+      <phrase id="tblcaption" value="tipoprueba" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="descripcion">
+        <phrase id="fldcaption" value="descripcion" />
+      </field>
+      <field id="id_audiologia">
+        <phrase id="fldcaption" value="id audiologia" />
+      </field>
+    </table>
+    <table id="tipopruebasaudiologia">
+      <phrase id="tblcaption" value="tipopruebasaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tipotratamientoaudiologia">
+      <phrase id="tblcaption" value="tipotratamientoaudiologia" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="tratamiento">
+      <phrase id="tblcaption" value="tratamiento" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="id_audiologia">
+        <phrase id="fldcaption" value="id audiologia" />
+      </field>
+      <field id="id_tipotratamientoaudiologia">
+        <phrase id="fldcaption" value="id tipotratamientoaudiologia" />
+      </field>
+    </table>
+    <table id="unidadeducativa">
+      <phrase id="tblcaption" value="unidadeducativa" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="codigo_sie">
+        <phrase id="fldcaption" value="codigo sie" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="direccion" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="id_persona">
+        <phrase id="fldcaption" value="id persona" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+    </table>
+    <table id="userlevelpermissions">
+      <phrase id="tblcaption" value="userlevelpermissions" />
+      <field id="userlevelid">
+        <phrase id="fldcaption" value="userlevelid" />
+      </field>
+      <field id="_tablename">
+        <phrase id="fldcaption" value="tablename" />
+      </field>
+      <field id="permission">
+        <phrase id="fldcaption" value="permission" />
+      </field>
+    </table>
+    <table id="userlevels">
+      <phrase id="tblcaption" value="userlevels" />
+      <field id="userlevelid">
+        <phrase id="fldcaption" value="userlevelid" />
+      </field>
+      <field id="userlevelname">
+        <phrase id="fldcaption" value="userlevelname" />
+      </field>
+    </table>
+    <table id="usuario">
+      <phrase id="tblcaption" value="usuario" />
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="apellido">
+        <phrase id="fldcaption" value="apellido" />
+      </field>
+      <field id="id_centro">
+        <phrase id="fldcaption" value="id centro" />
+      </field>
+      <field id="login">
+        <phrase id="fldcaption" value="login" />
+      </field>
+      <field id="password">
+        <phrase id="fldcaption" value="password" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="id_rol">
+        <phrase id="fldcaption" value="id rol" />
+      </field>
+    </table>
+  </project>
+</ew-language>

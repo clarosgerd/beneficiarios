@@ -38,6 +38,8 @@ if (!isset($Language)) {
 <link rel="stylesheet" type="text/css" href="<?php echo $EW_RELATIVE_PATH ?><?php echo EW_PDF_STYLESHEET_FILENAME ?>">
 <?php } ?>
 <script type="text/javascript" src="<?php echo $EW_RELATIVE_PATH ?>jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">jQuery.migrateMute = true;</script>
+<script type="text/javascript" src="<?php echo $EW_RELATIVE_PATH ?>jquery/jquery-migrate-3.0.0.js"></script>
 <script type="text/javascript" src="<?php echo $EW_RELATIVE_PATH ?>jquery/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="<?php echo $EW_RELATIVE_PATH ?>jquery/jquery.storageapi.min.js"></script>
 <script type="text/javascript" src="<?php echo $EW_RELATIVE_PATH ?>jquery/pGenerator.jquery.js"></script>

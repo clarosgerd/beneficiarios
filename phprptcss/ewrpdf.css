@@ -1,0 +1,206 @@
+body {
+	background-color: inherit; /* background color */
+	font-family: Helvetica; /* font name */
+	font-size: xx-small; /* font size - DO NOT CHANGE! */
+}
+
+/* table for PDF export */
+.ewTable {
+	border: 0;
+	border-spacing: 0;
+	border-collapse: separate;
+	font-size: xx-small; /* font size - DO NOT CHANGE! */
+	width: 100%;
+	border-top: 0.5px solid;
+	border-left: 0.5px solid;
+	border-color: #D5D5D5; /* border color */
+	margin-left: 0;
+	margin-right: 0;
+}
+.ewTable td, .ewTable th {
+	padding: 3px; /* cell padding */
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0.5px solid; /* border width, vertical grid line */
+	border-bottom: 0.5px solid; /* border width, horizontal grid line */
+	border-color: #D5D5D5; /* border color */
+}
+.ewTable .ewTableHeader td, .ewTable .ewTableHeader th {
+	background-image: none; /* remove header bg image */
+	background-color: #B1174D; /* header bgcolor */
+	color: #FFFFFF; /* header font color */
+	vertical-align: top;
+}
+
+/* row color */
+.ewTable .ewTableRow, .ewTable .ewTableRow td {
+	background-color: #FFFFFF; /* alt row color 1 */
+}
+
+/* alternate row color */
+.ewTable .ewTableAltRow, .ewTable .ewTableAltRow td {
+	background-color: #F8EDEF; /* alt row color 2 */
+}
+
+/* main table footer */
+.ewTable .ewTableFooter td {
+	background-color: #F5F5F5; /* footer color */
+
+/* crosstab column row */
+.ewTable .ewTableColumnRow {
+	background-color: #F8EDEF; /* alt row color 2 */
+}
+
+/* group 1 */
+.ewTable .ewRptGrpHeader1 {
+	color: black;
+	background-color: #FFF5EE;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader1 a:link, .ewRptGrpHeader1 a:active, .ewRptGrpHeader1 a:visited {
+	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField1 {
+	background-color: #FFF5EE;
+}
+.ewRptGrpSummary1 {
+	color: black;
+	background-color: #FFE4E1;
+}
+
+/* group 2 */
+.ewTable .ewRptGrpHeader2 {
+	color: black;
+	background-color: white;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader2 a:link, .ewRptGrpHeader2 a:active, .ewRptGrpHeader2 a:visited {
+
+//	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField2 {
+	background-color: white;
+}
+.ewRptGrpSummary2 {
+	color: black;
+	background-color: white;
+}
+
+/* group 3 */
+.ewTable .ewRptGrpHeader3 {
+	color: black;
+	background-color: #FFF5EE;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader3 a:link, .ewRptGrpHeader3 a:active, .ewRptGrpHeader3 a:visited {
+
+//	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField3 {
+	background-color: #FFF5EE;
+}
+.ewRptGrpSummary3 {
+	color: black;
+	background-color: #FFE4E1;
+}
+
+/* group 4 */
+.ewTable .ewRptGrpHeader4 {
+	color: black;
+	background-color: white;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader4 a:link, .ewRptGrpHeader4 a:active, .ewRptGrpHeader4 a:visited {
+
+//	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField4 {
+	background-color: white;
+}
+.ewRptGrpSummary4 {
+	color: black;
+	background-color: white;
+}
+
+/* group 5 */
+.ewTable .ewRptGrpHeader5 {
+	color: black;
+	background-color: #FFF5EE;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader5 a:link, .ewRptGrpHeader5 a:active, .ewRptGrpHeader5 a:visited {
+
+//	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField5 {
+	background-color: #FFF5EE;
+}
+.ewRptGrpSummary5 {
+	color: black;
+	background-color: #FFE4E1;
+}
+
+/* group 6 */
+.ewTable .ewRptGrpHeader6 {
+	color: black;
+	background-color: white;
+	border-bottom: 1px solid; /* header border width */
+	border-right: 1px solid; /* header border width */
+	font-weight: bold;
+}
+.ewRptGrpHeader6 a:link, .ewRptGrpHeader6 a:active, .ewRptGrpHeader6 a:visited {
+
+//	color: inherit;
+	text-decoration: none;
+}
+.ewRptGrpField6 {
+	background-color: white;
+}
+.ewRptGrpSummary6 {
+	color: black;
+	background-color: white;
+}
+.ewRptGrpAggregate {
+	font-weight: bold;
+}
+.ewRptPageSummary {
+	color: black; /* page summary text color */
+	background-color: #FFF0F5; /* page total background color */
+}
+.ewRptGrandSummary {
+	color: black; /* grand summary text color */
+	background-color: white; /* grand summary background color */
+}
+
+/* for crosstab report only */
+.ewRptColHeaderRow td {
+	border-bottom: 1px solid; /* header border width */
+}
+.ewRptColSummary {
+	background-color: #B1174D; /* column summary */
+	color: #FFFFFF;
+}
+.ewRptColHeader {
+	background-color: #B1174D; /* column heading background color */
+	color: #FFFFFF; /* column heading text color */
+}
+
+/* export page break */
+.ewPageBreak {
+	page-break-before: always;
+}

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/9/9" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/9/20" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -773,6 +773,138 @@
     </menu>
     <menu id="71">
       <phrase id="menutext" value="Reporte Neontal" />
+    </menu>
+    <menu id="10001">
+      <phrase id="menutext" value="actividad" />
+    </menu>
+    <menu id="10002">
+      <phrase id="menutext" value="apoderado" />
+    </menu>
+    <menu id="10003">
+      <phrase id="menutext" value="atencion" />
+    </menu>
+    <menu id="10004">
+      <phrase id="menutext" value="atencionescolaraudiologia" />
+    </menu>
+    <menu id="10005">
+      <phrase id="menutext" value="atencionneonatoaudiologia" />
+    </menu>
+    <menu id="10006">
+      <phrase id="menutext" value="atencionotrosaudiologia" />
+    </menu>
+    <menu id="10007">
+      <phrase id="menutext" value="audiologia" />
+    </menu>
+    <menu id="10008">
+      <phrase id="menutext" value="categoria" />
+    </menu>
+    <menu id="10009">
+      <phrase id="menutext" value="centros" />
+    </menu>
+    <menu id="10010">
+      <phrase id="menutext" value="ciudad" />
+    </menu>
+    <menu id="10011">
+      <phrase id="menutext" value="departamento" />
+    </menu>
+    <menu id="10012">
+      <phrase id="menutext" value="derivacion" />
+    </menu>
+    <menu id="10013">
+      <phrase id="menutext" value="diagnosticoaudiologia" />
+    </menu>
+    <menu id="10014">
+      <phrase id="menutext" value="discapacidad" />
+    </menu>
+    <menu id="10015">
+      <phrase id="menutext" value="docente" />
+    </menu>
+    <menu id="10016">
+      <phrase id="menutext" value="escolar" />
+    </menu>
+    <menu id="10017">
+      <phrase id="menutext" value="especialista" />
+    </menu>
+    <menu id="10018">
+      <phrase id="menutext" value="estudiante" />
+    </menu>
+    <menu id="10019">
+      <phrase id="menutext" value="institucionesdesalud" />
+    </menu>
+    <menu id="10020">
+      <phrase id="menutext" value="medio" />
+    </menu>
+    <menu id="10021">
+      <phrase id="menutext" value="municipio" />
+    </menu>
+    <menu id="10022">
+      <phrase id="menutext" value="neonatal" />
+    </menu>
+    <menu id="10023">
+      <phrase id="menutext" value="otrasorganizaciones" />
+    </menu>
+    <menu id="10024">
+      <phrase id="menutext" value="otros" />
+    </menu>
+    <menu id="10025">
+      <phrase id="menutext" value="participante" />
+    </menu>
+    <menu id="10026">
+      <phrase id="menutext" value="persona" />
+    </menu>
+    <menu id="10027">
+      <phrase id="menutext" value="provincia" />
+    </menu>
+    <menu id="10028">
+      <phrase id="menutext" value="pruebasaudiologia" />
+    </menu>
+    <menu id="10029">
+      <phrase id="menutext" value="referencia" />
+    </menu>
+    <menu id="10030">
+      <phrase id="menutext" value="sector" />
+    </menu>
+    <menu id="10031">
+      <phrase id="menutext" value="tapon" />
+    </menu>
+    <menu id="10032">
+      <phrase id="menutext" value="tipoactividad" />
+    </menu>
+    <menu id="10033">
+      <phrase id="menutext" value="tipocentro" />
+    </menu>
+    <menu id="10034">
+      <phrase id="menutext" value="tipodiagnosticoaudiologia" />
+    </menu>
+    <menu id="10035">
+      <phrase id="menutext" value="tipodiscapacidad" />
+    </menu>
+    <menu id="10036">
+      <phrase id="menutext" value="tipoespecialidad" />
+    </menu>
+    <menu id="10037">
+      <phrase id="menutext" value="tipoprueba" />
+    </menu>
+    <menu id="10038">
+      <phrase id="menutext" value="tipopruebasaudiologia" />
+    </menu>
+    <menu id="10039">
+      <phrase id="menutext" value="tipotratamientoaudiologia" />
+    </menu>
+    <menu id="10040">
+      <phrase id="menutext" value="tratamiento" />
+    </menu>
+    <menu id="10041">
+      <phrase id="menutext" value="unidadeducativa" />
+    </menu>
+    <menu id="10042">
+      <phrase id="menutext" value="userlevelpermissions" />
+    </menu>
+    <menu id="10043">
+      <phrase id="menutext" value="userlevels" />
+    </menu>
+    <menu id="10044">
+      <phrase id="menutext" value="usuario" />
     </menu>
     <table id="apoderado">
       <phrase id="tblcaption" value="Apoderado" />

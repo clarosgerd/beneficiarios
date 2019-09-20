@@ -44,6 +44,9 @@ $RootMenu->AddMenuItem(55, "mi_audiologia", $Language->MenuPhrase("55", "MenuTex
 $RootMenu->AddMenuItem(121, "mci_Reportes", $Language->MenuPhrase("121", "MenuText"), "", -1, "", TRUE, FALSE, TRUE, "");
 $RootMenu->AddMenuItem(122, "mi_Report_Neonatal", $Language->MenuPhrase("122", "MenuText"), "Report_Neonatallist.php", 121, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}Report Neonatal'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(71, "mi_Reporte_Neontal", $Language->MenuPhrase("71", "MenuText"), "Reporte_Neontalreport.php", 121, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}Reporte Neontal'), FALSE, FALSE, "fa fa-circle-o");
+$RootMenu->AddMenuItem(10015, "mri_docente", $Language->MenuPhrase("10015", "MenuText"), "docenterpt.php", -1, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}docente'), FALSE, FALSE, "");
+$RootMenu->AddMenuItem(10016, "mri_escolar", $Language->MenuPhrase("10016", "MenuText"), "escolarrpt.php", -1, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}escolar'), FALSE, FALSE, "");
+$RootMenu->AddMenuItem(10041, "mri_unidadeducativa", $Language->MenuPhrase("10041", "MenuText"), "unidadeducativarpt.php", -1, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}unidadeducativa'), FALSE, FALSE, "");
 echo $RootMenu->ToScript();
 ?>
 <div class="ewVertical" id="ewMenu"></div>

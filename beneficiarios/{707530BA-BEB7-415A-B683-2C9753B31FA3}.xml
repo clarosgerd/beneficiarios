@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuration date="2019/09/20" author="e.World Technology Ltd.">
+  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Documents\PHPReportMaker\Projects\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/09/20 15:15:27" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+    <table id="actividad" name="actividad" caption="actividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="apoderado" name="apoderado" caption="apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="atencion" name="atencion" caption="atencion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="atencionescolaraudiologia" name="atencionescolaraudiologia" caption="atencionescolaraudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="atencionneonatoaudiologia" name="atencionneonatoaudiologia" caption="atencionneonatoaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="atencionotrosaudiologia" name="atencionotrosaudiologia" caption="atencionotrosaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="audiologia" name="audiologia" caption="audiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="categoria" name="categoria" caption="categoria" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="centros" name="centros" caption="centros" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="ciudad" name="ciudad" caption="ciudad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="departamento" name="departamento" caption="departamento" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="derivacion" name="derivacion" caption="derivacion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="diagnosticoaudiologia" name="diagnosticoaudiologia" caption="diagnosticoaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="discapacidad" name="discapacidad" caption="discapacidad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="docente" name="docente" caption="docente" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="escolar" name="escolar" caption="escolar" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="especialista" name="especialista" caption="especialista" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="estudiante" name="estudiante" caption="estudiante" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="institucionesdesalud" name="institucionesdesalud" caption="institucionesdesalud" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="medio" name="medio" caption="medio" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="municipio" name="municipio" caption="municipio" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="neonatal" name="neonatal" caption="neonatal" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="otrasorganizaciones" name="otrasorganizaciones" caption="otrasorganizaciones" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="otros" name="otros" caption="otros" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="participante" name="participante" caption="participante" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="persona" name="persona" caption="persona" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="provincia" name="provincia" caption="provincia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="pruebasaudiologia" name="pruebasaudiologia" caption="pruebasaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="referencia" name="referencia" caption="referencia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="sector" name="sector" caption="sector" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tapon" name="tapon" caption="tapon" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipoactividad" name="tipoactividad" caption="tipoactividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipocentro" name="tipocentro" caption="tipocentro" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipodiagnosticoaudiologia" name="tipodiagnosticoaudiologia" caption="tipodiagnosticoaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipodiscapacidad" name="tipodiscapacidad" caption="tipodiscapacidad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipoespecialidad" name="tipoespecialidad" caption="tipoespecialidad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipoprueba" name="tipoprueba" caption="tipoprueba" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipopruebasaudiologia" name="tipopruebasaudiologia" caption="tipopruebasaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tipotratamientoaudiologia" name="tipotratamientoaudiologia" caption="tipotratamientoaudiologia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="tratamiento" name="tratamiento" caption="tratamiento" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="unidadeducativa" name="unidadeducativa" caption="unidadeducativa" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="userlevelpermissions" name="userlevelpermissions" caption="userlevelpermissions" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="userlevels" name="userlevels" caption="userlevels" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="usuario" name="usuario" caption="usuario" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+  </project>
+</configuration>
