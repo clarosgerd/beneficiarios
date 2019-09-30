@@ -41,10 +41,8 @@ $RootMenu->AddMenuItem(69, "mi_tipoespecialidad", $Language->MenuPhrase("69", "M
 $RootMenu->AddMenuItem(53, "mci_Servicios_de_Atencion", $Language->MenuPhrase("53", "MenuText"), "", -1, "", IsLoggedIn(), FALSE, TRUE, "");
 $RootMenu->AddMenuItem(54, "mi_ticket_php", $Language->MenuPhrase("54", "MenuText"), "ticket.php", 53, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ticket.php'), FALSE, TRUE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(55, "mi_audiologia", $Language->MenuPhrase("55", "MenuText"), "audiologialist.php", 53, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}audiologia'), FALSE, FALSE, "fa fa-circle-o");
-$RootMenu->AddMenuItem(121, "mci_Reportes", $Language->MenuPhrase("121", "MenuText"), "", -1, "", TRUE, FALSE, TRUE, "");
 $RootMenu->AddMenuItem(10047, "mci_Reportes", $Language->MenuPhrase("10047", "MenuText"), "", -1, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", IsLoggedIn(), FALSE, TRUE, "");
 $RootMenu->AddMenuItem(10045, "mri_viewestudiante", $Language->MenuPhrase("10045", "MenuText"), "viewestudianterpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiante'), FALSE, FALSE, "");
-$RootMenu->AddMenuItem(10046, "mri_ReportEstudiantes", $Language->MenuPhrase("10046", "MenuText"), "ReportEstudiantessmry.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}ReportEstudiantes'), FALSE, FALSE, "");
 echo $RootMenu->ToScript();
 ?>
 <div class="ewVertical" id="ewMenu"></div>

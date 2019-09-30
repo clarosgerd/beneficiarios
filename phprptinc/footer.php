@@ -1,11 +1,8 @@
 <?php if (@$gsExport == "") { ?>
-<!-- Create report URL dialog -->
-<div id="ewrReportUrlDialog" class="modal"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div>
-<div class="modal-body">
-<?php include_once "rurl11.php" ?>
-</div><div class="modal-footer"><button type="button" class="btn btn-primary ewButton"><?php echo $ReportLanguage->Phrase("Generate") ?></button><button class="btn btn-default ewButton ewCopyToClipboard" data-clipboard-target="#ewrUrl"><?php echo $ReportLanguage->Phrase("CopyToClipboard") ?></button><button type="button" class="btn btn-default ewButton" data-dismiss="modal" aria-hidden="true"><?php echo $ReportLanguage->Phrase("CloseBtn") ?></button></div></div></div></div>
 <!-- modal dialog -->
 <div id="ewrModalDialog" class="modal" role="dialog" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>
+<!-- modal lookup dialog -->
+<div id="ewrModalLookupDialog" class="modal" role="dialog" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>
 <!-- email dialog -->
 <div id="ewrEmailDialog" class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div>
 <div class="modal-body">

@@ -109,7 +109,7 @@ define("EWR_SESSION_TIMEOUT_COUNTDOWN", 60, TRUE); // Session timeout count down
 // General
 $EWR_ROOT_RELATIVE_PATH = "."; // Relative path of app root
 define("EWR_UNFORMAT_YEAR", 50, TRUE); // Unformat year
-define("EWR_RANDOM_KEY", 'PK9f8FfnrUxKqf8q', TRUE); // Random key for encryption
+define("EWR_RANDOM_KEY", 'hfq92t69dn28eIvA', TRUE); // Random key for encryption
 define("EWR_PROJECT_STYLESHEET_FILENAME", "phprptcss/beneficiarios.css", TRUE); // Project stylesheet file name
 define("EWR_CHART_WIDTH", 600, TRUE);
 define("EWR_CHART_HEIGHT", 500, TRUE);
@@ -262,9 +262,6 @@ define("EWR_USER_LEVEL_PRIV_TABLE_NAME_FIELD_2", "tablename", TRUE);
 define("EWR_USER_LEVEL_PRIV_TABLE_NAME_FIELD_SIZE", 255, TRUE);
 define("EWR_USER_LEVEL_PRIV_USER_LEVEL_ID_FIELD", "`userlevelid`", TRUE);
 define("EWR_USER_LEVEL_PRIV_PRIV_FIELD", "`permission`", TRUE);
-
-// Report encryption key
-define("EWR_REPORT_LOG_ENCRYPT_KEY", 'zcJje6s17uC9N5nJ', TRUE); // Key for encryption
 
 // Save report on server for file output
 define("EWR_REPORT_SAVE_OUTPUT_ON_SERVER", FALSE, TRUE); // Change to TRUE to save on server

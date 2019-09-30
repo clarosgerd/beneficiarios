@@ -9,24 +9,24 @@ $ReportEstudiantes = NULL;
 class crReportEstudiantes extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
 	var $ShowCompactSummaryFooter = TRUE;
-	var $departamentoname;
-	var $provname;
-	var $municipioname;
-	var $unidadaname;
-	var $apellidopaterno;
-	var $apellidomaterno;
-	var $nombres;
 	var $ci;
 	var $fechanacimiento;
 	var $sexo;
 	var $curso;
 	var $nrodiscapacidad;
-	var $nombredisca;
-	var $nombretipodisca;
-	var $observaciones;
 	var $codigorude;
 	var $codigorude_es;
 	var $nombreinstitucion;
+	var $departamento;
+	var $municipio;
+	var $provincia;
+	var $unidadeducativa;
+	var $nombre;
+	var $materno;
+	var $paterno;
+	var $edad;
+	var $discapacidad;
+	var $tipodiscapcidad;
 
 	//
 	// Table class constructor
@@ -42,87 +42,6 @@ class crReportEstudiantes extends crTableBase {
 		$this->ExportAll = FALSE;
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
-
-		// departamentoname
-		$this->departamentoname = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_departamentoname', 'departamentoname', '`departamentoname`', 200, EWR_DATATYPE_STRING, -1);
-		$this->departamentoname->Sortable = TRUE; // Allow sort
-		$this->departamentoname->GroupingFieldId = 2;
-		$this->departamentoname->ShowGroupHeaderAsRow = $this->ShowGroupHeaderAsRow;
-		$this->departamentoname->ShowCompactSummaryFooter = $this->ShowCompactSummaryFooter;
-		$this->departamentoname->DateFilter = "";
-		$this->departamentoname->SqlSelect = "SELECT DISTINCT `departamentoname`, SUBSTRING(`departamentoname`,1,2) AS `ew_report_groupvalue` FROM " . $this->getSqlFrom();
-		$this->departamentoname->SqlOrderBy = "SUBSTRING(`departamentoname`,1,2)";
-		$this->departamentoname->FldGroupByType = "f";
-		$this->departamentoname->FldGroupInt = "2";
-		$this->departamentoname->FldGroupSql = "SUBSTRING(%s,1,2)";
-		$this->departamentoname->DrillDownUrl = "viewestudianterpt.php?d=1&t=viewestudiante&s=ReportEstudiantes&nombreinstitucion=f0";
-		$this->fields['departamentoname'] = &$this->departamentoname;
-
-		// provname
-		$this->provname = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_provname', 'provname', '`provname`', 200, EWR_DATATYPE_STRING, -1);
-		$this->provname->Sortable = TRUE; // Allow sort
-		$this->provname->GroupingFieldId = 4;
-		$this->provname->ShowGroupHeaderAsRow = $this->ShowGroupHeaderAsRow;
-		$this->provname->ShowCompactSummaryFooter = $this->ShowCompactSummaryFooter;
-		$this->provname->DateFilter = "";
-		$this->provname->SqlSelect = "";
-		$this->provname->SqlOrderBy = "";
-		$this->provname->FldGroupByType = "";
-		$this->provname->FldGroupInt = "0";
-		$this->provname->FldGroupSql = "";
-		$this->fields['provname'] = &$this->provname;
-
-		// municipioname
-		$this->municipioname = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_municipioname', 'municipioname', '`municipioname`', 200, EWR_DATATYPE_STRING, -1);
-		$this->municipioname->Sortable = TRUE; // Allow sort
-		$this->municipioname->GroupingFieldId = 3;
-		$this->municipioname->ShowGroupHeaderAsRow = $this->ShowGroupHeaderAsRow;
-		$this->municipioname->ShowCompactSummaryFooter = $this->ShowCompactSummaryFooter;
-		$this->municipioname->DateFilter = "";
-		$this->municipioname->SqlSelect = "";
-		$this->municipioname->SqlOrderBy = "";
-		$this->municipioname->FldGroupByType = "";
-		$this->municipioname->FldGroupInt = "0";
-		$this->municipioname->FldGroupSql = "";
-		$this->fields['municipioname'] = &$this->municipioname;
-
-		// unidadaname
-		$this->unidadaname = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_unidadaname', 'unidadaname', '`unidadaname`', 200, EWR_DATATYPE_STRING, -1);
-		$this->unidadaname->Sortable = TRUE; // Allow sort
-		$this->unidadaname->GroupingFieldId = 5;
-		$this->unidadaname->ShowGroupHeaderAsRow = $this->ShowGroupHeaderAsRow;
-		$this->unidadaname->ShowCompactSummaryFooter = $this->ShowCompactSummaryFooter;
-		$this->unidadaname->DateFilter = "";
-		$this->unidadaname->SqlSelect = "";
-		$this->unidadaname->SqlOrderBy = "";
-		$this->unidadaname->FldGroupByType = "";
-		$this->unidadaname->FldGroupInt = "0";
-		$this->unidadaname->FldGroupSql = "";
-		$this->fields['unidadaname'] = &$this->unidadaname;
-
-		// apellidopaterno
-		$this->apellidopaterno = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_apellidopaterno', 'apellidopaterno', '`apellidopaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->apellidopaterno->Sortable = TRUE; // Allow sort
-		$this->apellidopaterno->DateFilter = "";
-		$this->apellidopaterno->SqlSelect = "";
-		$this->apellidopaterno->SqlOrderBy = "";
-		$this->fields['apellidopaterno'] = &$this->apellidopaterno;
-
-		// apellidomaterno
-		$this->apellidomaterno = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_apellidomaterno', 'apellidomaterno', '`apellidomaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->apellidomaterno->Sortable = TRUE; // Allow sort
-		$this->apellidomaterno->DateFilter = "";
-		$this->apellidomaterno->SqlSelect = "";
-		$this->apellidomaterno->SqlOrderBy = "";
-		$this->fields['apellidomaterno'] = &$this->apellidomaterno;
-
-		// nombres
-		$this->nombres = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_nombres', 'nombres', '`nombres`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombres->Sortable = TRUE; // Allow sort
-		$this->nombres->DateFilter = "";
-		$this->nombres->SqlSelect = "";
-		$this->nombres->SqlOrderBy = "";
-		$this->fields['nombres'] = &$this->nombres;
 
 		// ci
 		$this->ci = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_ci', 'ci', '`ci`', 200, EWR_DATATYPE_STRING, -1);
@@ -165,30 +84,6 @@ class crReportEstudiantes extends crTableBase {
 		$this->nrodiscapacidad->SqlOrderBy = "";
 		$this->fields['nrodiscapacidad'] = &$this->nrodiscapacidad;
 
-		// nombredisca
-		$this->nombredisca = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_nombredisca', 'nombredisca', '`nombredisca`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombredisca->Sortable = TRUE; // Allow sort
-		$this->nombredisca->DateFilter = "";
-		$this->nombredisca->SqlSelect = "";
-		$this->nombredisca->SqlOrderBy = "";
-		$this->fields['nombredisca'] = &$this->nombredisca;
-
-		// nombretipodisca
-		$this->nombretipodisca = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_nombretipodisca', 'nombretipodisca', '`nombretipodisca`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombretipodisca->Sortable = TRUE; // Allow sort
-		$this->nombretipodisca->DateFilter = "";
-		$this->nombretipodisca->SqlSelect = "";
-		$this->nombretipodisca->SqlOrderBy = "";
-		$this->fields['nombretipodisca'] = &$this->nombretipodisca;
-
-		// observaciones
-		$this->observaciones = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_observaciones', 'observaciones', '`observaciones`', 200, EWR_DATATYPE_STRING, -1);
-		$this->observaciones->Sortable = TRUE; // Allow sort
-		$this->observaciones->DateFilter = "";
-		$this->observaciones->SqlSelect = "";
-		$this->observaciones->SqlOrderBy = "";
-		$this->fields['observaciones'] = &$this->observaciones;
-
 		// codigorude
 		$this->codigorude = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_codigorude', 'codigorude', '`codigorude`', 200, EWR_DATATYPE_STRING, -1);
 		$this->codigorude->Sortable = TRUE; // Allow sort
@@ -218,6 +113,87 @@ class crReportEstudiantes extends crTableBase {
 		$this->nombreinstitucion->FldGroupInt = "0";
 		$this->nombreinstitucion->FldGroupSql = "";
 		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
+
+		// departamento
+		$this->departamento = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_departamento', 'departamento', '`departamento`', 200, EWR_DATATYPE_STRING, -1);
+		$this->departamento->Sortable = TRUE; // Allow sort
+		$this->departamento->DateFilter = "";
+		$this->departamento->SqlSelect = "";
+		$this->departamento->SqlOrderBy = "";
+		$this->fields['departamento'] = &$this->departamento;
+
+		// municipio
+		$this->municipio = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_municipio', 'municipio', '`municipio`', 200, EWR_DATATYPE_STRING, -1);
+		$this->municipio->Sortable = TRUE; // Allow sort
+		$this->municipio->DateFilter = "";
+		$this->municipio->SqlSelect = "";
+		$this->municipio->SqlOrderBy = "";
+		$this->fields['municipio'] = &$this->municipio;
+
+		// provincia
+		$this->provincia = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_provincia', 'provincia', '`provincia`', 200, EWR_DATATYPE_STRING, -1);
+		$this->provincia->Sortable = TRUE; // Allow sort
+		$this->provincia->DateFilter = "";
+		$this->provincia->SqlSelect = "";
+		$this->provincia->SqlOrderBy = "";
+		$this->fields['provincia'] = &$this->provincia;
+
+		// unidadeducativa
+		$this->unidadeducativa = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_unidadeducativa', 'unidadeducativa', '`unidadeducativa`', 200, EWR_DATATYPE_STRING, -1);
+		$this->unidadeducativa->Sortable = TRUE; // Allow sort
+		$this->unidadeducativa->DateFilter = "";
+		$this->unidadeducativa->SqlSelect = "";
+		$this->unidadeducativa->SqlOrderBy = "";
+		$this->fields['unidadeducativa'] = &$this->unidadeducativa;
+
+		// nombre
+		$this->nombre = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_nombre', 'nombre', '`nombre`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nombre->Sortable = TRUE; // Allow sort
+		$this->nombre->DateFilter = "";
+		$this->nombre->SqlSelect = "";
+		$this->nombre->SqlOrderBy = "";
+		$this->fields['nombre'] = &$this->nombre;
+
+		// materno
+		$this->materno = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_materno', 'materno', '`materno`', 200, EWR_DATATYPE_STRING, -1);
+		$this->materno->Sortable = TRUE; // Allow sort
+		$this->materno->DateFilter = "";
+		$this->materno->SqlSelect = "";
+		$this->materno->SqlOrderBy = "";
+		$this->fields['materno'] = &$this->materno;
+
+		// paterno
+		$this->paterno = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_paterno', 'paterno', '`paterno`', 200, EWR_DATATYPE_STRING, -1);
+		$this->paterno->Sortable = TRUE; // Allow sort
+		$this->paterno->DateFilter = "";
+		$this->paterno->SqlSelect = "";
+		$this->paterno->SqlOrderBy = "";
+		$this->fields['paterno'] = &$this->paterno;
+
+		// edad
+		$this->edad = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_edad', 'edad', '`edad`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->edad->Sortable = TRUE; // Allow sort
+		$this->edad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->edad->DateFilter = "";
+		$this->edad->SqlSelect = "";
+		$this->edad->SqlOrderBy = "";
+		$this->fields['edad'] = &$this->edad;
+
+		// discapacidad
+		$this->discapacidad = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_discapacidad', 'discapacidad', '`discapacidad`', 200, EWR_DATATYPE_STRING, -1);
+		$this->discapacidad->Sortable = TRUE; // Allow sort
+		$this->discapacidad->DateFilter = "";
+		$this->discapacidad->SqlSelect = "";
+		$this->discapacidad->SqlOrderBy = "";
+		$this->fields['discapacidad'] = &$this->discapacidad;
+
+		// tipodiscapcidad
+		$this->tipodiscapcidad = new crField('ReportEstudiantes', 'ReportEstudiantes', 'x_tipodiscapcidad', 'tipodiscapcidad', '`tipodiscapcidad`', 200, EWR_DATATYPE_STRING, -1);
+		$this->tipodiscapcidad->Sortable = TRUE; // Allow sort
+		$this->tipodiscapcidad->DateFilter = "";
+		$this->tipodiscapcidad->SqlSelect = "";
+		$this->tipodiscapcidad->SqlOrderBy = "";
+		$this->fields['tipodiscapcidad'] = &$this->tipodiscapcidad;
 	}
 
 	// Set Field Visibility
@@ -353,7 +329,7 @@ class crReportEstudiantes extends crTableBase {
 	var $_SqlOrderBy = "";
 
 	function getSqlOrderBy() {
-		return ($this->_SqlOrderBy <> "") ? $this->_SqlOrderBy : "`nombreinstitucion` ASC, SUBSTRING(`departamentoname`,1,2) ASC, `municipioname` ASC, `provname` ASC, `unidadaname` ASC";
+		return ($this->_SqlOrderBy <> "") ? $this->_SqlOrderBy : "`nombreinstitucion` ASC";
 	}
 
 	function SqlOrderBy() { // For backward compatibility

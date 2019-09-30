@@ -645,6 +645,10 @@ class crdocente_rpt extends crdocente {
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
 
+		// Requires search criteria
+		if (($this->Filter == $this->UserIDFilter || $grFormError != "") && !$this->DrillDown)
+			$this->Filter = "0=101";
+
 		// Search options
 		$this->SetupSearchOptions();
 

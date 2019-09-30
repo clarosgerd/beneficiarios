@@ -574,19 +574,23 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		global $grDashboardReport;
 
 		// Set field visibility for detail fields
-		$this->apellidopaterno->SetVisibility();
-		$this->apellidomaterno->SetVisibility();
-		$this->nombres->SetVisibility();
 		$this->ci->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
 		$this->sexo->SetVisibility();
 		$this->curso->SetVisibility();
 		$this->nrodiscapacidad->SetVisibility();
-		$this->nombredisca->SetVisibility();
-		$this->nombretipodisca->SetVisibility();
-		$this->observaciones->SetVisibility();
 		$this->codigorude->SetVisibility();
 		$this->codigorude_es->SetVisibility();
+		$this->departamento->SetVisibility();
+		$this->municipio->SetVisibility();
+		$this->provincia->SetVisibility();
+		$this->unidadeducativa->SetVisibility();
+		$this->nombre->SetVisibility();
+		$this->materno->SetVisibility();
+		$this->paterno->SetVisibility();
+		$this->edad->SetVisibility();
+		$this->discapacidad->SetVisibility();
+		$this->tipodiscapcidad->SetVisibility();
 
 		// Handle drill down
 		$sDrillDownFilter = $this->GetDrillDownFilter();
@@ -598,8 +602,8 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 14;
-		$nGrps = 6;
+		$nDtls = 18;
+		$nGrps = 2;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
 		$this->Smry = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -611,7 +615,7 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -648,10 +652,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
-
-		// Requires search criteria
-		if (($this->Filter == $this->UserIDFilter || $grFormError != "") && !$this->DrillDown)
-			$this->Filter = "0=101";
 
 		// Search options
 		$this->SetupSearchOptions();
@@ -714,43 +714,11 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		$cnt = 0;
 		foreach ($this->DetailRows as $row) {
 			$wrknombreinstitucion = $row["nombreinstitucion"];
-			$wrkdepartamentoname = $row["departamentoname"];
-			$wrkmunicipioname = $row["municipioname"];
-			$wrkprovname = $row["provname"];
-			$wrkunidadaname = $row["unidadaname"];
 			if ($lvl >= 1) {
 				$val = $curValue ? $this->nombreinstitucion->CurrentValue : $this->nombreinstitucion->OldValue;
 				$grpval = $curValue ? $this->nombreinstitucion->GroupValue() : $this->nombreinstitucion->GroupOldValue();
 				if (is_null($val) && !is_null($wrknombreinstitucion) || !is_null($val) && is_null($wrknombreinstitucion) ||
 					$grpval <> $this->nombreinstitucion->getGroupValueBase($wrknombreinstitucion))
-				continue;
-			}
-			if ($lvl >= 2) {
-				$val = $curValue ? $this->departamentoname->CurrentValue : $this->departamentoname->OldValue;
-				$grpval = $curValue ? $this->departamentoname->GroupValue() : $this->departamentoname->GroupOldValue();
-				if (is_null($val) && !is_null($wrkdepartamentoname) || !is_null($val) && is_null($wrkdepartamentoname) ||
-					$grpval <> $this->departamentoname->getGroupValueBase($wrkdepartamentoname))
-				continue;
-			}
-			if ($lvl >= 3) {
-				$val = $curValue ? $this->municipioname->CurrentValue : $this->municipioname->OldValue;
-				$grpval = $curValue ? $this->municipioname->GroupValue() : $this->municipioname->GroupOldValue();
-				if (is_null($val) && !is_null($wrkmunicipioname) || !is_null($val) && is_null($wrkmunicipioname) ||
-					$grpval <> $this->municipioname->getGroupValueBase($wrkmunicipioname))
-				continue;
-			}
-			if ($lvl >= 4) {
-				$val = $curValue ? $this->provname->CurrentValue : $this->provname->OldValue;
-				$grpval = $curValue ? $this->provname->GroupValue() : $this->provname->GroupOldValue();
-				if (is_null($val) && !is_null($wrkprovname) || !is_null($val) && is_null($wrkprovname) ||
-					$grpval <> $this->provname->getGroupValueBase($wrkprovname))
-				continue;
-			}
-			if ($lvl >= 5) {
-				$val = $curValue ? $this->unidadaname->CurrentValue : $this->unidadaname->OldValue;
-				$grpval = $curValue ? $this->unidadaname->GroupValue() : $this->unidadaname->GroupOldValue();
-				if (is_null($val) && !is_null($wrkunidadaname) || !is_null($val) && is_null($wrkunidadaname) ||
-					$grpval <> $this->unidadaname->getGroupValueBase($wrkunidadaname))
 				continue;
 			}
 			$cnt++;
@@ -765,22 +733,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 				return (is_null($this->nombreinstitucion->CurrentValue) && !is_null($this->nombreinstitucion->OldValue)) ||
 					(!is_null($this->nombreinstitucion->CurrentValue) && is_null($this->nombreinstitucion->OldValue)) ||
 					($this->nombreinstitucion->GroupValue() <> $this->nombreinstitucion->GroupOldValue());
-			case 2:
-				return (is_null($this->departamentoname->CurrentValue) && !is_null($this->departamentoname->OldValue)) ||
-					(!is_null($this->departamentoname->CurrentValue) && is_null($this->departamentoname->OldValue)) ||
-					($this->departamentoname->GroupValue() <> $this->departamentoname->GroupOldValue()) || $this->ChkLvlBreak(1); // Recurse upper level
-			case 3:
-				return (is_null($this->municipioname->CurrentValue) && !is_null($this->municipioname->OldValue)) ||
-					(!is_null($this->municipioname->CurrentValue) && is_null($this->municipioname->OldValue)) ||
-					($this->municipioname->GroupValue() <> $this->municipioname->GroupOldValue()) || $this->ChkLvlBreak(2); // Recurse upper level
-			case 4:
-				return (is_null($this->provname->CurrentValue) && !is_null($this->provname->OldValue)) ||
-					(!is_null($this->provname->CurrentValue) && is_null($this->provname->OldValue)) ||
-					($this->provname->GroupValue() <> $this->provname->GroupOldValue()) || $this->ChkLvlBreak(3); // Recurse upper level
-			case 5:
-				return (is_null($this->unidadaname->CurrentValue) && !is_null($this->unidadaname->OldValue)) ||
-					(!is_null($this->unidadaname->CurrentValue) && is_null($this->unidadaname->OldValue)) ||
-					($this->unidadaname->GroupValue() <> $this->unidadaname->GroupOldValue()) || $this->ChkLvlBreak(4); // Recurse upper level
 		}
 	}
 
@@ -931,44 +883,34 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$rs->MoveFirst(); // Move first
 			if ($this->GrpCount == 1) {
 				$this->FirstRowData = array();
-				$this->FirstRowData['departamentoname'] = ewr_Conv($rs->fields('departamentoname'), 200);
-				$this->FirstRowData['provname'] = ewr_Conv($rs->fields('provname'), 200);
-				$this->FirstRowData['municipioname'] = ewr_Conv($rs->fields('municipioname'), 200);
-				$this->FirstRowData['unidadaname'] = ewr_Conv($rs->fields('unidadaname'), 200);
-				$this->FirstRowData['apellidopaterno'] = ewr_Conv($rs->fields('apellidopaterno'), 200);
-				$this->FirstRowData['apellidomaterno'] = ewr_Conv($rs->fields('apellidomaterno'), 200);
-				$this->FirstRowData['nombres'] = ewr_Conv($rs->fields('nombres'), 200);
 				$this->FirstRowData['ci'] = ewr_Conv($rs->fields('ci'), 200);
 				$this->FirstRowData['fechanacimiento'] = ewr_Conv($rs->fields('fechanacimiento'), 133);
 				$this->FirstRowData['sexo'] = ewr_Conv($rs->fields('sexo'), 200);
 				$this->FirstRowData['curso'] = ewr_Conv($rs->fields('curso'), 200);
 				$this->FirstRowData['nrodiscapacidad'] = ewr_Conv($rs->fields('nrodiscapacidad'), 200);
-				$this->FirstRowData['nombredisca'] = ewr_Conv($rs->fields('nombredisca'), 200);
-				$this->FirstRowData['nombretipodisca'] = ewr_Conv($rs->fields('nombretipodisca'), 200);
-				$this->FirstRowData['observaciones'] = ewr_Conv($rs->fields('observaciones'), 200);
 				$this->FirstRowData['codigorude'] = ewr_Conv($rs->fields('codigorude'), 200);
 				$this->FirstRowData['codigorude_es'] = ewr_Conv($rs->fields('codigorude_es'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
+				$this->FirstRowData['departamento'] = ewr_Conv($rs->fields('departamento'), 200);
+				$this->FirstRowData['municipio'] = ewr_Conv($rs->fields('municipio'), 200);
+				$this->FirstRowData['provincia'] = ewr_Conv($rs->fields('provincia'), 200);
+				$this->FirstRowData['unidadeducativa'] = ewr_Conv($rs->fields('unidadeducativa'), 200);
+				$this->FirstRowData['nombre'] = ewr_Conv($rs->fields('nombre'), 200);
+				$this->FirstRowData['materno'] = ewr_Conv($rs->fields('materno'), 200);
+				$this->FirstRowData['paterno'] = ewr_Conv($rs->fields('paterno'), 200);
+				$this->FirstRowData['edad'] = ewr_Conv($rs->fields('edad'), 20);
+				$this->FirstRowData['discapacidad'] = ewr_Conv($rs->fields('discapacidad'), 200);
+				$this->FirstRowData['tipodiscapcidad'] = ewr_Conv($rs->fields('tipodiscapcidad'), 200);
 			}
 		} else { // Get next row
 			$rs->MoveNext();
 		}
 		if (!$rs->EOF) {
-			$this->departamentoname->setDbValue($rs->fields('departamentoname'));
-			$this->provname->setDbValue($rs->fields('provname'));
-			$this->municipioname->setDbValue($rs->fields('municipioname'));
-			$this->unidadaname->setDbValue($rs->fields('unidadaname'));
-			$this->apellidopaterno->setDbValue($rs->fields('apellidopaterno'));
-			$this->apellidomaterno->setDbValue($rs->fields('apellidomaterno'));
-			$this->nombres->setDbValue($rs->fields('nombres'));
 			$this->ci->setDbValue($rs->fields('ci'));
 			$this->fechanacimiento->setDbValue($rs->fields('fechanacimiento'));
 			$this->sexo->setDbValue($rs->fields('sexo'));
 			$this->curso->setDbValue($rs->fields('curso'));
 			$this->nrodiscapacidad->setDbValue($rs->fields('nrodiscapacidad'));
-			$this->nombredisca->setDbValue($rs->fields('nombredisca'));
-			$this->nombretipodisca->setDbValue($rs->fields('nombretipodisca'));
-			$this->observaciones->setDbValue($rs->fields('observaciones'));
 			$this->codigorude->setDbValue($rs->fields('codigorude'));
 			$this->codigorude_es->setDbValue($rs->fields('codigorude_es'));
 			if ($opt <> 1) {
@@ -977,38 +919,52 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 				else
 					$this->nombreinstitucion->setDbValue(ewr_GroupValue($this->nombreinstitucion, $rs->fields('nombreinstitucion')));
 			}
-			$this->Val[1] = $this->apellidopaterno->CurrentValue;
-			$this->Val[2] = $this->apellidomaterno->CurrentValue;
-			$this->Val[3] = $this->nombres->CurrentValue;
-			$this->Val[4] = $this->ci->CurrentValue;
-			$this->Val[5] = $this->fechanacimiento->CurrentValue;
-			$this->Val[6] = $this->sexo->CurrentValue;
-			$this->Val[7] = $this->curso->CurrentValue;
-			$this->Val[8] = $this->nrodiscapacidad->CurrentValue;
-			$this->Val[9] = $this->nombredisca->CurrentValue;
-			$this->Val[10] = $this->nombretipodisca->CurrentValue;
-			$this->Val[11] = $this->observaciones->CurrentValue;
-			$this->Val[12] = $this->codigorude->CurrentValue;
-			$this->Val[13] = $this->codigorude_es->CurrentValue;
+			$this->departamento->setDbValue($rs->fields('departamento'));
+			$this->municipio->setDbValue($rs->fields('municipio'));
+			$this->provincia->setDbValue($rs->fields('provincia'));
+			$this->unidadeducativa->setDbValue($rs->fields('unidadeducativa'));
+			$this->nombre->setDbValue($rs->fields('nombre'));
+			$this->materno->setDbValue($rs->fields('materno'));
+			$this->paterno->setDbValue($rs->fields('paterno'));
+			$this->edad->setDbValue($rs->fields('edad'));
+			$this->discapacidad->setDbValue($rs->fields('discapacidad'));
+			$this->tipodiscapcidad->setDbValue($rs->fields('tipodiscapcidad'));
+			$this->Val[1] = $this->ci->CurrentValue;
+			$this->Val[2] = $this->fechanacimiento->CurrentValue;
+			$this->Val[3] = $this->sexo->CurrentValue;
+			$this->Val[4] = $this->curso->CurrentValue;
+			$this->Val[5] = $this->nrodiscapacidad->CurrentValue;
+			$this->Val[6] = $this->codigorude->CurrentValue;
+			$this->Val[7] = $this->codigorude_es->CurrentValue;
+			$this->Val[8] = $this->departamento->CurrentValue;
+			$this->Val[9] = $this->municipio->CurrentValue;
+			$this->Val[10] = $this->provincia->CurrentValue;
+			$this->Val[11] = $this->unidadeducativa->CurrentValue;
+			$this->Val[12] = $this->nombre->CurrentValue;
+			$this->Val[13] = $this->materno->CurrentValue;
+			$this->Val[14] = $this->paterno->CurrentValue;
+			$this->Val[15] = $this->edad->CurrentValue;
+			$this->Val[16] = $this->discapacidad->CurrentValue;
+			$this->Val[17] = $this->tipodiscapcidad->CurrentValue;
 		} else {
-			$this->departamentoname->setDbValue("");
-			$this->provname->setDbValue("");
-			$this->municipioname->setDbValue("");
-			$this->unidadaname->setDbValue("");
-			$this->apellidopaterno->setDbValue("");
-			$this->apellidomaterno->setDbValue("");
-			$this->nombres->setDbValue("");
 			$this->ci->setDbValue("");
 			$this->fechanacimiento->setDbValue("");
 			$this->sexo->setDbValue("");
 			$this->curso->setDbValue("");
 			$this->nrodiscapacidad->setDbValue("");
-			$this->nombredisca->setDbValue("");
-			$this->nombretipodisca->setDbValue("");
-			$this->observaciones->setDbValue("");
 			$this->codigorude->setDbValue("");
 			$this->codigorude_es->setDbValue("");
 			$this->nombreinstitucion->setDbValue("");
+			$this->departamento->setDbValue("");
+			$this->municipio->setDbValue("");
+			$this->provincia->setDbValue("");
+			$this->unidadeducativa->setDbValue("");
+			$this->nombre->setDbValue("");
+			$this->materno->setDbValue("");
+			$this->paterno->setDbValue("");
+			$this->edad->setDbValue("");
+			$this->discapacidad->setDbValue("");
+			$this->tipodiscapcidad->setDbValue("");
 		}
 	}
 
@@ -1058,20 +1014,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 	// Load group db values if necessary
 	function LoadGroupDbValues() {
 		$conn = &$this->Connection();
-
-		// Set up departamentoname GroupDbValues
-		$sSql = ewr_BuildReportSql($this->departamentoname->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->departamentoname->SqlOrderBy, "", "");
-		$rswrk = $conn->Execute($sSql);
-		while ($rswrk && !$rswrk->EOF) {
-			$this->departamentoname->setDbValue($rswrk->fields[0]);
-			if (!is_null($this->departamentoname->CurrentValue) && $this->departamentoname->CurrentValue <> "") {
-				$grpval = $rswrk->fields('ew_report_groupvalue');
-				$this->departamentoname->GroupDbValues[$this->departamentoname->CurrentValue] = $grpval;
-			}
-			$rswrk->MoveNext();
-		}
-		if ($rswrk)
-			$rswrk->Close();
 	}
 
 	// Process Ajax popup
@@ -1210,10 +1152,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		if ($this->RowType == EWR_ROWTYPE_TOTAL && !($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER)) { // Summary row
 			ewr_PrependClass($this->RowAttrs["class"], ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : ""); // Set up row class
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP) $this->RowAttrs["data-group"] = $this->nombreinstitucion->GroupOldValue(); // Set up group attribute
-			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowGroupLevel >= 2) $this->RowAttrs["data-group-2"] = $this->departamentoname->GroupOldValue(); // Set up group attribute 2
-			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowGroupLevel >= 3) $this->RowAttrs["data-group-3"] = $this->municipioname->GroupOldValue(); // Set up group attribute 3
-			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowGroupLevel >= 4) $this->RowAttrs["data-group-4"] = $this->provname->GroupOldValue(); // Set up group attribute 4
-			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowGroupLevel >= 5) $this->RowAttrs["data-group-5"] = $this->unidadaname->GroupOldValue(); // Set up group attribute 5
 
 			// nombreinstitucion
 			$this->nombreinstitucion->GroupViewValue = $this->nombreinstitucion->GroupOldValue();
@@ -1223,68 +1161,8 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$this->nombreinstitucion->GroupSummaryValue = $this->nombreinstitucion->GroupViewValue;
 			$this->nombreinstitucion->GroupSummaryViewValue = ($this->nombreinstitucion->GroupSummaryOldValue <> $this->nombreinstitucion->GroupSummaryValue) ? $this->nombreinstitucion->GroupSummaryValue : "&nbsp;";
 
-			// departamentoname
-			$this->departamentoname->GroupViewValue = $this->departamentoname->GroupOldValue();
-			$this->departamentoname->CellAttrs["class"] = ($this->RowGroupLevel == 2) ? "ewRptGrpSummary2" : "ewRptGrpField2";
-			$this->departamentoname->GroupViewValue = ewr_DisplayGroupValue($this->departamentoname, $this->departamentoname->GroupViewValue);
-			$this->departamentoname->GroupSummaryOldValue = $this->departamentoname->GroupSummaryValue;
-			$this->departamentoname->GroupSummaryValue = $this->departamentoname->GroupViewValue;
-			$this->departamentoname->GroupSummaryViewValue = ($this->departamentoname->GroupSummaryOldValue <> $this->departamentoname->GroupSummaryValue) ? $this->departamentoname->GroupSummaryValue : "&nbsp;";
-
-			// municipioname
-			$this->municipioname->GroupViewValue = $this->municipioname->GroupOldValue();
-			$this->municipioname->CellAttrs["class"] = ($this->RowGroupLevel == 3) ? "ewRptGrpSummary3" : "ewRptGrpField3";
-			$this->municipioname->GroupViewValue = ewr_DisplayGroupValue($this->municipioname, $this->municipioname->GroupViewValue);
-			$this->municipioname->GroupSummaryOldValue = $this->municipioname->GroupSummaryValue;
-			$this->municipioname->GroupSummaryValue = $this->municipioname->GroupViewValue;
-			$this->municipioname->GroupSummaryViewValue = ($this->municipioname->GroupSummaryOldValue <> $this->municipioname->GroupSummaryValue) ? $this->municipioname->GroupSummaryValue : "&nbsp;";
-
-			// provname
-			$this->provname->GroupViewValue = $this->provname->GroupOldValue();
-			$this->provname->CellAttrs["class"] = ($this->RowGroupLevel == 4) ? "ewRptGrpSummary4" : "ewRptGrpField4";
-			$this->provname->GroupViewValue = ewr_DisplayGroupValue($this->provname, $this->provname->GroupViewValue);
-			$this->provname->GroupSummaryOldValue = $this->provname->GroupSummaryValue;
-			$this->provname->GroupSummaryValue = $this->provname->GroupViewValue;
-			$this->provname->GroupSummaryViewValue = ($this->provname->GroupSummaryOldValue <> $this->provname->GroupSummaryValue) ? $this->provname->GroupSummaryValue : "&nbsp;";
-
-			// unidadaname
-			$this->unidadaname->GroupViewValue = $this->unidadaname->GroupOldValue();
-			$this->unidadaname->CellAttrs["class"] = ($this->RowGroupLevel == 5) ? "ewRptGrpSummary5" : "ewRptGrpField5";
-			$this->unidadaname->GroupViewValue = ewr_DisplayGroupValue($this->unidadaname, $this->unidadaname->GroupViewValue);
-			$this->unidadaname->GroupSummaryOldValue = $this->unidadaname->GroupSummaryValue;
-			$this->unidadaname->GroupSummaryValue = $this->unidadaname->GroupViewValue;
-			$this->unidadaname->GroupSummaryViewValue = ($this->unidadaname->GroupSummaryOldValue <> $this->unidadaname->GroupSummaryValue) ? $this->unidadaname->GroupSummaryValue : "&nbsp;";
-
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
-
-			// departamentoname
-			$this->departamentoname->HrefValue = "";
-			if ($this->Export == "") {
-				$drillurl = $this->departamentoname->DrillDownUrl;
-				$drillurl = str_replace("=f0", "=" . ewr_Encrypt($this->GetDrillDownSQL($this->nombreinstitucion, "nombreinstitucion", $this->RowTotalType)), $drillurl);
-				$this->departamentoname->LinkAttrs["title"] = ewr_JsEncode($GLOBALS["ReportLanguage"]->Phrase("ClickToDrillDown"));
-				$this->departamentoname->LinkAttrs["class"] = "ewDrillLink";
-				$this->departamentoname->LinkAttrs["onclick"] = ewr_DrillDownJs($drillurl, 'ReportEstudiantes_departamentoname', $GLOBALS["ReportLanguage"]->TablePhrase('viewestudiante', 'TblCaption'), $this->UseDrillDownPanel);
-			}
-
-			// municipioname
-			$this->municipioname->HrefValue = "";
-
-			// provname
-			$this->provname->HrefValue = "";
-
-			// unidadaname
-			$this->unidadaname->HrefValue = "";
-
-			// apellidopaterno
-			$this->apellidopaterno->HrefValue = "";
-
-			// apellidomaterno
-			$this->apellidomaterno->HrefValue = "";
-
-			// nombres
-			$this->nombres->HrefValue = "";
 
 			// ci
 			$this->ci->HrefValue = "";
@@ -1301,33 +1179,46 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			// nrodiscapacidad
 			$this->nrodiscapacidad->HrefValue = "";
 
-			// nombredisca
-			$this->nombredisca->HrefValue = "";
-
-			// nombretipodisca
-			$this->nombretipodisca->HrefValue = "";
-
-			// observaciones
-			$this->observaciones->HrefValue = "";
-
 			// codigorude
 			$this->codigorude->HrefValue = "";
 
 			// codigorude_es
 			$this->codigorude_es->HrefValue = "";
+
+			// departamento
+			$this->departamento->HrefValue = "";
+
+			// municipio
+			$this->municipio->HrefValue = "";
+
+			// provincia
+			$this->provincia->HrefValue = "";
+
+			// unidadeducativa
+			$this->unidadeducativa->HrefValue = "";
+
+			// nombre
+			$this->nombre->HrefValue = "";
+
+			// materno
+			$this->materno->HrefValue = "";
+
+			// paterno
+			$this->paterno->HrefValue = "";
+
+			// edad
+			$this->edad->HrefValue = "";
+
+			// discapacidad
+			$this->discapacidad->HrefValue = "";
+
+			// tipodiscapcidad
+			$this->tipodiscapcidad->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			$this->RowAttrs["data-group"] = $this->nombreinstitucion->GroupValue(); // Set up group attribute
-			if ($this->RowGroupLevel >= 2) $this->RowAttrs["data-group-2"] = $this->departamentoname->GroupValue(); // Set up group attribute 2
-			if ($this->RowGroupLevel >= 3) $this->RowAttrs["data-group-3"] = $this->municipioname->GroupValue(); // Set up group attribute 3
-			if ($this->RowGroupLevel >= 4) $this->RowAttrs["data-group-4"] = $this->provname->GroupValue(); // Set up group attribute 4
-			if ($this->RowGroupLevel >= 5) $this->RowAttrs["data-group-5"] = $this->unidadaname->GroupValue(); // Set up group attribute 5
 			} else {
 			$this->RowAttrs["data-group"] = $this->nombreinstitucion->GroupValue(); // Set up group attribute
-			$this->RowAttrs["data-group-2"] = $this->departamentoname->GroupValue(); // Set up group attribute 2
-			$this->RowAttrs["data-group-3"] = $this->municipioname->GroupValue(); // Set up group attribute 3
-			$this->RowAttrs["data-group-4"] = $this->provname->GroupValue(); // Set up group attribute 4
-			$this->RowAttrs["data-group-5"] = $this->unidadaname->GroupValue(); // Set up group attribute 5
 			}
 
 			// nombreinstitucion
@@ -1336,46 +1227,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$this->nombreinstitucion->GroupViewValue = ewr_DisplayGroupValue($this->nombreinstitucion, $this->nombreinstitucion->GroupViewValue);
 			if ($this->nombreinstitucion->GroupValue() == $this->nombreinstitucion->GroupOldValue() && !$this->ChkLvlBreak(1))
 				$this->nombreinstitucion->GroupViewValue = "&nbsp;";
-
-			// departamentoname
-			$this->departamentoname->GroupViewValue = $this->departamentoname->GroupValue();
-			$this->departamentoname->CellAttrs["class"] = "ewRptGrpField2";
-			$this->departamentoname->GroupViewValue = ewr_DisplayGroupValue($this->departamentoname, $this->departamentoname->GroupViewValue);
-			if ($this->departamentoname->GroupValue() == $this->departamentoname->GroupOldValue() && !$this->ChkLvlBreak(2))
-				$this->departamentoname->GroupViewValue = "&nbsp;";
-
-			// municipioname
-			$this->municipioname->GroupViewValue = $this->municipioname->GroupValue();
-			$this->municipioname->CellAttrs["class"] = "ewRptGrpField3";
-			$this->municipioname->GroupViewValue = ewr_DisplayGroupValue($this->municipioname, $this->municipioname->GroupViewValue);
-			if ($this->municipioname->GroupValue() == $this->municipioname->GroupOldValue() && !$this->ChkLvlBreak(3))
-				$this->municipioname->GroupViewValue = "&nbsp;";
-
-			// provname
-			$this->provname->GroupViewValue = $this->provname->GroupValue();
-			$this->provname->CellAttrs["class"] = "ewRptGrpField4";
-			$this->provname->GroupViewValue = ewr_DisplayGroupValue($this->provname, $this->provname->GroupViewValue);
-			if ($this->provname->GroupValue() == $this->provname->GroupOldValue() && !$this->ChkLvlBreak(4))
-				$this->provname->GroupViewValue = "&nbsp;";
-
-			// unidadaname
-			$this->unidadaname->GroupViewValue = $this->unidadaname->GroupValue();
-			$this->unidadaname->CellAttrs["class"] = "ewRptGrpField5";
-			$this->unidadaname->GroupViewValue = ewr_DisplayGroupValue($this->unidadaname, $this->unidadaname->GroupViewValue);
-			if ($this->unidadaname->GroupValue() == $this->unidadaname->GroupOldValue() && !$this->ChkLvlBreak(5))
-				$this->unidadaname->GroupViewValue = "&nbsp;";
-
-			// apellidopaterno
-			$this->apellidopaterno->ViewValue = $this->apellidopaterno->CurrentValue;
-			$this->apellidopaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// apellidomaterno
-			$this->apellidomaterno->ViewValue = $this->apellidomaterno->CurrentValue;
-			$this->apellidomaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// nombres
-			$this->nombres->ViewValue = $this->nombres->CurrentValue;
-			$this->nombres->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// ci
 			$this->ci->ViewValue = $this->ci->CurrentValue;
@@ -1398,18 +1249,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$this->nrodiscapacidad->ViewValue = $this->nrodiscapacidad->CurrentValue;
 			$this->nrodiscapacidad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// nombredisca
-			$this->nombredisca->ViewValue = $this->nombredisca->CurrentValue;
-			$this->nombredisca->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// nombretipodisca
-			$this->nombretipodisca->ViewValue = $this->nombretipodisca->CurrentValue;
-			$this->nombretipodisca->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// observaciones
-			$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
-			$this->observaciones->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// codigorude
 			$this->codigorude->ViewValue = $this->codigorude->CurrentValue;
 			$this->codigorude->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
@@ -1418,36 +1257,48 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$this->codigorude_es->ViewValue = $this->codigorude_es->CurrentValue;
 			$this->codigorude_es->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// departamento
+			$this->departamento->ViewValue = $this->departamento->CurrentValue;
+			$this->departamento->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// municipio
+			$this->municipio->ViewValue = $this->municipio->CurrentValue;
+			$this->municipio->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// provincia
+			$this->provincia->ViewValue = $this->provincia->CurrentValue;
+			$this->provincia->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// unidadeducativa
+			$this->unidadeducativa->ViewValue = $this->unidadeducativa->CurrentValue;
+			$this->unidadeducativa->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// nombre
+			$this->nombre->ViewValue = $this->nombre->CurrentValue;
+			$this->nombre->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// materno
+			$this->materno->ViewValue = $this->materno->CurrentValue;
+			$this->materno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// paterno
+			$this->paterno->ViewValue = $this->paterno->CurrentValue;
+			$this->paterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// edad
+			$this->edad->ViewValue = $this->edad->CurrentValue;
+			$this->edad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// discapacidad
+			$this->discapacidad->ViewValue = $this->discapacidad->CurrentValue;
+			$this->discapacidad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// tipodiscapcidad
+			$this->tipodiscapcidad->ViewValue = $this->tipodiscapcidad->CurrentValue;
+			$this->tipodiscapcidad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
-
-			// departamentoname
-			$this->departamentoname->HrefValue = "";
-			if ($this->Export == "") {
-				$drillurl = $this->departamentoname->DrillDownUrl;
-				$drillurl = str_replace("=f0", "=" . ewr_Encrypt($this->GetDrillDownSQL($this->nombreinstitucion, "nombreinstitucion", 0)), $drillurl);
-				$this->departamentoname->LinkAttrs["title"] = ewr_JsEncode($ReportLanguage->Phrase("ClickToDrillDown"));
-				$this->departamentoname->LinkAttrs["class"] = "ewDrillLink";
-				$this->departamentoname->LinkAttrs["onclick"] = ewr_DrillDownJs($drillurl, 'ReportEstudiantes_departamentoname', $GLOBALS["ReportLanguage"]->TablePhrase('viewestudiante', 'TblCaption'), $this->UseDrillDownPanel);
-			}
-
-			// municipioname
-			$this->municipioname->HrefValue = "";
-
-			// provname
-			$this->provname->HrefValue = "";
-
-			// unidadaname
-			$this->unidadaname->HrefValue = "";
-
-			// apellidopaterno
-			$this->apellidopaterno->HrefValue = "";
-
-			// apellidomaterno
-			$this->apellidomaterno->HrefValue = "";
-
-			// nombres
-			$this->nombres->HrefValue = "";
 
 			// ci
 			$this->ci->HrefValue = "";
@@ -1464,20 +1315,41 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			// nrodiscapacidad
 			$this->nrodiscapacidad->HrefValue = "";
 
-			// nombredisca
-			$this->nombredisca->HrefValue = "";
-
-			// nombretipodisca
-			$this->nombretipodisca->HrefValue = "";
-
-			// observaciones
-			$this->observaciones->HrefValue = "";
-
 			// codigorude
 			$this->codigorude->HrefValue = "";
 
 			// codigorude_es
 			$this->codigorude_es->HrefValue = "";
+
+			// departamento
+			$this->departamento->HrefValue = "";
+
+			// municipio
+			$this->municipio->HrefValue = "";
+
+			// provincia
+			$this->provincia->HrefValue = "";
+
+			// unidadeducativa
+			$this->unidadeducativa->HrefValue = "";
+
+			// nombre
+			$this->nombre->HrefValue = "";
+
+			// materno
+			$this->materno->HrefValue = "";
+
+			// paterno
+			$this->paterno->HrefValue = "";
+
+			// edad
+			$this->edad->HrefValue = "";
+
+			// discapacidad
+			$this->discapacidad->HrefValue = "";
+
+			// tipodiscapcidad
+			$this->tipodiscapcidad->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1491,42 +1363,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$HrefValue = &$this->nombreinstitucion->HrefValue;
 			$LinkAttrs = &$this->nombreinstitucion->LinkAttrs;
 			$this->Cell_Rendered($this->nombreinstitucion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// departamentoname
-			$CurrentValue = $this->departamentoname->GroupViewValue;
-			$ViewValue = &$this->departamentoname->GroupViewValue;
-			$ViewAttrs = &$this->departamentoname->ViewAttrs;
-			$CellAttrs = &$this->departamentoname->CellAttrs;
-			$HrefValue = &$this->departamentoname->HrefValue;
-			$LinkAttrs = &$this->departamentoname->LinkAttrs;
-			$this->Cell_Rendered($this->departamentoname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// municipioname
-			$CurrentValue = $this->municipioname->GroupViewValue;
-			$ViewValue = &$this->municipioname->GroupViewValue;
-			$ViewAttrs = &$this->municipioname->ViewAttrs;
-			$CellAttrs = &$this->municipioname->CellAttrs;
-			$HrefValue = &$this->municipioname->HrefValue;
-			$LinkAttrs = &$this->municipioname->LinkAttrs;
-			$this->Cell_Rendered($this->municipioname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// provname
-			$CurrentValue = $this->provname->GroupViewValue;
-			$ViewValue = &$this->provname->GroupViewValue;
-			$ViewAttrs = &$this->provname->ViewAttrs;
-			$CellAttrs = &$this->provname->CellAttrs;
-			$HrefValue = &$this->provname->HrefValue;
-			$LinkAttrs = &$this->provname->LinkAttrs;
-			$this->Cell_Rendered($this->provname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// unidadaname
-			$CurrentValue = $this->unidadaname->GroupViewValue;
-			$ViewValue = &$this->unidadaname->GroupViewValue;
-			$ViewAttrs = &$this->unidadaname->ViewAttrs;
-			$CellAttrs = &$this->unidadaname->CellAttrs;
-			$HrefValue = &$this->unidadaname->HrefValue;
-			$LinkAttrs = &$this->unidadaname->LinkAttrs;
-			$this->Cell_Rendered($this->unidadaname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		} else {
 
 			// nombreinstitucion
@@ -1537,69 +1373,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$HrefValue = &$this->nombreinstitucion->HrefValue;
 			$LinkAttrs = &$this->nombreinstitucion->LinkAttrs;
 			$this->Cell_Rendered($this->nombreinstitucion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// departamentoname
-			$CurrentValue = $this->departamentoname->GroupValue();
-			$ViewValue = &$this->departamentoname->GroupViewValue;
-			$ViewAttrs = &$this->departamentoname->ViewAttrs;
-			$CellAttrs = &$this->departamentoname->CellAttrs;
-			$HrefValue = &$this->departamentoname->HrefValue;
-			$LinkAttrs = &$this->departamentoname->LinkAttrs;
-			$this->Cell_Rendered($this->departamentoname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// municipioname
-			$CurrentValue = $this->municipioname->GroupValue();
-			$ViewValue = &$this->municipioname->GroupViewValue;
-			$ViewAttrs = &$this->municipioname->ViewAttrs;
-			$CellAttrs = &$this->municipioname->CellAttrs;
-			$HrefValue = &$this->municipioname->HrefValue;
-			$LinkAttrs = &$this->municipioname->LinkAttrs;
-			$this->Cell_Rendered($this->municipioname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// provname
-			$CurrentValue = $this->provname->GroupValue();
-			$ViewValue = &$this->provname->GroupViewValue;
-			$ViewAttrs = &$this->provname->ViewAttrs;
-			$CellAttrs = &$this->provname->CellAttrs;
-			$HrefValue = &$this->provname->HrefValue;
-			$LinkAttrs = &$this->provname->LinkAttrs;
-			$this->Cell_Rendered($this->provname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// unidadaname
-			$CurrentValue = $this->unidadaname->GroupValue();
-			$ViewValue = &$this->unidadaname->GroupViewValue;
-			$ViewAttrs = &$this->unidadaname->ViewAttrs;
-			$CellAttrs = &$this->unidadaname->CellAttrs;
-			$HrefValue = &$this->unidadaname->HrefValue;
-			$LinkAttrs = &$this->unidadaname->LinkAttrs;
-			$this->Cell_Rendered($this->unidadaname, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// apellidopaterno
-			$CurrentValue = $this->apellidopaterno->CurrentValue;
-			$ViewValue = &$this->apellidopaterno->ViewValue;
-			$ViewAttrs = &$this->apellidopaterno->ViewAttrs;
-			$CellAttrs = &$this->apellidopaterno->CellAttrs;
-			$HrefValue = &$this->apellidopaterno->HrefValue;
-			$LinkAttrs = &$this->apellidopaterno->LinkAttrs;
-			$this->Cell_Rendered($this->apellidopaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// apellidomaterno
-			$CurrentValue = $this->apellidomaterno->CurrentValue;
-			$ViewValue = &$this->apellidomaterno->ViewValue;
-			$ViewAttrs = &$this->apellidomaterno->ViewAttrs;
-			$CellAttrs = &$this->apellidomaterno->CellAttrs;
-			$HrefValue = &$this->apellidomaterno->HrefValue;
-			$LinkAttrs = &$this->apellidomaterno->LinkAttrs;
-			$this->Cell_Rendered($this->apellidomaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// nombres
-			$CurrentValue = $this->nombres->CurrentValue;
-			$ViewValue = &$this->nombres->ViewValue;
-			$ViewAttrs = &$this->nombres->ViewAttrs;
-			$CellAttrs = &$this->nombres->CellAttrs;
-			$HrefValue = &$this->nombres->HrefValue;
-			$LinkAttrs = &$this->nombres->LinkAttrs;
-			$this->Cell_Rendered($this->nombres, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// ci
 			$CurrentValue = $this->ci->CurrentValue;
@@ -1646,33 +1419,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$LinkAttrs = &$this->nrodiscapacidad->LinkAttrs;
 			$this->Cell_Rendered($this->nrodiscapacidad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// nombredisca
-			$CurrentValue = $this->nombredisca->CurrentValue;
-			$ViewValue = &$this->nombredisca->ViewValue;
-			$ViewAttrs = &$this->nombredisca->ViewAttrs;
-			$CellAttrs = &$this->nombredisca->CellAttrs;
-			$HrefValue = &$this->nombredisca->HrefValue;
-			$LinkAttrs = &$this->nombredisca->LinkAttrs;
-			$this->Cell_Rendered($this->nombredisca, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// nombretipodisca
-			$CurrentValue = $this->nombretipodisca->CurrentValue;
-			$ViewValue = &$this->nombretipodisca->ViewValue;
-			$ViewAttrs = &$this->nombretipodisca->ViewAttrs;
-			$CellAttrs = &$this->nombretipodisca->CellAttrs;
-			$HrefValue = &$this->nombretipodisca->HrefValue;
-			$LinkAttrs = &$this->nombretipodisca->LinkAttrs;
-			$this->Cell_Rendered($this->nombretipodisca, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// observaciones
-			$CurrentValue = $this->observaciones->CurrentValue;
-			$ViewValue = &$this->observaciones->ViewValue;
-			$ViewAttrs = &$this->observaciones->ViewAttrs;
-			$CellAttrs = &$this->observaciones->CellAttrs;
-			$HrefValue = &$this->observaciones->HrefValue;
-			$LinkAttrs = &$this->observaciones->LinkAttrs;
-			$this->Cell_Rendered($this->observaciones, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
 			// codigorude
 			$CurrentValue = $this->codigorude->CurrentValue;
 			$ViewValue = &$this->codigorude->ViewValue;
@@ -1690,6 +1436,96 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$HrefValue = &$this->codigorude_es->HrefValue;
 			$LinkAttrs = &$this->codigorude_es->LinkAttrs;
 			$this->Cell_Rendered($this->codigorude_es, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// departamento
+			$CurrentValue = $this->departamento->CurrentValue;
+			$ViewValue = &$this->departamento->ViewValue;
+			$ViewAttrs = &$this->departamento->ViewAttrs;
+			$CellAttrs = &$this->departamento->CellAttrs;
+			$HrefValue = &$this->departamento->HrefValue;
+			$LinkAttrs = &$this->departamento->LinkAttrs;
+			$this->Cell_Rendered($this->departamento, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// municipio
+			$CurrentValue = $this->municipio->CurrentValue;
+			$ViewValue = &$this->municipio->ViewValue;
+			$ViewAttrs = &$this->municipio->ViewAttrs;
+			$CellAttrs = &$this->municipio->CellAttrs;
+			$HrefValue = &$this->municipio->HrefValue;
+			$LinkAttrs = &$this->municipio->LinkAttrs;
+			$this->Cell_Rendered($this->municipio, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// provincia
+			$CurrentValue = $this->provincia->CurrentValue;
+			$ViewValue = &$this->provincia->ViewValue;
+			$ViewAttrs = &$this->provincia->ViewAttrs;
+			$CellAttrs = &$this->provincia->CellAttrs;
+			$HrefValue = &$this->provincia->HrefValue;
+			$LinkAttrs = &$this->provincia->LinkAttrs;
+			$this->Cell_Rendered($this->provincia, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// unidadeducativa
+			$CurrentValue = $this->unidadeducativa->CurrentValue;
+			$ViewValue = &$this->unidadeducativa->ViewValue;
+			$ViewAttrs = &$this->unidadeducativa->ViewAttrs;
+			$CellAttrs = &$this->unidadeducativa->CellAttrs;
+			$HrefValue = &$this->unidadeducativa->HrefValue;
+			$LinkAttrs = &$this->unidadeducativa->LinkAttrs;
+			$this->Cell_Rendered($this->unidadeducativa, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// nombre
+			$CurrentValue = $this->nombre->CurrentValue;
+			$ViewValue = &$this->nombre->ViewValue;
+			$ViewAttrs = &$this->nombre->ViewAttrs;
+			$CellAttrs = &$this->nombre->CellAttrs;
+			$HrefValue = &$this->nombre->HrefValue;
+			$LinkAttrs = &$this->nombre->LinkAttrs;
+			$this->Cell_Rendered($this->nombre, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// materno
+			$CurrentValue = $this->materno->CurrentValue;
+			$ViewValue = &$this->materno->ViewValue;
+			$ViewAttrs = &$this->materno->ViewAttrs;
+			$CellAttrs = &$this->materno->CellAttrs;
+			$HrefValue = &$this->materno->HrefValue;
+			$LinkAttrs = &$this->materno->LinkAttrs;
+			$this->Cell_Rendered($this->materno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// paterno
+			$CurrentValue = $this->paterno->CurrentValue;
+			$ViewValue = &$this->paterno->ViewValue;
+			$ViewAttrs = &$this->paterno->ViewAttrs;
+			$CellAttrs = &$this->paterno->CellAttrs;
+			$HrefValue = &$this->paterno->HrefValue;
+			$LinkAttrs = &$this->paterno->LinkAttrs;
+			$this->Cell_Rendered($this->paterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// edad
+			$CurrentValue = $this->edad->CurrentValue;
+			$ViewValue = &$this->edad->ViewValue;
+			$ViewAttrs = &$this->edad->ViewAttrs;
+			$CellAttrs = &$this->edad->CellAttrs;
+			$HrefValue = &$this->edad->HrefValue;
+			$LinkAttrs = &$this->edad->LinkAttrs;
+			$this->Cell_Rendered($this->edad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// discapacidad
+			$CurrentValue = $this->discapacidad->CurrentValue;
+			$ViewValue = &$this->discapacidad->ViewValue;
+			$ViewAttrs = &$this->discapacidad->ViewAttrs;
+			$CellAttrs = &$this->discapacidad->CellAttrs;
+			$HrefValue = &$this->discapacidad->HrefValue;
+			$LinkAttrs = &$this->discapacidad->LinkAttrs;
+			$this->Cell_Rendered($this->discapacidad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// tipodiscapcidad
+			$CurrentValue = $this->tipodiscapcidad->CurrentValue;
+			$ViewValue = &$this->tipodiscapcidad->ViewValue;
+			$ViewAttrs = &$this->tipodiscapcidad->ViewAttrs;
+			$CellAttrs = &$this->tipodiscapcidad->CellAttrs;
+			$HrefValue = &$this->tipodiscapcidad->HrefValue;
+			$LinkAttrs = &$this->tipodiscapcidad->LinkAttrs;
+			$this->Cell_Rendered($this->tipodiscapcidad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1703,23 +1539,23 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		$this->SubGrpColumnCount = 0;
 		$this->DtlColumnCount = 0;
 		if ($this->nombreinstitucion->Visible) $this->GrpColumnCount += 1;
-		if ($this->departamentoname->Visible) { $this->GrpColumnCount += 1; $this->SubGrpColumnCount += 1; }
-		if ($this->municipioname->Visible) { $this->GrpColumnCount += 1; $this->SubGrpColumnCount += 1; }
-		if ($this->provname->Visible) { $this->GrpColumnCount += 1; $this->SubGrpColumnCount += 1; }
-		if ($this->unidadaname->Visible) { $this->GrpColumnCount += 1; $this->SubGrpColumnCount += 1; }
-		if ($this->apellidopaterno->Visible) $this->DtlColumnCount += 1;
-		if ($this->apellidomaterno->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombres->Visible) $this->DtlColumnCount += 1;
 		if ($this->ci->Visible) $this->DtlColumnCount += 1;
 		if ($this->fechanacimiento->Visible) $this->DtlColumnCount += 1;
 		if ($this->sexo->Visible) $this->DtlColumnCount += 1;
 		if ($this->curso->Visible) $this->DtlColumnCount += 1;
 		if ($this->nrodiscapacidad->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombredisca->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombretipodisca->Visible) $this->DtlColumnCount += 1;
-		if ($this->observaciones->Visible) $this->DtlColumnCount += 1;
 		if ($this->codigorude->Visible) $this->DtlColumnCount += 1;
 		if ($this->codigorude_es->Visible) $this->DtlColumnCount += 1;
+		if ($this->departamento->Visible) $this->DtlColumnCount += 1;
+		if ($this->municipio->Visible) $this->DtlColumnCount += 1;
+		if ($this->provincia->Visible) $this->DtlColumnCount += 1;
+		if ($this->unidadeducativa->Visible) $this->DtlColumnCount += 1;
+		if ($this->nombre->Visible) $this->DtlColumnCount += 1;
+		if ($this->materno->Visible) $this->DtlColumnCount += 1;
+		if ($this->paterno->Visible) $this->DtlColumnCount += 1;
+		if ($this->edad->Visible) $this->DtlColumnCount += 1;
+		if ($this->discapacidad->Visible) $this->DtlColumnCount += 1;
+		if ($this->tipodiscapcidad->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1817,55 +1653,6 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 		}
 	}
 
-	// Return drill down SQL
-	// - fld = source field object
-	// - target = target field name
-	// - rowtype = row type
-	//  * 0 = detail
-	//  * 1 = group
-	//  * 2 = page
-	//  * 3 = grand
-	// - parm = filter/column index
-	//  * -1  = use field filter value / current/old value
-	//  * 0   = use grouping/column field value
-	//  * > 0 = use column index
-	function GetDrillDownSQL($fld, $target, $rowtype, $parm = 0) {
-		$sql = "";
-
-		// Handle grand/page total
-		if ($fld->FldVar == "x_nombreinstitucion") { // First grouping field
-			if ($rowtype == EWR_ROWTOTAL_GRAND) { // Grand total
-				$sql = $fld->CurrentFilter;
-				if ($sql == "")
-					$sql = "1=1"; // Show all records
-			} elseif ($rowtype == EWR_ROWTOTAL_PAGE && $this->PageFirstGroupFilter <> "") { // Page total
-				$sql = str_replace($fld->FldExpression, "@" . $target, "(" . $this->PageFirstGroupFilter . ")");
-			}
-		}
-
-		// Handle group/row/column field
-		if ($parm >= 0 && $sql == "") {
-			switch (substr($fld->FldVar,2)) {
-			case "nombreinstitucion":
-				if ($fld->FldGroupSql <> "") {
-					$sql = str_replace("%s", "@" . $target, $fld->FldGroupSql) . " = " . ewr_QuotedValue(($rowtype == 0) ? $fld->CurrentValue : $fld->OldValue, EWR_DATATYPE_STRING, $this->DBID);
-					ewr_AddFilter($sql, str_replace($fld->FldExpression, "@" . $target, $fld->CurrentFilter));
-				} else {
-					$sql = "@" . $target . " = " . ewr_QuotedValue(($rowtype == 0) ? $fld->CurrentValue : $fld->OldValue, $fld->FldDataType, $this->DBID);
-				}
-				break;
-			}
-		}
-
-		// Detail field
-		if ($sql == "" && $rowtype == 0)
-			if ($fld->CurrentFilter <> "") // Use current filter
-				$sql = str_replace($fld->FldExpression, "@" . $target, $fld->CurrentFilter);
-			elseif ($fld->CurrentValue <> "") // Use current value for detail row
-				$sql = "@" . $target . "=" . ewr_QuotedValue($fld->CurrentValue, $fld->FldDataType, $this->DBID);
-		return $sql;
-	}
-
 	// Get sort parameters based on sort links clicked
 	function GetSort($options = array()) {
 		if ($this->DrillDown)
@@ -1879,23 +1666,23 @@ class crReportEstudiantes_summary extends crReportEstudiantes {
 			$this->setOrderBy("");
 			$this->setStartGroup(1);
 			$this->nombreinstitucion->setSort("");
-			$this->departamentoname->setSort("");
-			$this->municipioname->setSort("");
-			$this->provname->setSort("");
-			$this->unidadaname->setSort("");
-			$this->apellidopaterno->setSort("");
-			$this->apellidomaterno->setSort("");
-			$this->nombres->setSort("");
 			$this->ci->setSort("");
 			$this->fechanacimiento->setSort("");
 			$this->sexo->setSort("");
 			$this->curso->setSort("");
 			$this->nrodiscapacidad->setSort("");
-			$this->nombredisca->setSort("");
-			$this->nombretipodisca->setSort("");
-			$this->observaciones->setSort("");
 			$this->codigorude->setSort("");
 			$this->codigorude_es->setSort("");
+			$this->departamento->setSort("");
+			$this->municipio->setSort("");
+			$this->provincia->setSort("");
+			$this->unidadeducativa->setSort("");
+			$this->nombre->setSort("");
+			$this->materno->setSort("");
+			$this->paterno->setSort("");
+			$this->edad->setSort("");
+			$this->discapacidad->setSort("");
+			$this->tipodiscapcidad->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -2120,10 +1907,6 @@ $Page->RecIndex = 0;
 // Get first row
 if ($Page->TotalGrps > 0) {
 	$Page->GetGrpRow(1);
-	$Page->GrpCounter[0] = 1;
-	$Page->GrpCounter[1] = 1;
-	$Page->GrpCounter[2] = 1;
-	$Page->GrpCounter[3] = 1;
 	$Page->GrpCount = 1;
 }
 $Page->GrpIdx = ewr_InitArray($Page->StopGrp - $Page->StartGrp + 1, -1);
@@ -2179,148 +1962,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	</td>
 <?php } ?>
 	<?php } ?>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-	<?php if ($Page->departamentoname->ShowGroupHeaderAsRow) { ?>
-	<td data-field="departamentoname">&nbsp;</td>
-	<?php } else { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="departamentoname"><div class="ReportEstudiantes_departamentoname"><span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="departamentoname">
-<?php if ($Page->SortUrl($Page->departamentoname) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_departamentoname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_departamentoname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->departamentoname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->departamentoname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->departamentoname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->municipioname->Visible) { ?>
-	<?php if ($Page->municipioname->ShowGroupHeaderAsRow) { ?>
-	<td data-field="municipioname">&nbsp;</td>
-	<?php } else { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="municipioname"><div class="ReportEstudiantes_municipioname"><span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="municipioname">
-<?php if ($Page->SortUrl($Page->municipioname) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_municipioname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_municipioname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->municipioname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->municipioname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->municipioname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->provname->Visible) { ?>
-	<?php if ($Page->provname->ShowGroupHeaderAsRow) { ?>
-	<td data-field="provname">&nbsp;</td>
-	<?php } else { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="provname"><div class="ReportEstudiantes_provname"><span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="provname">
-<?php if ($Page->SortUrl($Page->provname) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_provname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_provname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->provname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->provname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->provname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->unidadaname->Visible) { ?>
-	<?php if ($Page->unidadaname->ShowGroupHeaderAsRow) { ?>
-	<td data-field="unidadaname">&nbsp;</td>
-	<?php } else { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="unidadaname"><div class="ReportEstudiantes_unidadaname"><span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="unidadaname">
-<?php if ($Page->SortUrl($Page->unidadaname) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_unidadaname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_unidadaname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidadaname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->unidadaname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->unidadaname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->apellidopaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="apellidopaterno"><div class="ReportEstudiantes_apellidopaterno"><span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="apellidopaterno">
-<?php if ($Page->SortUrl($Page->apellidopaterno) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_apellidopaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->apellidopaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidopaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->apellidomaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="apellidomaterno"><div class="ReportEstudiantes_apellidomaterno"><span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="apellidomaterno">
-<?php if ($Page->SortUrl($Page->apellidomaterno) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_apellidomaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->apellidomaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidomaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->nombres->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombres"><div class="ReportEstudiantes_nombres"><span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="nombres">
-<?php if ($Page->SortUrl($Page->nombres) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_nombres">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_nombres" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombres) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombres->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombres->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
 <?php } ?>
 <?php if ($Page->ci->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
@@ -2412,60 +2053,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->nombredisca->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombredisca"><div class="ReportEstudiantes_nombredisca"><span class="ewTableHeaderCaption"><?php echo $Page->nombredisca->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="nombredisca">
-<?php if ($Page->SortUrl($Page->nombredisca) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_nombredisca">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombredisca->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_nombredisca" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombredisca) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombredisca->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombredisca->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombredisca->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->nombretipodisca->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombretipodisca"><div class="ReportEstudiantes_nombretipodisca"><span class="ewTableHeaderCaption"><?php echo $Page->nombretipodisca->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="nombretipodisca">
-<?php if ($Page->SortUrl($Page->nombretipodisca) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_nombretipodisca">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombretipodisca->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_nombretipodisca" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombretipodisca) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombretipodisca->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombretipodisca->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombretipodisca->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->observaciones->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="observaciones"><div class="ReportEstudiantes_observaciones"><span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="observaciones">
-<?php if ($Page->SortUrl($Page->observaciones) == "") { ?>
-		<div class="ewTableHeaderBtn ReportEstudiantes_observaciones">
-			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_observaciones" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->observaciones) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->observaciones->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->observaciones->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
 <?php if ($Page->codigorude->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
 	<td data-field="codigorude"><div class="ReportEstudiantes_codigorude"><span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span></div></td>
@@ -2502,6 +2089,186 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	</td>
 <?php } ?>
 <?php } ?>
+<?php if ($Page->departamento->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="departamento"><div class="ReportEstudiantes_departamento"><span class="ewTableHeaderCaption"><?php echo $Page->departamento->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="departamento">
+<?php if ($Page->SortUrl($Page->departamento) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_departamento">
+			<span class="ewTableHeaderCaption"><?php echo $Page->departamento->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_departamento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->departamento) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->departamento->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->departamento->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->departamento->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->municipio->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="municipio"><div class="ReportEstudiantes_municipio"><span class="ewTableHeaderCaption"><?php echo $Page->municipio->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="municipio">
+<?php if ($Page->SortUrl($Page->municipio) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_municipio">
+			<span class="ewTableHeaderCaption"><?php echo $Page->municipio->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_municipio" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->municipio) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->municipio->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->municipio->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->municipio->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->provincia->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="provincia"><div class="ReportEstudiantes_provincia"><span class="ewTableHeaderCaption"><?php echo $Page->provincia->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="provincia">
+<?php if ($Page->SortUrl($Page->provincia) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_provincia">
+			<span class="ewTableHeaderCaption"><?php echo $Page->provincia->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_provincia" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->provincia) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->provincia->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->provincia->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->provincia->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->unidadeducativa->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="unidadeducativa"><div class="ReportEstudiantes_unidadeducativa"><span class="ewTableHeaderCaption"><?php echo $Page->unidadeducativa->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="unidadeducativa">
+<?php if ($Page->SortUrl($Page->unidadeducativa) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_unidadeducativa">
+			<span class="ewTableHeaderCaption"><?php echo $Page->unidadeducativa->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_unidadeducativa" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidadeducativa) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->unidadeducativa->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->unidadeducativa->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->unidadeducativa->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->nombre->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="nombre"><div class="ReportEstudiantes_nombre"><span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="nombre">
+<?php if ($Page->SortUrl($Page->nombre) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_nombre">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_nombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombre) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->nombre->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombre->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->materno->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="materno"><div class="ReportEstudiantes_materno"><span class="ewTableHeaderCaption"><?php echo $Page->materno->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="materno">
+<?php if ($Page->SortUrl($Page->materno) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_materno">
+			<span class="ewTableHeaderCaption"><?php echo $Page->materno->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_materno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->materno) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->materno->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->materno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->materno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->paterno->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="paterno"><div class="ReportEstudiantes_paterno"><span class="ewTableHeaderCaption"><?php echo $Page->paterno->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="paterno">
+<?php if ($Page->SortUrl($Page->paterno) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_paterno">
+			<span class="ewTableHeaderCaption"><?php echo $Page->paterno->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_paterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->paterno) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->paterno->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->paterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->paterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->edad->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="edad"><div class="ReportEstudiantes_edad"><span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="edad">
+<?php if ($Page->SortUrl($Page->edad) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_edad">
+			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->edad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->edad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->discapacidad->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="discapacidad"><div class="ReportEstudiantes_discapacidad"><span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="discapacidad">
+<?php if ($Page->SortUrl($Page->discapacidad) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_discapacidad">
+			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_discapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapacidad) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->discapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->discapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->tipodiscapcidad->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="tipodiscapcidad"><div class="ReportEstudiantes_tipodiscapcidad"><span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapcidad->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="tipodiscapcidad">
+<?php if ($Page->SortUrl($Page->tipodiscapcidad) == "") { ?>
+		<div class="ewTableHeaderBtn ReportEstudiantes_tipodiscapcidad">
+			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapcidad->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer ReportEstudiantes_tipodiscapcidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipodiscapcidad) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapcidad->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->tipodiscapcidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->tipodiscapcidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -2521,10 +2288,7 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	$rsdtlcnt = ($rs) ? $rs->RecordCount() : 0;
 	if ($rsdtlcnt > 0)
 		$Page->GetRow(1);
-	$Page->GrpIdx[$Page->GrpCount] = array(-1);
-	$Page->GrpIdx[$Page->GrpCount][] = array(-1);
-	$Page->GrpIdx[$Page->GrpCount][][] = array(-1);
-	$Page->GrpIdx[$Page->GrpCount][][][] = array(-1);
+	$Page->GrpIdx[$Page->GrpCount] = $rsdtlcnt;
 	while ($rs && !$rs->EOF) { // Loop detail records
 		$Page->RecCount++;
 		$Page->RecIndex++;
@@ -2566,194 +2330,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 		</td>
 	</tr>
 <?php } ?>
-<?php if ($Page->departamentoname->Visible && $Page->ChkLvlBreak(2) && $Page->departamentoname->ShowGroupHeaderAsRow) { ?>
-<?php
-
-		// Render header row
-		$Page->ResetAttrs();
-		$Page->RowType = EWR_ROWTYPE_TOTAL;
-		$Page->RowTotalType = EWR_ROWTOTAL_GROUP;
-		$Page->RowTotalSubType = EWR_ROWTOTAL_HEADER;
-		$Page->RowGroupLevel = 2;
-		$Page->departamentoname->Count = $Page->GetSummaryCount(2);
-		$Page->RenderRow();
-?>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>><span class="ewGroupToggle icon-collapse"></span></td>
-<?php } ?>
-		<td data-field="departamentoname" colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount - 2) ?>"<?php echo $Page->departamentoname->CellAttributes() ?>>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_departamentoname"><span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span></span>
-<?php } else { ?>
-	<?php if ($Page->SortUrl($Page->departamentoname) == "") { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_departamentoname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span>
-		</span>
-	<?php } else { ?>
-		<span class="ewTableHeaderBtn ewPointer ewSummaryCaption ReportEstudiantes_departamentoname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->departamentoname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->departamentoname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->departamentoname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->departamentoname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</span>
-	<?php } ?>
-<?php } ?>
-		<?php echo $ReportLanguage->Phrase("SummaryColon") ?>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_ReportEstudiantes_departamentoname"<?php echo $Page->departamentoname->ViewAttributes() ?>>
-<?php if ($Page->departamentoname->HrefValue <> "" || @$Page->departamentoname->LinkAttrs["onclick"] <> "") { ?>
-<?php if ($Page->departamentoname->GroupViewValue <> "" && $Page->departamentoname->GroupViewValue <> "&nbsp;") { ?>
-<a<?php echo $Page->departamentoname->LinkAttributes() ?>><?php echo $Page->departamentoname->GroupViewValue ?></a>
-<?php } else { echo "&nbsp;"; } ?>
-<?php } else { ?>
-<?php if ($Page->departamentoname->GroupViewValue <> "" && $Page->departamentoname->GroupViewValue <> "&nbsp;") { ?>
-<?php echo $Page->departamentoname->GroupViewValue ?>
-<?php } else { echo "&nbsp;"; } ?>
-<?php } ?>
-</span>
-		<span class="ewSummaryCount">(<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->departamentoname->Count,0,-2,-2,-2) ?></span>)</span>
-		</td>
-	</tr>
-<?php } ?>
-<?php if ($Page->municipioname->Visible && $Page->ChkLvlBreak(3) && $Page->municipioname->ShowGroupHeaderAsRow) { ?>
-<?php
-
-		// Render header row
-		$Page->ResetAttrs();
-		$Page->RowType = EWR_ROWTYPE_TOTAL;
-		$Page->RowTotalType = EWR_ROWTOTAL_GROUP;
-		$Page->RowTotalSubType = EWR_ROWTOTAL_HEADER;
-		$Page->RowGroupLevel = 3;
-		$Page->municipioname->Count = $Page->GetSummaryCount(3);
-		$Page->RenderRow();
-?>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->municipioname->Visible) { ?>
-		<td data-field="municipioname"<?php echo $Page->municipioname->CellAttributes(); ?>><span class="ewGroupToggle icon-collapse"></span></td>
-<?php } ?>
-		<td data-field="municipioname" colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount - 3) ?>"<?php echo $Page->municipioname->CellAttributes() ?>>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_municipioname"><span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span></span>
-<?php } else { ?>
-	<?php if ($Page->SortUrl($Page->municipioname) == "") { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_municipioname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span>
-		</span>
-	<?php } else { ?>
-		<span class="ewTableHeaderBtn ewPointer ewSummaryCaption ReportEstudiantes_municipioname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->municipioname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->municipioname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->municipioname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->municipioname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</span>
-	<?php } ?>
-<?php } ?>
-		<?php echo $ReportLanguage->Phrase("SummaryColon") ?>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_ReportEstudiantes_municipioname"<?php echo $Page->municipioname->ViewAttributes() ?>><?php echo $Page->municipioname->GroupViewValue ?></span>
-		<span class="ewSummaryCount">(<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->municipioname->Count,0,-2,-2,-2) ?></span>)</span>
-		</td>
-	</tr>
-<?php } ?>
-<?php if ($Page->provname->Visible && $Page->ChkLvlBreak(4) && $Page->provname->ShowGroupHeaderAsRow) { ?>
-<?php
-
-		// Render header row
-		$Page->ResetAttrs();
-		$Page->RowType = EWR_ROWTYPE_TOTAL;
-		$Page->RowTotalType = EWR_ROWTOTAL_GROUP;
-		$Page->RowTotalSubType = EWR_ROWTOTAL_HEADER;
-		$Page->RowGroupLevel = 4;
-		$Page->provname->Count = $Page->GetSummaryCount(4);
-		$Page->RenderRow();
-?>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->municipioname->Visible) { ?>
-		<td data-field="municipioname"<?php echo $Page->municipioname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->provname->Visible) { ?>
-		<td data-field="provname"<?php echo $Page->provname->CellAttributes(); ?>><span class="ewGroupToggle icon-collapse"></span></td>
-<?php } ?>
-		<td data-field="provname" colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount - 4) ?>"<?php echo $Page->provname->CellAttributes() ?>>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_provname"><span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span></span>
-<?php } else { ?>
-	<?php if ($Page->SortUrl($Page->provname) == "") { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_provname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span>
-		</span>
-	<?php } else { ?>
-		<span class="ewTableHeaderBtn ewPointer ewSummaryCaption ReportEstudiantes_provname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->provname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->provname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->provname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->provname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</span>
-	<?php } ?>
-<?php } ?>
-		<?php echo $ReportLanguage->Phrase("SummaryColon") ?>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_<?php echo $Page->GrpCounter[2] ?>_ReportEstudiantes_provname"<?php echo $Page->provname->ViewAttributes() ?>><?php echo $Page->provname->GroupViewValue ?></span>
-		<span class="ewSummaryCount">(<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->provname->Count,0,-2,-2,-2) ?></span>)</span>
-		</td>
-	</tr>
-<?php } ?>
-<?php if ($Page->unidadaname->Visible && $Page->ChkLvlBreak(5) && $Page->unidadaname->ShowGroupHeaderAsRow) { ?>
-<?php
-
-		// Render header row
-		$Page->ResetAttrs();
-		$Page->RowType = EWR_ROWTYPE_TOTAL;
-		$Page->RowTotalType = EWR_ROWTOTAL_GROUP;
-		$Page->RowTotalSubType = EWR_ROWTOTAL_HEADER;
-		$Page->RowGroupLevel = 5;
-		$Page->unidadaname->Count = $Page->GetSummaryCount(5);
-		$Page->RenderRow();
-?>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->municipioname->Visible) { ?>
-		<td data-field="municipioname"<?php echo $Page->municipioname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->provname->Visible) { ?>
-		<td data-field="provname"<?php echo $Page->provname->CellAttributes(); ?>></td>
-<?php } ?>
-<?php if ($Page->unidadaname->Visible) { ?>
-		<td data-field="unidadaname"<?php echo $Page->unidadaname->CellAttributes(); ?>><span class="ewGroupToggle icon-collapse"></span></td>
-<?php } ?>
-		<td data-field="unidadaname" colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount - 5) ?>"<?php echo $Page->unidadaname->CellAttributes() ?>>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_unidadaname"><span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span></span>
-<?php } else { ?>
-	<?php if ($Page->SortUrl($Page->unidadaname) == "") { ?>
-		<span class="ewSummaryCaption ReportEstudiantes_unidadaname">
-			<span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span>
-		</span>
-	<?php } else { ?>
-		<span class="ewTableHeaderBtn ewPointer ewSummaryCaption ReportEstudiantes_unidadaname" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidadaname) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->unidadaname->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->unidadaname->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->unidadaname->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</span>
-	<?php } ?>
-<?php } ?>
-		<?php echo $ReportLanguage->Phrase("SummaryColon") ?>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_<?php echo $Page->GrpCounter[2] ?>_<?php echo $Page->GrpCounter[3] ?>_ReportEstudiantes_unidadaname"<?php echo $Page->unidadaname->ViewAttributes() ?>><?php echo $Page->unidadaname->GroupViewValue ?></span>
-		<span class="ewSummaryCount">(<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->unidadaname->Count,0,-2,-2,-2) ?></span>)</span>
-		</td>
-	</tr>
-<?php } ?>
 <?php
 
 		// Render detail row
@@ -2769,60 +2345,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes(); ?>>
 <span data-class="tpx<?php echo $Page->GrpCount ?>_ReportEstudiantes_nombreinstitucion"<?php echo $Page->nombreinstitucion->ViewAttributes() ?>><?php echo $Page->nombreinstitucion->GroupViewValue ?></span></td>
 	<?php } ?>
-<?php } ?>
-<?php if ($Page->departamentoname->Visible) { ?>
-	<?php if ($Page->departamentoname->ShowGroupHeaderAsRow) { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>>&nbsp;</td>
-	<?php } else { ?>
-		<td data-field="departamentoname"<?php echo $Page->departamentoname->CellAttributes(); ?>>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_ReportEstudiantes_departamentoname"<?php echo $Page->departamentoname->ViewAttributes() ?>>
-<?php if ($Page->departamentoname->HrefValue <> "" || @$Page->departamentoname->LinkAttrs["onclick"] <> "") { ?>
-<?php if ($Page->departamentoname->GroupViewValue <> "" && $Page->departamentoname->GroupViewValue <> "&nbsp;") { ?>
-<a<?php echo $Page->departamentoname->LinkAttributes() ?>><?php echo $Page->departamentoname->GroupViewValue ?></a>
-<?php } else { echo "&nbsp;"; } ?>
-<?php } else { ?>
-<?php if ($Page->departamentoname->GroupViewValue <> "" && $Page->departamentoname->GroupViewValue <> "&nbsp;") { ?>
-<?php echo $Page->departamentoname->GroupViewValue ?>
-<?php } else { echo "&nbsp;"; } ?>
-<?php } ?>
-</span></td>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->municipioname->Visible) { ?>
-	<?php if ($Page->municipioname->ShowGroupHeaderAsRow) { ?>
-		<td data-field="municipioname"<?php echo $Page->municipioname->CellAttributes(); ?>>&nbsp;</td>
-	<?php } else { ?>
-		<td data-field="municipioname"<?php echo $Page->municipioname->CellAttributes(); ?>>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_ReportEstudiantes_municipioname"<?php echo $Page->municipioname->ViewAttributes() ?>><?php echo $Page->municipioname->GroupViewValue ?></span></td>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->provname->Visible) { ?>
-	<?php if ($Page->provname->ShowGroupHeaderAsRow) { ?>
-		<td data-field="provname"<?php echo $Page->provname->CellAttributes(); ?>>&nbsp;</td>
-	<?php } else { ?>
-		<td data-field="provname"<?php echo $Page->provname->CellAttributes(); ?>>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_<?php echo $Page->GrpCounter[2] ?>_ReportEstudiantes_provname"<?php echo $Page->provname->ViewAttributes() ?>><?php echo $Page->provname->GroupViewValue ?></span></td>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->unidadaname->Visible) { ?>
-	<?php if ($Page->unidadaname->ShowGroupHeaderAsRow) { ?>
-		<td data-field="unidadaname"<?php echo $Page->unidadaname->CellAttributes(); ?>>&nbsp;</td>
-	<?php } else { ?>
-		<td data-field="unidadaname"<?php echo $Page->unidadaname->CellAttributes(); ?>>
-<span data-class="tpx<?php echo $Page->GrpCount ?>_<?php echo $Page->GrpCounter[0] ?>_<?php echo $Page->GrpCounter[1] ?>_<?php echo $Page->GrpCounter[2] ?>_<?php echo $Page->GrpCounter[3] ?>_ReportEstudiantes_unidadaname"<?php echo $Page->unidadaname->ViewAttributes() ?>><?php echo $Page->unidadaname->GroupViewValue ?></span></td>
-	<?php } ?>
-<?php } ?>
-<?php if ($Page->apellidopaterno->Visible) { ?>
-		<td data-field="apellidopaterno"<?php echo $Page->apellidopaterno->CellAttributes() ?>>
-<span<?php echo $Page->apellidopaterno->ViewAttributes() ?>><?php echo $Page->apellidopaterno->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->apellidomaterno->Visible) { ?>
-		<td data-field="apellidomaterno"<?php echo $Page->apellidomaterno->CellAttributes() ?>>
-<span<?php echo $Page->apellidomaterno->ViewAttributes() ?>><?php echo $Page->apellidomaterno->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->nombres->Visible) { ?>
-		<td data-field="nombres"<?php echo $Page->nombres->CellAttributes() ?>>
-<span<?php echo $Page->nombres->ViewAttributes() ?>><?php echo $Page->nombres->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->ci->Visible) { ?>
 		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>>
@@ -2844,18 +2366,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>>
 <span<?php echo $Page->nrodiscapacidad->ViewAttributes() ?>><?php echo $Page->nrodiscapacidad->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->nombredisca->Visible) { ?>
-		<td data-field="nombredisca"<?php echo $Page->nombredisca->CellAttributes() ?>>
-<span<?php echo $Page->nombredisca->ViewAttributes() ?>><?php echo $Page->nombredisca->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->nombretipodisca->Visible) { ?>
-		<td data-field="nombretipodisca"<?php echo $Page->nombretipodisca->CellAttributes() ?>>
-<span<?php echo $Page->nombretipodisca->ViewAttributes() ?>><?php echo $Page->nombretipodisca->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->observaciones->Visible) { ?>
-		<td data-field="observaciones"<?php echo $Page->observaciones->CellAttributes() ?>>
-<span<?php echo $Page->observaciones->ViewAttributes() ?>><?php echo $Page->observaciones->ListViewValue() ?></span></td>
-<?php } ?>
 <?php if ($Page->codigorude->Visible) { ?>
 		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>>
 <span<?php echo $Page->codigorude->ViewAttributes() ?>><?php echo $Page->codigorude->ListViewValue() ?></span></td>
@@ -2863,6 +2373,46 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 <?php if ($Page->codigorude_es->Visible) { ?>
 		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>>
 <span<?php echo $Page->codigorude_es->ViewAttributes() ?>><?php echo $Page->codigorude_es->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->departamento->Visible) { ?>
+		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>>
+<span<?php echo $Page->departamento->ViewAttributes() ?>><?php echo $Page->departamento->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->municipio->Visible) { ?>
+		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>>
+<span<?php echo $Page->municipio->ViewAttributes() ?>><?php echo $Page->municipio->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->provincia->Visible) { ?>
+		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>>
+<span<?php echo $Page->provincia->ViewAttributes() ?>><?php echo $Page->provincia->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->unidadeducativa->Visible) { ?>
+		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>>
+<span<?php echo $Page->unidadeducativa->ViewAttributes() ?>><?php echo $Page->unidadeducativa->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->nombre->Visible) { ?>
+		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>>
+<span<?php echo $Page->nombre->ViewAttributes() ?>><?php echo $Page->nombre->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->materno->Visible) { ?>
+		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>>
+<span<?php echo $Page->materno->ViewAttributes() ?>><?php echo $Page->materno->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->paterno->Visible) { ?>
+		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>>
+<span<?php echo $Page->paterno->ViewAttributes() ?>><?php echo $Page->paterno->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->edad->Visible) { ?>
+		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>
+<span<?php echo $Page->edad->ViewAttributes() ?>><?php echo $Page->edad->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->discapacidad->Visible) { ?>
+		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>>
+<span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->tipodiscapcidad->Visible) { ?>
+		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>>
+<span<?php echo $Page->tipodiscapcidad->ViewAttributes() ?>><?php echo $Page->tipodiscapcidad->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php
@@ -2891,10 +2441,6 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	if ($Page->ShowHeader)
 		$Page->Page_Breaking($Page->ShowHeader, $Page->PageBreakContent);
 	$Page->GrpCount++;
-	$Page->GrpCounter[3] = 1;
-	$Page->GrpCounter[2] = 1;
-	$Page->GrpCounter[1] = 1;
-	$Page->GrpCounter[0] = 1;
 
 	// Handle EOF
 	if (!$rsgrp || $rsgrp->EOF)
@@ -2912,7 +2458,7 @@ while ($rsgrp && !$rsgrp->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page-
 	$Page->RowAttrs["class"] = "ewRptGrandSummary";
 	$Page->RenderRow();
 ?>
-<?php if ($Page->unidadaname->ShowCompactSummaryFooter) { ?>
+<?php if ($Page->nombreinstitucion->ShowCompactSummaryFooter) { ?>
 	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2) ?></span>)</td></tr>
 <?php } else { ?>
 	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>

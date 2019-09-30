@@ -393,6 +393,8 @@ class cdefault {
 			$this->Page_Terminate("derivacionlist.php");
 		if ($Security->AllowList(CurrentProjectID() . 'tipoespecialidad'))
 			$this->Page_Terminate("tipoespecialidadlist.php");
+		if ($Security->AllowList(CurrentProjectID() . 'viewestudiante'))
+			$this->Page_Terminate("viewestudiantelist.php");
 		if ($Security->IsLoggedIn()) {
 			$this->setFailureMessage(ew_DeniedMsg() . "<br><br><a href=\"logout.php\">" . $Language->Phrase("BackToLogin") . "</a>");
 		} else {

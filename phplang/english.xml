@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/9/20" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/9/29" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -618,6 +618,9 @@
   <project>
     <phrase id="bodytitle" value="Inderbo" />
     <phrase id="footertext" value="&amp;copy;2018 Inderbo. All rights reserved." />
+    <menu id="122">
+      <phrase id="menutext" value="viewestudiante" />
+    </menu>
     <menu id="14">
       <phrase id="menutext" value="Registros" />
     </menu>
@@ -2132,6 +2135,67 @@
       </field>
       <field id="nombre">
         <phrase id="fldcaption" value="nombre" />
+      </field>
+    </table>
+    <table id="viewestudiante">
+      <phrase id="tblcaption" value="viewestudiante" />
+      <field id="departamento">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="codigorude">
+        <phrase id="fldcaption" value="CODIGO RUDE" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="CODIGO RUDE-ES" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="descripcion" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="NOMBRE INSTITUCION" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="NOMBRE" />
+      </field>
+      <field id="materno">
+        <phrase id="fldcaption" value="APELLIDO MATERNO" />
+      </field>
+      <field id="paterno">
+        <phrase id="fldcaption" value="APELLIDO PATERNO" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="NRO DISCAPACIDA" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="CI" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="FECHA NACIMIENTO" />
+      </field>
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="SEXO" />
+        <phrase id="fldtagvalue1" value="FEMENINO" />
+        <phrase id="fldtagcaption1" value="FEMENINO" />
+        <phrase id="fldtagvalue2" value="MASCULINO" />
+        <phrase id="fldtagcaption2" value="MASCULINO" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="CURSO" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="tipodiscapcidad">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="NOMBRE INSTITUCION" />
       </field>
     </table>
   </project>

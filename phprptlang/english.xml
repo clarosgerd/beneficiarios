@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/9/20" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/9/29" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -1559,26 +1559,11 @@
     </table>
     <table id="viewestudiante">
       <phrase id="tblcaption" value="ESTUDIANTES" />
-      <field id="departamentoname">
-        <phrase id="fldcaption" value="nombre" />
+      <field id="codigorude">
+        <phrase id="fldcaption" value="codigorude" />
       </field>
-      <field id="provname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="municipioname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="unidadaname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="apellidopaterno">
-        <phrase id="fldcaption" value="apellidopaterno" />
-      </field>
-      <field id="apellidomaterno">
-        <phrase id="fldcaption" value="apellidomaterno" />
-      </field>
-      <field id="nombres">
-        <phrase id="fldcaption" value="nombres" />
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
       </field>
       <field id="ci">
         <phrase id="fldcaption" value="ci" />
@@ -1595,48 +1580,42 @@
       <field id="nrodiscapacidad">
         <phrase id="fldcaption" value="nrodiscapacidad" />
       </field>
-      <field id="nombredisca">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="nombretipodisca">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="observaciones">
-        <phrase id="fldcaption" value="observaciones" />
-      </field>
-      <field id="codigorude">
-        <phrase id="fldcaption" value="codigorude" />
-      </field>
-      <field id="codigorude_es">
-        <phrase id="fldcaption" value="codigorude es" />
-      </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="materno">
+        <phrase id="fldcaption" value="materno" />
+      </field>
+      <field id="paterno">
+        <phrase id="fldcaption" value="paterno" />
+      </field>
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapcidad">
+        <phrase id="fldcaption" value="tipodiscapcidad" />
       </field>
     </table>
     <table id="reportestudiantes">
       <phrase id="tblcaption" value="Report Estudiantes" />
-      <field id="departamentoname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="provname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="municipioname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="unidadaname">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="apellidopaterno">
-        <phrase id="fldcaption" value="apellidopaterno" />
-      </field>
-      <field id="apellidomaterno">
-        <phrase id="fldcaption" value="apellidomaterno" />
-      </field>
-      <field id="nombres">
-        <phrase id="fldcaption" value="nombres" />
-      </field>
       <field id="ci">
         <phrase id="fldcaption" value="ci" />
       </field>
@@ -1652,15 +1631,6 @@
       <field id="nrodiscapacidad">
         <phrase id="fldcaption" value="nrodiscapacidad" />
       </field>
-      <field id="nombredisca">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="nombretipodisca">
-        <phrase id="fldcaption" value="nombre" />
-      </field>
-      <field id="observaciones">
-        <phrase id="fldcaption" value="observaciones" />
-      </field>
       <field id="codigorude">
         <phrase id="fldcaption" value="codigorude" />
       </field>
@@ -1669,6 +1639,36 @@
       </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="materno">
+        <phrase id="fldcaption" value="materno" />
+      </field>
+      <field id="paterno">
+        <phrase id="fldcaption" value="paterno" />
+      </field>
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapcidad">
+        <phrase id="fldcaption" value="tipodiscapcidad" />
       </field>
     </table>
   </project>

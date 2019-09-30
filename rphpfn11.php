@@ -4321,6 +4321,8 @@ class crAdvancedSecurity {
 
 		// Get the User Level privileges
 		$sUserPrivSql = "SELECT " . EWR_USER_LEVEL_PRIV_TABLE_NAME_FIELD . ", " . EWR_USER_LEVEL_PRIV_USER_LEVEL_ID_FIELD . ", " . EWR_USER_LEVEL_PRIV_PRIV_FIELD . " FROM " . EWR_USER_LEVEL_PRIV_TABLE;
+		if (!$this->IsAdmin() && count($this->UserLevelID) > 0)
+			$sUserPrivSql .= " WHERE " . EWR_USER_LEVEL_PRIV_USER_LEVEL_ID_FIELD . " IN (" . $this->UserLevelList() . ")";
 		if ($rs = $conn->Execute($sUserPrivSql)) {
 			$this->UserLevelPriv = $rs->GetRows();
 			$rs->Close();

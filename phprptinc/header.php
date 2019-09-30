@@ -94,6 +94,11 @@ var EWR_CHART_EXPORT_HANDLER = "<?php echo ewr_FullUrl("chartexporter11.php", "c
 <script type="text/javascript">ewr_GetScript("phprptjs/ewr11.js");</script>
 <script type="text/javascript">if (window.jQuery && !window.jQuery.views) ewr_GetScript("phprptjs/jsrender.min.js");</script>
 <script type="text/javascript">
+if (window.jQuery && !(jQuery.ew && jQuery.ew.ewjtable)) ewr_GetScript("jquery/jquery.ewjtable.min.js");
+if (!window.ew_Alert) ew_Alert = ewr_Alert;
+if (!window.ew_FormatDate) ew_FormatDate = ewr_FormatDate;
+</script>
+<script type="text/javascript">
 if (window.jQuery && !jQuery.fn.alert) ewr_GetScript("bootstrap3/js/bootstrap.min.js");
 if (window.jQuery && !window.jQuery.fileDownload) ewr_GetScript("jquery/jquery.fileDownload.min.js");
 if (window.jQuery && !jQuery.typeahead) ewr_GetScript("phprptjs/typeahead.jquery.js");
