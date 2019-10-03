@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/9/29" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/3" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -771,6 +771,12 @@
     <menu id="121">
       <phrase id="menutext" value="Reportes" />
     </menu>
+    <menu id="10057">
+      <phrase id="menutext" value="viewmarcologico" />
+    </menu>
+    <menu id="10049">
+      <phrase id="menutext" value="Dashboard 1" />
+    </menu>
     <menu id="10001">
       <phrase id="menutext" value="actividad" />
     </menu>
@@ -906,11 +912,32 @@
     <menu id="10047">
       <phrase id="menutext" value="Reportes" />
     </menu>
+    <menu id="10054">
+      <phrase id="menutext" value="UNIDADEDUCATIVA" />
+    </menu>
     <menu id="10045">
       <phrase id="menutext" value="ESTUDIANTES" />
     </menu>
     <menu id="10046">
       <phrase id="menutext" value="Report Estudiantes" />
+    </menu>
+    <menu id="10051">
+      <phrase id="menutext" value="PARTICIPANTE" />
+    </menu>
+    <menu id="10050">
+      <phrase id="menutext" value="ACTIVIDADES" />
+    </menu>
+    <menu id="10052">
+      <phrase id="menutext" value="DOCENTE" />
+    </menu>
+    <menu id="10053">
+      <phrase id="menutext" value="ESTUDIANTES" />
+    </menu>
+    <menu id="10055">
+      <phrase id="menutext" value="GRUPODISCAPACIDAD" />
+    </menu>
+    <menu id="10056">
+      <phrase id="menutext" value="GRUPOTOTALES" />
     </menu>
     <table id="apoderado">
       <phrase id="tblcaption" value="Apoderado" />

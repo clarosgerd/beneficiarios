@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2019/09/29" author="e.World Technology Ltd.">
-  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/09/29 18:43:23" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2019/10/03" author="e.World Technology Ltd.">
+  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/10/03 06:43:50" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="actividad" name="actividad" caption="actividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="apoderado" name="apoderado" caption="apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="atencion" name="atencion" caption="atencion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -47,5 +47,14 @@
     <table id="usuario" name="usuario" caption="usuario" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewestudiante" name="viewestudiante" caption="ESTUDIANTES" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="ReportEstudiantes" name="ReportEstudiantes" caption="Report Estudiantes" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="Dashboard1" name="Dashboard1" caption="Dashboard 1" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewactividad" name="viewactividad" caption="ACTIVIDAD" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewparticipante" name="viewparticipante" caption="PARTICIPANTE" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewdocente" name="viewdocente" caption="DOCENTE" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantecurso" name="viewestudiantecurso" caption="ESTUDIANTES" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewunidadeducativa" name="viewunidadeducativa" caption="UNIDADEDUCATIVA" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantesetareo" name="viewestudiantesetareo" caption="GRUPODISCAPACIDAD" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantesetareocurso" name="viewestudiantesetareocurso" caption="GRUPOTOTALES" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewmarcologico" name="viewmarcologico" caption="viewmarcologico" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

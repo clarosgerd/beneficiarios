@@ -2,142 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d902bab-7dc9-4c40-9ddf-8d2e4d5e28e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/actividadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/actividadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/actividadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apoderadorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apoderadorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apoderadorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atencionrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atencionrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atencionrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/audiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/audiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/audiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/categoriarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/categoriarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/categoriarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/centrosrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/centrosrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/centrosrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ciudadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ciudadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ciudadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departamentorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departamentorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/departamentorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/derivacionrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/derivacionrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/derivacionrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/diagnosticoaudiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/diagnosticoaudiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/diagnosticoaudiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/discapacidadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/discapacidadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/discapacidadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/especialistarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/especialistarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/especialistarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/estudianterpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/estudianterptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/estudianterptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/institucionesdesaludrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/institucionesdesaludrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/institucionesdesaludrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mediorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mediorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mediorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/municipiorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/municipiorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/municipiorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neonatalrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neonatalrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neonatalrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrasorganizacionesrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrasorganizacionesrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrasorganizacionesrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrosrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrosrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/otrosrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/participanterpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/participanterptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/participanterptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/personarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/personarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/personarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/provinciarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/provinciarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/provinciarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/proyecto/benificiaries (10).sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/proyecto/benificiaries (11).sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pruebasaudiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pruebasaudiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pruebasaudiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/referenciarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/referenciarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/referenciarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sectorrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sectorrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sectorrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/taponrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/taponrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/taponrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoactividadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoactividadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoactividadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipocentrorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipocentrorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipocentrorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiagnosticoaudiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiagnosticoaudiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiagnosticoaudiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiscapacidadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiscapacidadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipodiscapacidadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoespecialidadrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoespecialidadrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipoespecialidadrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebasaudiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebasaudiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipopruebasaudiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipotratamientoaudiologiarpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipotratamientoaudiologiarptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tipotratamientoaudiologiarptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tratamientorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tratamientorptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tratamientorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelpermissionsrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelpermissionsrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelpermissionsrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelsrpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelsrptinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/userlevelsrptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuariorpt.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuariorptpager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/viewestudianteinfo.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/viewestudiantelist.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReportEstudiantessmry.php" afterPath="$PROJECT_DIR$/ReportEstudiantessmry.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReportEstudiantessmryinfo.php" afterPath="$PROJECT_DIR$/ReportEstudiantessmryinfo.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docenterpt.php" afterPath="$PROJECT_DIR$/docenterpt.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/escolarrpt.php" afterPath="$PROJECT_DIR$/escolarrpt.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewcfg14.php" afterPath="$PROJECT_DIR$/ewcfg14.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmenu.php" afterPath="$PROJECT_DIR$/ewmenu.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phplang/english.xml" afterPath="$PROJECT_DIR$/phplang/english.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptinc/footer.php" afterPath="$PROJECT_DIR$/phprptinc/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptinc/header.php" afterPath="$PROJECT_DIR$/phprptinc/header.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptlang/english.xml" afterPath="$PROJECT_DIR$/phprptlang/english.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.prp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.prp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rcfg11.php" afterPath="$PROJECT_DIR$/rcfg11.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rphpfn11.php" afterPath="$PROJECT_DIR$/rphpfn11.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unidadeducativarpt.php" afterPath="$PROJECT_DIR$/unidadeducativarpt.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudianterpt.php" afterPath="$PROJECT_DIR$/viewestudianterpt.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudianterptinfo.php" afterPath="$PROJECT_DIR$/viewestudianterptinfo.php" />
     </list>
@@ -185,6 +59,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -197,7 +72,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -228,32 +102,39 @@
       <option name="presentableId" value="Default" />
       <updated>1568062422828</updated>
       <workItem from="1568062424226" duration="629000" />
+      <workItem from="1570100260719" duration="815000" />
     </task>
+    <task id="LOCAL-00001" summary="first report">
+      <created>1569842383931</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569842383931</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2804000" />
+    <option name="totallyTimeSpent" value="4332000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25340393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5295008" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.52118003" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -263,6 +144,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first report" />
+    <option name="LAST_COMMIT_MESSAGE" value="first report" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

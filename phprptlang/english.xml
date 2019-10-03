@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/9/29" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/3" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -369,6 +369,12 @@
   </global>
   <project>
     <phrase id="footertext" value="&amp;copy;2018 e.World Technology Ltd. All rights reserved." />
+    <menu id="57">
+      <phrase id="menutext" value="viewmarcologico" />
+    </menu>
+    <menu id="49">
+      <phrase id="menutext" value="Dashboard 1" />
+    </menu>
     <menu id="1">
       <phrase id="menutext" value="actividad" />
     </menu>
@@ -504,11 +510,32 @@
     <menu id="47">
       <phrase id="menutext" value="Reportes" />
     </menu>
+    <menu id="54">
+      <phrase id="menutext" value="UNIDADEDUCATIVA" />
+    </menu>
     <menu id="45">
       <phrase id="menutext" value="ESTUDIANTES" />
     </menu>
     <menu id="46">
       <phrase id="menutext" value="Report Estudiantes" />
+    </menu>
+    <menu id="51">
+      <phrase id="menutext" value="PARTICIPANTE" />
+    </menu>
+    <menu id="50">
+      <phrase id="menutext" value="ACTIVIDADES" />
+    </menu>
+    <menu id="52">
+      <phrase id="menutext" value="DOCENTE" />
+    </menu>
+    <menu id="53">
+      <phrase id="menutext" value="ESTUDIANTES" />
+    </menu>
+    <menu id="55">
+      <phrase id="menutext" value="GRUPODISCAPACIDAD" />
+    </menu>
+    <menu id="56">
+      <phrase id="menutext" value="GRUPOTOTALES" />
     </menu>
     <table id="actividad">
       <phrase id="tblcaption" value="actividad" />
@@ -1669,6 +1696,285 @@
       </field>
       <field id="tipodiscapcidad">
         <phrase id="fldcaption" value="tipodiscapcidad" />
+      </field>
+    </table>
+    <table id="dashboard1">
+      <phrase id="tblcaption" value="Dashboard 1" />
+    </table>
+    <table id="viewactividad">
+      <phrase id="tblcaption" value="ACTIVIDAD" />
+      <field id="sector">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="tipoactividad">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="organizador">
+        <phrase id="fldcaption" value="organizador" />
+      </field>
+      <field id="nombreactividad">
+        <phrase id="fldcaption" value="nombreactividad" />
+      </field>
+      <field id="nombrelocal">
+        <phrase id="fldcaption" value="nombrelocal" />
+      </field>
+      <field id="direccionlocal">
+        <phrase id="fldcaption" value="direccionlocal" />
+      </field>
+      <field id="fecha_inicio">
+        <phrase id="fldcaption" value="fecha inicio" />
+      </field>
+      <field id="fecha_fin">
+        <phrase id="fldcaption" value="fecha fin" />
+      </field>
+      <field id="horasprogramadas">
+        <phrase id="fldcaption" value="horasprogramadas" />
+      </field>
+      <field id="perosnanombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="personaapellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="personaapellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="contenido">
+        <phrase id="fldcaption" value="contenido" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+    </table>
+    <table id="viewparticipante">
+      <phrase id="tblcaption" value="PARTICIPANTE" />
+      <field id="sector">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="actividad">
+        <phrase id="fldcaption" value="nombreactividad" />
+      </field>
+      <field id="categoria">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="direcciondomicilio">
+        <phrase id="fldcaption" value="direcciondomicilio" />
+      </field>
+      <field id="ocupacion">
+        <phrase id="fldcaption" value="ocupacion" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="cargo">
+        <phrase id="fldcaption" value="cargo" />
+      </field>
+      <field id="nivelestudio">
+        <phrase id="fldcaption" value="nivelestudio" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+    </table>
+    <table id="viewdocente">
+      <phrase id="tblcaption" value="DOCENTE" />
+      <field id="deoartamento">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="materias">
+        <phrase id="fldcaption" value="materias" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapacidad">
+        <phrase id="fldcaption" value="tipodiscapacidad" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+    </table>
+    <table id="viewestudiantecurso">
+      <phrase id="tblcaption" value="ESTUDIANTES" />
+      <field id="departamento">
+        <phrase id="fldcaption" value="departamento" />
+      </field>
+      <field id="codigorude">
+        <phrase id="fldcaption" value="codigorude" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="municipio" />
+      </field>
+      <field id="provincia">
+        <phrase id="fldcaption" value="provincia" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="materno">
+        <phrase id="fldcaption" value="materno" />
+      </field>
+      <field id="paterno">
+        <phrase id="fldcaption" value="paterno" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapcidad">
+        <phrase id="fldcaption" value="tipodiscapcidad" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+    </table>
+    <table id="viewunidadeducativa">
+      <phrase id="tblcaption" value="UNIDADEDUCATIVA" />
+      <field id="centro">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="codigo_sie">
+        <phrase id="fldcaption" value="codigo sie" />
+      </field>
+      <field id="departamento">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="municipio">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="principio">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="direccion" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="_email">
+        <phrase id="fldcaption" value="email" />
+      </field>
+    </table>
+    <table id="viewestudiantesetareo">
+      <phrase id="tblcaption" value="GRUPODISCAPACIDAD" />
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="etareo">
+        <phrase id="fldcaption" value="etareo" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+    </table>
+    <table id="viewestudiantesetareocurso">
+      <phrase id="tblcaption" value="GRUPOTOTALES" />
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="etareo">
+        <phrase id="fldcaption" value="etareo" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+    </table>
+    <table id="viewmarcologico">
+      <phrase id="tblcaption" value="viewmarcologico" />
+      <field id="edad">
+        <phrase id="fldcaption" value="edad" />
+      </field>
+      <field id="etareo">
+        <phrase id="fldcaption" value="etareo" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
       </field>
     </table>
   </project>
