@@ -8,7 +8,7 @@ $viewdocente = NULL;
 //
 class crviewdocente extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
-	var $ShowCompactSummaryFooter = TRUE;
+	var $ShowCompactSummaryFooter = FALSE;
 	var $deoartamento;
 	var $unidadeducativa;
 	var $nombres;
@@ -35,7 +35,7 @@ class crviewdocente extends crTableBase {
 		$this->TableReportType = 'rpt';
 		$this->SourcTableIsCustomView = FALSE;
 		$this->DBID = 'DB';
-		$this->ExportAll = FALSE;
+		$this->ExportAll = TRUE;
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
@@ -396,7 +396,17 @@ class crviewdocente extends crTableBase {
 	// Sort URL
 	function SortUrl(&$fld) {
 		global $grDashboardReport;
-		return "";
+		if ($this->Export <> "" || $grDashboardReport ||
+			in_array($fld->FldType, array(128, 204, 205))) { // Unsortable data type
+				return "";
+		} elseif ($fld->Sortable) {
+
+			//$sUrlParm = "order=" . urlencode($fld->FldName) . "&ordertype=" . $fld->ReverseSort();
+			$sUrlParm = "order=" . urlencode($fld->FldName) . "&amp;ordertype=" . $fld->ReverseSort();
+			return ewr_CurrentPage() . "?" . $sUrlParm;
+		} else {
+			return "";
+		}
 	}
 
 	// Setup lookup filters of a field

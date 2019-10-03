@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configuration date="2019/10/03" author="e.World Technology Ltd.">
-  <project id="{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.pmp" name="beneficiarios" product="PHPMaker" version="14.0" datetime="2019/10/03 06:51:42" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" relatedid="{707530BA-BEB7-415A-B683-2C9753B31FA3}">
+  <project id="{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.pmp" name="beneficiarios" product="PHPMaker" version="14.0" datetime="2019/10/03 13:59:16" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" relatedid="{707530BA-BEB7-415A-B683-2C9753B31FA3}">
     <table id="apoderado" name="apoderado" caption="Apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="centros" name="centros" caption="Centros" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="escolar" name="escolar" caption="Escolar" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -47,5 +47,13 @@
     <table id="derivacion" name="derivacion" caption="derivacion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="tipoespecialidad" name="tipoespecialidad" caption="tipo especialidad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewestudiante" name="viewestudiante" caption="viewestudiante" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewactividad" name="viewactividad" caption="viewactividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewdocente" name="viewdocente" caption="viewdocente" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantecurso" name="viewestudiantecurso" caption="viewestudiantecurso" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantesetareo" name="viewestudiantesetareo" caption="viewestudiantesetareo" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewestudiantesetareocurso" name="viewestudiantesetareocurso" caption="viewestudiantesetareocurso" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewmarcologico" name="viewmarcologico" caption="viewmarcologico" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewparticipante" name="viewparticipante" caption="viewparticipante" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewunidadeducativa" name="viewunidadeducativa" caption="viewunidadeducativa" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

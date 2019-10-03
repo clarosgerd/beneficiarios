@@ -7,8 +7,8 @@ $viewestudiante = NULL;
 // Table class for viewestudiante
 //
 class crviewestudiante extends crTableBase {
-	var $ShowGroupHeaderAsRow = TRUE;
-	var $ShowCompactSummaryFooter = TRUE;
+	var $ShowGroupHeaderAsRow = FALSE;
+	var $ShowCompactSummaryFooter = FALSE;
 	var $codigorude;
 	var $codigorude_es;
 	var $ci;
@@ -47,24 +47,24 @@ class crviewestudiante extends crTableBase {
 		$this->codigorude = new crField('viewestudiante', 'viewestudiante', 'x_codigorude', 'codigorude', '`codigorude`', 200, EWR_DATATYPE_STRING, -1);
 		$this->codigorude->Sortable = TRUE; // Allow sort
 		$this->codigorude->DateFilter = "";
-		$this->codigorude->SqlSelect = "SELECT DISTINCT `codigorude`, `codigorude` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->codigorude->SqlOrderBy = "`codigorude`";
+		$this->codigorude->SqlSelect = "";
+		$this->codigorude->SqlOrderBy = "";
 		$this->fields['codigorude'] = &$this->codigorude;
 
 		// codigorude_es
 		$this->codigorude_es = new crField('viewestudiante', 'viewestudiante', 'x_codigorude_es', 'codigorude_es', '`codigorude_es`', 200, EWR_DATATYPE_STRING, -1);
 		$this->codigorude_es->Sortable = TRUE; // Allow sort
 		$this->codigorude_es->DateFilter = "";
-		$this->codigorude_es->SqlSelect = "SELECT DISTINCT `codigorude_es`, `codigorude_es` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->codigorude_es->SqlOrderBy = "`codigorude_es`";
+		$this->codigorude_es->SqlSelect = "";
+		$this->codigorude_es->SqlOrderBy = "";
 		$this->fields['codigorude_es'] = &$this->codigorude_es;
 
 		// ci
 		$this->ci = new crField('viewestudiante', 'viewestudiante', 'x_ci', 'ci', '`ci`', 200, EWR_DATATYPE_STRING, -1);
 		$this->ci->Sortable = TRUE; // Allow sort
 		$this->ci->DateFilter = "";
-		$this->ci->SqlSelect = "SELECT DISTINCT `ci`, `ci` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->ci->SqlOrderBy = "`ci`";
+		$this->ci->SqlSelect = "";
+		$this->ci->SqlOrderBy = "";
 		$this->fields['ci'] = &$this->ci;
 
 		// fechanacimiento
@@ -96,8 +96,8 @@ class crviewestudiante extends crTableBase {
 		$this->nrodiscapacidad = new crField('viewestudiante', 'viewestudiante', 'x_nrodiscapacidad', 'nrodiscapacidad', '`nrodiscapacidad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nrodiscapacidad->Sortable = TRUE; // Allow sort
 		$this->nrodiscapacidad->DateFilter = "";
-		$this->nrodiscapacidad->SqlSelect = "SELECT DISTINCT `nrodiscapacidad`, `nrodiscapacidad` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->nrodiscapacidad->SqlOrderBy = "`nrodiscapacidad`";
+		$this->nrodiscapacidad->SqlSelect = "";
+		$this->nrodiscapacidad->SqlOrderBy = "";
 		$this->fields['nrodiscapacidad'] = &$this->nrodiscapacidad;
 
 		// nombreinstitucion
@@ -144,24 +144,24 @@ class crviewestudiante extends crTableBase {
 		$this->nombre = new crField('viewestudiante', 'viewestudiante', 'x_nombre', 'nombre', '`nombre`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nombre->Sortable = TRUE; // Allow sort
 		$this->nombre->DateFilter = "";
-		$this->nombre->SqlSelect = "SELECT DISTINCT `nombre`, `nombre` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->nombre->SqlOrderBy = "`nombre`";
+		$this->nombre->SqlSelect = "";
+		$this->nombre->SqlOrderBy = "";
 		$this->fields['nombre'] = &$this->nombre;
 
 		// materno
 		$this->materno = new crField('viewestudiante', 'viewestudiante', 'x_materno', 'materno', '`materno`', 200, EWR_DATATYPE_STRING, -1);
 		$this->materno->Sortable = TRUE; // Allow sort
 		$this->materno->DateFilter = "";
-		$this->materno->SqlSelect = "SELECT DISTINCT `materno`, `materno` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->materno->SqlOrderBy = "`materno`";
+		$this->materno->SqlSelect = "";
+		$this->materno->SqlOrderBy = "";
 		$this->fields['materno'] = &$this->materno;
 
 		// paterno
 		$this->paterno = new crField('viewestudiante', 'viewestudiante', 'x_paterno', 'paterno', '`paterno`', 200, EWR_DATATYPE_STRING, -1);
 		$this->paterno->Sortable = TRUE; // Allow sort
 		$this->paterno->DateFilter = "";
-		$this->paterno->SqlSelect = "SELECT DISTINCT `paterno`, `paterno` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->paterno->SqlOrderBy = "`paterno`";
+		$this->paterno->SqlSelect = "";
+		$this->paterno->SqlOrderBy = "";
 		$this->fields['paterno'] = &$this->paterno;
 
 		// edad
@@ -169,24 +169,24 @@ class crviewestudiante extends crTableBase {
 		$this->edad->Sortable = TRUE; // Allow sort
 		$this->edad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->edad->DateFilter = "";
-		$this->edad->SqlSelect = "SELECT DISTINCT `edad`, `edad` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->edad->SqlOrderBy = "`edad`";
+		$this->edad->SqlSelect = "";
+		$this->edad->SqlOrderBy = "";
 		$this->fields['edad'] = &$this->edad;
 
 		// discapacidad
 		$this->discapacidad = new crField('viewestudiante', 'viewestudiante', 'x_discapacidad', 'discapacidad', '`discapacidad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->discapacidad->Sortable = TRUE; // Allow sort
 		$this->discapacidad->DateFilter = "";
-		$this->discapacidad->SqlSelect = "SELECT DISTINCT `discapacidad`, `discapacidad` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->discapacidad->SqlOrderBy = "`discapacidad`";
+		$this->discapacidad->SqlSelect = "";
+		$this->discapacidad->SqlOrderBy = "";
 		$this->fields['discapacidad'] = &$this->discapacidad;
 
 		// tipodiscapcidad
 		$this->tipodiscapcidad = new crField('viewestudiante', 'viewestudiante', 'x_tipodiscapcidad', 'tipodiscapcidad', '`tipodiscapcidad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->tipodiscapcidad->Sortable = TRUE; // Allow sort
 		$this->tipodiscapcidad->DateFilter = "";
-		$this->tipodiscapcidad->SqlSelect = "SELECT DISTINCT `tipodiscapcidad`, `tipodiscapcidad` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->tipodiscapcidad->SqlOrderBy = "`tipodiscapcidad`";
+		$this->tipodiscapcidad->SqlSelect = "";
+		$this->tipodiscapcidad->SqlOrderBy = "";
 		$this->fields['tipodiscapcidad'] = &$this->tipodiscapcidad;
 	}
 

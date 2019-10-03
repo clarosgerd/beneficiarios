@@ -1,26 +1,25 @@
 <?php
 
 // Global variable for table object
-$viewestudiantesetareocurso = NULL;
+$viewmarcologico = NULL;
 
 //
-// Table class for viewestudiantesetareocurso
+// Table class for viewmarcologico
 //
-class crviewestudiantesetareocurso extends crTableBase {
-	var $ShowGroupHeaderAsRow = FALSE;
-	var $ShowCompactSummaryFooter = FALSE;
+class crviewmarcologico extends crTableBase {
+	var $ShowGroupHeaderAsRow = TRUE;
+	var $ShowCompactSummaryFooter = TRUE;
 	var $edad;
 	var $etareo;
 	var $nombreinstitucion;
-	var $curso;
 
 	//
 	// Table class constructor
 	//
 	function __construct() {
 		global $ReportLanguage, $grLanguage;
-		$this->TableVar = 'viewestudiantesetareocurso';
-		$this->TableName = 'viewestudiantesetareocurso';
+		$this->TableVar = 'viewmarcologico';
+		$this->TableName = 'viewmarcologico';
 		$this->TableType = 'VIEW';
 		$this->TableReportType = 'rpt';
 		$this->SourcTableIsCustomView = FALSE;
@@ -30,7 +29,7 @@ class crviewestudiantesetareocurso extends crTableBase {
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
 		// edad
-		$this->edad = new crField('viewestudiantesetareocurso', 'viewestudiantesetareocurso', 'x_edad', 'edad', '`edad`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->edad = new crField('viewmarcologico', 'viewmarcologico', 'x_edad', 'edad', '`edad`', 20, EWR_DATATYPE_NUMBER, -1);
 		$this->edad->Sortable = TRUE; // Allow sort
 		$this->edad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->edad->DateFilter = "";
@@ -39,7 +38,7 @@ class crviewestudiantesetareocurso extends crTableBase {
 		$this->fields['edad'] = &$this->edad;
 
 		// etareo
-		$this->etareo = new crField('viewestudiantesetareocurso', 'viewestudiantesetareocurso', 'x_etareo', 'etareo', '`etareo`', 200, EWR_DATATYPE_STRING, -1);
+		$this->etareo = new crField('viewmarcologico', 'viewmarcologico', 'x_etareo', 'etareo', '`etareo`', 200, EWR_DATATYPE_STRING, -1);
 		$this->etareo->Sortable = TRUE; // Allow sort
 		$this->etareo->DateFilter = "";
 		$this->etareo->SqlSelect = "";
@@ -47,20 +46,12 @@ class crviewestudiantesetareocurso extends crTableBase {
 		$this->fields['etareo'] = &$this->etareo;
 
 		// nombreinstitucion
-		$this->nombreinstitucion = new crField('viewestudiantesetareocurso', 'viewestudiantesetareocurso', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nombreinstitucion = new crField('viewmarcologico', 'viewmarcologico', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
 		$this->nombreinstitucion->DateFilter = "";
 		$this->nombreinstitucion->SqlSelect = "";
 		$this->nombreinstitucion->SqlOrderBy = "";
 		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
-
-		// curso
-		$this->curso = new crField('viewestudiantesetareocurso', 'viewestudiantesetareocurso', 'x_curso', 'curso', '`curso`', 200, EWR_DATATYPE_STRING, -1);
-		$this->curso->Sortable = TRUE; // Allow sort
-		$this->curso->DateFilter = "";
-		$this->curso->SqlSelect = "";
-		$this->curso->SqlOrderBy = "";
-		$this->fields['curso'] = &$this->curso;
 	}
 
 	// Set Field Visibility
@@ -120,7 +111,7 @@ class crviewestudiantesetareocurso extends crTableBase {
 	var $_SqlFrom = "";
 
 	function getSqlFrom() {
-		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`viewestudiantesetareocurso`";
+		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`viewmarcologico`";
 	}
 
 	function SqlFrom() { // For backward compatibility
@@ -211,7 +202,7 @@ class crviewestudiantesetareocurso extends crTableBase {
 	var $_SqlSelectAgg = "";
 
 	function getSqlSelectAgg() {
-		return ($this->_SqlSelectAgg <> "") ? $this->_SqlSelectAgg : "SELECT COUNT(*) AS `cnt_etareo` FROM " . $this->getSqlFrom();
+		return ($this->_SqlSelectAgg <> "") ? $this->_SqlSelectAgg : "SELECT * FROM " . $this->getSqlFrom();
 	}
 
 	function SqlSelectAgg() { // For backward compatibility

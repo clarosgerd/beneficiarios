@@ -294,6 +294,9 @@ class crviewparticipante_rpt extends crviewparticipante {
 
 		// Security
 		$Security = new crAdvancedSecurity();
+
+		// Process generate request
+		$this->ProcessGenRequest();
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin(); // Auto login
 		$Security->TablePermission_Loading();
 		$Security->LoadCurrentUserLevel($this->ProjectID . 'viewparticipante');
@@ -310,6 +313,12 @@ class crviewparticipante_rpt extends crviewparticipante {
 			$Security->SaveLastUrl();
 			$this->setFailureMessage(ewr_DeniedMsg()); // Set no permission
 			$this->Page_Terminate(ewr_GetUrl("login.php"));
+		}
+
+		// Generate request URL
+		if ($this->GenerateRequestUrl()) {
+			$this->Page_Terminate();
+			exit();
 		}
 
 		// Get export parameters
@@ -347,6 +356,208 @@ class crviewparticipante_rpt extends crviewparticipante {
 		$this->CreateToken();
 	}
 
+	// Generate request URL
+	function GenerateRequestUrl() {
+		global $Security, $ReportLanguage, $grLanguage, $ReportOptions;
+		global $UserTableConn;
+		$post = $_POST;
+
+		// Check if create URL request
+		if (count($post) == 0 || @$post["generateurl"] <> "1" || @$post["reporttype"] == "") {
+			$UserNameList = array();
+			if ($Security->IsSysAdmin())
+				$UserNameList["@@admin"] = $ReportLanguage->Phrase("ReportFormUserDefault");
+
+			// Get list of user names
+			$sSql = EWR_LOGIN_SELECT_SQL;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				while (!$rs->EOF) {
+					$usr = $rs->fields('login');
+					$userid = $rs->fields('login');
+					if (!$Security->IsSysAdmin() && !in_array(strval($userid), $Security->UserID))
+						$usr = "";
+					$lvl = $rs->fields('id_rol');
+					$priv = $Security->GetUserLevelPrivEx($this->ProjectID . $this->TableName, $lvl);
+					if (($priv & EWR_ALLOW_REPORT) <> EWR_ALLOW_REPORT)
+						$usr = "";
+					if ($usr <> "")
+						$UserNameList[$usr] = $usr;
+					$rs->MoveNext();
+				}
+			}
+			$ReportOptions["UserNameList"] = $UserNameList;
+			$ReportOptions["ShowFilter"] = TRUE;
+			return FALSE;
+		}
+
+		// Check if login
+		if (!$Security->IsLoggedIn())
+			return FALSE;
+
+		// Get username/password
+		$usr = @$post["username"];
+		$pwd = "";
+		if ($usr == "@@admin") {
+			$usr = EWR_ADMIN_USER_NAME;
+			$pwd = EWR_ADMIN_PASSWORD;
+		} else {
+			$sFilter = str_replace("%u", ewr_AdjustSql($usr, EWR_USER_TABLE_DBID), EWR_USER_NAME_FILTER);
+			$sSql = EWR_LOGIN_SELECT_SQL . " WHERE " . $sFilter;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				if (!$rs->EOF)
+					$pwd = $rs->fields('password');
+			}
+		}
+		if ($usr == "" || $pwd == "") // No user specified
+			return FALSE;
+		$usr = ewr_Encrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$pwd = ewr_Encrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+
+		// Set report parameters
+		$reportType = @$post["reporttype"];
+		$genKey = ewr_Encrypt($this->TableVar, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$url = ewr_FullUrl();
+		$url .= "?reporttype=" . $reportType . "&k=" . urlencode($genKey) . "&u=" . urlencode($usr) . "&p=" . urlencode($pwd);
+		if ($reportType == "email") {
+			$sender = @$post["sender"];
+			$recipient = @$post["recipient"];
+			$cc = @$post["cc"];
+			$bcc = @$post["bcc"];
+			$subject = @$post["subject"];
+			if ($sender == "" || $recipient == "" || $subject == "")
+				return FALSE;
+			$url .= "&sender=" . urlencode($sender) . "&recipient=" . urlencode($recipient) . "&subject=" . urlencode($subject);
+			if ($cc <> "") $url .= "&cc=" . urlencode($cc);
+			if ($bcc <> "") $url .= "&bcc=" . urlencode($bcc);
+		}
+		$pageOption = @$post["pageoption"];
+		$url .= ($pageOption == "all") ? "&exportall=1" : "&exportall=0&start=1"; // All pages / First page
+
+		// Set report filter
+		$filterName = @$post["filtername"];
+		if ($filterName == "")
+			$filterName = "_none";
+		elseif ($filterName == "@@current")
+			$filterName = "_user";
+		$url .= "&filtername=" . urlencode($filterName);
+		$filter = json_decode(@$post["filter"], TRUE);
+		if (is_array($filter)) {
+			foreach ($filter as $key => $val)
+				$url .= "&" . $key . "=" . urlencode($val);
+		}
+
+		// Set response type
+		$responseType = @$post["responsetype"];
+		$url .= "&responsetype=" . urlencode($responseType);
+
+		// Set show current filter
+		$showCurrentFilter = @$post["showcurrentfilter"];
+		$url .= "&showfilter=" . ($showCurrentFilter == "1" ? "1" : "0");
+		echo json_encode(array("url" => $url));
+		return TRUE;
+	}
+
+	// Process generate request
+	function ProcessGenRequest() {
+		global $Security, $ReportLanguage;
+		$ar = ewr_IsHttpPost() ? $_POST : $_GET;
+		$genType = @$ar["reporttype"];
+		$genKey = @$ar["k"];
+		if (array_key_exists("k", $ar)) // Remove key
+			unset($ar["k"]);
+		if (ewr_Decrypt($genKey, EWR_REPORT_LOG_ENCRYPT_KEY) == $this->TableVar && $genType <> "") {
+			$usr = @$ar["u"];
+			$usr = ewr_Decrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+			if (array_key_exists("u", $ar)) // Update actual user name
+				$ar["u"] = $usr;
+			$pwd = @$ar["p"];
+			if (array_key_exists("p", $ar)) // Remove password
+				unset($ar["p"]);
+			$pwd = ewr_Decrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+			$encrypted = @$ar["encrypted"] == "1";
+			$bLogin = $Security->ValidateUser($usr, $pwd, FALSE, $encrypted); // Manual login
+			if (!$bLogin) {
+				echo ewr_DeniedMsg();
+				exit();
+			} else {
+				if ($genType == "html") $genType = "print";
+				$this->Export = $genType;
+				$this->ShowCurrentFilter = FALSE;
+				if (@$ar["exportall"] <> "") // Export all option specified
+					$this->ExportAll = $ar["exportall"] == "1";
+				$this->GenOptions = $this->GetGenOptions($ar); // Set up generate options
+				$this->SetupGenFilterList($ar); // Update filter list
+			}
+		}
+	}
+
+	// Generate file extension
+	function GenFileExt($genType) {
+		if ($genType == "print" || $genType == "html")
+			return "html";
+		elseif ($genType == "excel")
+			return "xls";
+		elseif ($genType == "word")
+			return "doc";
+		elseif ($genType == "pdf")
+			return "pdf";
+		else
+			return $genType;
+	}
+
+	// Get Generate options
+	function GetGenOptions($ar) {
+		$options = array();
+		$options["parms"] = json_encode($ar);
+
+		// Set up gen type / filename
+		$genType = @$ar["reporttype"];
+		$options["reporttype"] = $genType;
+		$options["filtername"] = @$ar["filtername"];
+		$options["responsetype"] = @$ar["responsetype"];
+		if ($genType == "email") { // Email
+			$options["sender"] = @$ar["sender"];
+			$options["recipient"] = @$ar["recipient"];
+			$options["subject"] = @$ar["subject"];
+		} else {
+			$options["folder"] = (@$ar["folder"] <> "") ? $ar["folder"] : EWR_UPLOAD_DEST_PATH;
+			$options["filename"] = (@$ar["filename"] <> "") ? $ar["filename"] : $this->TableVar . "_" . ewr_RandomGuid() . "." . $this->GenFileExt($genType);
+		}
+
+		// Paging
+		$options["start"] = @$ar["start"]; // Start
+		$options["pageno"] = @$ar["pageno"]; // Page number
+		$options["grpperpage"] = @$ar["grpperpage"]; // Group per page
+
+		// Sort
+		$options["order"] = @$ar["order"]; // Order by
+		$options["ordertype"] = @$ar["ordertype"]; // ASC/DESC
+		if ($options["order"] == "") // Reset sort if not specified
+			$options["resetsort"] = "1";
+		$options["showfilter"] = @$ar["showfilter"]; // Show current filter
+		return $options;
+	}
+
+	// Set up generate filter
+	function SetupGenFilterList($ar) {
+		$filter = array();
+		$keys = preg_grep('/^(sv|sv2|so|so2|sc|sel)_/', array_keys($ar));
+		foreach ($keys as $key) {
+			$filter[$key] = @$ar[$key];
+		}
+		return $this->SetupFilterList($filter); 
+	}
+
+	// Write generate response
+	function WriteGenResponse($genurl) {
+		if ($genurl <> "") {
+			$genType = @$this->GenOptions["reporttype"];
+			$responseType = @$this->GenOptions["responsetype"];
+			if ($responseType == "json" || $genType == "email")
+				echo json_encode(array("url" => $genurl));
+		}
+	}
+
 	// Set up export options
 	function SetupExportOptions() {
 		global $Security, $ReportLanguage, $ReportOptions;
@@ -356,19 +567,19 @@ class crviewparticipante_rpt extends crviewparticipante {
 		// Printer friendly
 		$item = &$this->ExportOptions->Add("print");
 		$item->Body = "<a class=\"ewrExportLink ewPrint\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" href=\"" . $this->ExportPrintUrl . "\">" . $ReportLanguage->Phrase("PrinterFriendly") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["print"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPrint") : "";
 
 		// Export to Excel
 		$item = &$this->ExportOptions->Add("excel");
 		$item->Body = "<a class=\"ewrExportLink ewExcel\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" href=\"" . $this->ExportExcelUrl . "\">" . $ReportLanguage->Phrase("ExportToExcel") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["excel"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormExcel") : "";
 
 		// Export to Word
 		$item = &$this->ExportOptions->Add("word");
 		$item->Body = "<a class=\"ewrExportLink ewWord\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" href=\"" . $this->ExportWordUrl . "\">" . $ReportLanguage->Phrase("ExportToWord") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["word"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormWord") : "";
 
 		// Export to Pdf
@@ -377,7 +588,7 @@ class crviewparticipante_rpt extends crviewparticipante {
 		$item->Visible = FALSE;
 
 		// Uncomment codes below to show export to Pdf link
-//		$item->Visible = FALSE;
+//		$item->Visible = TRUE;
 
 		$ReportTypes["pdf"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPdf") : "";
 
@@ -390,7 +601,7 @@ class crviewparticipante_rpt extends crviewparticipante {
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 
 		// Drop down button for export
-		$this->ExportOptions->UseDropDownButton = FALSE;
+		$this->ExportOptions->UseDropDownButton = TRUE;
 		$this->ExportOptions->UseButtonGroup = TRUE;
 		$this->ExportOptions->UseImageAndText = $this->ExportOptions->UseDropDownButton;
 		$this->ExportOptions->DropDownButtonPhrase = $ReportLanguage->Phrase("ButtonExport");
@@ -413,6 +624,17 @@ class crviewparticipante_rpt extends crviewparticipante {
 
 		// Add group option item
 		$item = &$this->FilterOptions->Add($this->FilterOptions->GroupOptionName);
+		$item->Body = "";
+		$item->Visible = FALSE;
+
+		// Button to create generate URL
+		$item = &$this->GenerateOptions->Add("generateurl");
+		$item->Body = "<a type=\"button\" title=\"" . $ReportLanguage->Phrase("GenerateReportUrl", TRUE) . "\" onclick=\"ewr_ModalGenerateUrlShow(event);\" class=\"ewGenerateUrlBtn btn btn-default\"><span class=\"glyphicon glyphicon-link ewIcon\"></span></a>";
+		$item->Visible = $Security->IsLoggedIn(); // Check if logged in
+		$this->GenerateOptions->UseButtonGroup = TRUE;
+
+		// Add group option item
+		$item = &$this->GenerateOptions->Add($this->GenerateOptions->GroupOptionName);
 		$item->Body = "";
 		$item->Visible = FALSE;
 
@@ -662,10 +884,6 @@ class crviewparticipante_rpt extends crviewparticipante {
 
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
-
-		// Requires search criteria
-		if (($this->Filter == $this->UserIDFilter || $grFormError != "") && !$this->DrillDown)
-			$this->Filter = "0=101";
 
 		// Search options
 		$this->SetupSearchOptions();
@@ -1495,7 +1713,7 @@ class crviewparticipante_rpt extends crviewparticipante {
 		global $ReportLanguage, $ReportOptions;
 		$ReportTypes = $ReportOptions["ReportTypes"];
 		$item =& $this->ExportOptions->GetItem("pdf");
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		if ($item->Visible)
 			$ReportTypes["pdf"] = $ReportLanguage->Phrase("ReportFormPdf");
 		$exportid = session_id();
@@ -2182,11 +2400,93 @@ class crviewparticipante_rpt extends crviewparticipante {
 		} elseif ($orderBy <> "") {
 			$this->CurrentOrder = $orderBy;
 			$this->CurrentOrderType = $orderType;
+			$this->UpdateSort($this->sector); // sector
+			$this->UpdateSort($this->actividad); // actividad
+			$this->UpdateSort($this->categoria); // categoria
+			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
+			$this->UpdateSort($this->nombre); // nombre
+			$this->UpdateSort($this->apellidopaterno); // apellidopaterno
+			$this->UpdateSort($this->apellidomaterno); // apellidomaterno
+			$this->UpdateSort($this->fecha_nacimiento); // fecha_nacimiento
+			$this->UpdateSort($this->sexo); // sexo
+			$this->UpdateSort($this->ci); // ci
+			$this->UpdateSort($this->nrodiscapacidad); // nrodiscapacidad
+			$this->UpdateSort($this->celular); // celular
+			$this->UpdateSort($this->direcciondomicilio); // direcciondomicilio
+			$this->UpdateSort($this->ocupacion); // ocupacion
+			$this->UpdateSort($this->_email); // email
+			$this->UpdateSort($this->cargo); // cargo
+			$this->UpdateSort($this->nivelestudio); // nivelestudio
+			$this->UpdateSort($this->observaciones); // observaciones
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
 		}
 		return $this->getOrderBy();
+	}
+
+	// Export to HTML
+	function ExportHtml($html, $options = array()) {
+
+		//global $gsExportFile;
+		//header('Content-Type: text/html' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+		//header('Content-Disposition: attachment; filename=' . $gsExportFile . '.html');
+
+		$folder = @$this->GenOptions["folder"];
+		$fileName = @$this->GenOptions["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+
+		// Save generate file for print
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+			$baseTag = "<base href=\"" . ewr_BaseUrl() . "\">";
+			$html = preg_replace('/<head>/', '<head>' . $baseTag, $html);
+			ewr_SaveFile($folder, $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file")
+			echo $html;
+		return $saveToFile;
+	}
+
+	// Export to WORD
+	function ExportWord($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-word' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.doc');
+			echo $html;
+		}
+		return $saveToFile;
+	}
+
+	// Export to EXCEL
+	function ExportExcel($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-excel' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.xls');
+			echo $html;
+		}
+		return $saveToFile;
 	}
 
 	// Export PDF
@@ -2334,6 +2634,7 @@ $Page->Page_Render();
 <?php include_once "header.php" ?>
 <?php include_once "phprptinc/header.php" ?>
 <?php } ?>
+<?php if ($Page->Export == "" || $Page->Export == "print" || $Page->Export == "email" && @$gsEmailContentType == "url") { ?>
 <script type="text/javascript">
 
 // Create page object
@@ -2343,7 +2644,8 @@ var viewparticipante_rpt = new ewr_Page("viewparticipante_rpt");
 viewparticipante_rpt.PageID = "rpt"; // Page ID
 var EWR_PAGE_ID = viewparticipante_rpt.PageID;
 </script>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Form object
@@ -2377,7 +2679,7 @@ fviewparticipanterpt.ValidateRequired = false; // No JavaScript validation
 // Use Ajax
 </script>
 <?php } ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your client script here, no need to add script tags.
@@ -2411,8 +2713,10 @@ if (!$Page->DrillDownInPanel) {
 <div id="ewCenter" class="col-sm-12 ewCenter">
 <?php } ?>
 <!-- Summary Report begins -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="report_summary">
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <!-- Search form (begin) -->
 <form name="fviewparticipanterpt" id="fviewparticipanterpt" class="form-inline ewForm ewExtFilterForm" action="<?php echo ewr_CurrentPage() ?>">
 <?php $SearchPanelClass = ($Page->Filter <> "") ? " in" : " in"; ?>
@@ -2427,8 +2731,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_sector" id="sv_sector" name="sv_sector" size="30" maxlength="100" placeholder="<?php echo $Page->sector->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->sector->SearchValue) ?>"<?php echo $Page->sector->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_actividad" class="ewCell form-group">
 	<label for="sv_actividad" class="ewSearchCaption ewLabel"><?php echo $Page->actividad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_actividad" id="so_actividad" value="LIKE"></span>
@@ -2437,8 +2739,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_actividad" id="sv_actividad" name="sv_actividad" size="30" maxlength="100" placeholder="<?php echo $Page->actividad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->actividad->SearchValue) ?>"<?php echo $Page->actividad->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_categoria" class="ewCell form-group">
 	<label for="sv_categoria" class="ewSearchCaption ewLabel"><?php echo $Page->categoria->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_categoria" id="so_categoria" value="LIKE"></span>
@@ -2447,8 +2747,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_categoria" id="sv_categoria" name="sv_categoria" size="30" maxlength="100" placeholder="<?php echo $Page->categoria->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->categoria->SearchValue) ?>"<?php echo $Page->categoria->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_4" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>
@@ -2501,13 +2799,23 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 
 	if ($Page->ShowHeader) {
 ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<div class="box-header ewGridUpperPanel">
+<?php include "viewparticipanterptpager.php" ?>
+<div class="clearfix"></div>
+</div>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewparticipante" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <thead>
 	<!-- Table header -->
@@ -2522,7 +2830,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->sector->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_sector" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sector) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_sector" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sector) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->sector->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->sector->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->sector->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2540,7 +2848,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->actividad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_actividad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->actividad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_actividad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->actividad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->actividad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->actividad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->actividad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2558,7 +2866,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->categoria->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_categoria" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->categoria) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_categoria" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->categoria) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->categoria->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->categoria->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->categoria->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2576,7 +2884,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombreinstitucion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombreinstitucion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2594,7 +2902,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_nombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombre) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_nombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombre) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombre->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombre->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2612,7 +2920,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->apellidopaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidopaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2630,7 +2938,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->apellidomaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidomaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2648,7 +2956,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->fecha_nacimiento->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_fecha_nacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha_nacimiento) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_fecha_nacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha_nacimiento) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->fecha_nacimiento->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->fecha_nacimiento->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fecha_nacimiento->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2666,7 +2974,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->sexo->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->sexo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->sexo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->sexo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2684,7 +2992,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->ci->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ci->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2702,7 +3010,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nrodiscapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nrodiscapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2720,7 +3028,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->celular->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_celular" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->celular) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_celular" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->celular) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->celular->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->celular->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->celular->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2738,7 +3046,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->direcciondomicilio->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_direcciondomicilio" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direcciondomicilio) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_direcciondomicilio" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direcciondomicilio) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->direcciondomicilio->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->direcciondomicilio->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->direcciondomicilio->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2756,7 +3064,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->ocupacion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_ocupacion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ocupacion) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_ocupacion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ocupacion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ocupacion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->ocupacion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ocupacion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2774,7 +3082,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->_email->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante__email" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_email) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante__email" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_email) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->_email->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->_email->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_email->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2792,7 +3100,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->cargo->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_cargo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cargo) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_cargo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cargo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->cargo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->cargo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cargo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2810,7 +3118,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nivelestudio->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_nivelestudio" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nivelestudio) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_nivelestudio" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nivelestudio) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nivelestudio->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nivelestudio->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nivelestudio->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2828,7 +3136,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewparticipante_observaciones" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->observaciones) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewparticipante_observaciones" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->observaciones) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->observaciones->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->observaciones->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2942,27 +3250,45 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <tfoot>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && FALSE) { // No header displayed ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<div class="box-header ewGridUpperPanel">
+<?php include "viewparticipanterptpager.php" ?>
+<div class="clearfix"></div>
+</div>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewparticipante" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <?php } ?>
 <?php if ($Page->TotalGrps > 0 || FALSE) { // Show footer ?>
 </table>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
-<?php if (!($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<?php } ?>
+<?php if ($Page->TotalGrps > 0) { ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
 <div class="box-footer ewGridLowerPanel">
 <?php include "viewparticipanterptpager.php" ?>
 <div class="clearfix"></div>
 </div>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
+<?php } ?>
 <!-- Summary Report Ends -->
 <?php if ($Page->Export == "" && !$grDashboardReport) { ?>
 </div>
@@ -2987,7 +3313,7 @@ if (EWR_DEBUG_ENABLED)
 if ($rsgrp) $rsgrp->Close();
 if ($rs) $rs->Close();
 ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your table-specific startup script here

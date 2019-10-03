@@ -294,6 +294,9 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Security
 		$Security = new crAdvancedSecurity();
+
+		// Process generate request
+		$this->ProcessGenRequest();
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin(); // Auto login
 		$Security->TablePermission_Loading();
 		$Security->LoadCurrentUserLevel($this->ProjectID . 'viewestudiante');
@@ -312,6 +315,12 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->Page_Terminate(ewr_GetUrl("login.php"));
 		}
 
+		// Generate request URL
+		if ($this->GenerateRequestUrl()) {
+			$this->Page_Terminate();
+			exit();
+		}
+
 		// Get export parameters
 		if (@$_GET["export"] <> "")
 			$this->Export = strtolower($_GET["export"]);
@@ -322,12 +331,14 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$gsEmailContentType = @$_POST["contenttype"]; // Get email content type
 
 		// Setup placeholder
-		$this->fechanacimiento->PlaceHolder = $this->fechanacimiento->FldCaption();
 		$this->curso->PlaceHolder = $this->curso->FldCaption();
 		$this->nombreinstitucion->PlaceHolder = $this->nombreinstitucion->FldCaption();
 		$this->municipio->PlaceHolder = $this->municipio->FldCaption();
 		$this->provincia->PlaceHolder = $this->provincia->FldCaption();
 		$this->unidadeducativa->PlaceHolder = $this->unidadeducativa->FldCaption();
+		$this->nombre->PlaceHolder = $this->nombre->FldCaption();
+		$this->materno->PlaceHolder = $this->materno->FldCaption();
+		$this->paterno->PlaceHolder = $this->paterno->FldCaption();
 
 		// Setup export options
 		$this->SetupExportOptions();
@@ -347,6 +358,208 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Create Token
 		$this->CreateToken();
+	}
+
+	// Generate request URL
+	function GenerateRequestUrl() {
+		global $Security, $ReportLanguage, $grLanguage, $ReportOptions;
+		global $UserTableConn;
+		$post = $_POST;
+
+		// Check if create URL request
+		if (count($post) == 0 || @$post["generateurl"] <> "1" || @$post["reporttype"] == "") {
+			$UserNameList = array();
+			if ($Security->IsSysAdmin())
+				$UserNameList["@@admin"] = $ReportLanguage->Phrase("ReportFormUserDefault");
+
+			// Get list of user names
+			$sSql = EWR_LOGIN_SELECT_SQL;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				while (!$rs->EOF) {
+					$usr = $rs->fields('login');
+					$userid = $rs->fields('login');
+					if (!$Security->IsSysAdmin() && !in_array(strval($userid), $Security->UserID))
+						$usr = "";
+					$lvl = $rs->fields('id_rol');
+					$priv = $Security->GetUserLevelPrivEx($this->ProjectID . $this->TableName, $lvl);
+					if (($priv & EWR_ALLOW_REPORT) <> EWR_ALLOW_REPORT)
+						$usr = "";
+					if ($usr <> "")
+						$UserNameList[$usr] = $usr;
+					$rs->MoveNext();
+				}
+			}
+			$ReportOptions["UserNameList"] = $UserNameList;
+			$ReportOptions["ShowFilter"] = TRUE;
+			return FALSE;
+		}
+
+		// Check if login
+		if (!$Security->IsLoggedIn())
+			return FALSE;
+
+		// Get username/password
+		$usr = @$post["username"];
+		$pwd = "";
+		if ($usr == "@@admin") {
+			$usr = EWR_ADMIN_USER_NAME;
+			$pwd = EWR_ADMIN_PASSWORD;
+		} else {
+			$sFilter = str_replace("%u", ewr_AdjustSql($usr, EWR_USER_TABLE_DBID), EWR_USER_NAME_FILTER);
+			$sSql = EWR_LOGIN_SELECT_SQL . " WHERE " . $sFilter;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				if (!$rs->EOF)
+					$pwd = $rs->fields('password');
+			}
+		}
+		if ($usr == "" || $pwd == "") // No user specified
+			return FALSE;
+		$usr = ewr_Encrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$pwd = ewr_Encrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+
+		// Set report parameters
+		$reportType = @$post["reporttype"];
+		$genKey = ewr_Encrypt($this->TableVar, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$url = ewr_FullUrl();
+		$url .= "?reporttype=" . $reportType . "&k=" . urlencode($genKey) . "&u=" . urlencode($usr) . "&p=" . urlencode($pwd);
+		if ($reportType == "email") {
+			$sender = @$post["sender"];
+			$recipient = @$post["recipient"];
+			$cc = @$post["cc"];
+			$bcc = @$post["bcc"];
+			$subject = @$post["subject"];
+			if ($sender == "" || $recipient == "" || $subject == "")
+				return FALSE;
+			$url .= "&sender=" . urlencode($sender) . "&recipient=" . urlencode($recipient) . "&subject=" . urlencode($subject);
+			if ($cc <> "") $url .= "&cc=" . urlencode($cc);
+			if ($bcc <> "") $url .= "&bcc=" . urlencode($bcc);
+		}
+		$pageOption = @$post["pageoption"];
+		$url .= ($pageOption == "all") ? "&exportall=1" : "&exportall=0&start=1"; // All pages / First page
+
+		// Set report filter
+		$filterName = @$post["filtername"];
+		if ($filterName == "")
+			$filterName = "_none";
+		elseif ($filterName == "@@current")
+			$filterName = "_user";
+		$url .= "&filtername=" . urlencode($filterName);
+		$filter = json_decode(@$post["filter"], TRUE);
+		if (is_array($filter)) {
+			foreach ($filter as $key => $val)
+				$url .= "&" . $key . "=" . urlencode($val);
+		}
+
+		// Set response type
+		$responseType = @$post["responsetype"];
+		$url .= "&responsetype=" . urlencode($responseType);
+
+		// Set show current filter
+		$showCurrentFilter = @$post["showcurrentfilter"];
+		$url .= "&showfilter=" . ($showCurrentFilter == "1" ? "1" : "0");
+		echo json_encode(array("url" => $url));
+		return TRUE;
+	}
+
+	// Process generate request
+	function ProcessGenRequest() {
+		global $Security, $ReportLanguage;
+		$ar = ewr_IsHttpPost() ? $_POST : $_GET;
+		$genType = @$ar["reporttype"];
+		$genKey = @$ar["k"];
+		if (array_key_exists("k", $ar)) // Remove key
+			unset($ar["k"]);
+		if (ewr_Decrypt($genKey, EWR_REPORT_LOG_ENCRYPT_KEY) == $this->TableVar && $genType <> "") {
+			$usr = @$ar["u"];
+			$usr = ewr_Decrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+			if (array_key_exists("u", $ar)) // Update actual user name
+				$ar["u"] = $usr;
+			$pwd = @$ar["p"];
+			if (array_key_exists("p", $ar)) // Remove password
+				unset($ar["p"]);
+			$pwd = ewr_Decrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+			$encrypted = @$ar["encrypted"] == "1";
+			$bLogin = $Security->ValidateUser($usr, $pwd, FALSE, $encrypted); // Manual login
+			if (!$bLogin) {
+				echo ewr_DeniedMsg();
+				exit();
+			} else {
+				if ($genType == "html") $genType = "print";
+				$this->Export = $genType;
+				$this->ShowCurrentFilter = FALSE;
+				if (@$ar["exportall"] <> "") // Export all option specified
+					$this->ExportAll = $ar["exportall"] == "1";
+				$this->GenOptions = $this->GetGenOptions($ar); // Set up generate options
+				$this->SetupGenFilterList($ar); // Update filter list
+			}
+		}
+	}
+
+	// Generate file extension
+	function GenFileExt($genType) {
+		if ($genType == "print" || $genType == "html")
+			return "html";
+		elseif ($genType == "excel")
+			return "xls";
+		elseif ($genType == "word")
+			return "doc";
+		elseif ($genType == "pdf")
+			return "pdf";
+		else
+			return $genType;
+	}
+
+	// Get Generate options
+	function GetGenOptions($ar) {
+		$options = array();
+		$options["parms"] = json_encode($ar);
+
+		// Set up gen type / filename
+		$genType = @$ar["reporttype"];
+		$options["reporttype"] = $genType;
+		$options["filtername"] = @$ar["filtername"];
+		$options["responsetype"] = @$ar["responsetype"];
+		if ($genType == "email") { // Email
+			$options["sender"] = @$ar["sender"];
+			$options["recipient"] = @$ar["recipient"];
+			$options["subject"] = @$ar["subject"];
+		} else {
+			$options["folder"] = (@$ar["folder"] <> "") ? $ar["folder"] : EWR_UPLOAD_DEST_PATH;
+			$options["filename"] = (@$ar["filename"] <> "") ? $ar["filename"] : $this->TableVar . "_" . ewr_RandomGuid() . "." . $this->GenFileExt($genType);
+		}
+
+		// Paging
+		$options["start"] = @$ar["start"]; // Start
+		$options["pageno"] = @$ar["pageno"]; // Page number
+		$options["grpperpage"] = @$ar["grpperpage"]; // Group per page
+
+		// Sort
+		$options["order"] = @$ar["order"]; // Order by
+		$options["ordertype"] = @$ar["ordertype"]; // ASC/DESC
+		if ($options["order"] == "") // Reset sort if not specified
+			$options["resetsort"] = "1";
+		$options["showfilter"] = @$ar["showfilter"]; // Show current filter
+		return $options;
+	}
+
+	// Set up generate filter
+	function SetupGenFilterList($ar) {
+		$filter = array();
+		$keys = preg_grep('/^(sv|sv2|so|so2|sc|sel)_/', array_keys($ar));
+		foreach ($keys as $key) {
+			$filter[$key] = @$ar[$key];
+		}
+		return $this->SetupFilterList($filter); 
+	}
+
+	// Write generate response
+	function WriteGenResponse($genurl) {
+		if ($genurl <> "") {
+			$genType = @$this->GenOptions["reporttype"];
+			$responseType = @$this->GenOptions["responsetype"];
+			if ($responseType == "json" || $genType == "email")
+				echo json_encode(array("url" => $genurl));
+		}
 	}
 
 	// Set up export options
@@ -387,7 +600,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$item = &$this->ExportOptions->Add("email");
 		$url = $this->PageUrl() . "export=email";
 		$item->Body = "<a class=\"ewrExportLink ewEmail\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" id=\"emf_viewestudiante\" href=\"javascript:void(0);\" onclick=\"ewr_EmailDialogShow({lnk:'emf_viewestudiante',hdr:ewLanguage.Phrase('ExportToEmail'),url:'$url',exportid:'$exportid',el:this});\">" . $ReportLanguage->Phrase("ExportToEmail") . "</a>";
-		$item->Visible = TRUE;
+		$item->Visible = FALSE;
 		$ReportTypes["email"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormEmail") : "";
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 
@@ -415,6 +628,17 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Add group option item
 		$item = &$this->FilterOptions->Add($this->FilterOptions->GroupOptionName);
+		$item->Body = "";
+		$item->Visible = FALSE;
+
+		// Button to create generate URL
+		$item = &$this->GenerateOptions->Add("generateurl");
+		$item->Body = "<a type=\"button\" title=\"" . $ReportLanguage->Phrase("GenerateReportUrl", TRUE) . "\" onclick=\"ewr_ModalGenerateUrlShow(event);\" class=\"ewGenerateUrlBtn btn btn-default\"><span class=\"glyphicon glyphicon-link ewIcon\"></span></a>";
+		$item->Visible = $Security->IsLoggedIn(); // Check if logged in
+		$this->GenerateOptions->UseButtonGroup = TRUE;
+
+		// Add group option item
+		$item = &$this->GenerateOptions->Add($this->GenerateOptions->GroupOptionName);
 		$item->Body = "";
 		$item->Visible = FALSE;
 
@@ -535,7 +759,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 	var $TotalGrps = 0; // Total groups
 	var $GrpCount = 0; // Group count
 	var $GrpCounter = array(); // Group counter
-	var $DisplayGrps = 3; // Groups per page
+	var $DisplayGrps = 10; // Groups per page
 	var $GrpRange = 10;
 	var $Sort = "";
 	var $Filter = "";
@@ -630,15 +854,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Set up Breadcrumb
 		if ($this->Export == "")
 			$this->SetupBreadcrumb();
-		$this->codigorude->SelectionList = "";
-		$this->codigorude->DefaultSelectionList = "";
-		$this->codigorude->ValueList = "";
-		$this->codigorude_es->SelectionList = "";
-		$this->codigorude_es->DefaultSelectionList = "";
-		$this->codigorude_es->ValueList = "";
-		$this->ci->SelectionList = "";
-		$this->ci->DefaultSelectionList = "";
-		$this->ci->ValueList = "";
 		$this->fechanacimiento->SelectionList = "";
 		$this->fechanacimiento->DefaultSelectionList = "";
 		$this->fechanacimiento->ValueList = "";
@@ -648,9 +863,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$this->curso->SelectionList = "";
 		$this->curso->DefaultSelectionList = "";
 		$this->curso->ValueList = "";
-		$this->nrodiscapacidad->SelectionList = "";
-		$this->nrodiscapacidad->DefaultSelectionList = "";
-		$this->nrodiscapacidad->ValueList = "";
 		$this->nombreinstitucion->SelectionList = "";
 		$this->nombreinstitucion->DefaultSelectionList = "";
 		$this->nombreinstitucion->ValueList = "";
@@ -666,24 +878,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$this->unidadeducativa->SelectionList = "";
 		$this->unidadeducativa->DefaultSelectionList = "";
 		$this->unidadeducativa->ValueList = "";
-		$this->nombre->SelectionList = "";
-		$this->nombre->DefaultSelectionList = "";
-		$this->nombre->ValueList = "";
-		$this->materno->SelectionList = "";
-		$this->materno->DefaultSelectionList = "";
-		$this->materno->ValueList = "";
-		$this->paterno->SelectionList = "";
-		$this->paterno->DefaultSelectionList = "";
-		$this->paterno->ValueList = "";
-		$this->edad->SelectionList = "";
-		$this->edad->DefaultSelectionList = "";
-		$this->edad->ValueList = "";
-		$this->discapacidad->SelectionList = "";
-		$this->discapacidad->DefaultSelectionList = "";
-		$this->discapacidad->ValueList = "";
-		$this->tipodiscapcidad->SelectionList = "";
-		$this->tipodiscapcidad->DefaultSelectionList = "";
-		$this->tipodiscapcidad->ValueList = "";
 
 		// Check if search command
 		$this->SearchCommand = (@$_GET["cmd"] == "search");
@@ -724,10 +918,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
-
-		// Requires search criteria
-		if (($this->Filter == $this->UserIDFilter || $grFormError != "") && !$this->DrillDown)
-			$this->Filter = "0=101";
 
 		// Search options
 		$this->SetupSearchOptions();
@@ -1027,101 +1217,8 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$popupname = $_GET["popup"];
 
 			// Check popup name
-			// Build distinct values for codigorude
-
-			if ($popupname == 'viewestudiante_codigorude') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->codigorude, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->codigorude->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->codigorude->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->codigorude->setDbValue($rswrk->fields[0]);
-					$this->codigorude->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->codigorude->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->codigorude->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->codigorude->ValueList, $this->codigorude->CurrentValue, $this->codigorude->ViewValue, FALSE, $this->codigorude->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->codigorude->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->codigorude->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->codigorude;
-			}
-
-			// Build distinct values for codigorude_es
-			if ($popupname == 'viewestudiante_codigorude_es') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->codigorude_es, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->codigorude_es->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->codigorude_es->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->codigorude_es->setDbValue($rswrk->fields[0]);
-					$this->codigorude_es->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->codigorude_es->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->codigorude_es->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->codigorude_es->ValueList, $this->codigorude_es->CurrentValue, $this->codigorude_es->ViewValue, FALSE, $this->codigorude_es->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->codigorude_es->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->codigorude_es->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->codigorude_es;
-			}
-
-			// Build distinct values for ci
-			if ($popupname == 'viewestudiante_ci') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->ci, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->ci->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->ci->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->ci->setDbValue($rswrk->fields[0]);
-					$this->ci->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->ci->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->ci->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->ci->ValueList, $this->ci->CurrentValue, $this->ci->ViewValue, FALSE, $this->ci->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->ci->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->ci->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->ci;
-			}
-
 			// Build distinct values for fechanacimiento
+
 			if ($popupname == 'viewestudiante_fechanacimiento') {
 				$bNullValue = FALSE;
 				$bEmptyValue = FALSE;
@@ -1212,37 +1309,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				if ($bNullValue)
 					ewr_SetupDistinctValues($this->curso->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
 				$fld = &$this->curso;
-			}
-
-			// Build distinct values for nrodiscapacidad
-			if ($popupname == 'viewestudiante_nrodiscapacidad') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->nrodiscapacidad, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->nrodiscapacidad->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->nrodiscapacidad->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->nrodiscapacidad->setDbValue($rswrk->fields[0]);
-					$this->nrodiscapacidad->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->nrodiscapacidad->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->nrodiscapacidad->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->nrodiscapacidad->ValueList, $this->nrodiscapacidad->CurrentValue, $this->nrodiscapacidad->ViewValue, FALSE, $this->nrodiscapacidad->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->nrodiscapacidad->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->nrodiscapacidad->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->nrodiscapacidad;
 			}
 
 			// Build distinct values for nombreinstitucion
@@ -1400,192 +1466,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				$fld = &$this->unidadeducativa;
 			}
 
-			// Build distinct values for nombre
-			if ($popupname == 'viewestudiante_nombre') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->nombre, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->nombre->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->nombre->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->nombre->setDbValue($rswrk->fields[0]);
-					$this->nombre->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->nombre->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->nombre->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->nombre->ValueList, $this->nombre->CurrentValue, $this->nombre->ViewValue, FALSE, $this->nombre->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->nombre->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->nombre->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->nombre;
-			}
-
-			// Build distinct values for materno
-			if ($popupname == 'viewestudiante_materno') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->materno, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->materno->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->materno->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->materno->setDbValue($rswrk->fields[0]);
-					$this->materno->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->materno->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->materno->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->materno->ValueList, $this->materno->CurrentValue, $this->materno->ViewValue, FALSE, $this->materno->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->materno->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->materno->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->materno;
-			}
-
-			// Build distinct values for paterno
-			if ($popupname == 'viewestudiante_paterno') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->paterno, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->paterno->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->paterno->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->paterno->setDbValue($rswrk->fields[0]);
-					$this->paterno->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->paterno->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->paterno->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->paterno->ValueList, $this->paterno->CurrentValue, $this->paterno->ViewValue, FALSE, $this->paterno->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->paterno->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->paterno->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->paterno;
-			}
-
-			// Build distinct values for edad
-			if ($popupname == 'viewestudiante_edad') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->edad, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->edad->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->edad->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->edad->setDbValue($rswrk->fields[0]);
-					$this->edad->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->edad->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->edad->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->edad->ValueList, $this->edad->CurrentValue, $this->edad->ViewValue, FALSE, $this->edad->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->edad->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->edad->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->edad;
-			}
-
-			// Build distinct values for discapacidad
-			if ($popupname == 'viewestudiante_discapacidad') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->discapacidad, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->discapacidad->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->discapacidad->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->discapacidad->setDbValue($rswrk->fields[0]);
-					$this->discapacidad->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->discapacidad->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->discapacidad->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->discapacidad->ValueList, $this->discapacidad->CurrentValue, $this->discapacidad->ViewValue, FALSE, $this->discapacidad->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->discapacidad->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->discapacidad->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->discapacidad;
-			}
-
-			// Build distinct values for tipodiscapcidad
-			if ($popupname == 'viewestudiante_tipodiscapcidad') {
-				$bNullValue = FALSE;
-				$bEmptyValue = FALSE;
-				$sFilter = $this->Filter;
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->tipodiscapcidad, $sFilter, "popup");
-				$sSql = ewr_BuildReportSql($this->tipodiscapcidad->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->tipodiscapcidad->SqlOrderBy, $sFilter, "");
-				$rswrk = $conn->Execute($sSql);
-				while ($rswrk && !$rswrk->EOF) {
-					$this->tipodiscapcidad->setDbValue($rswrk->fields[0]);
-					$this->tipodiscapcidad->ViewValue = @$rswrk->fields[1];
-					if (is_null($this->tipodiscapcidad->CurrentValue)) {
-						$bNullValue = TRUE;
-					} elseif ($this->tipodiscapcidad->CurrentValue == "") {
-						$bEmptyValue = TRUE;
-					} else {
-						ewr_SetupDistinctValues($this->tipodiscapcidad->ValueList, $this->tipodiscapcidad->CurrentValue, $this->tipodiscapcidad->ViewValue, FALSE, $this->tipodiscapcidad->FldDelimiter);
-					}
-					$rswrk->MoveNext();
-				}
-				if ($rswrk)
-					$rswrk->Close();
-				if ($bEmptyValue)
-					ewr_SetupDistinctValues($this->tipodiscapcidad->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
-				if ($bNullValue)
-					ewr_SetupDistinctValues($this->tipodiscapcidad->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
-				$fld = &$this->tipodiscapcidad;
-			}
-
 			// Output data as Json
 			if (!is_null($fld)) {
 				$jsdb = ewr_GetJsDb($fld, $fld->FldType);
@@ -1631,52 +1511,21 @@ class crviewestudiante_rpt extends crviewestudiante {
 		} elseif (@$_GET["cmd"] <> "") {
 			$sCmd = $_GET["cmd"];
 			if (strtolower($sCmd) == "reset") {
-				$this->ClearSessionSelection('codigorude');
-				$this->ClearSessionSelection('codigorude_es');
-				$this->ClearSessionSelection('ci');
 				$this->ClearSessionSelection('fechanacimiento');
 				$this->ClearSessionSelection('sexo');
 				$this->ClearSessionSelection('curso');
-				$this->ClearSessionSelection('nrodiscapacidad');
 				$this->ClearSessionSelection('nombreinstitucion');
 				$this->ClearSessionSelection('departamento');
 				$this->ClearSessionSelection('municipio');
 				$this->ClearSessionSelection('provincia');
 				$this->ClearSessionSelection('unidadeducativa');
-				$this->ClearSessionSelection('nombre');
-				$this->ClearSessionSelection('materno');
-				$this->ClearSessionSelection('paterno');
-				$this->ClearSessionSelection('edad');
-				$this->ClearSessionSelection('discapacidad');
-				$this->ClearSessionSelection('tipodiscapcidad');
 				$this->ResetPager();
 			}
 		}
 
 		// Load selection criteria to array
-		// Get codigorude selected values
-
-		if (is_array(@$_SESSION["sel_viewestudiante_codigorude"])) {
-			$this->LoadSelectionFromSession('codigorude');
-		} elseif (@$_SESSION["sel_viewestudiante_codigorude"] == EWR_INIT_VALUE) { // Select all
-			$this->codigorude->SelectionList = "";
-		}
-
-		// Get codigorude_es selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_codigorude_es"])) {
-			$this->LoadSelectionFromSession('codigorude_es');
-		} elseif (@$_SESSION["sel_viewestudiante_codigorude_es"] == EWR_INIT_VALUE) { // Select all
-			$this->codigorude_es->SelectionList = "";
-		}
-
-		// Get ci selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_ci"])) {
-			$this->LoadSelectionFromSession('ci');
-		} elseif (@$_SESSION["sel_viewestudiante_ci"] == EWR_INIT_VALUE) { // Select all
-			$this->ci->SelectionList = "";
-		}
-
 		// Get fechanacimiento selected values
+
 		if (is_array(@$_SESSION["sel_viewestudiante_fechanacimiento"])) {
 			$this->LoadSelectionFromSession('fechanacimiento');
 		} elseif (@$_SESSION["sel_viewestudiante_fechanacimiento"] == EWR_INIT_VALUE) { // Select all
@@ -1695,13 +1544,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->LoadSelectionFromSession('curso');
 		} elseif (@$_SESSION["sel_viewestudiante_curso"] == EWR_INIT_VALUE) { // Select all
 			$this->curso->SelectionList = "";
-		}
-
-		// Get nrodiscapacidad selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_nrodiscapacidad"])) {
-			$this->LoadSelectionFromSession('nrodiscapacidad');
-		} elseif (@$_SESSION["sel_viewestudiante_nrodiscapacidad"] == EWR_INIT_VALUE) { // Select all
-			$this->nrodiscapacidad->SelectionList = "";
 		}
 
 		// Get nombreinstitucion selected values
@@ -1738,48 +1580,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		} elseif (@$_SESSION["sel_viewestudiante_unidadeducativa"] == EWR_INIT_VALUE) { // Select all
 			$this->unidadeducativa->SelectionList = "";
 		}
-
-		// Get nombre selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_nombre"])) {
-			$this->LoadSelectionFromSession('nombre');
-		} elseif (@$_SESSION["sel_viewestudiante_nombre"] == EWR_INIT_VALUE) { // Select all
-			$this->nombre->SelectionList = "";
-		}
-
-		// Get materno selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_materno"])) {
-			$this->LoadSelectionFromSession('materno');
-		} elseif (@$_SESSION["sel_viewestudiante_materno"] == EWR_INIT_VALUE) { // Select all
-			$this->materno->SelectionList = "";
-		}
-
-		// Get paterno selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_paterno"])) {
-			$this->LoadSelectionFromSession('paterno');
-		} elseif (@$_SESSION["sel_viewestudiante_paterno"] == EWR_INIT_VALUE) { // Select all
-			$this->paterno->SelectionList = "";
-		}
-
-		// Get edad selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_edad"])) {
-			$this->LoadSelectionFromSession('edad');
-		} elseif (@$_SESSION["sel_viewestudiante_edad"] == EWR_INIT_VALUE) { // Select all
-			$this->edad->SelectionList = "";
-		}
-
-		// Get discapacidad selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_discapacidad"])) {
-			$this->LoadSelectionFromSession('discapacidad');
-		} elseif (@$_SESSION["sel_viewestudiante_discapacidad"] == EWR_INIT_VALUE) { // Select all
-			$this->discapacidad->SelectionList = "";
-		}
-
-		// Get tipodiscapcidad selected values
-		if (is_array(@$_SESSION["sel_viewestudiante_tipodiscapcidad"])) {
-			$this->LoadSelectionFromSession('tipodiscapcidad');
-		} elseif (@$_SESSION["sel_viewestudiante_tipodiscapcidad"] == EWR_INIT_VALUE) { // Select all
-			$this->tipodiscapcidad->SelectionList = "";
-		}
 	}
 
 	// Reset pager
@@ -1800,7 +1600,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 				if (strtoupper($sWrk) == "ALL") { // Display all groups
 					$this->DisplayGrps = -1;
 				} else {
-					$this->DisplayGrps = 3; // Non-numeric, load default
+					$this->DisplayGrps = 10; // Non-numeric, load default
 				}
 			}
 			$this->setGroupPerPage($this->DisplayGrps); // Save to session
@@ -1812,7 +1612,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 			if ($this->getGroupPerPage() <> "") {
 				$this->DisplayGrps = $this->getGroupPerPage(); // Restore from session
 			} else {
-				$this->DisplayGrps = 3; // Load default
+				$this->DisplayGrps = 10; // Load default
 			}
 		}
 	}
@@ -2322,10 +2122,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Reset extended filter if filter changed
 		if ($bPostBack) {
 
-			// Clear extended filter for field fechanacimiento
-			if ($this->ClearExtFilter == 'viewestudiante_fechanacimiento')
-				$this->SetSessionFilterValues('', '=', 'AND', '', '=', 'fechanacimiento');
-
 			// Set/clear dropdown for field sexo
 			if ($this->PopupName == 'viewestudiante_sexo' && $this->PopupValue <> "") {
 				if ($this->PopupValue == EWR_INIT_VALUE)
@@ -2372,7 +2168,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		} elseif (@$_GET["cmd"] == "reset") {
 
 			// Load default values
-			$this->SetSessionFilterValues($this->fechanacimiento->SearchValue, $this->fechanacimiento->SearchOperator, $this->fechanacimiento->SearchCondition, $this->fechanacimiento->SearchValue2, $this->fechanacimiento->SearchOperator2, 'fechanacimiento'); // Field fechanacimiento
 			$this->SetSessionDropDownValue($this->sexo->DropDownValue, $this->sexo->SearchOperator, 'sexo'); // Field sexo
 			$this->SetSessionFilterValues($this->curso->SearchValue, $this->curso->SearchOperator, $this->curso->SearchCondition, $this->curso->SearchValue2, $this->curso->SearchOperator2, 'curso'); // Field curso
 			$this->SetSessionFilterValues($this->nombreinstitucion->SearchValue, $this->nombreinstitucion->SearchOperator, $this->nombreinstitucion->SearchCondition, $this->nombreinstitucion->SearchValue2, $this->nombreinstitucion->SearchOperator2, 'nombreinstitucion'); // Field nombreinstitucion
@@ -2380,15 +2175,13 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->SetSessionFilterValues($this->municipio->SearchValue, $this->municipio->SearchOperator, $this->municipio->SearchCondition, $this->municipio->SearchValue2, $this->municipio->SearchOperator2, 'municipio'); // Field municipio
 			$this->SetSessionFilterValues($this->provincia->SearchValue, $this->provincia->SearchOperator, $this->provincia->SearchCondition, $this->provincia->SearchValue2, $this->provincia->SearchOperator2, 'provincia'); // Field provincia
 			$this->SetSessionFilterValues($this->unidadeducativa->SearchValue, $this->unidadeducativa->SearchOperator, $this->unidadeducativa->SearchCondition, $this->unidadeducativa->SearchValue2, $this->unidadeducativa->SearchOperator2, 'unidadeducativa'); // Field unidadeducativa
+			$this->SetSessionFilterValues($this->nombre->SearchValue, $this->nombre->SearchOperator, $this->nombre->SearchCondition, $this->nombre->SearchValue2, $this->nombre->SearchOperator2, 'nombre'); // Field nombre
+			$this->SetSessionFilterValues($this->materno->SearchValue, $this->materno->SearchOperator, $this->materno->SearchCondition, $this->materno->SearchValue2, $this->materno->SearchOperator2, 'materno'); // Field materno
+			$this->SetSessionFilterValues($this->paterno->SearchValue, $this->paterno->SearchOperator, $this->paterno->SearchCondition, $this->paterno->SearchValue2, $this->paterno->SearchOperator2, 'paterno'); // Field paterno
 
 			//$bSetupFilter = TRUE; // No need to set up, just use default
 		} else {
 			$bRestoreSession = !$this->SearchCommand;
-
-			// Field fechanacimiento
-			if ($this->GetFilterValues($this->fechanacimiento)) {
-				$bSetupFilter = TRUE;
-			}
 
 			// Field sexo
 			if ($this->GetDropDownValue($this->sexo)) {
@@ -2428,6 +2221,21 @@ class crviewestudiante_rpt extends crviewestudiante {
 			if ($this->GetFilterValues($this->unidadeducativa)) {
 				$bSetupFilter = TRUE;
 			}
+
+			// Field nombre
+			if ($this->GetFilterValues($this->nombre)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field materno
+			if ($this->GetFilterValues($this->materno)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field paterno
+			if ($this->GetFilterValues($this->paterno)) {
+				$bSetupFilter = TRUE;
+			}
 			if (!$this->ValidateForm()) {
 				$this->setFailureMessage($grFormError);
 				return $sFilter;
@@ -2436,7 +2244,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Restore session
 		if ($bRestoreSession) {
-			$this->GetSessionFilterValues($this->fechanacimiento); // Field fechanacimiento
 			$this->GetSessionDropDownValue($this->sexo); // Field sexo
 			$this->GetSessionFilterValues($this->curso); // Field curso
 			$this->GetSessionFilterValues($this->nombreinstitucion); // Field nombreinstitucion
@@ -2444,13 +2251,15 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->GetSessionFilterValues($this->municipio); // Field municipio
 			$this->GetSessionFilterValues($this->provincia); // Field provincia
 			$this->GetSessionFilterValues($this->unidadeducativa); // Field unidadeducativa
+			$this->GetSessionFilterValues($this->nombre); // Field nombre
+			$this->GetSessionFilterValues($this->materno); // Field materno
+			$this->GetSessionFilterValues($this->paterno); // Field paterno
 		}
 
 		// Call page filter validated event
 		$this->Page_FilterValidated();
 
 		// Build SQL
-		$this->BuildExtendedFilter($this->fechanacimiento, $sFilter, FALSE, TRUE); // Field fechanacimiento
 		$this->BuildDropDownFilter($this->sexo, $sFilter, $this->sexo->SearchOperator, FALSE, TRUE); // Field sexo
 		$this->BuildExtendedFilter($this->curso, $sFilter, FALSE, TRUE); // Field curso
 		$this->BuildExtendedFilter($this->nombreinstitucion, $sFilter, FALSE, TRUE); // Field nombreinstitucion
@@ -2458,9 +2267,11 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$this->BuildExtendedFilter($this->municipio, $sFilter, FALSE, TRUE); // Field municipio
 		$this->BuildExtendedFilter($this->provincia, $sFilter, FALSE, TRUE); // Field provincia
 		$this->BuildExtendedFilter($this->unidadeducativa, $sFilter, FALSE, TRUE); // Field unidadeducativa
+		$this->BuildExtendedFilter($this->nombre, $sFilter, FALSE, TRUE); // Field nombre
+		$this->BuildExtendedFilter($this->materno, $sFilter, FALSE, TRUE); // Field materno
+		$this->BuildExtendedFilter($this->paterno, $sFilter, FALSE, TRUE); // Field paterno
 
 		// Save parms to session
-		$this->SetSessionFilterValues($this->fechanacimiento->SearchValue, $this->fechanacimiento->SearchOperator, $this->fechanacimiento->SearchCondition, $this->fechanacimiento->SearchValue2, $this->fechanacimiento->SearchOperator2, 'fechanacimiento'); // Field fechanacimiento
 		$this->SetSessionDropDownValue($this->sexo->DropDownValue, $this->sexo->SearchOperator, 'sexo'); // Field sexo
 		$this->SetSessionFilterValues($this->curso->SearchValue, $this->curso->SearchOperator, $this->curso->SearchCondition, $this->curso->SearchValue2, $this->curso->SearchOperator2, 'curso'); // Field curso
 		$this->SetSessionFilterValues($this->nombreinstitucion->SearchValue, $this->nombreinstitucion->SearchOperator, $this->nombreinstitucion->SearchCondition, $this->nombreinstitucion->SearchValue2, $this->nombreinstitucion->SearchOperator2, 'nombreinstitucion'); // Field nombreinstitucion
@@ -2468,15 +2279,12 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$this->SetSessionFilterValues($this->municipio->SearchValue, $this->municipio->SearchOperator, $this->municipio->SearchCondition, $this->municipio->SearchValue2, $this->municipio->SearchOperator2, 'municipio'); // Field municipio
 		$this->SetSessionFilterValues($this->provincia->SearchValue, $this->provincia->SearchOperator, $this->provincia->SearchCondition, $this->provincia->SearchValue2, $this->provincia->SearchOperator2, 'provincia'); // Field provincia
 		$this->SetSessionFilterValues($this->unidadeducativa->SearchValue, $this->unidadeducativa->SearchOperator, $this->unidadeducativa->SearchCondition, $this->unidadeducativa->SearchValue2, $this->unidadeducativa->SearchOperator2, 'unidadeducativa'); // Field unidadeducativa
+		$this->SetSessionFilterValues($this->nombre->SearchValue, $this->nombre->SearchOperator, $this->nombre->SearchCondition, $this->nombre->SearchValue2, $this->nombre->SearchOperator2, 'nombre'); // Field nombre
+		$this->SetSessionFilterValues($this->materno->SearchValue, $this->materno->SearchOperator, $this->materno->SearchCondition, $this->materno->SearchValue2, $this->materno->SearchOperator2, 'materno'); // Field materno
+		$this->SetSessionFilterValues($this->paterno->SearchValue, $this->paterno->SearchOperator, $this->paterno->SearchCondition, $this->paterno->SearchValue2, $this->paterno->SearchOperator2, 'paterno'); // Field paterno
 
 		// Setup filter
 		if ($bSetupFilter) {
-
-			// Field fechanacimiento
-			$sWrk = "";
-			$this->BuildExtendedFilter($this->fechanacimiento, $sWrk);
-			ewr_LoadSelectionFromFilter($this->fechanacimiento, $sWrk, $this->fechanacimiento->SelectionList);
-			$_SESSION['sel_viewestudiante_fechanacimiento'] = ($this->fechanacimiento->SelectionList == "") ? EWR_INIT_VALUE : $this->fechanacimiento->SelectionList;
 
 			// Field sexo
 			$sWrk = "";
@@ -2793,10 +2601,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Check if validation required
 		if (!EWR_SERVER_VALIDATE)
 			return ($grFormError == "");
-		if (!ewr_CheckDateDef($this->fechanacimiento->SearchValue)) {
-			if ($grFormError <> "") $grFormError .= "<br>";
-			$grFormError .= $this->fechanacimiento->FldErrMsg();
-		}
 
 		// Return validate result
 		$ValidateForm = ($grFormError == "");
@@ -2859,14 +2663,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		* $sv2 - Default ext filter value 2 (if operator 2 is enabled)
 		*/
 
-		// Field fechanacimiento
-		$this->SetDefaultExtFilter($this->fechanacimiento, "=", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->fechanacimiento);
-		$sWrk = "";
-		$this->BuildExtendedFilter($this->fechanacimiento, $sWrk, TRUE);
-		ewr_LoadSelectionFromFilter($this->fechanacimiento, $sWrk, $this->fechanacimiento->DefaultSelectionList);
-		if (!$this->SearchCommand) $this->fechanacimiento->SelectionList = $this->fechanacimiento->DefaultSelectionList;
-
 		// Field curso
 		$this->SetDefaultExtFilter($this->curso, "LIKE", NULL, 'AND', "=", NULL);
 		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->curso);
@@ -2906,24 +2702,28 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$this->BuildExtendedFilter($this->unidadeducativa, $sWrk, TRUE);
 		ewr_LoadSelectionFromFilter($this->unidadeducativa, $sWrk, $this->unidadeducativa->DefaultSelectionList);
 		if (!$this->SearchCommand) $this->unidadeducativa->SelectionList = $this->unidadeducativa->DefaultSelectionList;
+
+		// Field nombre
+		$this->SetDefaultExtFilter($this->nombre, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->nombre);
+
+		// Field materno
+		$this->SetDefaultExtFilter($this->materno, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->materno);
+
+		// Field paterno
+		$this->SetDefaultExtFilter($this->paterno, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->paterno);
 		/**
 		* Set up default values for popup filters
 		*/
 
-		// Field codigorude
-		// $this->codigorude->DefaultSelectionList = array("val1", "val2");
-		// Field codigorude_es
-		// $this->codigorude_es->DefaultSelectionList = array("val1", "val2");
-		// Field ci
-		// $this->ci->DefaultSelectionList = array("val1", "val2");
 		// Field fechanacimiento
 		// $this->fechanacimiento->DefaultSelectionList = array("val1", "val2");
 		// Field sexo
 		// $this->sexo->DefaultSelectionList = array("val1", "val2");
 		// Field curso
 		// $this->curso->DefaultSelectionList = array("val1", "val2");
-		// Field nrodiscapacidad
-		// $this->nrodiscapacidad->DefaultSelectionList = array("val1", "val2");
 		// Field nombreinstitucion
 		// $this->nombreinstitucion->DefaultSelectionList = array("val1", "val2");
 		// Field departamento
@@ -2934,39 +2734,11 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// $this->provincia->DefaultSelectionList = array("val1", "val2");
 		// Field unidadeducativa
 		// $this->unidadeducativa->DefaultSelectionList = array("val1", "val2");
-		// Field nombre
-		// $this->nombre->DefaultSelectionList = array("val1", "val2");
-		// Field materno
-		// $this->materno->DefaultSelectionList = array("val1", "val2");
-		// Field paterno
-		// $this->paterno->DefaultSelectionList = array("val1", "val2");
-		// Field edad
-		// $this->edad->DefaultSelectionList = array("val1", "val2");
-		// Field discapacidad
-		// $this->discapacidad->DefaultSelectionList = array("val1", "val2");
-		// Field tipodiscapcidad
-		// $this->tipodiscapcidad->DefaultSelectionList = array("val1", "val2");
 
 	}
 
 	// Check if filter applied
 	function CheckFilter() {
-
-		// Check codigorude popup filter
-		if (!ewr_MatchedArray($this->codigorude->DefaultSelectionList, $this->codigorude->SelectionList))
-			return TRUE;
-
-		// Check codigorude_es popup filter
-		if (!ewr_MatchedArray($this->codigorude_es->DefaultSelectionList, $this->codigorude_es->SelectionList))
-			return TRUE;
-
-		// Check ci popup filter
-		if (!ewr_MatchedArray($this->ci->DefaultSelectionList, $this->ci->SelectionList))
-			return TRUE;
-
-		// Check fechanacimiento text filter
-		if ($this->TextFilterApplied($this->fechanacimiento))
-			return TRUE;
 
 		// Check fechanacimiento popup filter
 		if (!ewr_MatchedArray($this->fechanacimiento->DefaultSelectionList, $this->fechanacimiento->SelectionList))
@@ -2986,10 +2758,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Check curso popup filter
 		if (!ewr_MatchedArray($this->curso->DefaultSelectionList, $this->curso->SelectionList))
-			return TRUE;
-
-		// Check nrodiscapacidad popup filter
-		if (!ewr_MatchedArray($this->nrodiscapacidad->DefaultSelectionList, $this->nrodiscapacidad->SelectionList))
 			return TRUE;
 
 		// Check nombreinstitucion text filter
@@ -3032,28 +2800,16 @@ class crviewestudiante_rpt extends crviewestudiante {
 		if (!ewr_MatchedArray($this->unidadeducativa->DefaultSelectionList, $this->unidadeducativa->SelectionList))
 			return TRUE;
 
-		// Check nombre popup filter
-		if (!ewr_MatchedArray($this->nombre->DefaultSelectionList, $this->nombre->SelectionList))
+		// Check nombre text filter
+		if ($this->TextFilterApplied($this->nombre))
 			return TRUE;
 
-		// Check materno popup filter
-		if (!ewr_MatchedArray($this->materno->DefaultSelectionList, $this->materno->SelectionList))
+		// Check materno text filter
+		if ($this->TextFilterApplied($this->materno))
 			return TRUE;
 
-		// Check paterno popup filter
-		if (!ewr_MatchedArray($this->paterno->DefaultSelectionList, $this->paterno->SelectionList))
-			return TRUE;
-
-		// Check edad popup filter
-		if (!ewr_MatchedArray($this->edad->DefaultSelectionList, $this->edad->SelectionList))
-			return TRUE;
-
-		// Check discapacidad popup filter
-		if (!ewr_MatchedArray($this->discapacidad->DefaultSelectionList, $this->discapacidad->SelectionList))
-			return TRUE;
-
-		// Check tipodiscapcidad popup filter
-		if (!ewr_MatchedArray($this->tipodiscapcidad->DefaultSelectionList, $this->tipodiscapcidad->SelectionList))
+		// Check paterno text filter
+		if ($this->TextFilterApplied($this->paterno))
 			return TRUE;
 		return FALSE;
 	}
@@ -3065,49 +2821,9 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Initialize
 		$sFilterList = "";
 
-		// Field codigorude
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->codigorude->SelectionList))
-			$sWrk = ewr_JoinArray($this->codigorude->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->codigorude->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field codigorude_es
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->codigorude_es->SelectionList))
-			$sWrk = ewr_JoinArray($this->codigorude_es->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->codigorude_es->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field ci
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->ci->SelectionList))
-			$sWrk = ewr_JoinArray($this->ci->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->ci->FldCaption() . "</span>" . $sFilter . "</div>";
-
 		// Field fechanacimiento
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->fechanacimiento, $sExtWrk);
 		if (is_array($this->fechanacimiento->SelectionList))
 			$sWrk = ewr_JoinArray($this->fechanacimiento->SelectionList, ", ", EWR_DATATYPE_DATE, 0, $this->DBID);
 		$sFilter = "";
@@ -3145,19 +2861,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
 		if ($sFilter <> "")
 			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->curso->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field nrodiscapacidad
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->nrodiscapacidad->SelectionList))
-			$sWrk = ewr_JoinArray($this->nrodiscapacidad->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nrodiscapacidad->FldCaption() . "</span>" . $sFilter . "</div>";
 
 		// Field nombreinstitucion
 		$sExtWrk = "";
@@ -3232,8 +2935,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Field nombre
 		$sExtWrk = "";
 		$sWrk = "";
-		if (is_array($this->nombre->SelectionList))
-			$sWrk = ewr_JoinArray($this->nombre->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
+		$this->BuildExtendedFilter($this->nombre, $sExtWrk);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -3245,8 +2947,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Field materno
 		$sExtWrk = "";
 		$sWrk = "";
-		if (is_array($this->materno->SelectionList))
-			$sWrk = ewr_JoinArray($this->materno->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
+		$this->BuildExtendedFilter($this->materno, $sExtWrk);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -3258,8 +2959,7 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Field paterno
 		$sExtWrk = "";
 		$sWrk = "";
-		if (is_array($this->paterno->SelectionList))
-			$sWrk = ewr_JoinArray($this->paterno->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
+		$this->BuildExtendedFilter($this->paterno, $sExtWrk);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -3267,45 +2967,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
 		if ($sFilter <> "")
 			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->paterno->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field edad
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->edad->SelectionList))
-			$sWrk = ewr_JoinArray($this->edad->SelectionList, ", ", EWR_DATATYPE_NUMBER, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->edad->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field discapacidad
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->discapacidad->SelectionList))
-			$sWrk = ewr_JoinArray($this->discapacidad->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->discapacidad->FldCaption() . "</span>" . $sFilter . "</div>";
-
-		// Field tipodiscapcidad
-		$sExtWrk = "";
-		$sWrk = "";
-		if (is_array($this->tipodiscapcidad->SelectionList))
-			$sWrk = ewr_JoinArray($this->tipodiscapcidad->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
-		$sFilter = "";
-		if ($sExtWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
-		elseif ($sWrk <> "")
-			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
-		if ($sFilter <> "")
-			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->tipodiscapcidad->FldCaption() . "</span>" . $sFilter . "</div>";
 		$divstyle = "";
 		$divdataclass = "";
 
@@ -3328,57 +2989,8 @@ class crviewestudiante_rpt extends crviewestudiante {
 		// Initialize
 		$sFilterList = "";
 
-		// Field codigorude
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->codigorude->SelectionList <> EWR_INIT_VALUE) ? $this->codigorude->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_codigorude\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field codigorude_es
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->codigorude_es->SelectionList <> EWR_INIT_VALUE) ? $this->codigorude_es->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_codigorude_es\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field ci
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->ci->SelectionList <> EWR_INIT_VALUE) ? $this->ci->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_ci\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
 		// Field fechanacimiento
 		$sWrk = "";
-		if ($this->fechanacimiento->SearchValue <> "" || $this->fechanacimiento->SearchValue2 <> "") {
-			$sWrk = "\"sv_fechanacimiento\":\"" . ewr_JsEncode2($this->fechanacimiento->SearchValue) . "\"," .
-				"\"so_fechanacimiento\":\"" . ewr_JsEncode2($this->fechanacimiento->SearchOperator) . "\"," .
-				"\"sc_fechanacimiento\":\"" . ewr_JsEncode2($this->fechanacimiento->SearchCondition) . "\"," .
-				"\"sv2_fechanacimiento\":\"" . ewr_JsEncode2($this->fechanacimiento->SearchValue2) . "\"," .
-				"\"so2_fechanacimiento\":\"" . ewr_JsEncode2($this->fechanacimiento->SearchOperator2) . "\"";
-		}
 		if ($sWrk == "") {
 			$sWrk = ($this->fechanacimiento->SelectionList <> EWR_INIT_VALUE) ? $this->fechanacimiento->SelectionList : "";
 			if (is_array($sWrk))
@@ -3425,20 +3037,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				$sWrk = implode("||", $sWrk);
 			if ($sWrk <> "")
 				$sWrk = "\"sel_curso\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field nrodiscapacidad
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->nrodiscapacidad->SelectionList <> EWR_INIT_VALUE) ? $this->nrodiscapacidad->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_nrodiscapacidad\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		}
 		if ($sWrk <> "") {
 			if ($sFilterList <> "") $sFilterList .= ",";
@@ -3550,12 +3148,12 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Field nombre
 		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->nombre->SelectionList <> EWR_INIT_VALUE) ? $this->nombre->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_nombre\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($this->nombre->SearchValue <> "" || $this->nombre->SearchValue2 <> "") {
+			$sWrk = "\"sv_nombre\":\"" . ewr_JsEncode2($this->nombre->SearchValue) . "\"," .
+				"\"so_nombre\":\"" . ewr_JsEncode2($this->nombre->SearchOperator) . "\"," .
+				"\"sc_nombre\":\"" . ewr_JsEncode2($this->nombre->SearchCondition) . "\"," .
+				"\"sv2_nombre\":\"" . ewr_JsEncode2($this->nombre->SearchValue2) . "\"," .
+				"\"so2_nombre\":\"" . ewr_JsEncode2($this->nombre->SearchOperator2) . "\"";
 		}
 		if ($sWrk <> "") {
 			if ($sFilterList <> "") $sFilterList .= ",";
@@ -3564,12 +3162,12 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Field materno
 		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->materno->SelectionList <> EWR_INIT_VALUE) ? $this->materno->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_materno\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($this->materno->SearchValue <> "" || $this->materno->SearchValue2 <> "") {
+			$sWrk = "\"sv_materno\":\"" . ewr_JsEncode2($this->materno->SearchValue) . "\"," .
+				"\"so_materno\":\"" . ewr_JsEncode2($this->materno->SearchOperator) . "\"," .
+				"\"sc_materno\":\"" . ewr_JsEncode2($this->materno->SearchCondition) . "\"," .
+				"\"sv2_materno\":\"" . ewr_JsEncode2($this->materno->SearchValue2) . "\"," .
+				"\"so2_materno\":\"" . ewr_JsEncode2($this->materno->SearchOperator2) . "\"";
 		}
 		if ($sWrk <> "") {
 			if ($sFilterList <> "") $sFilterList .= ",";
@@ -3578,54 +3176,12 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Field paterno
 		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->paterno->SelectionList <> EWR_INIT_VALUE) ? $this->paterno->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_paterno\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field edad
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->edad->SelectionList <> EWR_INIT_VALUE) ? $this->edad->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_edad\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field discapacidad
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->discapacidad->SelectionList <> EWR_INIT_VALUE) ? $this->discapacidad->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_discapacidad\":\"" . ewr_JsEncode2($sWrk) . "\"";
-		}
-		if ($sWrk <> "") {
-			if ($sFilterList <> "") $sFilterList .= ",";
-			$sFilterList .= $sWrk;
-		}
-
-		// Field tipodiscapcidad
-		$sWrk = "";
-		if ($sWrk == "") {
-			$sWrk = ($this->tipodiscapcidad->SelectionList <> EWR_INIT_VALUE) ? $this->tipodiscapcidad->SelectionList : "";
-			if (is_array($sWrk))
-				$sWrk = implode("||", $sWrk);
-			if ($sWrk <> "")
-				$sWrk = "\"sel_tipodiscapcidad\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($this->paterno->SearchValue <> "" || $this->paterno->SearchValue2 <> "") {
+			$sWrk = "\"sv_paterno\":\"" . ewr_JsEncode2($this->paterno->SearchValue) . "\"," .
+				"\"so_paterno\":\"" . ewr_JsEncode2($this->paterno->SearchOperator) . "\"," .
+				"\"sc_paterno\":\"" . ewr_JsEncode2($this->paterno->SearchCondition) . "\"," .
+				"\"sv2_paterno\":\"" . ewr_JsEncode2($this->paterno->SearchValue2) . "\"," .
+				"\"so2_paterno\":\"" . ewr_JsEncode2($this->paterno->SearchOperator2) . "\"";
 		}
 		if ($sWrk <> "") {
 			if ($sFilterList <> "") $sFilterList .= ",";
@@ -3654,62 +3210,16 @@ class crviewestudiante_rpt extends crviewestudiante {
 		if (!is_array($filter))
 			return FALSE;
 
-		// Field codigorude
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_codigorude", $filter)) {
-			$sWrk = $filter["sel_codigorude"];
-			$sWrk = explode("||", $sWrk);
-			$this->codigorude->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_codigorude"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
-		}
-
-		// Field codigorude_es
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_codigorude_es", $filter)) {
-			$sWrk = $filter["sel_codigorude_es"];
-			$sWrk = explode("||", $sWrk);
-			$this->codigorude_es->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_codigorude_es"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
-		}
-
-		// Field ci
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_ci", $filter)) {
-			$sWrk = $filter["sel_ci"];
-			$sWrk = explode("||", $sWrk);
-			$this->ci->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_ci"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
-		}
-
 		// Field fechanacimiento
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_fechanacimiento", $filter) || array_key_exists("so_fechanacimiento", $filter) ||
-			array_key_exists("sc_fechanacimiento", $filter) ||
-			array_key_exists("sv2_fechanacimiento", $filter) || array_key_exists("so2_fechanacimiento", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_fechanacimiento"], @$filter["so_fechanacimiento"], @$filter["sc_fechanacimiento"], @$filter["sv2_fechanacimiento"], @$filter["so2_fechanacimiento"], "fechanacimiento");
-			$bRestoreFilter = TRUE;
-		}
 		if (array_key_exists("sel_fechanacimiento", $filter)) {
 			$sWrk = $filter["sel_fechanacimiento"];
 			$sWrk = explode("||", $sWrk);
 			$this->fechanacimiento->SelectionList = $sWrk;
 			$_SESSION["sel_viewestudiante_fechanacimiento"] = $sWrk;
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "fechanacimiento"); // Clear extended filter
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "fechanacimiento");
-			$this->fechanacimiento->SelectionList = "";
-			$_SESSION["sel_viewestudiante_fechanacimiento"] = "";
 		}
 
 		// Field sexo
@@ -3755,18 +3265,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->SetSessionFilterValues("", "=", "AND", "", "=", "curso");
 			$this->curso->SelectionList = "";
 			$_SESSION["sel_viewestudiante_curso"] = "";
-		}
-
-		// Field nrodiscapacidad
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_nrodiscapacidad", $filter)) {
-			$sWrk = $filter["sel_nrodiscapacidad"];
-			$sWrk = explode("||", $sWrk);
-			$this->nrodiscapacidad->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_nrodiscapacidad"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
 		}
 
 		// Field nombreinstitucion
@@ -3882,74 +3380,38 @@ class crviewestudiante_rpt extends crviewestudiante {
 
 		// Field nombre
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_nombre", $filter)) {
-			$sWrk = $filter["sel_nombre"];
-			$sWrk = explode("||", $sWrk);
-			$this->nombre->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_nombre"] = $sWrk;
+		if (array_key_exists("sv_nombre", $filter) || array_key_exists("so_nombre", $filter) ||
+			array_key_exists("sc_nombre", $filter) ||
+			array_key_exists("sv2_nombre", $filter) || array_key_exists("so2_nombre", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_nombre"], @$filter["so_nombre"], @$filter["sc_nombre"], @$filter["sv2_nombre"], @$filter["so2_nombre"], "nombre");
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "nombre");
 		}
 
 		// Field materno
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_materno", $filter)) {
-			$sWrk = $filter["sel_materno"];
-			$sWrk = explode("||", $sWrk);
-			$this->materno->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_materno"] = $sWrk;
+		if (array_key_exists("sv_materno", $filter) || array_key_exists("so_materno", $filter) ||
+			array_key_exists("sc_materno", $filter) ||
+			array_key_exists("sv2_materno", $filter) || array_key_exists("so2_materno", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_materno"], @$filter["so_materno"], @$filter["sc_materno"], @$filter["sv2_materno"], @$filter["so2_materno"], "materno");
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "materno");
 		}
 
 		// Field paterno
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_paterno", $filter)) {
-			$sWrk = $filter["sel_paterno"];
-			$sWrk = explode("||", $sWrk);
-			$this->paterno->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_paterno"] = $sWrk;
+		if (array_key_exists("sv_paterno", $filter) || array_key_exists("so_paterno", $filter) ||
+			array_key_exists("sc_paterno", $filter) ||
+			array_key_exists("sv2_paterno", $filter) || array_key_exists("so2_paterno", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_paterno"], @$filter["so_paterno"], @$filter["sc_paterno"], @$filter["sv2_paterno"], @$filter["so2_paterno"], "paterno");
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-		}
-
-		// Field edad
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_edad", $filter)) {
-			$sWrk = $filter["sel_edad"];
-			$sWrk = explode("||", $sWrk);
-			$this->edad->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_edad"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
-		}
-
-		// Field discapacidad
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_discapacidad", $filter)) {
-			$sWrk = $filter["sel_discapacidad"];
-			$sWrk = explode("||", $sWrk);
-			$this->discapacidad->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_discapacidad"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
-		}
-
-		// Field tipodiscapcidad
-		$bRestoreFilter = FALSE;
-		if (array_key_exists("sel_tipodiscapcidad", $filter)) {
-			$sWrk = $filter["sel_tipodiscapcidad"];
-			$sWrk = explode("||", $sWrk);
-			$this->tipodiscapcidad->SelectionList = $sWrk;
-			$_SESSION["sel_viewestudiante_tipodiscapcidad"] = $sWrk;
-			$bRestoreFilter = TRUE;
-		}
-		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "paterno");
 		}
 		return TRUE;
 	}
@@ -3959,31 +3421,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$sWrk = "";
 		if ($this->DrillDown)
 			return "";
-			if (is_array($this->codigorude->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->codigorude, "`codigorude`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->codigorude, $sFilter, "popup");
-				$this->codigorude->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->codigorude_es->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->codigorude_es, "`codigorude_es`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->codigorude_es, $sFilter, "popup");
-				$this->codigorude_es->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->ci->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->ci, "`ci`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->ci, $sFilter, "popup");
-				$this->ci->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-		if (!$this->ExtendedFilterExist($this->fechanacimiento)) {
 			if (is_array($this->fechanacimiento->SelectionList)) {
 				$sFilter = ewr_FilterSql($this->fechanacimiento, "`fechanacimiento`", EWR_DATATYPE_DATE, $this->DBID);
 
@@ -3992,7 +3429,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				$this->fechanacimiento->CurrentFilter = $sFilter;
 				ewr_AddFilter($sWrk, $sFilter);
 			}
-		}
 		if (!$this->DropDownFilterExist($this->sexo, $this->sexo->SearchOperator)) {
 			if (is_array($this->sexo->SelectionList)) {
 				$sFilter = ewr_FilterSql($this->sexo, "`sexo`", EWR_DATATYPE_STRING, $this->DBID);
@@ -4013,14 +3449,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
-			if (is_array($this->nrodiscapacidad->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->nrodiscapacidad, "`nrodiscapacidad`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->nrodiscapacidad, $sFilter, "popup");
-				$this->nrodiscapacidad->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
 		if (!$this->ExtendedFilterExist($this->nombreinstitucion)) {
 			if (is_array($this->nombreinstitucion->SelectionList)) {
 				$sFilter = ewr_FilterSql($this->nombreinstitucion, "`nombreinstitucion`", EWR_DATATYPE_STRING, $this->DBID);
@@ -4071,54 +3499,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
-			if (is_array($this->nombre->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->nombre, "`nombre`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->nombre, $sFilter, "popup");
-				$this->nombre->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->materno->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->materno, "`materno`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->materno, $sFilter, "popup");
-				$this->materno->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->paterno->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->paterno, "`paterno`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->paterno, $sFilter, "popup");
-				$this->paterno->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->edad->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->edad, "`edad`", EWR_DATATYPE_NUMBER, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->edad, $sFilter, "popup");
-				$this->edad->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->discapacidad->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->discapacidad, "`discapacidad`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->discapacidad, $sFilter, "popup");
-				$this->discapacidad->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
-			if (is_array($this->tipodiscapcidad->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->tipodiscapcidad, "`tipodiscapcidad`", EWR_DATATYPE_STRING, $this->DBID);
-
-				// Call Page Filtering event
-				$this->Page_Filtering($this->tipodiscapcidad, $sFilter, "popup");
-				$this->tipodiscapcidad->CurrentFilter = $sFilter;
-				ewr_AddFilter($sWrk, $sFilter);
-			}
 		return $sWrk;
 	}
 
@@ -4131,66 +3511,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 		$opt = @$post["d"];
 		if ($opt == "1" || $opt == "2") {
 			$mastertable = @$post["s"]; // Get source table
-			$sql = @$post["codigorude"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@codigorude", "`codigorude`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->codigorude->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["codigorude_es"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@codigorude_es", "`codigorude_es`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->codigorude_es->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["ci"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@ci", "`ci`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->ci->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["fechanacimiento"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@fechanacimiento", "`fechanacimiento`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->fechanacimiento->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
 			$sql = @$post["sexo"];
 
 			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
@@ -4220,21 +3540,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				$filter .= $sql;
 				if ($sql <> "1=1")
 					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->curso->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["nrodiscapacidad"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@nrodiscapacidad", "`nrodiscapacidad`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nrodiscapacidad->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
 			}
 			$sql = @$post["nombreinstitucion"];
 
@@ -4310,96 +3615,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 				$filter .= $sql;
 				if ($sql <> "1=1")
 					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->unidadeducativa->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["nombre"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@nombre", "`nombre`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombre->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["materno"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@materno", "`materno`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->materno->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["paterno"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@paterno", "`paterno`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->paterno->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["edad"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@edad", "`edad`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->edad->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["discapacidad"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@discapacidad", "`discapacidad`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->discapacidad->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
-			}
-			$sql = @$post["tipodiscapcidad"];
-
-			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
-			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
-			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
-
-			$sql = str_replace("$", "-", $sql);
-			$sql = ewr_Decrypt($sql);
-			$sql = str_replace("@tipodiscapcidad", "`tipodiscapcidad`", $sql);
-			if ($sql <> "") {
-				if ($filter <> "") $filter .= " AND ";
-				$filter .= $sql;
-				if ($sql <> "1=1")
-					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->tipodiscapcidad->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
 			}
 
 			// Save to session
@@ -4500,111 +3715,6 @@ class crviewestudiante_rpt extends crviewestudiante {
 			$this->setStartGroup(1);
 		}
 		return $this->getOrderBy();
-	}
-
-	// Export email
-	function ExportEmail($EmailContent, $options = array()) {
-		global $grTmpImages, $ReportLanguage;
-		$bGenRequest = @$options["reporttype"] == "email";
-		$sFailRespPfx = $bGenRequest ? "" : "<p class=\"text-error\">";
-		$sSuccessRespPfx = $bGenRequest ? "" : "<p class=\"text-success\">";
-		$sRespPfx = $bGenRequest ? "" : "</p>";
-		$sContentType = (@$options["contenttype"] <> "") ? $options["contenttype"] : @$_POST["contenttype"];
-		$sSender = (@$options["sender"] <> "") ? $options["sender"] : @$_POST["sender"];
-		$sRecipient = (@$options["recipient"] <> "") ? $options["recipient"] : @$_POST["recipient"];
-		$sCc = (@$options["cc"] <> "") ? $options["cc"] : @$_POST["cc"];
-		$sBcc = (@$options["bcc"] <> "") ? $options["bcc"] : @$_POST["bcc"];
-
-		// Subject
-		$sEmailSubject = (@$options["subject"] <> "") ? $options["subject"] : @$_POST["subject"];
-
-		// Message
-		$sEmailMessage = (@$options["message"] <> "") ? $options["message"] : @$_POST["message"];
-
-		// Check sender
-		if ($sSender == "")
-			return $sFailRespPfx . $ReportLanguage->Phrase("EnterSenderEmail") . $sRespPfx;
-		if (!ewr_CheckEmail($sSender))
-			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperSenderEmail") . $sRespPfx;
-
-		// Check recipient
-		if (!ewr_CheckEmailList($sRecipient, EWR_MAX_EMAIL_RECIPIENT))
-			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperRecipientEmail") . $sRespPfx;
-
-		// Check cc
-		if (!ewr_CheckEmailList($sCc, EWR_MAX_EMAIL_RECIPIENT))
-			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperCcEmail") . $sRespPfx;
-
-		// Check bcc
-		if (!ewr_CheckEmailList($sBcc, EWR_MAX_EMAIL_RECIPIENT))
-			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperBccEmail") . $sRespPfx;
-
-		// Check email sent count
-		$emailcount = $bGenRequest ? 0 : ewr_LoadEmailCount();
-		if (intval($emailcount) >= EWR_MAX_EMAIL_SENT_COUNT)
-			return $sFailRespPfx . $ReportLanguage->Phrase("ExceedMaxEmailExport") . $sRespPfx;
-		if ($sEmailMessage <> "") {
-			if (EWR_REMOVE_XSS) $sEmailMessage = ewr_RemoveXSS($sEmailMessage);
-			$sEmailMessage .= ($sContentType == "url") ? "\r\n\r\n" : "<br><br>";
-		}
-		$sAttachmentContent = ewr_AdjustEmailContent($EmailContent);
-		$sAppPath = ewr_FullUrl();
-		$sAppPath = substr($sAppPath, 0, strrpos($sAppPath, "/")+1);
-		if (strpos($sAttachmentContent, "<head>") !== FALSE)
-			$sAttachmentContent = str_replace("<head>", "<head><base href=\"" . $sAppPath . "\">", $sAttachmentContent); // Add <base href> statement inside the header
-		else
-			$sAttachmentContent = "<base href=\"" . $sAppPath . "\">" . $sAttachmentContent; // Add <base href> statement as the first statement
-
-		//$sAttachmentFile = $this->TableVar . "_" . Date("YmdHis") . ".html";
-		$sAttachmentFile = $this->TableVar . "_" . Date("YmdHis") . "_" . ewr_Random() . ".html";
-		if ($sContentType == "url") {
-			ewr_SaveFile(EWR_UPLOAD_DEST_PATH, $sAttachmentFile, $sAttachmentContent);
-			$sAttachmentFile = EWR_UPLOAD_DEST_PATH . $sAttachmentFile;
-			$sUrl = $sAppPath . $sAttachmentFile;
-			$sEmailMessage .= $sUrl; // Send URL only
-			$sAttachmentFile = "";
-			$sAttachmentContent = "";
-		} else {
-			$sEmailMessage .= $sAttachmentContent;
-			$sAttachmentFile = "";
-			$sAttachmentContent = "";
-		}
-
-		// Send email
-		$Email = new crEmail();
-		$Email->Sender = $sSender; // Sender
-		$Email->Recipient = $sRecipient; // Recipient
-		$Email->Cc = $sCc; // Cc
-		$Email->Bcc = $sBcc; // Bcc
-		$Email->Subject = $sEmailSubject; // Subject
-		$Email->Content = $sEmailMessage; // Content
-		if ($sAttachmentFile <> "")
-			$Email->AddAttachment($sAttachmentFile, $sAttachmentContent);
-		if ($sContentType <> "url") {
-			foreach ($grTmpImages as $tmpimage)
-				$Email->AddEmbeddedImage($tmpimage);
-		}
-		$Email->Format = ($sContentType == "url") ? "text" : "html";
-		$Email->Charset = EWR_EMAIL_CHARSET;
-		$EventArgs = array();
-		$bEmailSent = FALSE;
-		if ($this->Email_Sending($Email, $EventArgs))
-			$bEmailSent = $Email->Send();
-		ewr_DeleteTmpImages($EmailContent);
-
-		// Check email sent status
-		if ($bEmailSent) {
-
-			// Update email sent count and write log
-			ewr_AddEmailLog($sSender, $sRecipient, $sEmailSubject, $sEmailMessage);
-
-			// Sent email success
-			return $sSuccessRespPfx . $ReportLanguage->Phrase("SendEmailSuccess") . $sRespPfx; // Set up success message
-		} else {
-
-			// Sent email failure
-			return $sFailRespPfx . $Email->SendErrDescription . $sRespPfx;
-		}
 	}
 
 	// Export to HTML
@@ -4838,11 +3948,6 @@ fviewestudianterpt.Validate = function() {
 	if (!this.ValidateRequired)
 		return true; // Ignore validation
 	var $ = jQuery, fobj = this.GetForm(), $fobj = $(fobj);
-	var elm = fobj.sv_fechanacimiento;
-	if (elm && !ewr_CheckDateDef(elm.value)) {
-		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fechanacimiento->FldErrMsg()) ?>"))
-			return false;
-	}
 
 	// Call Form Custom Validate event
 	if (!this.Form_CustomValidate(fobj))
@@ -4917,16 +4022,6 @@ if (!$Page->DrillDownInPanel) {
 <div id="fviewestudianterpt_SearchPanel" class="ewSearchPanel collapse<?php echo $SearchPanelClass ?>">
 <input type="hidden" name="cmd" value="search">
 <div id="r_1" class="ewRow">
-<div id="c_fechanacimiento" class="ewCell form-group">
-	<label for="sv_fechanacimiento" class="ewSearchCaption ewLabel"><?php echo $Page->fechanacimiento->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fechanacimiento" id="so_fechanacimiento" value="="></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->fechanacimiento->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewestudiante" data-field="x_fechanacimiento" id="sv_fechanacimiento" name="sv_fechanacimiento" placeholder="<?php echo $Page->fechanacimiento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fechanacimiento->SearchValue) ?>"<?php echo $Page->fechanacimiento->EditAttributes() ?>>
-</span>
-</div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_sexo" class="ewCell form-group">
 	<label for="sv_sexo" class="ewSearchCaption ewLabel"><?php echo $Page->sexo->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -4941,8 +4036,6 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 </script>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_curso" class="ewCell form-group">
 	<label for="sv_curso" class="ewSearchCaption ewLabel"><?php echo $Page->curso->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_curso" id="so_curso" value="LIKE"></span>
@@ -4951,8 +4044,6 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 <input type="text" data-table="viewestudiante" data-field="x_curso" id="sv_curso" name="sv_curso" size="30" maxlength="100" placeholder="<?php echo $Page->curso->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->curso->SearchValue) ?>"<?php echo $Page->curso->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_4" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>
@@ -4961,8 +4052,6 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 <input type="text" data-table="viewestudiante" data-field="x_nombreinstitucion" id="sv_nombreinstitucion" name="sv_nombreinstitucion" size="30" maxlength="100" placeholder="<?php echo $Page->nombreinstitucion->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombreinstitucion->SearchValue) ?>"<?php echo $Page->nombreinstitucion->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_5" class="ewRow">
 <div id="c_departamento" class="ewCell form-group">
 	<label for="sv_departamento" class="ewSearchCaption ewLabel"><?php echo $Page->departamento->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -4977,8 +4066,6 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 </script>
 </span>
 </div>
-</div>
-<div id="r_6" class="ewRow">
 <div id="c_municipio" class="ewCell form-group">
 	<label for="sv_municipio" class="ewSearchCaption ewLabel"><?php echo $Page->municipio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_municipio" id="so_municipio" value="LIKE"></span>
@@ -4987,8 +4074,6 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_municipio" id="sv_municipio" name="sv_municipio" size="30" maxlength="100" placeholder="<?php echo $Page->municipio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->municipio->SearchValue) ?>"<?php echo $Page->municipio->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_7" class="ewRow">
 <div id="c_provincia" class="ewCell form-group">
 	<label for="sv_provincia" class="ewSearchCaption ewLabel"><?php echo $Page->provincia->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_provincia" id="so_provincia" value="LIKE"></span>
@@ -4997,14 +4082,36 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_provincia" id="sv_provincia" name="sv_provincia" size="30" maxlength="100" placeholder="<?php echo $Page->provincia->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->provincia->SearchValue) ?>"<?php echo $Page->provincia->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_8" class="ewRow">
 <div id="c_unidadeducativa" class="ewCell form-group">
 	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
 	<span class="control-group ewSearchField">
 <?php ewr_PrependClass($Page->unidadeducativa->EditAttrs["class"], "form-control"); // PR8 ?>
 <input type="text" data-table="viewestudiante" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_nombre" class="ewCell form-group">
+	<label for="sv_nombre" class="ewSearchCaption ewLabel"><?php echo $Page->nombre->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombre" id="so_nombre" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->nombre->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewestudiante" data-field="x_nombre" id="sv_nombre" name="sv_nombre" size="30" maxlength="100" placeholder="<?php echo $Page->nombre->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombre->SearchValue) ?>"<?php echo $Page->nombre->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_materno" class="ewCell form-group">
+	<label for="sv_materno" class="ewSearchCaption ewLabel"><?php echo $Page->materno->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_materno" id="so_materno" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->materno->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewestudiante" data-field="x_materno" id="sv_materno" name="sv_materno" size="30" maxlength="100" placeholder="<?php echo $Page->materno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->materno->SearchValue) ?>"<?php echo $Page->materno->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_paterno" class="ewCell form-group">
+	<label for="sv_paterno" class="ewSearchCaption ewLabel"><?php echo $Page->paterno->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_paterno" id="so_paterno" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->paterno->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewestudiante" data-field="x_paterno" id="sv_paterno" name="sv_paterno" size="30" maxlength="100" placeholder="<?php echo $Page->paterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->paterno->SearchValue) ?>"<?php echo $Page->paterno->EditAttributes() ?>>
 </span>
 </div>
 </div>
@@ -5074,17 +4181,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->codigorude) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_codigorude">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_codigorude', range: false, from: '<?php echo $Page->codigorude->RangeFrom; ?>', to: '<?php echo $Page->codigorude->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_codigorude<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_codigorude" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->codigorude->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->codigorude->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_codigorude', range: false, from: '<?php echo $Page->codigorude->RangeFrom; ?>', to: '<?php echo $Page->codigorude->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_codigorude<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5098,17 +4199,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->codigorude_es) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_codigorude_es">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude_es->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_codigorude_es', range: false, from: '<?php echo $Page->codigorude_es->RangeFrom; ?>', to: '<?php echo $Page->codigorude_es->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_codigorude_es<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_codigorude_es" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude_es) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude_es->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->codigorude_es->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->codigorude_es->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_codigorude_es', range: false, from: '<?php echo $Page->codigorude_es->RangeFrom; ?>', to: '<?php echo $Page->codigorude_es->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_codigorude_es<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5122,17 +4217,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->ci) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_ci">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_ci', range: false, from: '<?php echo $Page->ci->RangeFrom; ?>', to: '<?php echo $Page->ci->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_ci<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->ci->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ci->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_ci', range: false, from: '<?php echo $Page->ci->RangeFrom; ?>', to: '<?php echo $Page->ci->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_ci<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5218,17 +4307,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->nrodiscapacidad) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_nrodiscapacidad">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_nrodiscapacidad', range: false, from: '<?php echo $Page->nrodiscapacidad->RangeFrom; ?>', to: '<?php echo $Page->nrodiscapacidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_nrodiscapacidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nrodiscapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nrodiscapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_nrodiscapacidad', range: false, from: '<?php echo $Page->nrodiscapacidad->RangeFrom; ?>', to: '<?php echo $Page->nrodiscapacidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_nrodiscapacidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5362,17 +4445,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->nombre) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_nombre">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_nombre', range: false, from: '<?php echo $Page->nombre->RangeFrom; ?>', to: '<?php echo $Page->nombre->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_nombre<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_nombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombre) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombre->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombre->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_nombre', range: false, from: '<?php echo $Page->nombre->RangeFrom; ?>', to: '<?php echo $Page->nombre->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_nombre<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5386,17 +4463,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->materno) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_materno">
 			<span class="ewTableHeaderCaption"><?php echo $Page->materno->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_materno', range: false, from: '<?php echo $Page->materno->RangeFrom; ?>', to: '<?php echo $Page->materno->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_materno<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_materno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->materno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->materno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->materno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->materno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_materno', range: false, from: '<?php echo $Page->materno->RangeFrom; ?>', to: '<?php echo $Page->materno->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_materno<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5410,17 +4481,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->paterno) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_paterno">
 			<span class="ewTableHeaderCaption"><?php echo $Page->paterno->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_paterno', range: false, from: '<?php echo $Page->paterno->RangeFrom; ?>', to: '<?php echo $Page->paterno->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_paterno<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_paterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->paterno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->paterno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->paterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->paterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_paterno', range: false, from: '<?php echo $Page->paterno->RangeFrom; ?>', to: '<?php echo $Page->paterno->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_paterno<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5434,17 +4499,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->edad) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_edad">
 			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_edad', range: false, from: '<?php echo $Page->edad->RangeFrom; ?>', to: '<?php echo $Page->edad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_edad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->edad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->edad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_edad', range: false, from: '<?php echo $Page->edad->RangeFrom; ?>', to: '<?php echo $Page->edad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_edad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5458,17 +4517,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->discapacidad) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_discapacidad">
 			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_discapacidad', range: false, from: '<?php echo $Page->discapacidad->RangeFrom; ?>', to: '<?php echo $Page->discapacidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_discapacidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_discapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->discapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->discapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_discapacidad', range: false, from: '<?php echo $Page->discapacidad->RangeFrom; ?>', to: '<?php echo $Page->discapacidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_discapacidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5482,17 +4535,11 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->tipodiscapcidad) == "") { ?>
 		<div class="ewTableHeaderBtn viewestudiante_tipodiscapcidad">
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapcidad->FldCaption() ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_tipodiscapcidad', range: false, from: '<?php echo $Page->tipodiscapcidad->RangeFrom; ?>', to: '<?php echo $Page->tipodiscapcidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_tipodiscapcidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewestudiante_tipodiscapcidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipodiscapcidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapcidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->tipodiscapcidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->tipodiscapcidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-	<?php if (!$grDashboardReport) { ?>
-			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewestudiante_tipodiscapcidad', range: false, from: '<?php echo $Page->tipodiscapcidad->RangeFrom; ?>', to: '<?php echo $Page->tipodiscapcidad->RangeTo; ?>', url: 'viewestudianterpt.php' });" id="x_tipodiscapcidad<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
-	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -5515,6 +4562,80 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		$Page->RowType = EWR_ROWTYPE_DETAIL;
 		$Page->RenderRow();
 ?>
+	<tr<?php echo $Page->RowAttributes(); ?>>
+<?php if ($Page->codigorude->Visible) { ?>
+		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>>
+<span<?php echo $Page->codigorude->ViewAttributes() ?>><?php echo $Page->codigorude->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->codigorude_es->Visible) { ?>
+		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>>
+<span<?php echo $Page->codigorude_es->ViewAttributes() ?>><?php echo $Page->codigorude_es->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->ci->Visible) { ?>
+		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>>
+<span<?php echo $Page->ci->ViewAttributes() ?>><?php echo $Page->ci->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->fechanacimiento->Visible) { ?>
+		<td data-field="fechanacimiento"<?php echo $Page->fechanacimiento->CellAttributes() ?>>
+<span<?php echo $Page->fechanacimiento->ViewAttributes() ?>><?php echo $Page->fechanacimiento->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->sexo->Visible) { ?>
+		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>>
+<span<?php echo $Page->sexo->ViewAttributes() ?>><?php echo $Page->sexo->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->curso->Visible) { ?>
+		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>>
+<span<?php echo $Page->curso->ViewAttributes() ?>><?php echo $Page->curso->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->nrodiscapacidad->Visible) { ?>
+		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>>
+<span<?php echo $Page->nrodiscapacidad->ViewAttributes() ?>><?php echo $Page->nrodiscapacidad->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->nombreinstitucion->Visible) { ?>
+		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>
+<span<?php echo $Page->nombreinstitucion->ViewAttributes() ?>><?php echo $Page->nombreinstitucion->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->departamento->Visible) { ?>
+		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>>
+<span<?php echo $Page->departamento->ViewAttributes() ?>><?php echo $Page->departamento->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->municipio->Visible) { ?>
+		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>>
+<span<?php echo $Page->municipio->ViewAttributes() ?>><?php echo $Page->municipio->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->provincia->Visible) { ?>
+		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>>
+<span<?php echo $Page->provincia->ViewAttributes() ?>><?php echo $Page->provincia->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->unidadeducativa->Visible) { ?>
+		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>>
+<span<?php echo $Page->unidadeducativa->ViewAttributes() ?>><?php echo $Page->unidadeducativa->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->nombre->Visible) { ?>
+		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>>
+<span<?php echo $Page->nombre->ViewAttributes() ?>><?php echo $Page->nombre->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->materno->Visible) { ?>
+		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>>
+<span<?php echo $Page->materno->ViewAttributes() ?>><?php echo $Page->materno->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->paterno->Visible) { ?>
+		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>>
+<span<?php echo $Page->paterno->ViewAttributes() ?>><?php echo $Page->paterno->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->edad->Visible) { ?>
+		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>
+<span<?php echo $Page->edad->ViewAttributes() ?>><?php echo $Page->edad->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->discapacidad->Visible) { ?>
+		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>>
+<span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->tipodiscapcidad->Visible) { ?>
+		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>>
+<span<?php echo $Page->tipodiscapcidad->ViewAttributes() ?>><?php echo $Page->tipodiscapcidad->ListViewValue() ?></span></td>
+<?php } ?>
+	</tr>
 <?php
 
 		// Accumulate page summary
@@ -5528,270 +4649,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->TotalGrps > 0) { ?>
 </tbody>
 <tfoot>
-<?php if (($Page->StopGrp - $Page->StartGrp + 1) <> $Page->TotalGrps) { ?>
-<?php
-	$Page->discapacidad->Count = $Page->Cnt[0][17];
-	$Page->discapacidad->CntValue = $Page->Cnt[0][17]; // Load CNT
-	$Page->ResetAttrs();
-	$Page->RowType = EWR_ROWTYPE_TOTAL;
-	$Page->RowTotalType = EWR_ROWTOTAL_PAGE;
-	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
-	$Page->RowAttrs["class"] = "ewRptPageSummary";
-	$Page->RenderRow();
-?>
-<?php if ($Page->ShowCompactSummaryFooter) { ?>
-	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2) ?></span>)</td></tr>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->GrpColumnCount > 0) { ?>
-		<td colspan="<?php echo $Page->GrpColumnCount ?>" class="ewRptGrpAggregate">&nbsp;</td>
-<?php } ?>
-<?php if ($Page->codigorude->Visible) { ?>
-		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->codigorude_es->Visible) { ?>
-		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->ci->Visible) { ?>
-		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->fechanacimiento->Visible) { ?>
-		<td data-field="fechanacimiento"<?php echo $Page->fechanacimiento->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->sexo->Visible) { ?>
-		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nrodiscapacidad->Visible) { ?>
-		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->departamento->Visible) { ?>
-		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->municipio->Visible) { ?>
-		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->provincia->Visible) { ?>
-		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->unidadeducativa->Visible) { ?>
-		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->materno->Visible) { ?>
-		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->paterno->Visible) { ?>
-		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->discapacidad->Visible) { ?>
-		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>><?php echo $ReportLanguage->Phrase("RptCnt") ?><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->CntViewValue ?></span></td>
-<?php } ?>
-<?php if ($Page->tipodiscapcidad->Visible) { ?>
-		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>></td>
-<?php } ?>
-	</tr>
-<?php } else { ?>
-	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
-	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->codigorude->Visible) { ?>
-		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->codigorude_es->Visible) { ?>
-		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->ci->Visible) { ?>
-		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->fechanacimiento->Visible) { ?>
-		<td data-field="fechanacimiento"<?php echo $Page->fechanacimiento->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->sexo->Visible) { ?>
-		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nrodiscapacidad->Visible) { ?>
-		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->departamento->Visible) { ?>
-		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->municipio->Visible) { ?>
-		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->provincia->Visible) { ?>
-		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->unidadeducativa->Visible) { ?>
-		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->materno->Visible) { ?>
-		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->paterno->Visible) { ?>
-		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->discapacidad->Visible) { ?>
-		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>><span class="ewAggregate"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateColon") ?>
-<span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->CntViewValue ?></span></td>
-<?php } ?>
-<?php if ($Page->tipodiscapcidad->Visible) { ?>
-		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-	</tr>
-<?php } ?>
-<?php } ?>
-<?php
-	$Page->discapacidad->Count = $Page->GrandCnt[17];
-	$Page->discapacidad->CntValue = $Page->GrandCnt[17]; // Load CNT
-	$Page->ResetAttrs();
-	$Page->RowType = EWR_ROWTYPE_TOTAL;
-	$Page->RowTotalType = EWR_ROWTOTAL_GRAND;
-	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
-	$Page->RowAttrs["class"] = "ewRptGrandSummary";
-	$Page->RenderRow();
-?>
-<?php if ($Page->ShowCompactSummaryFooter) { ?>
-	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2) ?></span>)</td></tr>
-	<tr<?php echo $Page->RowAttributes() ?>>
-<?php if ($Page->GrpColumnCount > 0) { ?>
-		<td colspan="<?php echo $Page->GrpColumnCount ?>" class="ewRptGrpAggregate">&nbsp;</td>
-<?php } ?>
-<?php if ($Page->codigorude->Visible) { ?>
-		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->codigorude_es->Visible) { ?>
-		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->ci->Visible) { ?>
-		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->fechanacimiento->Visible) { ?>
-		<td data-field="fechanacimiento"<?php echo $Page->fechanacimiento->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->sexo->Visible) { ?>
-		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nrodiscapacidad->Visible) { ?>
-		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->departamento->Visible) { ?>
-		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->municipio->Visible) { ?>
-		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->provincia->Visible) { ?>
-		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->unidadeducativa->Visible) { ?>
-		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->materno->Visible) { ?>
-		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->paterno->Visible) { ?>
-		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>></td>
-<?php } ?>
-<?php if ($Page->discapacidad->Visible) { ?>
-		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>><?php echo $ReportLanguage->Phrase("RptCnt") ?><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->CntViewValue ?></span></td>
-<?php } ?>
-<?php if ($Page->tipodiscapcidad->Visible) { ?>
-		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>></td>
-<?php } ?>
-	</tr>
-<?php } else { ?>
-	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
-	<tr<?php echo $Page->RowAttributes() ?>>
-<?php if ($Page->codigorude->Visible) { ?>
-		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->codigorude_es->Visible) { ?>
-		<td data-field="codigorude_es"<?php echo $Page->codigorude_es->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->ci->Visible) { ?>
-		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->fechanacimiento->Visible) { ?>
-		<td data-field="fechanacimiento"<?php echo $Page->fechanacimiento->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->sexo->Visible) { ?>
-		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nrodiscapacidad->Visible) { ?>
-		<td data-field="nrodiscapacidad"<?php echo $Page->nrodiscapacidad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nombreinstitucion->Visible) { ?>
-		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->departamento->Visible) { ?>
-		<td data-field="departamento"<?php echo $Page->departamento->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->municipio->Visible) { ?>
-		<td data-field="municipio"<?php echo $Page->municipio->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->provincia->Visible) { ?>
-		<td data-field="provincia"<?php echo $Page->provincia->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->unidadeducativa->Visible) { ?>
-		<td data-field="unidadeducativa"<?php echo $Page->unidadeducativa->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->materno->Visible) { ?>
-		<td data-field="materno"<?php echo $Page->materno->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->paterno->Visible) { ?>
-		<td data-field="paterno"<?php echo $Page->paterno->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-<?php if ($Page->discapacidad->Visible) { ?>
-		<td data-field="discapacidad"<?php echo $Page->discapacidad->CellAttributes() ?>><span class="ewAggregate"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateColon") ?>
-<span<?php echo $Page->discapacidad->ViewAttributes() ?>><?php echo $Page->discapacidad->CntViewValue ?></span></td>
-<?php } ?>
-<?php if ($Page->tipodiscapcidad->Visible) { ?>
-		<td data-field="tipodiscapcidad"<?php echo $Page->tipodiscapcidad->CellAttributes() ?>>&nbsp;</td>
-<?php } ?>
-	</tr>
-<?php } ?>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && TRUE) { // No header displayed ?>
 <?php if ($Page->Export <> "pdf") { ?>

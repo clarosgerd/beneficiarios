@@ -294,6 +294,9 @@ class crviewdocente_rpt extends crviewdocente {
 
 		// Security
 		$Security = new crAdvancedSecurity();
+
+		// Process generate request
+		$this->ProcessGenRequest();
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin(); // Auto login
 		$Security->TablePermission_Loading();
 		$Security->LoadCurrentUserLevel($this->ProjectID . 'viewdocente');
@@ -312,6 +315,12 @@ class crviewdocente_rpt extends crviewdocente {
 			$this->Page_Terminate(ewr_GetUrl("login.php"));
 		}
 
+		// Generate request URL
+		if ($this->GenerateRequestUrl()) {
+			$this->Page_Terminate();
+			exit();
+		}
+
 		// Get export parameters
 		if (@$_GET["export"] <> "")
 			$this->Export = strtolower($_GET["export"]);
@@ -322,8 +331,16 @@ class crviewdocente_rpt extends crviewdocente {
 		$gsEmailContentType = @$_POST["contenttype"]; // Get email content type
 
 		// Setup placeholder
-		// Setup export options
+		$this->deoartamento->PlaceHolder = $this->deoartamento->FldCaption();
+		$this->unidadeducativa->PlaceHolder = $this->unidadeducativa->FldCaption();
+		$this->nombres->PlaceHolder = $this->nombres->FldCaption();
+		$this->apellidopaterno->PlaceHolder = $this->apellidopaterno->FldCaption();
+		$this->apellidomaterno->PlaceHolder = $this->apellidomaterno->FldCaption();
+		$this->nrodiscapacidad->PlaceHolder = $this->nrodiscapacidad->FldCaption();
+		$this->ci->PlaceHolder = $this->ci->FldCaption();
+		$this->materias->PlaceHolder = $this->materias->FldCaption();
 
+		// Setup export options
 		$this->SetupExportOptions();
 
 		// Global Page Loading event (in userfn*.php)
@@ -343,6 +360,208 @@ class crviewdocente_rpt extends crviewdocente {
 		$this->CreateToken();
 	}
 
+	// Generate request URL
+	function GenerateRequestUrl() {
+		global $Security, $ReportLanguage, $grLanguage, $ReportOptions;
+		global $UserTableConn;
+		$post = $_POST;
+
+		// Check if create URL request
+		if (count($post) == 0 || @$post["generateurl"] <> "1" || @$post["reporttype"] == "") {
+			$UserNameList = array();
+			if ($Security->IsSysAdmin())
+				$UserNameList["@@admin"] = $ReportLanguage->Phrase("ReportFormUserDefault");
+
+			// Get list of user names
+			$sSql = EWR_LOGIN_SELECT_SQL;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				while (!$rs->EOF) {
+					$usr = $rs->fields('login');
+					$userid = $rs->fields('login');
+					if (!$Security->IsSysAdmin() && !in_array(strval($userid), $Security->UserID))
+						$usr = "";
+					$lvl = $rs->fields('id_rol');
+					$priv = $Security->GetUserLevelPrivEx($this->ProjectID . $this->TableName, $lvl);
+					if (($priv & EWR_ALLOW_REPORT) <> EWR_ALLOW_REPORT)
+						$usr = "";
+					if ($usr <> "")
+						$UserNameList[$usr] = $usr;
+					$rs->MoveNext();
+				}
+			}
+			$ReportOptions["UserNameList"] = $UserNameList;
+			$ReportOptions["ShowFilter"] = TRUE;
+			return FALSE;
+		}
+
+		// Check if login
+		if (!$Security->IsLoggedIn())
+			return FALSE;
+
+		// Get username/password
+		$usr = @$post["username"];
+		$pwd = "";
+		if ($usr == "@@admin") {
+			$usr = EWR_ADMIN_USER_NAME;
+			$pwd = EWR_ADMIN_PASSWORD;
+		} else {
+			$sFilter = str_replace("%u", ewr_AdjustSql($usr, EWR_USER_TABLE_DBID), EWR_USER_NAME_FILTER);
+			$sSql = EWR_LOGIN_SELECT_SQL . " WHERE " . $sFilter;
+			if ($rs = $UserTableConn->Execute($sSql)) {
+				if (!$rs->EOF)
+					$pwd = $rs->fields('password');
+			}
+		}
+		if ($usr == "" || $pwd == "") // No user specified
+			return FALSE;
+		$usr = ewr_Encrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$pwd = ewr_Encrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+
+		// Set report parameters
+		$reportType = @$post["reporttype"];
+		$genKey = ewr_Encrypt($this->TableVar, EWR_REPORT_LOG_ENCRYPT_KEY);
+		$url = ewr_FullUrl();
+		$url .= "?reporttype=" . $reportType . "&k=" . urlencode($genKey) . "&u=" . urlencode($usr) . "&p=" . urlencode($pwd);
+		if ($reportType == "email") {
+			$sender = @$post["sender"];
+			$recipient = @$post["recipient"];
+			$cc = @$post["cc"];
+			$bcc = @$post["bcc"];
+			$subject = @$post["subject"];
+			if ($sender == "" || $recipient == "" || $subject == "")
+				return FALSE;
+			$url .= "&sender=" . urlencode($sender) . "&recipient=" . urlencode($recipient) . "&subject=" . urlencode($subject);
+			if ($cc <> "") $url .= "&cc=" . urlencode($cc);
+			if ($bcc <> "") $url .= "&bcc=" . urlencode($bcc);
+		}
+		$pageOption = @$post["pageoption"];
+		$url .= ($pageOption == "all") ? "&exportall=1" : "&exportall=0&start=1"; // All pages / First page
+
+		// Set report filter
+		$filterName = @$post["filtername"];
+		if ($filterName == "")
+			$filterName = "_none";
+		elseif ($filterName == "@@current")
+			$filterName = "_user";
+		$url .= "&filtername=" . urlencode($filterName);
+		$filter = json_decode(@$post["filter"], TRUE);
+		if (is_array($filter)) {
+			foreach ($filter as $key => $val)
+				$url .= "&" . $key . "=" . urlencode($val);
+		}
+
+		// Set response type
+		$responseType = @$post["responsetype"];
+		$url .= "&responsetype=" . urlencode($responseType);
+
+		// Set show current filter
+		$showCurrentFilter = @$post["showcurrentfilter"];
+		$url .= "&showfilter=" . ($showCurrentFilter == "1" ? "1" : "0");
+		echo json_encode(array("url" => $url));
+		return TRUE;
+	}
+
+	// Process generate request
+	function ProcessGenRequest() {
+		global $Security, $ReportLanguage;
+		$ar = ewr_IsHttpPost() ? $_POST : $_GET;
+		$genType = @$ar["reporttype"];
+		$genKey = @$ar["k"];
+		if (array_key_exists("k", $ar)) // Remove key
+			unset($ar["k"]);
+		if (ewr_Decrypt($genKey, EWR_REPORT_LOG_ENCRYPT_KEY) == $this->TableVar && $genType <> "") {
+			$usr = @$ar["u"];
+			$usr = ewr_Decrypt($usr, EWR_REPORT_LOG_ENCRYPT_KEY);
+			if (array_key_exists("u", $ar)) // Update actual user name
+				$ar["u"] = $usr;
+			$pwd = @$ar["p"];
+			if (array_key_exists("p", $ar)) // Remove password
+				unset($ar["p"]);
+			$pwd = ewr_Decrypt($pwd, EWR_REPORT_LOG_ENCRYPT_KEY);
+			$encrypted = @$ar["encrypted"] == "1";
+			$bLogin = $Security->ValidateUser($usr, $pwd, FALSE, $encrypted); // Manual login
+			if (!$bLogin) {
+				echo ewr_DeniedMsg();
+				exit();
+			} else {
+				if ($genType == "html") $genType = "print";
+				$this->Export = $genType;
+				$this->ShowCurrentFilter = FALSE;
+				if (@$ar["exportall"] <> "") // Export all option specified
+					$this->ExportAll = $ar["exportall"] == "1";
+				$this->GenOptions = $this->GetGenOptions($ar); // Set up generate options
+				$this->SetupGenFilterList($ar); // Update filter list
+			}
+		}
+	}
+
+	// Generate file extension
+	function GenFileExt($genType) {
+		if ($genType == "print" || $genType == "html")
+			return "html";
+		elseif ($genType == "excel")
+			return "xls";
+		elseif ($genType == "word")
+			return "doc";
+		elseif ($genType == "pdf")
+			return "pdf";
+		else
+			return $genType;
+	}
+
+	// Get Generate options
+	function GetGenOptions($ar) {
+		$options = array();
+		$options["parms"] = json_encode($ar);
+
+		// Set up gen type / filename
+		$genType = @$ar["reporttype"];
+		$options["reporttype"] = $genType;
+		$options["filtername"] = @$ar["filtername"];
+		$options["responsetype"] = @$ar["responsetype"];
+		if ($genType == "email") { // Email
+			$options["sender"] = @$ar["sender"];
+			$options["recipient"] = @$ar["recipient"];
+			$options["subject"] = @$ar["subject"];
+		} else {
+			$options["folder"] = (@$ar["folder"] <> "") ? $ar["folder"] : EWR_UPLOAD_DEST_PATH;
+			$options["filename"] = (@$ar["filename"] <> "") ? $ar["filename"] : $this->TableVar . "_" . ewr_RandomGuid() . "." . $this->GenFileExt($genType);
+		}
+
+		// Paging
+		$options["start"] = @$ar["start"]; // Start
+		$options["pageno"] = @$ar["pageno"]; // Page number
+		$options["grpperpage"] = @$ar["grpperpage"]; // Group per page
+
+		// Sort
+		$options["order"] = @$ar["order"]; // Order by
+		$options["ordertype"] = @$ar["ordertype"]; // ASC/DESC
+		if ($options["order"] == "") // Reset sort if not specified
+			$options["resetsort"] = "1";
+		$options["showfilter"] = @$ar["showfilter"]; // Show current filter
+		return $options;
+	}
+
+	// Set up generate filter
+	function SetupGenFilterList($ar) {
+		$filter = array();
+		$keys = preg_grep('/^(sv|sv2|so|so2|sc|sel)_/', array_keys($ar));
+		foreach ($keys as $key) {
+			$filter[$key] = @$ar[$key];
+		}
+		return $this->SetupFilterList($filter); 
+	}
+
+	// Write generate response
+	function WriteGenResponse($genurl) {
+		if ($genurl <> "") {
+			$genType = @$this->GenOptions["reporttype"];
+			$responseType = @$this->GenOptions["responsetype"];
+			if ($responseType == "json" || $genType == "email")
+				echo json_encode(array("url" => $genurl));
+		}
+	}
+
 	// Set up export options
 	function SetupExportOptions() {
 		global $Security, $ReportLanguage, $ReportOptions;
@@ -352,19 +571,19 @@ class crviewdocente_rpt extends crviewdocente {
 		// Printer friendly
 		$item = &$this->ExportOptions->Add("print");
 		$item->Body = "<a class=\"ewrExportLink ewPrint\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" href=\"" . $this->ExportPrintUrl . "\">" . $ReportLanguage->Phrase("PrinterFriendly") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["print"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPrint") : "";
 
 		// Export to Excel
 		$item = &$this->ExportOptions->Add("excel");
 		$item->Body = "<a class=\"ewrExportLink ewExcel\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" href=\"" . $this->ExportExcelUrl . "\">" . $ReportLanguage->Phrase("ExportToExcel") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["excel"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormExcel") : "";
 
 		// Export to Word
 		$item = &$this->ExportOptions->Add("word");
 		$item->Body = "<a class=\"ewrExportLink ewWord\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" href=\"" . $this->ExportWordUrl . "\">" . $ReportLanguage->Phrase("ExportToWord") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["word"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormWord") : "";
 
 		// Export to Pdf
@@ -373,7 +592,7 @@ class crviewdocente_rpt extends crviewdocente {
 		$item->Visible = FALSE;
 
 		// Uncomment codes below to show export to Pdf link
-//		$item->Visible = FALSE;
+//		$item->Visible = TRUE;
 
 		$ReportTypes["pdf"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPdf") : "";
 
@@ -386,7 +605,7 @@ class crviewdocente_rpt extends crviewdocente {
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 
 		// Drop down button for export
-		$this->ExportOptions->UseDropDownButton = FALSE;
+		$this->ExportOptions->UseDropDownButton = TRUE;
 		$this->ExportOptions->UseButtonGroup = TRUE;
 		$this->ExportOptions->UseImageAndText = $this->ExportOptions->UseDropDownButton;
 		$this->ExportOptions->DropDownButtonPhrase = $ReportLanguage->Phrase("ButtonExport");
@@ -409,6 +628,17 @@ class crviewdocente_rpt extends crviewdocente {
 
 		// Add group option item
 		$item = &$this->FilterOptions->Add($this->FilterOptions->GroupOptionName);
+		$item->Body = "";
+		$item->Visible = FALSE;
+
+		// Button to create generate URL
+		$item = &$this->GenerateOptions->Add("generateurl");
+		$item->Body = "<a type=\"button\" title=\"" . $ReportLanguage->Phrase("GenerateReportUrl", TRUE) . "\" onclick=\"ewr_ModalGenerateUrlShow(event);\" class=\"ewGenerateUrlBtn btn btn-default\"><span class=\"glyphicon glyphicon-link ewIcon\"></span></a>";
+		$item->Visible = $Security->IsLoggedIn(); // Check if logged in
+		$this->GenerateOptions->UseButtonGroup = TRUE;
+
+		// Add group option item
+		$item = &$this->GenerateOptions->Add($this->GenerateOptions->GroupOptionName);
 		$item->Body = "";
 		$item->Visible = FALSE;
 
@@ -436,12 +666,12 @@ class crviewdocente_rpt extends crviewdocente {
 		$item = &$this->SearchOptions->Add("searchtoggle");
 		$SearchToggleClass = $this->FilterApplied ? " active" : " active";
 		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-caption=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-toggle=\"button\" data-form=\"fviewdocenterpt\">" . $ReportLanguage->Phrase("SearchBtn") . "</button>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 
 		// Reset filter
 		$item = &$this->SearchOptions->Add("resetfilter");
 		$item->Body = "<button type=\"button\" class=\"btn btn-default\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ResetAllFilter", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ResetAllFilter", TRUE)) . "\" onclick=\"location='" . ewr_CurrentPage() . "?cmd=reset'\">" . $ReportLanguage->Phrase("ResetAllFilter") . "</button>";
-		$item->Visible = FALSE && $this->FilterApplied;
+		$item->Visible = TRUE && $this->FilterApplied;
 
 		// Button group for reset filter
 		$this->SearchOptions->UseButtonGroup = TRUE;
@@ -589,6 +819,12 @@ class crviewdocente_rpt extends crviewdocente {
 		$this->tipodiscapacidad->SetVisibility();
 		$this->nombreinstitucion->SetVisibility();
 
+		// Handle drill down
+		$sDrillDownFilter = $this->GetDrillDownFilter();
+		$grDrillDownInPanel = $this->DrillDownInPanel;
+		if ($this->DrillDown)
+			ewr_AddFilter($this->Filter, $sDrillDownFilter);
+
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
@@ -615,6 +851,12 @@ class crviewdocente_rpt extends crviewdocente {
 		if ($this->Export == "")
 			$this->SetupBreadcrumb();
 
+		// Check if search command
+		$this->SearchCommand = (@$_GET["cmd"] == "search");
+
+		// Load default filter values
+		$this->LoadDefaultFilters();
+
 		// Load custom filters
 		$this->Page_FilterLoad();
 
@@ -630,23 +872,24 @@ class crviewdocente_rpt extends crviewdocente {
 		// Extended filter
 		$sExtendedFilter = "";
 
+		// Restore filter list
+		$this->RestoreFilterList();
+
+		// Build extended filter
+		$sExtendedFilter = $this->GetExtendedFilter();
+		ewr_AddFilter($this->Filter, $sExtendedFilter);
+
 		// Build popup filter
 		$sPopupFilter = $this->GetPopupFilter();
 
 		//ewr_SetDebugMsg("popup filter: " . $sPopupFilter);
 		ewr_AddFilter($this->Filter, $sPopupFilter);
 
-		// No filter
-		$this->FilterApplied = FALSE;
-		$this->FilterOptions->GetItem("savecurrentfilter")->Visible = FALSE;
-		$this->FilterOptions->GetItem("deletefilter")->Visible = FALSE;
+		// Check if filter applied
+		$this->FilterApplied = $this->CheckFilter();
 
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
-
-		// Requires search criteria
-		if (($this->Filter == $this->UserIDFilter || $grFormError != "") && !$this->DrillDown)
-			$this->Filter = "0=101";
 
 		// Search options
 		$this->SetupSearchOptions();
@@ -958,6 +1201,13 @@ class crviewdocente_rpt extends crviewdocente {
 					$arValues = $_POST["sel_$sName"];
 					if (trim($arValues[0]) == "") // Select all
 						$arValues = EWR_INIT_VALUE;
+					$this->PopupName = $sName;
+					if (ewr_IsAdvancedFilterValue($arValues) || $arValues == EWR_INIT_VALUE)
+						$this->PopupValue = $arValues;
+					if (!ewr_MatchedArray($arValues, $_SESSION["sel_$sName"])) {
+						if ($this->HasSessionFilterValues($sName))
+							$this->ClearExtFilter = $sName; // Clear extended filter for this field
+					}
 					$_SESSION["sel_$sName"] = $arValues;
 					$_SESSION["rf_$sName"] = @$_POST["rf_$sName"];
 					$_SESSION["rt_$sName"] = @$_POST["rt_$sName"];
@@ -1373,7 +1623,7 @@ class crviewdocente_rpt extends crviewdocente {
 		global $ReportLanguage, $ReportOptions;
 		$ReportTypes = $ReportOptions["ReportTypes"];
 		$item =& $this->ExportOptions->GetItem("pdf");
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		if ($item->Visible)
 			$ReportTypes["pdf"] = $ReportLanguage->Phrase("ReportFormPdf");
 		$exportid = session_id();
@@ -1382,12 +1632,1037 @@ class crviewdocente_rpt extends crviewdocente {
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 	}
 
+	// Return extended filter
+	function GetExtendedFilter() {
+		global $grFormError;
+		$sFilter = "";
+		if ($this->DrillDown)
+			return "";
+		$bPostBack = ewr_IsHttpPost();
+		$bRestoreSession = TRUE;
+		$bSetupFilter = FALSE;
+
+		// Reset extended filter if filter changed
+		if ($bPostBack) {
+
+		// Reset search command
+		} elseif (@$_GET["cmd"] == "reset") {
+
+			// Load default values
+			$this->SetSessionFilterValues($this->deoartamento->SearchValue, $this->deoartamento->SearchOperator, $this->deoartamento->SearchCondition, $this->deoartamento->SearchValue2, $this->deoartamento->SearchOperator2, 'deoartamento'); // Field deoartamento
+			$this->SetSessionFilterValues($this->unidadeducativa->SearchValue, $this->unidadeducativa->SearchOperator, $this->unidadeducativa->SearchCondition, $this->unidadeducativa->SearchValue2, $this->unidadeducativa->SearchOperator2, 'unidadeducativa'); // Field unidadeducativa
+			$this->SetSessionFilterValues($this->nombres->SearchValue, $this->nombres->SearchOperator, $this->nombres->SearchCondition, $this->nombres->SearchValue2, $this->nombres->SearchOperator2, 'nombres'); // Field nombres
+			$this->SetSessionFilterValues($this->apellidopaterno->SearchValue, $this->apellidopaterno->SearchOperator, $this->apellidopaterno->SearchCondition, $this->apellidopaterno->SearchValue2, $this->apellidopaterno->SearchOperator2, 'apellidopaterno'); // Field apellidopaterno
+			$this->SetSessionFilterValues($this->apellidomaterno->SearchValue, $this->apellidomaterno->SearchOperator, $this->apellidomaterno->SearchCondition, $this->apellidomaterno->SearchValue2, $this->apellidomaterno->SearchOperator2, 'apellidomaterno'); // Field apellidomaterno
+			$this->SetSessionFilterValues($this->nrodiscapacidad->SearchValue, $this->nrodiscapacidad->SearchOperator, $this->nrodiscapacidad->SearchCondition, $this->nrodiscapacidad->SearchValue2, $this->nrodiscapacidad->SearchOperator2, 'nrodiscapacidad'); // Field nrodiscapacidad
+			$this->SetSessionFilterValues($this->ci->SearchValue, $this->ci->SearchOperator, $this->ci->SearchCondition, $this->ci->SearchValue2, $this->ci->SearchOperator2, 'ci'); // Field ci
+			$this->SetSessionFilterValues($this->materias->SearchValue, $this->materias->SearchOperator, $this->materias->SearchCondition, $this->materias->SearchValue2, $this->materias->SearchOperator2, 'materias'); // Field materias
+
+			//$bSetupFilter = TRUE; // No need to set up, just use default
+		} else {
+			$bRestoreSession = !$this->SearchCommand;
+
+			// Field deoartamento
+			if ($this->GetFilterValues($this->deoartamento)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field unidadeducativa
+			if ($this->GetFilterValues($this->unidadeducativa)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field nombres
+			if ($this->GetFilterValues($this->nombres)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field apellidopaterno
+			if ($this->GetFilterValues($this->apellidopaterno)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field apellidomaterno
+			if ($this->GetFilterValues($this->apellidomaterno)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field nrodiscapacidad
+			if ($this->GetFilterValues($this->nrodiscapacidad)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field ci
+			if ($this->GetFilterValues($this->ci)) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field materias
+			if ($this->GetFilterValues($this->materias)) {
+				$bSetupFilter = TRUE;
+			}
+			if (!$this->ValidateForm()) {
+				$this->setFailureMessage($grFormError);
+				return $sFilter;
+			}
+		}
+
+		// Restore session
+		if ($bRestoreSession) {
+			$this->GetSessionFilterValues($this->deoartamento); // Field deoartamento
+			$this->GetSessionFilterValues($this->unidadeducativa); // Field unidadeducativa
+			$this->GetSessionFilterValues($this->nombres); // Field nombres
+			$this->GetSessionFilterValues($this->apellidopaterno); // Field apellidopaterno
+			$this->GetSessionFilterValues($this->apellidomaterno); // Field apellidomaterno
+			$this->GetSessionFilterValues($this->nrodiscapacidad); // Field nrodiscapacidad
+			$this->GetSessionFilterValues($this->ci); // Field ci
+			$this->GetSessionFilterValues($this->materias); // Field materias
+		}
+
+		// Call page filter validated event
+		$this->Page_FilterValidated();
+
+		// Build SQL
+		$this->BuildExtendedFilter($this->deoartamento, $sFilter, FALSE, TRUE); // Field deoartamento
+		$this->BuildExtendedFilter($this->unidadeducativa, $sFilter, FALSE, TRUE); // Field unidadeducativa
+		$this->BuildExtendedFilter($this->nombres, $sFilter, FALSE, TRUE); // Field nombres
+		$this->BuildExtendedFilter($this->apellidopaterno, $sFilter, FALSE, TRUE); // Field apellidopaterno
+		$this->BuildExtendedFilter($this->apellidomaterno, $sFilter, FALSE, TRUE); // Field apellidomaterno
+		$this->BuildExtendedFilter($this->nrodiscapacidad, $sFilter, FALSE, TRUE); // Field nrodiscapacidad
+		$this->BuildExtendedFilter($this->ci, $sFilter, FALSE, TRUE); // Field ci
+		$this->BuildExtendedFilter($this->materias, $sFilter, FALSE, TRUE); // Field materias
+
+		// Save parms to session
+		$this->SetSessionFilterValues($this->deoartamento->SearchValue, $this->deoartamento->SearchOperator, $this->deoartamento->SearchCondition, $this->deoartamento->SearchValue2, $this->deoartamento->SearchOperator2, 'deoartamento'); // Field deoartamento
+		$this->SetSessionFilterValues($this->unidadeducativa->SearchValue, $this->unidadeducativa->SearchOperator, $this->unidadeducativa->SearchCondition, $this->unidadeducativa->SearchValue2, $this->unidadeducativa->SearchOperator2, 'unidadeducativa'); // Field unidadeducativa
+		$this->SetSessionFilterValues($this->nombres->SearchValue, $this->nombres->SearchOperator, $this->nombres->SearchCondition, $this->nombres->SearchValue2, $this->nombres->SearchOperator2, 'nombres'); // Field nombres
+		$this->SetSessionFilterValues($this->apellidopaterno->SearchValue, $this->apellidopaterno->SearchOperator, $this->apellidopaterno->SearchCondition, $this->apellidopaterno->SearchValue2, $this->apellidopaterno->SearchOperator2, 'apellidopaterno'); // Field apellidopaterno
+		$this->SetSessionFilterValues($this->apellidomaterno->SearchValue, $this->apellidomaterno->SearchOperator, $this->apellidomaterno->SearchCondition, $this->apellidomaterno->SearchValue2, $this->apellidomaterno->SearchOperator2, 'apellidomaterno'); // Field apellidomaterno
+		$this->SetSessionFilterValues($this->nrodiscapacidad->SearchValue, $this->nrodiscapacidad->SearchOperator, $this->nrodiscapacidad->SearchCondition, $this->nrodiscapacidad->SearchValue2, $this->nrodiscapacidad->SearchOperator2, 'nrodiscapacidad'); // Field nrodiscapacidad
+		$this->SetSessionFilterValues($this->ci->SearchValue, $this->ci->SearchOperator, $this->ci->SearchCondition, $this->ci->SearchValue2, $this->ci->SearchOperator2, 'ci'); // Field ci
+		$this->SetSessionFilterValues($this->materias->SearchValue, $this->materias->SearchOperator, $this->materias->SearchCondition, $this->materias->SearchValue2, $this->materias->SearchOperator2, 'materias'); // Field materias
+
+		// Setup filter
+		if ($bSetupFilter) {
+		}
+		return $sFilter;
+	}
+
+	// Build dropdown filter
+	function BuildDropDownFilter(&$fld, &$FilterClause, $FldOpr, $Default = FALSE, $SaveFilter = FALSE) {
+		$FldVal = ($Default) ? $fld->DefaultDropDownValue : $fld->DropDownValue;
+		$sSql = "";
+		if (is_array($FldVal)) {
+			foreach ($FldVal as $val) {
+				$sWrk = $this->GetDropDownFilter($fld, $val, $FldOpr);
+
+				// Call Page Filtering event
+				if (substr($val, 0, 2) <> "@@")
+					$this->Page_Filtering($fld, $sWrk, "dropdown", $FldOpr, $val);
+				if ($sWrk <> "") {
+					if ($sSql <> "")
+						$sSql .= " OR " . $sWrk;
+					else
+						$sSql = $sWrk;
+				}
+			}
+		} else {
+			$sSql = $this->GetDropDownFilter($fld, $FldVal, $FldOpr);
+
+			// Call Page Filtering event
+			if (substr($FldVal, 0, 2) <> "@@")
+				$this->Page_Filtering($fld, $sSql, "dropdown", $FldOpr, $FldVal);
+		}
+		if ($sSql <> "") {
+			ewr_AddFilter($FilterClause, $sSql);
+			if ($SaveFilter) $fld->CurrentFilter = $sSql;
+		}
+	}
+
+	function GetDropDownFilter(&$fld, $FldVal, $FldOpr) {
+		$FldName = $fld->FldName;
+		$FldExpression = $fld->FldExpression;
+		$FldDataType = $fld->FldDataType;
+		$FldDelimiter = $fld->FldDelimiter;
+		$FldVal = strval($FldVal);
+		if ($FldOpr == "") $FldOpr = "=";
+		$sWrk = "";
+		if (ewr_SameStr($FldVal, EWR_NULL_VALUE)) {
+			$sWrk = $FldExpression . " IS NULL";
+		} elseif (ewr_SameStr($FldVal, EWR_NOT_NULL_VALUE)) {
+			$sWrk = $FldExpression . " IS NOT NULL";
+		} elseif (ewr_SameStr($FldVal, EWR_EMPTY_VALUE)) {
+			$sWrk = $FldExpression . " = ''";
+		} elseif (ewr_SameStr($FldVal, EWR_ALL_VALUE)) {
+			$sWrk = "1 = 1";
+		} else {
+			if (substr($FldVal, 0, 2) == "@@") {
+				$sWrk = $this->GetCustomFilter($fld, $FldVal, $this->DBID);
+			} elseif ($FldDelimiter <> "" && trim($FldVal) <> "" && ($FldDataType == EWR_DATATYPE_STRING || $FldDataType == EWR_DATATYPE_MEMO)) {
+				$sWrk = ewr_GetMultiSearchSql($FldExpression, trim($FldVal), $this->DBID);
+			} else {
+				if ($FldVal <> "" && $FldVal <> EWR_INIT_VALUE) {
+					if ($FldDataType == EWR_DATATYPE_DATE && $FldOpr <> "") {
+						$sWrk = ewr_DateFilterString($FldExpression, $FldOpr, $FldVal, $FldDataType, $this->DBID);
+					} else {
+						$sWrk = ewr_FilterString($FldOpr, $FldVal, $FldDataType, $this->DBID);
+						if ($sWrk <> "") $sWrk = $FldExpression . $sWrk;
+					}
+				}
+			}
+		}
+		return $sWrk;
+	}
+
+	// Get custom filter
+	function GetCustomFilter(&$fld, $FldVal, $dbid = 0) {
+		$sWrk = "";
+		if (is_array($fld->AdvancedFilters)) {
+			foreach ($fld->AdvancedFilters as $filter) {
+				if ($filter->ID == $FldVal && $filter->Enabled) {
+					$sFld = $fld->FldExpression;
+					$sFn = $filter->FunctionName;
+					$wrkid = (substr($filter->ID, 0, 2) == "@@") ? substr($filter->ID,2) : $filter->ID;
+					if ($sFn <> "")
+						$sWrk = $sFn($sFld, $dbid);
+					else
+						$sWrk = "";
+					$this->Page_Filtering($fld, $sWrk, "custom", $wrkid);
+					break;
+				}
+			}
+		}
+		return $sWrk;
+	}
+
+	// Build extended filter
+	function BuildExtendedFilter(&$fld, &$FilterClause, $Default = FALSE, $SaveFilter = FALSE) {
+		$sWrk = ewr_GetExtendedFilter($fld, $Default, $this->DBID);
+		if (!$Default)
+			$this->Page_Filtering($fld, $sWrk, "extended", $fld->SearchOperator, $fld->SearchValue, $fld->SearchCondition, $fld->SearchOperator2, $fld->SearchValue2);
+		if ($sWrk <> "") {
+			ewr_AddFilter($FilterClause, $sWrk);
+			if ($SaveFilter) $fld->CurrentFilter = $sWrk;
+		}
+	}
+
+	// Get drop down value from querystring
+	function GetDropDownValue(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		if (ewr_IsHttpPost())
+			return FALSE; // Skip post back
+		if (isset($_GET["so_$parm"]))
+			$fld->SearchOperator = @$_GET["so_$parm"];
+		if (isset($_GET["sv_$parm"])) {
+			$fld->DropDownValue = @$_GET["sv_$parm"];
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	// Get filter values from querystring
+	function GetFilterValues(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		if (ewr_IsHttpPost())
+			return; // Skip post back
+		$got = FALSE;
+		if (isset($_GET["sv_$parm"])) {
+			$fld->SearchValue = @$_GET["sv_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["so_$parm"])) {
+			$fld->SearchOperator = @$_GET["so_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["sc_$parm"])) {
+			$fld->SearchCondition = @$_GET["sc_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["sv2_$parm"])) {
+			$fld->SearchValue2 = @$_GET["sv2_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["so2_$parm"])) {
+			$fld->SearchOperator2 = $_GET["so2_$parm"];
+			$got = TRUE;
+		}
+		return $got;
+	}
+
+	// Set default ext filter
+	function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2) {
+		$fld->DefaultSearchValue = $sv1; // Default ext filter value 1
+		$fld->DefaultSearchValue2 = $sv2; // Default ext filter value 2 (if operator 2 is enabled)
+		$fld->DefaultSearchOperator = $so1; // Default search operator 1
+		$fld->DefaultSearchOperator2 = $so2; // Default search operator 2 (if operator 2 is enabled)
+		$fld->DefaultSearchCondition = $sc; // Default search condition (if operator 2 is enabled)
+	}
+
+	// Apply default ext filter
+	function ApplyDefaultExtFilter(&$fld) {
+		$fld->SearchValue = $fld->DefaultSearchValue;
+		$fld->SearchValue2 = $fld->DefaultSearchValue2;
+		$fld->SearchOperator = $fld->DefaultSearchOperator;
+		$fld->SearchOperator2 = $fld->DefaultSearchOperator2;
+		$fld->SearchCondition = $fld->DefaultSearchCondition;
+	}
+
+	// Check if Text Filter applied
+	function TextFilterApplied(&$fld) {
+		return (strval($fld->SearchValue) <> strval($fld->DefaultSearchValue) ||
+			strval($fld->SearchValue2) <> strval($fld->DefaultSearchValue2) ||
+			(strval($fld->SearchValue) <> "" &&
+				strval($fld->SearchOperator) <> strval($fld->DefaultSearchOperator)) ||
+			(strval($fld->SearchValue2) <> "" &&
+				strval($fld->SearchOperator2) <> strval($fld->DefaultSearchOperator2)) ||
+			strval($fld->SearchCondition) <> strval($fld->DefaultSearchCondition));
+	}
+
+	// Check if Non-Text Filter applied
+	function NonTextFilterApplied(&$fld) {
+		if (is_array($fld->DropDownValue)) {
+			if (is_array($fld->DefaultDropDownValue)) {
+				if (count($fld->DefaultDropDownValue) <> count($fld->DropDownValue))
+					return TRUE;
+				else
+					return (count(array_diff($fld->DefaultDropDownValue, $fld->DropDownValue)) <> 0);
+			} else {
+				return TRUE;
+			}
+		} else {
+			if (is_array($fld->DefaultDropDownValue))
+				return TRUE;
+			else
+				$v1 = strval($fld->DefaultDropDownValue);
+			if ($v1 == EWR_INIT_VALUE)
+				$v1 = "";
+			$v2 = strval($fld->DropDownValue);
+			if ($v2 == EWR_INIT_VALUE || $v2 == EWR_ALL_VALUE)
+				$v2 = "";
+			return ($v1 <> $v2);
+		}
+	}
+
+	// Get dropdown value from session
+	function GetSessionDropDownValue(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		$this->GetSessionValue($fld->DropDownValue, 'sv_viewdocente_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator, 'so_viewdocente_' . $parm);
+	}
+
+	// Get filter values from session
+	function GetSessionFilterValues(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		$this->GetSessionValue($fld->SearchValue, 'sv_viewdocente_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator, 'so_viewdocente_' . $parm);
+		$this->GetSessionValue($fld->SearchCondition, 'sc_viewdocente_' . $parm);
+		$this->GetSessionValue($fld->SearchValue2, 'sv2_viewdocente_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator2, 'so2_viewdocente_' . $parm);
+	}
+
+	// Get value from session
+	function GetSessionValue(&$sv, $sn) {
+		if (array_key_exists($sn, $_SESSION))
+			$sv = $_SESSION[$sn];
+	}
+
+	// Set dropdown value to session
+	function SetSessionDropDownValue($sv, $so, $parm) {
+		$_SESSION['sv_viewdocente_' . $parm] = $sv;
+		$_SESSION['so_viewdocente_' . $parm] = $so;
+	}
+
+	// Set filter values to session
+	function SetSessionFilterValues($sv1, $so1, $sc, $sv2, $so2, $parm) {
+		$_SESSION['sv_viewdocente_' . $parm] = $sv1;
+		$_SESSION['so_viewdocente_' . $parm] = $so1;
+		$_SESSION['sc_viewdocente_' . $parm] = $sc;
+		$_SESSION['sv2_viewdocente_' . $parm] = $sv2;
+		$_SESSION['so2_viewdocente_' . $parm] = $so2;
+	}
+
+	// Check if has Session filter values
+	function HasSessionFilterValues($parm) {
+		return ((@$_SESSION['sv_' . $parm] <> "" && @$_SESSION['sv_' . $parm] <> EWR_INIT_VALUE) ||
+			(@$_SESSION['sv_' . $parm] <> "" && @$_SESSION['sv_' . $parm] <> EWR_INIT_VALUE) ||
+			(@$_SESSION['sv2_' . $parm] <> "" && @$_SESSION['sv2_' . $parm] <> EWR_INIT_VALUE));
+	}
+
+	// Dropdown filter exist
+	function DropDownFilterExist(&$fld, $FldOpr) {
+		$sWrk = "";
+		$this->BuildDropDownFilter($fld, $sWrk, $FldOpr);
+		return ($sWrk <> "");
+	}
+
+	// Extended filter exist
+	function ExtendedFilterExist(&$fld) {
+		$sExtWrk = "";
+		$this->BuildExtendedFilter($fld, $sExtWrk);
+		return ($sExtWrk <> "");
+	}
+
+	// Validate form
+	function ValidateForm() {
+		global $ReportLanguage, $grFormError;
+
+		// Initialize form error message
+		$grFormError = "";
+
+		// Check if validation required
+		if (!EWR_SERVER_VALIDATE)
+			return ($grFormError == "");
+
+		// Return validate result
+		$ValidateForm = ($grFormError == "");
+
+		// Call Form_CustomValidate event
+		$sFormCustomError = "";
+		$ValidateForm = $ValidateForm && $this->Form_CustomValidate($sFormCustomError);
+		if ($sFormCustomError <> "") {
+			$grFormError .= ($grFormError <> "") ? "<p>&nbsp;</p>" : "";
+			$grFormError .= $sFormCustomError;
+		}
+		return $ValidateForm;
+	}
+
+	// Clear selection stored in session
+	function ClearSessionSelection($parm) {
+		$_SESSION["sel_viewdocente_$parm"] = "";
+		$_SESSION["rf_viewdocente_$parm"] = "";
+		$_SESSION["rt_viewdocente_$parm"] = "";
+	}
+
+	// Load selection from session
+	function LoadSelectionFromSession($parm) {
+		$fld = &$this->FieldByParm($parm);
+		$fld->SelectionList = @$_SESSION["sel_viewdocente_$parm"];
+		$fld->RangeFrom = @$_SESSION["rf_viewdocente_$parm"];
+		$fld->RangeTo = @$_SESSION["rt_viewdocente_$parm"];
+	}
+
+	// Load default value for filters
+	function LoadDefaultFilters() {
+		/**
+		* Set up default values for non Text filters
+		*/
+		/**
+		* Set up default values for extended filters
+		* function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2)
+		* Parameters:
+		* $fld - Field object
+		* $so1 - Default search operator 1
+		* $sv1 - Default ext filter value 1
+		* $sc - Default search condition (if operator 2 is enabled)
+		* $so2 - Default search operator 2 (if operator 2 is enabled)
+		* $sv2 - Default ext filter value 2 (if operator 2 is enabled)
+		*/
+
+		// Field deoartamento
+		$this->SetDefaultExtFilter($this->deoartamento, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->deoartamento);
+
+		// Field unidadeducativa
+		$this->SetDefaultExtFilter($this->unidadeducativa, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->unidadeducativa);
+
+		// Field nombres
+		$this->SetDefaultExtFilter($this->nombres, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->nombres);
+
+		// Field apellidopaterno
+		$this->SetDefaultExtFilter($this->apellidopaterno, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->apellidopaterno);
+
+		// Field apellidomaterno
+		$this->SetDefaultExtFilter($this->apellidomaterno, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->apellidomaterno);
+
+		// Field nrodiscapacidad
+		$this->SetDefaultExtFilter($this->nrodiscapacidad, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->nrodiscapacidad);
+
+		// Field ci
+		$this->SetDefaultExtFilter($this->ci, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->ci);
+
+		// Field materias
+		$this->SetDefaultExtFilter($this->materias, "LIKE", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->materias);
+		/**
+		* Set up default values for popup filters
+		*/
+	}
+
+	// Check if filter applied
+	function CheckFilter() {
+
+		// Check deoartamento text filter
+		if ($this->TextFilterApplied($this->deoartamento))
+			return TRUE;
+
+		// Check unidadeducativa text filter
+		if ($this->TextFilterApplied($this->unidadeducativa))
+			return TRUE;
+
+		// Check nombres text filter
+		if ($this->TextFilterApplied($this->nombres))
+			return TRUE;
+
+		// Check apellidopaterno text filter
+		if ($this->TextFilterApplied($this->apellidopaterno))
+			return TRUE;
+
+		// Check apellidomaterno text filter
+		if ($this->TextFilterApplied($this->apellidomaterno))
+			return TRUE;
+
+		// Check nrodiscapacidad text filter
+		if ($this->TextFilterApplied($this->nrodiscapacidad))
+			return TRUE;
+
+		// Check ci text filter
+		if ($this->TextFilterApplied($this->ci))
+			return TRUE;
+
+		// Check materias text filter
+		if ($this->TextFilterApplied($this->materias))
+			return TRUE;
+		return FALSE;
+	}
+
+	// Show list of filters
+	function ShowFilterList($showDate = FALSE) {
+		global $ReportLanguage;
+
+		// Initialize
+		$sFilterList = "";
+
+		// Field deoartamento
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->deoartamento, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->deoartamento->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field unidadeducativa
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->unidadeducativa, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->unidadeducativa->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field nombres
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->nombres, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombres->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field apellidopaterno
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->apellidopaterno, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->apellidopaterno->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field apellidomaterno
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->apellidomaterno, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->apellidomaterno->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field nrodiscapacidad
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->nrodiscapacidad, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nrodiscapacidad->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field ci
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->ci, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->ci->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field materias
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->materias, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->materias->FldCaption() . "</span>" . $sFilter . "</div>";
+		$divstyle = "";
+		$divdataclass = "";
+
+		// Show Filters
+		if ($sFilterList <> "" || $showDate) {
+			$sMessage = "<div" . $divstyle . $divdataclass . "><div id=\"ewrFilterList\" class=\"alert alert-info\">";
+			if ($showDate)
+				$sMessage .= "<div id=\"ewrCurrentDate\">" . $ReportLanguage->Phrase("ReportGeneratedDate") . ewr_FormatDateTime(date("Y-m-d H:i:s"), 1) . "</div>";
+			if ($sFilterList <> "")
+				$sMessage .= "<div id=\"ewrCurrentFilters\">" . $ReportLanguage->Phrase("CurrentFilters") . "</div>" . $sFilterList;
+			$sMessage .= "</div></div>";
+			$this->Message_Showing($sMessage, "");
+			echo $sMessage;
+		}
+	}
+
+	// Get list of filters
+	function GetFilterList() {
+
+		// Initialize
+		$sFilterList = "";
+
+		// Field deoartamento
+		$sWrk = "";
+		if ($this->deoartamento->SearchValue <> "" || $this->deoartamento->SearchValue2 <> "") {
+			$sWrk = "\"sv_deoartamento\":\"" . ewr_JsEncode2($this->deoartamento->SearchValue) . "\"," .
+				"\"so_deoartamento\":\"" . ewr_JsEncode2($this->deoartamento->SearchOperator) . "\"," .
+				"\"sc_deoartamento\":\"" . ewr_JsEncode2($this->deoartamento->SearchCondition) . "\"," .
+				"\"sv2_deoartamento\":\"" . ewr_JsEncode2($this->deoartamento->SearchValue2) . "\"," .
+				"\"so2_deoartamento\":\"" . ewr_JsEncode2($this->deoartamento->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field unidadeducativa
+		$sWrk = "";
+		if ($this->unidadeducativa->SearchValue <> "" || $this->unidadeducativa->SearchValue2 <> "") {
+			$sWrk = "\"sv_unidadeducativa\":\"" . ewr_JsEncode2($this->unidadeducativa->SearchValue) . "\"," .
+				"\"so_unidadeducativa\":\"" . ewr_JsEncode2($this->unidadeducativa->SearchOperator) . "\"," .
+				"\"sc_unidadeducativa\":\"" . ewr_JsEncode2($this->unidadeducativa->SearchCondition) . "\"," .
+				"\"sv2_unidadeducativa\":\"" . ewr_JsEncode2($this->unidadeducativa->SearchValue2) . "\"," .
+				"\"so2_unidadeducativa\":\"" . ewr_JsEncode2($this->unidadeducativa->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field nombres
+		$sWrk = "";
+		if ($this->nombres->SearchValue <> "" || $this->nombres->SearchValue2 <> "") {
+			$sWrk = "\"sv_nombres\":\"" . ewr_JsEncode2($this->nombres->SearchValue) . "\"," .
+				"\"so_nombres\":\"" . ewr_JsEncode2($this->nombres->SearchOperator) . "\"," .
+				"\"sc_nombres\":\"" . ewr_JsEncode2($this->nombres->SearchCondition) . "\"," .
+				"\"sv2_nombres\":\"" . ewr_JsEncode2($this->nombres->SearchValue2) . "\"," .
+				"\"so2_nombres\":\"" . ewr_JsEncode2($this->nombres->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field apellidopaterno
+		$sWrk = "";
+		if ($this->apellidopaterno->SearchValue <> "" || $this->apellidopaterno->SearchValue2 <> "") {
+			$sWrk = "\"sv_apellidopaterno\":\"" . ewr_JsEncode2($this->apellidopaterno->SearchValue) . "\"," .
+				"\"so_apellidopaterno\":\"" . ewr_JsEncode2($this->apellidopaterno->SearchOperator) . "\"," .
+				"\"sc_apellidopaterno\":\"" . ewr_JsEncode2($this->apellidopaterno->SearchCondition) . "\"," .
+				"\"sv2_apellidopaterno\":\"" . ewr_JsEncode2($this->apellidopaterno->SearchValue2) . "\"," .
+				"\"so2_apellidopaterno\":\"" . ewr_JsEncode2($this->apellidopaterno->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field apellidomaterno
+		$sWrk = "";
+		if ($this->apellidomaterno->SearchValue <> "" || $this->apellidomaterno->SearchValue2 <> "") {
+			$sWrk = "\"sv_apellidomaterno\":\"" . ewr_JsEncode2($this->apellidomaterno->SearchValue) . "\"," .
+				"\"so_apellidomaterno\":\"" . ewr_JsEncode2($this->apellidomaterno->SearchOperator) . "\"," .
+				"\"sc_apellidomaterno\":\"" . ewr_JsEncode2($this->apellidomaterno->SearchCondition) . "\"," .
+				"\"sv2_apellidomaterno\":\"" . ewr_JsEncode2($this->apellidomaterno->SearchValue2) . "\"," .
+				"\"so2_apellidomaterno\":\"" . ewr_JsEncode2($this->apellidomaterno->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field nrodiscapacidad
+		$sWrk = "";
+		if ($this->nrodiscapacidad->SearchValue <> "" || $this->nrodiscapacidad->SearchValue2 <> "") {
+			$sWrk = "\"sv_nrodiscapacidad\":\"" . ewr_JsEncode2($this->nrodiscapacidad->SearchValue) . "\"," .
+				"\"so_nrodiscapacidad\":\"" . ewr_JsEncode2($this->nrodiscapacidad->SearchOperator) . "\"," .
+				"\"sc_nrodiscapacidad\":\"" . ewr_JsEncode2($this->nrodiscapacidad->SearchCondition) . "\"," .
+				"\"sv2_nrodiscapacidad\":\"" . ewr_JsEncode2($this->nrodiscapacidad->SearchValue2) . "\"," .
+				"\"so2_nrodiscapacidad\":\"" . ewr_JsEncode2($this->nrodiscapacidad->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field ci
+		$sWrk = "";
+		if ($this->ci->SearchValue <> "" || $this->ci->SearchValue2 <> "") {
+			$sWrk = "\"sv_ci\":\"" . ewr_JsEncode2($this->ci->SearchValue) . "\"," .
+				"\"so_ci\":\"" . ewr_JsEncode2($this->ci->SearchOperator) . "\"," .
+				"\"sc_ci\":\"" . ewr_JsEncode2($this->ci->SearchCondition) . "\"," .
+				"\"sv2_ci\":\"" . ewr_JsEncode2($this->ci->SearchValue2) . "\"," .
+				"\"so2_ci\":\"" . ewr_JsEncode2($this->ci->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field materias
+		$sWrk = "";
+		if ($this->materias->SearchValue <> "" || $this->materias->SearchValue2 <> "") {
+			$sWrk = "\"sv_materias\":\"" . ewr_JsEncode2($this->materias->SearchValue) . "\"," .
+				"\"so_materias\":\"" . ewr_JsEncode2($this->materias->SearchOperator) . "\"," .
+				"\"sc_materias\":\"" . ewr_JsEncode2($this->materias->SearchCondition) . "\"," .
+				"\"sv2_materias\":\"" . ewr_JsEncode2($this->materias->SearchValue2) . "\"," .
+				"\"so2_materias\":\"" . ewr_JsEncode2($this->materias->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Return filter list in json
+		if ($sFilterList <> "")
+			return "{" . $sFilterList . "}";
+		else
+			return "null";
+	}
+
+	// Restore list of filters
+	function RestoreFilterList() {
+
+		// Return if not reset filter
+		if (@$_POST["cmd"] <> "resetfilter")
+			return FALSE;
+		$filter = json_decode(@$_POST["filter"], TRUE);
+		return $this->SetupFilterList($filter);
+	}
+
+	// Setup list of filters
+	function SetupFilterList($filter) {
+		if (!is_array($filter))
+			return FALSE;
+
+		// Field deoartamento
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_deoartamento", $filter) || array_key_exists("so_deoartamento", $filter) ||
+			array_key_exists("sc_deoartamento", $filter) ||
+			array_key_exists("sv2_deoartamento", $filter) || array_key_exists("so2_deoartamento", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_deoartamento"], @$filter["so_deoartamento"], @$filter["sc_deoartamento"], @$filter["sv2_deoartamento"], @$filter["so2_deoartamento"], "deoartamento");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "deoartamento");
+		}
+
+		// Field unidadeducativa
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_unidadeducativa", $filter) || array_key_exists("so_unidadeducativa", $filter) ||
+			array_key_exists("sc_unidadeducativa", $filter) ||
+			array_key_exists("sv2_unidadeducativa", $filter) || array_key_exists("so2_unidadeducativa", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_unidadeducativa"], @$filter["so_unidadeducativa"], @$filter["sc_unidadeducativa"], @$filter["sv2_unidadeducativa"], @$filter["so2_unidadeducativa"], "unidadeducativa");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "unidadeducativa");
+		}
+
+		// Field nombres
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_nombres", $filter) || array_key_exists("so_nombres", $filter) ||
+			array_key_exists("sc_nombres", $filter) ||
+			array_key_exists("sv2_nombres", $filter) || array_key_exists("so2_nombres", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_nombres"], @$filter["so_nombres"], @$filter["sc_nombres"], @$filter["sv2_nombres"], @$filter["so2_nombres"], "nombres");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "nombres");
+		}
+
+		// Field apellidopaterno
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_apellidopaterno", $filter) || array_key_exists("so_apellidopaterno", $filter) ||
+			array_key_exists("sc_apellidopaterno", $filter) ||
+			array_key_exists("sv2_apellidopaterno", $filter) || array_key_exists("so2_apellidopaterno", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_apellidopaterno"], @$filter["so_apellidopaterno"], @$filter["sc_apellidopaterno"], @$filter["sv2_apellidopaterno"], @$filter["so2_apellidopaterno"], "apellidopaterno");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "apellidopaterno");
+		}
+
+		// Field apellidomaterno
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_apellidomaterno", $filter) || array_key_exists("so_apellidomaterno", $filter) ||
+			array_key_exists("sc_apellidomaterno", $filter) ||
+			array_key_exists("sv2_apellidomaterno", $filter) || array_key_exists("so2_apellidomaterno", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_apellidomaterno"], @$filter["so_apellidomaterno"], @$filter["sc_apellidomaterno"], @$filter["sv2_apellidomaterno"], @$filter["so2_apellidomaterno"], "apellidomaterno");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "apellidomaterno");
+		}
+
+		// Field nrodiscapacidad
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_nrodiscapacidad", $filter) || array_key_exists("so_nrodiscapacidad", $filter) ||
+			array_key_exists("sc_nrodiscapacidad", $filter) ||
+			array_key_exists("sv2_nrodiscapacidad", $filter) || array_key_exists("so2_nrodiscapacidad", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_nrodiscapacidad"], @$filter["so_nrodiscapacidad"], @$filter["sc_nrodiscapacidad"], @$filter["sv2_nrodiscapacidad"], @$filter["so2_nrodiscapacidad"], "nrodiscapacidad");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "nrodiscapacidad");
+		}
+
+		// Field ci
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_ci", $filter) || array_key_exists("so_ci", $filter) ||
+			array_key_exists("sc_ci", $filter) ||
+			array_key_exists("sv2_ci", $filter) || array_key_exists("so2_ci", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_ci"], @$filter["so_ci"], @$filter["sc_ci"], @$filter["sv2_ci"], @$filter["so2_ci"], "ci");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "ci");
+		}
+
+		// Field materias
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_materias", $filter) || array_key_exists("so_materias", $filter) ||
+			array_key_exists("sc_materias", $filter) ||
+			array_key_exists("sv2_materias", $filter) || array_key_exists("so2_materias", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_materias"], @$filter["so_materias"], @$filter["sc_materias"], @$filter["sv2_materias"], @$filter["so2_materias"], "materias");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "materias");
+		}
+		return TRUE;
+	}
+
 	// Return popup filter
 	function GetPopupFilter() {
 		$sWrk = "";
 		if ($this->DrillDown)
 			return "";
 		return $sWrk;
+	}
+
+	// Return drill down filter
+	function GetDrillDownFilter() {
+		global $ReportLanguage;
+		$sFilterList = "";
+		$filter = "";
+		$post = $_POST;
+		$opt = @$post["d"];
+		if ($opt == "1" || $opt == "2") {
+			$mastertable = @$post["s"]; // Get source table
+			$sql = @$post["deoartamento"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@deoartamento", "`deoartamento`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->deoartamento->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["unidadeducativa"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@unidadeducativa", "`unidadeducativa`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->unidadeducativa->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["nombres"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@nombres", "`nombres`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombres->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["apellidopaterno"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@apellidopaterno", "`apellidopaterno`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->apellidopaterno->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["apellidomaterno"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@apellidomaterno", "`apellidomaterno`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->apellidomaterno->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["nrodiscapacidad"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@nrodiscapacidad", "`nrodiscapacidad`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nrodiscapacidad->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["ci"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@ci", "`ci`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->ci->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+			$sql = @$post["materias"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@materias", "`materias`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->materias->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+
+			// Save to session
+			$_SESSION[EWR_PROJECT_NAME . "_" . $this->TableVar . "_" . EWR_TABLE_MASTER_TABLE] = $mastertable;
+			$_SESSION['do_viewdocente'] = $opt;
+			$_SESSION['df_viewdocente'] = $filter;
+			$_SESSION['dl_viewdocente'] = $sFilterList;
+		} elseif (@$_GET["cmd"] == "resetdrilldown") { // Clear drill down
+			$_SESSION[EWR_PROJECT_NAME . "_" . $this->TableVar . "_" . EWR_TABLE_MASTER_TABLE] = "";
+			$_SESSION['do_viewdocente'] = "";
+			$_SESSION['df_viewdocente'] = "";
+			$_SESSION['dl_viewdocente'] = "";
+		} else { // Restore from Session
+			$opt = @$_SESSION['do_viewdocente'];
+			$filter = @$_SESSION['df_viewdocente'];
+			$sFilterList = @$_SESSION['dl_viewdocente'];
+		}
+		if ($opt == "1" || $opt == "2")
+			$this->DrillDown = TRUE;
+		if ($opt == "1") {
+			$this->DrillDownInPanel = TRUE;
+			$GLOBALS["gbSkipHeaderFooter"] = TRUE;
+		}
+		if ($filter <> "") {
+			if ($sFilterList == "")
+				$sFilterList = "<div><span class=\"ewFilterValue\">" . $ReportLanguage->Phrase("DrillDownAllRecords") . "</span></div>";
+			$this->DrillDownList = "<div id=\"ewrDrillDownFilters\">" . $ReportLanguage->Phrase("DrillDownFilters") . "</div>" . $sFilterList;
+		}
+		return $filter;
+	}
+
+	// Show drill down filters
+	function ShowDrillDownList() {
+		$divstyle = "";
+		$divdataclass = "";
+		if ($this->DrillDownList <> "") {
+			$sMessage = "<div id=\"ewrDrillDownList\"" . $divstyle . "><div class=\"alert alert-info\"" . $divdataclass . ">" . $this->DrillDownList . "</div></div>";
+			$this->Message_Showing($sMessage, "");
+			echo $sMessage;
+		}
 	}
 
 	// Get sort parameters based on sort links clicked
@@ -1421,11 +2696,89 @@ class crviewdocente_rpt extends crviewdocente {
 		} elseif ($orderBy <> "") {
 			$this->CurrentOrder = $orderBy;
 			$this->CurrentOrderType = $orderType;
+			$this->UpdateSort($this->deoartamento); // deoartamento
+			$this->UpdateSort($this->unidadeducativa); // unidadeducativa
+			$this->UpdateSort($this->nombres); // nombres
+			$this->UpdateSort($this->apellidopaterno); // apellidopaterno
+			$this->UpdateSort($this->apellidomaterno); // apellidomaterno
+			$this->UpdateSort($this->nrodiscapacidad); // nrodiscapacidad
+			$this->UpdateSort($this->ci); // ci
+			$this->UpdateSort($this->fechanacimiento); // fechanacimiento
+			$this->UpdateSort($this->sexo); // sexo
+			$this->UpdateSort($this->celular); // celular
+			$this->UpdateSort($this->materias); // materias
+			$this->UpdateSort($this->discapacidad); // discapacidad
+			$this->UpdateSort($this->tipodiscapacidad); // tipodiscapacidad
+			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
 		}
 		return $this->getOrderBy();
+	}
+
+	// Export to HTML
+	function ExportHtml($html, $options = array()) {
+
+		//global $gsExportFile;
+		//header('Content-Type: text/html' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+		//header('Content-Disposition: attachment; filename=' . $gsExportFile . '.html');
+
+		$folder = @$this->GenOptions["folder"];
+		$fileName = @$this->GenOptions["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+
+		// Save generate file for print
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+			$baseTag = "<base href=\"" . ewr_BaseUrl() . "\">";
+			$html = preg_replace('/<head>/', '<head>' . $baseTag, $html);
+			ewr_SaveFile($folder, $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file")
+			echo $html;
+		return $saveToFile;
+	}
+
+	// Export to WORD
+	function ExportWord($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-word' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.doc');
+			echo $html;
+		}
+		return $saveToFile;
+	}
+
+	// Export to EXCEL
+	function ExportExcel($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-excel' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.xls');
+			echo $html;
+		}
+		return $saveToFile;
 	}
 
 	// Export PDF
@@ -1573,6 +2926,7 @@ $Page->Page_Render();
 <?php include_once "header.php" ?>
 <?php include_once "phprptinc/header.php" ?>
 <?php } ?>
+<?php if ($Page->Export == "" || $Page->Export == "print" || $Page->Export == "email" && @$gsEmailContentType == "url") { ?>
 <script type="text/javascript">
 
 // Create page object
@@ -1582,9 +2936,42 @@ var viewdocente_rpt = new ewr_Page("viewdocente_rpt");
 viewdocente_rpt.PageID = "rpt"; // Page ID
 var EWR_PAGE_ID = viewdocente_rpt.PageID;
 </script>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
 <?php } ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
+<script type="text/javascript">
+
+// Form object
+var CurrentForm = fviewdocenterpt = new ewr_Form("fviewdocenterpt");
+
+// Validate method
+fviewdocenterpt.Validate = function() {
+	if (!this.ValidateRequired)
+		return true; // Ignore validation
+	var $ = jQuery, fobj = this.GetForm(), $fobj = $(fobj);
+
+	// Call Form Custom Validate event
+	if (!this.Form_CustomValidate(fobj))
+		return false;
+	return true;
+}
+
+// Form_CustomValidate method
+fviewdocenterpt.Form_CustomValidate = 
+ function(fobj) { // DO NOT CHANGE THIS LINE!
+
+ 	// Your custom validation code here, return false if invalid.
+ 	return true;
+ }
+<?php if (EWR_CLIENT_VALIDATE) { ?>
+fviewdocenterpt.ValidateRequired = true; // Uses JavaScript validation
+<?php } else { ?>
+fviewdocenterpt.ValidateRequired = false; // No JavaScript validation
+<?php } ?>
+
+// Use Ajax
+</script>
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your client script here, no need to add script tags.
@@ -1617,8 +3004,98 @@ if (!$Page->DrillDownInPanel) {
 <!-- Center Container - Report -->
 <div id="ewCenter" class="col-sm-12 ewCenter">
 <?php } ?>
+<?php if ($Page->ShowDrillDownFilter) { ?>
+<?php $Page->ShowDrillDownList() ?>
+<?php } ?>
 <!-- Summary Report begins -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="report_summary">
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
+<!-- Search form (begin) -->
+<form name="fviewdocenterpt" id="fviewdocenterpt" class="form-inline ewForm ewExtFilterForm" action="<?php echo ewr_CurrentPage() ?>">
+<?php $SearchPanelClass = ($Page->Filter <> "") ? " in" : " in"; ?>
+<div id="fviewdocenterpt_SearchPanel" class="ewSearchPanel collapse<?php echo $SearchPanelClass ?>">
+<input type="hidden" name="cmd" value="search">
+<div id="r_1" class="ewRow">
+<div id="c_deoartamento" class="ewCell form-group">
+	<label for="sv_deoartamento" class="ewSearchCaption ewLabel"><?php echo $Page->deoartamento->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_deoartamento" id="so_deoartamento" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->deoartamento->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_deoartamento" id="sv_deoartamento" name="sv_deoartamento" size="30" maxlength="100" placeholder="<?php echo $Page->deoartamento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->deoartamento->SearchValue) ?>"<?php echo $Page->deoartamento->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_unidadeducativa" class="ewCell form-group">
+	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->unidadeducativa->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_nombres" class="ewCell form-group">
+	<label for="sv_nombres" class="ewSearchCaption ewLabel"><?php echo $Page->nombres->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombres" id="so_nombres" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->nombres->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_nombres" id="sv_nombres" name="sv_nombres" size="30" maxlength="100" placeholder="<?php echo $Page->nombres->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombres->SearchValue) ?>"<?php echo $Page->nombres->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_apellidopaterno" class="ewCell form-group">
+	<label for="sv_apellidopaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidopaterno->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidopaterno" id="so_apellidopaterno" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->apellidopaterno->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_apellidopaterno" id="sv_apellidopaterno" name="sv_apellidopaterno" size="30" maxlength="100" placeholder="<?php echo $Page->apellidopaterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->apellidopaterno->SearchValue) ?>"<?php echo $Page->apellidopaterno->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_apellidomaterno" class="ewCell form-group">
+	<label for="sv_apellidomaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidomaterno->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidomaterno" id="so_apellidomaterno" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->apellidomaterno->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_apellidomaterno" id="sv_apellidomaterno" name="sv_apellidomaterno" size="30" maxlength="100" placeholder="<?php echo $Page->apellidomaterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->apellidomaterno->SearchValue) ?>"<?php echo $Page->apellidomaterno->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_nrodiscapacidad" class="ewCell form-group">
+	<label for="sv_nrodiscapacidad" class="ewSearchCaption ewLabel"><?php echo $Page->nrodiscapacidad->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nrodiscapacidad" id="so_nrodiscapacidad" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->nrodiscapacidad->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_nrodiscapacidad" id="sv_nrodiscapacidad" name="sv_nrodiscapacidad" size="30" maxlength="15" placeholder="<?php echo $Page->nrodiscapacidad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nrodiscapacidad->SearchValue) ?>"<?php echo $Page->nrodiscapacidad->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_ci" class="ewCell form-group">
+	<label for="sv_ci" class="ewSearchCaption ewLabel"><?php echo $Page->ci->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_ci" id="so_ci" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->ci->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_ci" id="sv_ci" name="sv_ci" size="30" maxlength="15" placeholder="<?php echo $Page->ci->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->ci->SearchValue) ?>"<?php echo $Page->ci->EditAttributes() ?>>
+</span>
+</div>
+<div id="c_materias" class="ewCell form-group">
+	<label for="sv_materias" class="ewSearchCaption ewLabel"><?php echo $Page->materias->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_materias" id="so_materias" value="LIKE"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->materias->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewdocente" data-field="x_materias" id="sv_materias" name="sv_materias" size="30" maxlength="100" placeholder="<?php echo $Page->materias->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->materias->SearchValue) ?>"<?php echo $Page->materias->EditAttributes() ?>>
+</span>
+</div>
+</div>
+<div class="ewRow"><input type="submit" name="btnsubmit" id="btnsubmit" class="btn btn-primary" value="<?php echo $ReportLanguage->Phrase("Search") ?>">
+<input type="reset" name="btnreset" id="btnreset" class="btn hide" value="<?php echo $ReportLanguage->Phrase("Reset") ?>"></div>
+</div>
+</form>
+<script type="text/javascript">
+fviewdocenterpt.Init();
+fviewdocenterpt.FilterList = <?php echo $Page->GetFilterList() ?>;
+</script>
+<!-- Search form (end) -->
+<?php } ?>
+<?php if ($Page->ShowCurrentFilter) { ?>
+<?php $Page->ShowFilterList() ?>
+<?php } ?>
 <?php
 
 // Set the last group to display if not export all
@@ -1649,13 +3126,23 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 
 	if ($Page->ShowHeader) {
 ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<div class="box-header ewGridUpperPanel">
+<?php include "viewdocenterptpager.php" ?>
+<div class="clearfix"></div>
+</div>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewdocente" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <thead>
 	<!-- Table header -->
@@ -1670,7 +3157,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->deoartamento->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_deoartamento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->deoartamento) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_deoartamento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->deoartamento) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->deoartamento->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->deoartamento->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->deoartamento->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1688,7 +3175,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->unidadeducativa->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_unidadeducativa" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidadeducativa) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_unidadeducativa" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidadeducativa) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->unidadeducativa->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->unidadeducativa->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->unidadeducativa->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1706,7 +3193,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_nombres" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombres) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_nombres" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombres) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombres->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombres->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1724,7 +3211,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->apellidopaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidopaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1742,7 +3229,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->apellidomaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidomaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1760,7 +3247,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nrodiscapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nrodiscapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1778,7 +3265,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->ci->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ci->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1796,7 +3283,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->fechanacimiento->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_fechanacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fechanacimiento) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_fechanacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fechanacimiento) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->fechanacimiento->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->fechanacimiento->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fechanacimiento->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1814,7 +3301,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->sexo->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->sexo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->sexo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->sexo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1832,7 +3319,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->celular->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_celular" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->celular) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_celular" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->celular) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->celular->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->celular->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->celular->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1850,7 +3337,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->materias->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_materias" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->materias) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_materias" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->materias) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->materias->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->materias->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->materias->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1868,7 +3355,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_discapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapacidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_discapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->discapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->discapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->discapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1886,7 +3373,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapacidad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_tipodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipodiscapacidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_tipodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipodiscapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipodiscapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->tipodiscapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->tipodiscapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1904,7 +3391,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewdocente_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewdocente_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombreinstitucion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombreinstitucion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -2002,27 +3489,45 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <tfoot>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && FALSE) { // No header displayed ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<div class="box-header ewGridUpperPanel">
+<?php include "viewdocenterptpager.php" ?>
+<div class="clearfix"></div>
+</div>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewdocente" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <?php } ?>
 <?php if ($Page->TotalGrps > 0 || FALSE) { // Show footer ?>
 </table>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
-<?php if (!($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<?php } ?>
+<?php if ($Page->TotalGrps > 0) { ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
 <div class="box-footer ewGridLowerPanel">
 <?php include "viewdocenterptpager.php" ?>
 <div class="clearfix"></div>
 </div>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
+<?php } ?>
 <!-- Summary Report Ends -->
 <?php if ($Page->Export == "" && !$grDashboardReport) { ?>
 </div>
@@ -2047,7 +3552,7 @@ if (EWR_DEBUG_ENABLED)
 if ($rsgrp) $rsgrp->Close();
 if ($rs) $rs->Close();
 ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your table-specific startup script here

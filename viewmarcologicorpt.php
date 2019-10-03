@@ -6,16 +6,16 @@ ob_start();
 <?php include_once ((EW_USE_ADODB) ? "adodb5/adodb.inc.php" : "phprptinc/ewmysql.php") ?>
 <?php include_once "rphpfn11.php" ?>
 <?php include_once "rusrfn11.php" ?>
-<?php include_once "viewestudiantesetareocursorptinfo.php" ?>
+<?php include_once "viewmarcologicorptinfo.php" ?>
 <?php
 
 //
 // Page class
 //
 
-$viewestudiantesetareocurso_rpt = NULL; // Initialize page object first
+$viewmarcologico_rpt = NULL; // Initialize page object first
 
-class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
+class crviewmarcologico_rpt extends crviewmarcologico {
 
 	// Page ID
 	var $PageID = 'rpt';
@@ -24,7 +24,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 	var $ProjectID = "{707530BA-BEB7-415A-B683-2C9753B31FA3}";
 
 	// Page object name
-	var $PageObjName = 'viewestudiantesetareocurso_rpt';
+	var $PageObjName = 'viewmarcologico_rpt';
 
 	// Page headings
 	var $Heading = '';
@@ -225,10 +225,10 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (viewestudiantesetareocurso)
-		if (!isset($GLOBALS["viewestudiantesetareocurso"])) {
-			$GLOBALS["viewestudiantesetareocurso"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["viewestudiantesetareocurso"];
+		// Table object (viewmarcologico)
+		if (!isset($GLOBALS["viewmarcologico"])) {
+			$GLOBALS["viewmarcologico"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["viewmarcologico"];
 		}
 
 		// Initialize URLs
@@ -243,7 +243,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 
 		// Table name (for backward compatibility)
 		if (!defined("EWR_TABLE_NAME"))
-			define("EWR_TABLE_NAME", 'viewestudiantesetareocurso', TRUE);
+			define("EWR_TABLE_NAME", 'viewmarcologico', TRUE);
 
 		// Start timer
 		if (!isset($GLOBALS["grTimer"]))
@@ -274,7 +274,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		// Filter options
 		$this->FilterOptions = new crListOptions();
 		$this->FilterOptions->Tag = "div";
-		$this->FilterOptions->TagClassName = "ewFilterOption fviewestudiantesetareocursorpt";
+		$this->FilterOptions->TagClassName = "ewFilterOption fviewmarcologicorpt";
 
 		// Generate report options
 		$this->GenerateOptions = new crListOptions();
@@ -299,7 +299,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		$this->ProcessGenRequest();
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin(); // Auto login
 		$Security->TablePermission_Loading();
-		$Security->LoadCurrentUserLevel($this->ProjectID . 'viewestudiantesetareocurso');
+		$Security->LoadCurrentUserLevel($this->ProjectID . 'viewmarcologico');
 		$Security->TablePermission_Loaded();
 		if (!$Security->CanList()) {
 			$Security->SaveLastUrl();
@@ -586,8 +586,8 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		// Export to Email
 		$item = &$this->ExportOptions->Add("email");
 		$url = $this->PageUrl() . "export=email";
-		$item->Body = "<a class=\"ewrExportLink ewEmail\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" id=\"emf_viewestudiantesetareocurso\" href=\"javascript:void(0);\" onclick=\"ewr_EmailDialogShow({lnk:'emf_viewestudiantesetareocurso',hdr:ewLanguage.Phrase('ExportToEmail'),url:'$url',exportid:'$exportid',el:this});\">" . $ReportLanguage->Phrase("ExportToEmail") . "</a>";
-		$item->Visible = FALSE;
+		$item->Body = "<a class=\"ewrExportLink ewEmail\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToEmail", TRUE)) . "\" id=\"emf_viewmarcologico\" href=\"javascript:void(0);\" onclick=\"ewr_EmailDialogShow({lnk:'emf_viewmarcologico',hdr:ewLanguage.Phrase('ExportToEmail'),url:'$url',exportid:'$exportid',el:this});\">" . $ReportLanguage->Phrase("ExportToEmail") . "</a>";
+		$item->Visible = TRUE;
 		$ReportTypes["email"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormEmail") : "";
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 
@@ -604,10 +604,10 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 
 		// Filter button
 		$item = &$this->FilterOptions->Add("savecurrentfilter");
-		$item->Body = "<a class=\"ewSaveFilter\" data-form=\"fviewestudiantesetareocursorpt\" href=\"#\">" . $ReportLanguage->Phrase("SaveCurrentFilter") . "</a>";
+		$item->Body = "<a class=\"ewSaveFilter\" data-form=\"fviewmarcologicorpt\" href=\"#\">" . $ReportLanguage->Phrase("SaveCurrentFilter") . "</a>";
 		$item->Visible = TRUE;
 		$item = &$this->FilterOptions->Add("deletefilter");
-		$item->Body = "<a class=\"ewDeleteFilter\" data-form=\"fviewestudiantesetareocursorpt\" href=\"#\">" . $ReportLanguage->Phrase("DeleteFilter") . "</a>";
+		$item->Body = "<a class=\"ewDeleteFilter\" data-form=\"fviewmarcologicorpt\" href=\"#\">" . $ReportLanguage->Phrase("DeleteFilter") . "</a>";
 		$item->Visible = TRUE;
 		$this->FilterOptions->UseDropDownButton = TRUE;
 		$this->FilterOptions->UseButtonGroup = !$this->FilterOptions->UseDropDownButton; // v8
@@ -652,7 +652,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		// Filter panel button
 		$item = &$this->SearchOptions->Add("searchtoggle");
 		$SearchToggleClass = $this->FilterApplied ? " active" : " active";
-		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-caption=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-toggle=\"button\" data-form=\"fviewestudiantesetareocursorpt\">" . $ReportLanguage->Phrase("SearchBtn") . "</button>";
+		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-caption=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-toggle=\"button\" data-form=\"fviewmarcologicorpt\">" . $ReportLanguage->Phrase("SearchBtn") . "</button>";
 		$item->Visible = FALSE;
 
 		// Reset filter
@@ -794,13 +794,12 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		$this->edad->SetVisibility();
 		$this->etareo->SetVisibility();
 		$this->nombreinstitucion->SetVisibility();
-		$this->curso->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 5;
+		$nDtls = 4;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -813,7 +812,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(TRUE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -1015,7 +1014,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 				$this->FirstRowData['edad'] = ewr_Conv($rs->fields('edad'), 20);
 				$this->FirstRowData['etareo'] = ewr_Conv($rs->fields('etareo'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
-				$this->FirstRowData['curso'] = ewr_Conv($rs->fields('curso'), 200);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -1023,16 +1021,13 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			$this->edad->setDbValue($rs->fields('edad'));
 			$this->etareo->setDbValue($rs->fields('etareo'));
 			$this->nombreinstitucion->setDbValue($rs->fields('nombreinstitucion'));
-			$this->curso->setDbValue($rs->fields('curso'));
 			$this->Val[1] = $this->edad->CurrentValue;
 			$this->Val[2] = $this->etareo->CurrentValue;
 			$this->Val[3] = $this->nombreinstitucion->CurrentValue;
-			$this->Val[4] = $this->curso->CurrentValue;
 		} else {
 			$this->edad->setDbValue("");
 			$this->etareo->setDbValue("");
 			$this->nombreinstitucion->setDbValue("");
-			$this->curso->setDbValue("");
 		}
 	}
 
@@ -1192,20 +1187,7 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			} else {
 				$this->TotCount = 0;
 			}
-
-			// Get total from sql directly
-			$sSql = ewr_BuildReportSql($this->getSqlSelectAgg(), $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), "", $this->Filter, "");
-			$sSql = $this->getSqlAggPfx() . $sSql . $this->getSqlAggSfx();
-			$rsagg = $conn->Execute($sSql);
-			if ($rsagg) {
-				$this->GrandCnt[1] = $this->TotCount;
-				$this->GrandCnt[2] = $this->TotCount;
-				$this->GrandCnt[2] = $rsagg->fields("cnt_etareo");
-				$this->GrandCnt[3] = $this->TotCount;
-				$this->GrandCnt[4] = $this->TotCount;
-				$rsagg->Close();
-				$bGotSummary = TRUE;
-			}
+		$bGotSummary = TRUE;
 
 			// Accumulate grand summary from detail records
 			if (!$bGotCount || !$bGotSummary) {
@@ -1233,11 +1215,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		if ($this->RowType == EWR_ROWTYPE_TOTAL && !($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER)) { // Summary row
 			ewr_PrependClass($this->RowAttrs["class"], ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : ""); // Set up row class
 
-			// etareo
-			$this->etareo->CntViewValue = $this->etareo->CntValue;
-			$this->etareo->CntViewValue = ewr_FormatNumber($this->etareo->CntViewValue, 0, -2, -2, -2);
-			$this->etareo->CellAttrs["class"] = ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : "ewRptGrpSummary" . $this->RowGroupLevel;
-
 			// edad
 			$this->edad->HrefValue = "";
 
@@ -1246,9 +1223,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
-
-			// curso
-			$this->curso->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1266,10 +1240,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			$this->nombreinstitucion->ViewValue = $this->nombreinstitucion->CurrentValue;
 			$this->nombreinstitucion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// curso
-			$this->curso->ViewValue = $this->curso->CurrentValue;
-			$this->curso->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// edad
 			$this->edad->HrefValue = "";
 
@@ -1278,22 +1248,10 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
-
-			// curso
-			$this->curso->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
 		if ($this->RowType == EWR_ROWTYPE_TOTAL) { // Summary row
-
-			// etareo
-			$CurrentValue = $this->etareo->CntValue;
-			$ViewValue = &$this->etareo->CntViewValue;
-			$ViewAttrs = &$this->etareo->ViewAttrs;
-			$CellAttrs = &$this->etareo->CellAttrs;
-			$HrefValue = &$this->etareo->HrefValue;
-			$LinkAttrs = &$this->etareo->LinkAttrs;
-			$this->Cell_Rendered($this->etareo, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		} else {
 
 			// edad
@@ -1322,15 +1280,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			$HrefValue = &$this->nombreinstitucion->HrefValue;
 			$LinkAttrs = &$this->nombreinstitucion->LinkAttrs;
 			$this->Cell_Rendered($this->nombreinstitucion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// curso
-			$CurrentValue = $this->curso->CurrentValue;
-			$ViewValue = &$this->curso->ViewValue;
-			$ViewAttrs = &$this->curso->ViewAttrs;
-			$CellAttrs = &$this->curso->CellAttrs;
-			$HrefValue = &$this->curso->HrefValue;
-			$LinkAttrs = &$this->curso->LinkAttrs;
-			$this->Cell_Rendered($this->curso, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1346,7 +1295,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 		if ($this->edad->Visible) $this->DtlColumnCount += 1;
 		if ($this->etareo->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombreinstitucion->Visible) $this->DtlColumnCount += 1;
-		if ($this->curso->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1394,7 +1342,6 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			$this->edad->setSort("");
 			$this->etareo->setSort("");
 			$this->nombreinstitucion->setSort("");
-			$this->curso->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -1403,12 +1350,116 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 			$this->UpdateSort($this->edad); // edad
 			$this->UpdateSort($this->etareo); // etareo
 			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
-			$this->UpdateSort($this->curso); // curso
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
 		}
 		return $this->getOrderBy();
+	}
+
+	// Export email
+	function ExportEmail($EmailContent, $options = array()) {
+		global $grTmpImages, $ReportLanguage;
+		$bGenRequest = @$options["reporttype"] == "email";
+		$sFailRespPfx = $bGenRequest ? "" : "<p class=\"text-error\">";
+		$sSuccessRespPfx = $bGenRequest ? "" : "<p class=\"text-success\">";
+		$sRespPfx = $bGenRequest ? "" : "</p>";
+		$sContentType = (@$options["contenttype"] <> "") ? $options["contenttype"] : @$_POST["contenttype"];
+		$sSender = (@$options["sender"] <> "") ? $options["sender"] : @$_POST["sender"];
+		$sRecipient = (@$options["recipient"] <> "") ? $options["recipient"] : @$_POST["recipient"];
+		$sCc = (@$options["cc"] <> "") ? $options["cc"] : @$_POST["cc"];
+		$sBcc = (@$options["bcc"] <> "") ? $options["bcc"] : @$_POST["bcc"];
+
+		// Subject
+		$sEmailSubject = (@$options["subject"] <> "") ? $options["subject"] : @$_POST["subject"];
+
+		// Message
+		$sEmailMessage = (@$options["message"] <> "") ? $options["message"] : @$_POST["message"];
+
+		// Check sender
+		if ($sSender == "")
+			return $sFailRespPfx . $ReportLanguage->Phrase("EnterSenderEmail") . $sRespPfx;
+		if (!ewr_CheckEmail($sSender))
+			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperSenderEmail") . $sRespPfx;
+
+		// Check recipient
+		if (!ewr_CheckEmailList($sRecipient, EWR_MAX_EMAIL_RECIPIENT))
+			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperRecipientEmail") . $sRespPfx;
+
+		// Check cc
+		if (!ewr_CheckEmailList($sCc, EWR_MAX_EMAIL_RECIPIENT))
+			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperCcEmail") . $sRespPfx;
+
+		// Check bcc
+		if (!ewr_CheckEmailList($sBcc, EWR_MAX_EMAIL_RECIPIENT))
+			return $sFailRespPfx . $ReportLanguage->Phrase("EnterProperBccEmail") . $sRespPfx;
+
+		// Check email sent count
+		$emailcount = $bGenRequest ? 0 : ewr_LoadEmailCount();
+		if (intval($emailcount) >= EWR_MAX_EMAIL_SENT_COUNT)
+			return $sFailRespPfx . $ReportLanguage->Phrase("ExceedMaxEmailExport") . $sRespPfx;
+		if ($sEmailMessage <> "") {
+			if (EWR_REMOVE_XSS) $sEmailMessage = ewr_RemoveXSS($sEmailMessage);
+			$sEmailMessage .= ($sContentType == "url") ? "\r\n\r\n" : "<br><br>";
+		}
+		$sAttachmentContent = ewr_AdjustEmailContent($EmailContent);
+		$sAppPath = ewr_FullUrl();
+		$sAppPath = substr($sAppPath, 0, strrpos($sAppPath, "/")+1);
+		if (strpos($sAttachmentContent, "<head>") !== FALSE)
+			$sAttachmentContent = str_replace("<head>", "<head><base href=\"" . $sAppPath . "\">", $sAttachmentContent); // Add <base href> statement inside the header
+		else
+			$sAttachmentContent = "<base href=\"" . $sAppPath . "\">" . $sAttachmentContent; // Add <base href> statement as the first statement
+
+		//$sAttachmentFile = $this->TableVar . "_" . Date("YmdHis") . ".html";
+		$sAttachmentFile = $this->TableVar . "_" . Date("YmdHis") . "_" . ewr_Random() . ".html";
+		if ($sContentType == "url") {
+			ewr_SaveFile(EWR_UPLOAD_DEST_PATH, $sAttachmentFile, $sAttachmentContent);
+			$sAttachmentFile = EWR_UPLOAD_DEST_PATH . $sAttachmentFile;
+			$sUrl = $sAppPath . $sAttachmentFile;
+			$sEmailMessage .= $sUrl; // Send URL only
+			$sAttachmentFile = "";
+			$sAttachmentContent = "";
+		} else {
+			$sEmailMessage .= $sAttachmentContent;
+			$sAttachmentFile = "";
+			$sAttachmentContent = "";
+		}
+
+		// Send email
+		$Email = new crEmail();
+		$Email->Sender = $sSender; // Sender
+		$Email->Recipient = $sRecipient; // Recipient
+		$Email->Cc = $sCc; // Cc
+		$Email->Bcc = $sBcc; // Bcc
+		$Email->Subject = $sEmailSubject; // Subject
+		$Email->Content = $sEmailMessage; // Content
+		if ($sAttachmentFile <> "")
+			$Email->AddAttachment($sAttachmentFile, $sAttachmentContent);
+		if ($sContentType <> "url") {
+			foreach ($grTmpImages as $tmpimage)
+				$Email->AddEmbeddedImage($tmpimage);
+		}
+		$Email->Format = ($sContentType == "url") ? "text" : "html";
+		$Email->Charset = EWR_EMAIL_CHARSET;
+		$EventArgs = array();
+		$bEmailSent = FALSE;
+		if ($this->Email_Sending($Email, $EventArgs))
+			$bEmailSent = $Email->Send();
+		ewr_DeleteTmpImages($EmailContent);
+
+		// Check email sent status
+		if ($bEmailSent) {
+
+			// Update email sent count and write log
+			ewr_AddEmailLog($sSender, $sRecipient, $sEmailSubject, $sEmailMessage);
+
+			// Sent email success
+			return $sSuccessRespPfx . $ReportLanguage->Phrase("SendEmailSuccess") . $sRespPfx; // Set up success message
+		} else {
+
+			// Sent email failure
+			return $sFailRespPfx . $Email->SendErrDescription . $sRespPfx;
+		}
 	}
 
 	// Export to HTML
@@ -1598,9 +1649,9 @@ class crviewestudiantesetareocurso_rpt extends crviewestudiantesetareocurso {
 <?php
 
 // Create page object
-if (!isset($viewestudiantesetareocurso_rpt)) $viewestudiantesetareocurso_rpt = new crviewestudiantesetareocurso_rpt();
+if (!isset($viewmarcologico_rpt)) $viewmarcologico_rpt = new crviewmarcologico_rpt();
 if (isset($Page)) $OldPage = $Page;
-$Page = &$viewestudiantesetareocurso_rpt;
+$Page = &$viewmarcologico_rpt;
 
 // Page init
 $Page->Page_Init();
@@ -1624,11 +1675,11 @@ $Page->Page_Render();
 <script type="text/javascript">
 
 // Create page object
-var viewestudiantesetareocurso_rpt = new ewr_Page("viewestudiantesetareocurso_rpt");
+var viewmarcologico_rpt = new ewr_Page("viewmarcologico_rpt");
 
 // Page properties
-viewestudiantesetareocurso_rpt.PageID = "rpt"; // Page ID
-var EWR_PAGE_ID = viewestudiantesetareocurso_rpt.PageID;
+viewmarcologico_rpt.PageID = "rpt"; // Page ID
+var EWR_PAGE_ID = viewmarcologico_rpt.PageID;
 </script>
 <?php } ?>
 <?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
@@ -1709,7 +1760,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php } ?>
 <!-- Report grid (begin) -->
 <?php if ($Page->Export <> "pdf") { ?>
-<div id="gmp_viewestudiantesetareocurso" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<div id="gmp_viewmarcologico" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
 <?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <thead>
@@ -1717,15 +1768,15 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<tr class="ewTableHeader">
 <?php if ($Page->edad->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="edad"><div class="viewestudiantesetareocurso_edad"><span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span></div></td>
+	<td data-field="edad"><div class="viewmarcologico_edad"><span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span></div></td>
 <?php } else { ?>
 	<td data-field="edad">
 <?php if ($Page->SortUrl($Page->edad) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareocurso_edad">
+		<div class="ewTableHeaderBtn viewmarcologico_edad">
 			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareocurso_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',1);">
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->edad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->edad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1735,15 +1786,15 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php } ?>
 <?php if ($Page->etareo->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="etareo"><div class="viewestudiantesetareocurso_etareo"><span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span></div></td>
+	<td data-field="etareo"><div class="viewmarcologico_etareo"><span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span></div></td>
 <?php } else { ?>
 	<td data-field="etareo">
 <?php if ($Page->SortUrl($Page->etareo) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareocurso_etareo">
+		<div class="ewTableHeaderBtn viewmarcologico_etareo">
 			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareocurso_etareo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->etareo) ?>',1);">
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_etareo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->etareo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->etareo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->etareo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -1753,35 +1804,17 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php } ?>
 <?php if ($Page->nombreinstitucion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombreinstitucion"><div class="viewestudiantesetareocurso_nombreinstitucion"><span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span></div></td>
+	<td data-field="nombreinstitucion"><div class="viewmarcologico_nombreinstitucion"><span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span></div></td>
 <?php } else { ?>
 	<td data-field="nombreinstitucion">
 <?php if ($Page->SortUrl($Page->nombreinstitucion) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareocurso_nombreinstitucion">
+		<div class="ewTableHeaderBtn viewmarcologico_nombreinstitucion">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareocurso_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombreinstitucion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombreinstitucion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="curso"><div class="viewestudiantesetareocurso_curso"><span class="ewTableHeaderCaption"><?php echo $Page->curso->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="curso">
-<?php if ($Page->SortUrl($Page->curso) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareocurso_curso">
-			<span class="ewTableHeaderCaption"><?php echo $Page->curso->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareocurso_curso" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->curso) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->curso->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->curso->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->curso->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1817,10 +1850,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>
 <span<?php echo $Page->nombreinstitucion->ViewAttributes() ?>><?php echo $Page->nombreinstitucion->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->curso->Visible) { ?>
-		<td data-field="curso"<?php echo $Page->curso->CellAttributes() ?>>
-<span<?php echo $Page->curso->ViewAttributes() ?>><?php echo $Page->curso->ListViewValue() ?></span></td>
-<?php } ?>
 	</tr>
 <?php
 
@@ -1835,6 +1864,34 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->TotalGrps > 0) { ?>
 </tbody>
 <tfoot>
+<?php if (($Page->StopGrp - $Page->StartGrp + 1) <> $Page->TotalGrps) { ?>
+<?php
+	$Page->ResetAttrs();
+	$Page->RowType = EWR_ROWTYPE_TOTAL;
+	$Page->RowTotalType = EWR_ROWTOTAL_PAGE;
+	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
+	$Page->RowAttrs["class"] = "ewRptPageSummary";
+	$Page->RenderRow();
+?>
+<?php if ($Page->ShowCompactSummaryFooter) { ?>
+	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2) ?></span>)</td></tr>
+<?php } else { ?>
+	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
+<?php } ?>
+<?php } ?>
+<?php
+	$Page->ResetAttrs();
+	$Page->RowType = EWR_ROWTYPE_TOTAL;
+	$Page->RowTotalType = EWR_ROWTOTAL_GRAND;
+	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
+	$Page->RowAttrs["class"] = "ewRptGrandSummary";
+	$Page->RenderRow();
+?>
+<?php if ($Page->ShowCompactSummaryFooter) { ?>
+	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2) ?></span>)</td></tr>
+<?php } else { ?>
+	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
+<?php } ?>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && FALSE) { // No header displayed ?>
 <?php if ($Page->Export <> "pdf") { ?>
@@ -1846,7 +1903,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php } ?>
 <!-- Report grid (begin) -->
 <?php if ($Page->Export <> "pdf") { ?>
-<div id="gmp_viewestudiantesetareocurso" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<div id="gmp_viewmarcologico" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
 <?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <?php } ?>
@@ -1857,7 +1914,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php } ?>
 <?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
 <div class="box-footer ewGridLowerPanel">
-<?php include "viewestudiantesetareocursorptpager.php" ?>
+<?php include "viewmarcologicorptpager.php" ?>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

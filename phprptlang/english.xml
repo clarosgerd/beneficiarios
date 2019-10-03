@@ -369,9 +369,6 @@
   </global>
   <project>
     <phrase id="footertext" value="&amp;copy;2018 e.World Technology Ltd. All rights reserved." />
-    <menu id="57">
-      <phrase id="menutext" value="viewmarcologico" />
-    </menu>
     <menu id="49">
       <phrase id="menutext" value="Dashboard 1" />
     </menu>
@@ -529,13 +526,16 @@
       <phrase id="menutext" value="DOCENTE" />
     </menu>
     <menu id="53">
-      <phrase id="menutext" value="ESTUDIANTES" />
+      <phrase id="menutext" value="ESTUDIANTES POR CURSO" />
     </menu>
     <menu id="55">
       <phrase id="menutext" value="GRUPODISCAPACIDAD" />
     </menu>
     <menu id="56">
       <phrase id="menutext" value="GRUPOTOTALES" />
+    </menu>
+    <menu id="57">
+      <phrase id="menutext" value="MARCO LOGICO" />
     </menu>
     <table id="actividad">
       <phrase id="tblcaption" value="actividad" />
@@ -1852,7 +1852,7 @@
       </field>
     </table>
     <table id="viewestudiantecurso">
-      <phrase id="tblcaption" value="ESTUDIANTES" />
+      <phrase id="tblcaption" value="ESTUDIANTES POR CURSO" />
       <field id="departamento">
         <phrase id="fldcaption" value="departamento" />
       </field>
@@ -1966,7 +1966,7 @@
       </field>
     </table>
     <table id="viewmarcologico">
-      <phrase id="tblcaption" value="viewmarcologico" />
+      <phrase id="tblcaption" value="MARCO LOGICO" />
       <field id="edad">
         <phrase id="fldcaption" value="edad" />
       </field>

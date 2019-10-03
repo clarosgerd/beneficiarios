@@ -7,8 +7,8 @@ $viewestudiantecurso = NULL;
 // Table class for viewestudiantecurso
 //
 class crviewestudiantecurso extends crTableBase {
-	var $ShowGroupHeaderAsRow = TRUE;
-	var $ShowCompactSummaryFooter = TRUE;
+	var $ShowGroupHeaderAsRow = FALSE;
+	var $ShowCompactSummaryFooter = FALSE;
 	var $departamento;
 	var $codigorude;
 	var $codigorude_es;

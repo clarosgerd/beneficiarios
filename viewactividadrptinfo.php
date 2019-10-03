@@ -8,7 +8,7 @@ $viewactividad = NULL;
 //
 class crviewactividad extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
-	var $ShowCompactSummaryFooter = TRUE;
+	var $ShowCompactSummaryFooter = FALSE;
 	var $sector;
 	var $tipoactividad;
 	var $organizador;
@@ -44,16 +44,16 @@ class crviewactividad extends crTableBase {
 		$this->sector = new crField('viewactividad', 'viewactividad', 'x_sector', 'sector', '`sector`', 200, EWR_DATATYPE_STRING, -1);
 		$this->sector->Sortable = TRUE; // Allow sort
 		$this->sector->DateFilter = "";
-		$this->sector->SqlSelect = "";
-		$this->sector->SqlOrderBy = "";
+		$this->sector->SqlSelect = "SELECT DISTINCT `sector`, `sector` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->sector->SqlOrderBy = "`sector`";
 		$this->fields['sector'] = &$this->sector;
 
 		// tipoactividad
 		$this->tipoactividad = new crField('viewactividad', 'viewactividad', 'x_tipoactividad', 'tipoactividad', '`tipoactividad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->tipoactividad->Sortable = TRUE; // Allow sort
 		$this->tipoactividad->DateFilter = "";
-		$this->tipoactividad->SqlSelect = "";
-		$this->tipoactividad->SqlOrderBy = "";
+		$this->tipoactividad->SqlSelect = "SELECT DISTINCT `tipoactividad`, `tipoactividad` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->tipoactividad->SqlOrderBy = "`tipoactividad`";
 		$this->fields['tipoactividad'] = &$this->tipoactividad;
 
 		// organizador
@@ -61,8 +61,8 @@ class crviewactividad extends crTableBase {
 		$this->organizador->Sortable = TRUE; // Allow sort
 		$this->organizador->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->organizador->DateFilter = "";
-		$this->organizador->SqlSelect = "";
-		$this->organizador->SqlOrderBy = "";
+		$this->organizador->SqlSelect = "SELECT DISTINCT `organizador`, `organizador` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->organizador->SqlOrderBy = "`organizador`";
 		$this->fields['organizador'] = &$this->organizador;
 
 		// nombreactividad
@@ -94,8 +94,8 @@ class crviewactividad extends crTableBase {
 		$this->fecha_inicio->Sortable = TRUE; // Allow sort
 		$this->fecha_inicio->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
 		$this->fecha_inicio->DateFilter = "";
-		$this->fecha_inicio->SqlSelect = "";
-		$this->fecha_inicio->SqlOrderBy = "";
+		$this->fecha_inicio->SqlSelect = "SELECT DISTINCT `fecha_inicio`, `fecha_inicio` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->fecha_inicio->SqlOrderBy = "`fecha_inicio`";
 		$this->fields['fecha_inicio'] = &$this->fecha_inicio;
 
 		// fecha_fin
@@ -103,8 +103,8 @@ class crviewactividad extends crTableBase {
 		$this->fecha_fin->Sortable = TRUE; // Allow sort
 		$this->fecha_fin->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
 		$this->fecha_fin->DateFilter = "";
-		$this->fecha_fin->SqlSelect = "";
-		$this->fecha_fin->SqlOrderBy = "";
+		$this->fecha_fin->SqlSelect = "SELECT DISTINCT `fecha_fin`, `fecha_fin` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->fecha_fin->SqlOrderBy = "`fecha_fin`";
 		$this->fields['fecha_fin'] = &$this->fecha_fin;
 
 		// horasprogramadas
@@ -159,8 +159,8 @@ class crviewactividad extends crTableBase {
 		$this->nombreinstitucion = new crField('viewactividad', 'viewactividad', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
 		$this->nombreinstitucion->DateFilter = "";
-		$this->nombreinstitucion->SqlSelect = "";
-		$this->nombreinstitucion->SqlOrderBy = "";
+		$this->nombreinstitucion->SqlSelect = "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->nombreinstitucion->SqlOrderBy = "`nombreinstitucion`";
 		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
 	}
 
@@ -404,7 +404,17 @@ class crviewactividad extends crTableBase {
 	// Sort URL
 	function SortUrl(&$fld) {
 		global $grDashboardReport;
-		return "";
+		if ($this->Export <> "" || $grDashboardReport ||
+			in_array($fld->FldType, array(128, 204, 205))) { // Unsortable data type
+				return "";
+		} elseif ($fld->Sortable) {
+
+			//$sUrlParm = "order=" . urlencode($fld->FldName) . "&ordertype=" . $fld->ReverseSort();
+			$sUrlParm = "order=" . urlencode($fld->FldName) . "&amp;ordertype=" . $fld->ReverseSort();
+			return ewr_CurrentPage() . "?" . $sUrlParm;
+		} else {
+			return "";
+		}
 	}
 
 	// Setup lookup filters of a field
