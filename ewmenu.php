@@ -50,7 +50,6 @@ $RootMenu->AddMenuItem(10050, "mri_viewactividad", $Language->MenuPhrase("10050"
 $RootMenu->AddMenuItem(10052, "mri_viewdocente", $Language->MenuPhrase("10052", "MenuText"), "viewdocenterpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewdocente'), FALSE, FALSE, "");
 $RootMenu->AddMenuItem(10053, "mri_viewestudiantecurso", $Language->MenuPhrase("10053", "MenuText"), "viewestudiantecursorpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantecurso'), FALSE, FALSE, "");
 $RootMenu->AddMenuItem(10055, "mri_viewestudiantesetareo", $Language->MenuPhrase("10055", "MenuText"), "viewestudiantesetareorpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareo'), FALSE, FALSE, "");
-$RootMenu->AddMenuItem(10056, "mri_viewestudiantesetareocurso", $Language->MenuPhrase("10056", "MenuText"), "viewestudiantesetareocursorpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareocurso'), FALSE, FALSE, "");
 $RootMenu->AddMenuItem(10057, "mri_viewmarcologico", $Language->MenuPhrase("10057", "MenuText"), "viewmarcologicorpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewmarcologico'), FALSE, FALSE, "");
 echo $RootMenu->ToScript();
 ?>

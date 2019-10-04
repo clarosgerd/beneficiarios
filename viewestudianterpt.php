@@ -4036,6 +4036,8 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 </script>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_curso" class="ewCell form-group">
 	<label for="sv_curso" class="ewSearchCaption ewLabel"><?php echo $Page->curso->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_curso" id="so_curso" value="LIKE"></span>
@@ -4044,6 +4046,8 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 <input type="text" data-table="viewestudiante" data-field="x_curso" id="sv_curso" name="sv_curso" size="30" maxlength="100" placeholder="<?php echo $Page->curso->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->curso->SearchValue) ?>"<?php echo $Page->curso->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>
@@ -4052,6 +4056,8 @@ fviewestudianterpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($Page->
 <input type="text" data-table="viewestudiante" data-field="x_nombreinstitucion" id="sv_nombreinstitucion" name="sv_nombreinstitucion" size="30" maxlength="100" placeholder="<?php echo $Page->nombreinstitucion->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombreinstitucion->SearchValue) ?>"<?php echo $Page->nombreinstitucion->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_departamento" class="ewCell form-group">
 	<label for="sv_departamento" class="ewSearchCaption ewLabel"><?php echo $Page->departamento->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -4066,6 +4072,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 </script>
 </span>
 </div>
+</div>
+<div id="r_5" class="ewRow">
 <div id="c_municipio" class="ewCell form-group">
 	<label for="sv_municipio" class="ewSearchCaption ewLabel"><?php echo $Page->municipio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_municipio" id="so_municipio" value="LIKE"></span>
@@ -4074,6 +4082,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_municipio" id="sv_municipio" name="sv_municipio" size="30" maxlength="100" placeholder="<?php echo $Page->municipio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->municipio->SearchValue) ?>"<?php echo $Page->municipio->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_6" class="ewRow">
 <div id="c_provincia" class="ewCell form-group">
 	<label for="sv_provincia" class="ewSearchCaption ewLabel"><?php echo $Page->provincia->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_provincia" id="so_provincia" value="LIKE"></span>
@@ -4082,6 +4092,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_provincia" id="sv_provincia" name="sv_provincia" size="30" maxlength="100" placeholder="<?php echo $Page->provincia->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->provincia->SearchValue) ?>"<?php echo $Page->provincia->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_7" class="ewRow">
 <div id="c_unidadeducativa" class="ewCell form-group">
 	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
@@ -4090,6 +4102,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_8" class="ewRow">
 <div id="c_nombre" class="ewCell form-group">
 	<label for="sv_nombre" class="ewSearchCaption ewLabel"><?php echo $Page->nombre->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombre" id="so_nombre" value="LIKE"></span>
@@ -4098,6 +4112,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_nombre" id="sv_nombre" name="sv_nombre" size="30" maxlength="100" placeholder="<?php echo $Page->nombre->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombre->SearchValue) ?>"<?php echo $Page->nombre->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_9" class="ewRow">
 <div id="c_materno" class="ewCell form-group">
 	<label for="sv_materno" class="ewSearchCaption ewLabel"><?php echo $Page->materno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_materno" id="so_materno" value="LIKE"></span>
@@ -4106,6 +4122,8 @@ fviewestudianterpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayToJson
 <input type="text" data-table="viewestudiante" data-field="x_materno" id="sv_materno" name="sv_materno" size="30" maxlength="100" placeholder="<?php echo $Page->materno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->materno->SearchValue) ?>"<?php echo $Page->materno->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_10" class="ewRow">
 <div id="c_paterno" class="ewCell form-group">
 	<label for="sv_paterno" class="ewSearchCaption ewLabel"><?php echo $Page->paterno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_paterno" id="so_paterno" value="LIKE"></span>

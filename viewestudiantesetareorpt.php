@@ -791,15 +791,27 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 		global $grDashboardReport;
 
 		// Set field visibility for detail fields
-		$this->edad->SetVisibility();
-		$this->etareo->SetVisibility();
 		$this->nombreinstitucion->SetVisibility();
+		$this->_0_3F->SetVisibility();
+		$this->_4_6F->SetVisibility();
+		$this->_7_9F->SetVisibility();
+		$this->_10_12F->SetVisibility();
+		$this->_13_15F->SetVisibility();
+		$this->_16_18F->SetVisibility();
+		$this->_19F->SetVisibility();
+		$this->_0_3M->SetVisibility();
+		$this->_4_6M->SetVisibility();
+		$this->_7_9M->SetVisibility();
+		$this->_10_12M->SetVisibility();
+		$this->_13_15M->SetVisibility();
+		$this->_16_18M->SetVisibility();
+		$this->_19M->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 4;
+		$nDtls = 16;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -812,7 +824,7 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -1011,23 +1023,71 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 			return;
 		if ($opt == 1) { // Get first row
 				$this->FirstRowData = array();
-				$this->FirstRowData['edad'] = ewr_Conv($rs->fields('edad'), 20);
-				$this->FirstRowData['etareo'] = ewr_Conv($rs->fields('etareo'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
+				$this->FirstRowData['_0_3F'] = ewr_Conv($rs->fields('0-3F'), 131);
+				$this->FirstRowData['_4_6F'] = ewr_Conv($rs->fields('4-6F'), 131);
+				$this->FirstRowData['_7_9F'] = ewr_Conv($rs->fields('7-9F'), 131);
+				$this->FirstRowData['_10_12F'] = ewr_Conv($rs->fields('10-12F'), 131);
+				$this->FirstRowData['_13_15F'] = ewr_Conv($rs->fields('13-15F'), 131);
+				$this->FirstRowData['_16_18F'] = ewr_Conv($rs->fields('16-18F'), 131);
+				$this->FirstRowData['_19F'] = ewr_Conv($rs->fields('19F'), 131);
+				$this->FirstRowData['_0_3M'] = ewr_Conv($rs->fields('0-3M'), 131);
+				$this->FirstRowData['_4_6M'] = ewr_Conv($rs->fields('4-6M'), 131);
+				$this->FirstRowData['_7_9M'] = ewr_Conv($rs->fields('7-9M'), 131);
+				$this->FirstRowData['_10_12M'] = ewr_Conv($rs->fields('10-12M'), 20);
+				$this->FirstRowData['_13_15M'] = ewr_Conv($rs->fields('13-15M'), 131);
+				$this->FirstRowData['_16_18M'] = ewr_Conv($rs->fields('16-18M'), 131);
+				$this->FirstRowData['_19M'] = ewr_Conv($rs->fields('19M'), 131);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
 		if (!$rs->EOF) {
-			$this->edad->setDbValue($rs->fields('edad'));
-			$this->etareo->setDbValue($rs->fields('etareo'));
 			$this->nombreinstitucion->setDbValue($rs->fields('nombreinstitucion'));
-			$this->Val[1] = $this->edad->CurrentValue;
-			$this->Val[2] = $this->etareo->CurrentValue;
-			$this->Val[3] = $this->nombreinstitucion->CurrentValue;
+			$this->_0_3F->setDbValue($rs->fields('0-3F'));
+			$this->_4_6F->setDbValue($rs->fields('4-6F'));
+			$this->_7_9F->setDbValue($rs->fields('7-9F'));
+			$this->_10_12F->setDbValue($rs->fields('10-12F'));
+			$this->_13_15F->setDbValue($rs->fields('13-15F'));
+			$this->_16_18F->setDbValue($rs->fields('16-18F'));
+			$this->_19F->setDbValue($rs->fields('19F'));
+			$this->_0_3M->setDbValue($rs->fields('0-3M'));
+			$this->_4_6M->setDbValue($rs->fields('4-6M'));
+			$this->_7_9M->setDbValue($rs->fields('7-9M'));
+			$this->_10_12M->setDbValue($rs->fields('10-12M'));
+			$this->_13_15M->setDbValue($rs->fields('13-15M'));
+			$this->_16_18M->setDbValue($rs->fields('16-18M'));
+			$this->_19M->setDbValue($rs->fields('19M'));
+			$this->Val[1] = $this->nombreinstitucion->CurrentValue;
+			$this->Val[2] = $this->_0_3F->CurrentValue;
+			$this->Val[3] = $this->_4_6F->CurrentValue;
+			$this->Val[4] = $this->_7_9F->CurrentValue;
+			$this->Val[5] = $this->_10_12F->CurrentValue;
+			$this->Val[6] = $this->_13_15F->CurrentValue;
+			$this->Val[7] = $this->_16_18F->CurrentValue;
+			$this->Val[8] = $this->_19F->CurrentValue;
+			$this->Val[9] = $this->_0_3M->CurrentValue;
+			$this->Val[10] = $this->_4_6M->CurrentValue;
+			$this->Val[11] = $this->_7_9M->CurrentValue;
+			$this->Val[12] = $this->_10_12M->CurrentValue;
+			$this->Val[13] = $this->_13_15M->CurrentValue;
+			$this->Val[14] = $this->_16_18M->CurrentValue;
+			$this->Val[15] = $this->_19M->CurrentValue;
 		} else {
-			$this->edad->setDbValue("");
-			$this->etareo->setDbValue("");
 			$this->nombreinstitucion->setDbValue("");
+			$this->_0_3F->setDbValue("");
+			$this->_4_6F->setDbValue("");
+			$this->_7_9F->setDbValue("");
+			$this->_10_12F->setDbValue("");
+			$this->_13_15F->setDbValue("");
+			$this->_16_18F->setDbValue("");
+			$this->_19F->setDbValue("");
+			$this->_0_3M->setDbValue("");
+			$this->_4_6M->setDbValue("");
+			$this->_7_9M->setDbValue("");
+			$this->_10_12M->setDbValue("");
+			$this->_13_15M->setDbValue("");
+			$this->_16_18M->setDbValue("");
+			$this->_19M->setDbValue("");
 		}
 	}
 
@@ -1215,62 +1275,164 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 		if ($this->RowType == EWR_ROWTYPE_TOTAL && !($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER)) { // Summary row
 			ewr_PrependClass($this->RowAttrs["class"], ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : ""); // Set up row class
 
-			// edad
-			$this->edad->HrefValue = "";
-
-			// etareo
-			$this->etareo->HrefValue = "";
-
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
+
+			// 0-3F
+			$this->_0_3F->HrefValue = "";
+
+			// 4-6F
+			$this->_4_6F->HrefValue = "";
+
+			// 7-9F
+			$this->_7_9F->HrefValue = "";
+
+			// 10-12F
+			$this->_10_12F->HrefValue = "";
+
+			// 13-15F
+			$this->_13_15F->HrefValue = "";
+
+			// 16-18F
+			$this->_16_18F->HrefValue = "";
+
+			// 19F
+			$this->_19F->HrefValue = "";
+
+			// 0-3M
+			$this->_0_3M->HrefValue = "";
+
+			// 4-6M
+			$this->_4_6M->HrefValue = "";
+
+			// 7-9M
+			$this->_7_9M->HrefValue = "";
+
+			// 10-12M
+			$this->_10_12M->HrefValue = "";
+
+			// 13-15M
+			$this->_13_15M->HrefValue = "";
+
+			// 16-18M
+			$this->_16_18M->HrefValue = "";
+
+			// 19M
+			$this->_19M->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
 			}
 
-			// edad
-			$this->edad->ViewValue = $this->edad->CurrentValue;
-			$this->edad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// etareo
-			$this->etareo->ViewValue = $this->etareo->CurrentValue;
-			$this->etareo->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// nombreinstitucion
 			$this->nombreinstitucion->ViewValue = $this->nombreinstitucion->CurrentValue;
 			$this->nombreinstitucion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// edad
-			$this->edad->HrefValue = "";
+			// 0-3F
+			$this->_0_3F->ViewValue = $this->_0_3F->CurrentValue;
+			$this->_0_3F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// etareo
-			$this->etareo->HrefValue = "";
+			// 4-6F
+			$this->_4_6F->ViewValue = $this->_4_6F->CurrentValue;
+			$this->_4_6F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 7-9F
+			$this->_7_9F->ViewValue = $this->_7_9F->CurrentValue;
+			$this->_7_9F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 10-12F
+			$this->_10_12F->ViewValue = $this->_10_12F->CurrentValue;
+			$this->_10_12F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 13-15F
+			$this->_13_15F->ViewValue = $this->_13_15F->CurrentValue;
+			$this->_13_15F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 16-18F
+			$this->_16_18F->ViewValue = $this->_16_18F->CurrentValue;
+			$this->_16_18F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 19F
+			$this->_19F->ViewValue = $this->_19F->CurrentValue;
+			$this->_19F->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 0-3M
+			$this->_0_3M->ViewValue = $this->_0_3M->CurrentValue;
+			$this->_0_3M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 4-6M
+			$this->_4_6M->ViewValue = $this->_4_6M->CurrentValue;
+			$this->_4_6M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 7-9M
+			$this->_7_9M->ViewValue = $this->_7_9M->CurrentValue;
+			$this->_7_9M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 10-12M
+			$this->_10_12M->ViewValue = $this->_10_12M->CurrentValue;
+			$this->_10_12M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 13-15M
+			$this->_13_15M->ViewValue = $this->_13_15M->CurrentValue;
+			$this->_13_15M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 16-18M
+			$this->_16_18M->ViewValue = $this->_16_18M->CurrentValue;
+			$this->_16_18M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// 19M
+			$this->_19M->ViewValue = $this->_19M->CurrentValue;
+			$this->_19M->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
+
+			// 0-3F
+			$this->_0_3F->HrefValue = "";
+
+			// 4-6F
+			$this->_4_6F->HrefValue = "";
+
+			// 7-9F
+			$this->_7_9F->HrefValue = "";
+
+			// 10-12F
+			$this->_10_12F->HrefValue = "";
+
+			// 13-15F
+			$this->_13_15F->HrefValue = "";
+
+			// 16-18F
+			$this->_16_18F->HrefValue = "";
+
+			// 19F
+			$this->_19F->HrefValue = "";
+
+			// 0-3M
+			$this->_0_3M->HrefValue = "";
+
+			// 4-6M
+			$this->_4_6M->HrefValue = "";
+
+			// 7-9M
+			$this->_7_9M->HrefValue = "";
+
+			// 10-12M
+			$this->_10_12M->HrefValue = "";
+
+			// 13-15M
+			$this->_13_15M->HrefValue = "";
+
+			// 16-18M
+			$this->_16_18M->HrefValue = "";
+
+			// 19M
+			$this->_19M->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
 		if ($this->RowType == EWR_ROWTYPE_TOTAL) { // Summary row
 		} else {
-
-			// edad
-			$CurrentValue = $this->edad->CurrentValue;
-			$ViewValue = &$this->edad->ViewValue;
-			$ViewAttrs = &$this->edad->ViewAttrs;
-			$CellAttrs = &$this->edad->CellAttrs;
-			$HrefValue = &$this->edad->HrefValue;
-			$LinkAttrs = &$this->edad->LinkAttrs;
-			$this->Cell_Rendered($this->edad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// etareo
-			$CurrentValue = $this->etareo->CurrentValue;
-			$ViewValue = &$this->etareo->ViewValue;
-			$ViewAttrs = &$this->etareo->ViewAttrs;
-			$CellAttrs = &$this->etareo->CellAttrs;
-			$HrefValue = &$this->etareo->HrefValue;
-			$LinkAttrs = &$this->etareo->LinkAttrs;
-			$this->Cell_Rendered($this->etareo, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// nombreinstitucion
 			$CurrentValue = $this->nombreinstitucion->CurrentValue;
@@ -1280,6 +1442,132 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 			$HrefValue = &$this->nombreinstitucion->HrefValue;
 			$LinkAttrs = &$this->nombreinstitucion->LinkAttrs;
 			$this->Cell_Rendered($this->nombreinstitucion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 0-3F
+			$CurrentValue = $this->_0_3F->CurrentValue;
+			$ViewValue = &$this->_0_3F->ViewValue;
+			$ViewAttrs = &$this->_0_3F->ViewAttrs;
+			$CellAttrs = &$this->_0_3F->CellAttrs;
+			$HrefValue = &$this->_0_3F->HrefValue;
+			$LinkAttrs = &$this->_0_3F->LinkAttrs;
+			$this->Cell_Rendered($this->_0_3F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 4-6F
+			$CurrentValue = $this->_4_6F->CurrentValue;
+			$ViewValue = &$this->_4_6F->ViewValue;
+			$ViewAttrs = &$this->_4_6F->ViewAttrs;
+			$CellAttrs = &$this->_4_6F->CellAttrs;
+			$HrefValue = &$this->_4_6F->HrefValue;
+			$LinkAttrs = &$this->_4_6F->LinkAttrs;
+			$this->Cell_Rendered($this->_4_6F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 7-9F
+			$CurrentValue = $this->_7_9F->CurrentValue;
+			$ViewValue = &$this->_7_9F->ViewValue;
+			$ViewAttrs = &$this->_7_9F->ViewAttrs;
+			$CellAttrs = &$this->_7_9F->CellAttrs;
+			$HrefValue = &$this->_7_9F->HrefValue;
+			$LinkAttrs = &$this->_7_9F->LinkAttrs;
+			$this->Cell_Rendered($this->_7_9F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 10-12F
+			$CurrentValue = $this->_10_12F->CurrentValue;
+			$ViewValue = &$this->_10_12F->ViewValue;
+			$ViewAttrs = &$this->_10_12F->ViewAttrs;
+			$CellAttrs = &$this->_10_12F->CellAttrs;
+			$HrefValue = &$this->_10_12F->HrefValue;
+			$LinkAttrs = &$this->_10_12F->LinkAttrs;
+			$this->Cell_Rendered($this->_10_12F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 13-15F
+			$CurrentValue = $this->_13_15F->CurrentValue;
+			$ViewValue = &$this->_13_15F->ViewValue;
+			$ViewAttrs = &$this->_13_15F->ViewAttrs;
+			$CellAttrs = &$this->_13_15F->CellAttrs;
+			$HrefValue = &$this->_13_15F->HrefValue;
+			$LinkAttrs = &$this->_13_15F->LinkAttrs;
+			$this->Cell_Rendered($this->_13_15F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 16-18F
+			$CurrentValue = $this->_16_18F->CurrentValue;
+			$ViewValue = &$this->_16_18F->ViewValue;
+			$ViewAttrs = &$this->_16_18F->ViewAttrs;
+			$CellAttrs = &$this->_16_18F->CellAttrs;
+			$HrefValue = &$this->_16_18F->HrefValue;
+			$LinkAttrs = &$this->_16_18F->LinkAttrs;
+			$this->Cell_Rendered($this->_16_18F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 19F
+			$CurrentValue = $this->_19F->CurrentValue;
+			$ViewValue = &$this->_19F->ViewValue;
+			$ViewAttrs = &$this->_19F->ViewAttrs;
+			$CellAttrs = &$this->_19F->CellAttrs;
+			$HrefValue = &$this->_19F->HrefValue;
+			$LinkAttrs = &$this->_19F->LinkAttrs;
+			$this->Cell_Rendered($this->_19F, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 0-3M
+			$CurrentValue = $this->_0_3M->CurrentValue;
+			$ViewValue = &$this->_0_3M->ViewValue;
+			$ViewAttrs = &$this->_0_3M->ViewAttrs;
+			$CellAttrs = &$this->_0_3M->CellAttrs;
+			$HrefValue = &$this->_0_3M->HrefValue;
+			$LinkAttrs = &$this->_0_3M->LinkAttrs;
+			$this->Cell_Rendered($this->_0_3M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 4-6M
+			$CurrentValue = $this->_4_6M->CurrentValue;
+			$ViewValue = &$this->_4_6M->ViewValue;
+			$ViewAttrs = &$this->_4_6M->ViewAttrs;
+			$CellAttrs = &$this->_4_6M->CellAttrs;
+			$HrefValue = &$this->_4_6M->HrefValue;
+			$LinkAttrs = &$this->_4_6M->LinkAttrs;
+			$this->Cell_Rendered($this->_4_6M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 7-9M
+			$CurrentValue = $this->_7_9M->CurrentValue;
+			$ViewValue = &$this->_7_9M->ViewValue;
+			$ViewAttrs = &$this->_7_9M->ViewAttrs;
+			$CellAttrs = &$this->_7_9M->CellAttrs;
+			$HrefValue = &$this->_7_9M->HrefValue;
+			$LinkAttrs = &$this->_7_9M->LinkAttrs;
+			$this->Cell_Rendered($this->_7_9M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 10-12M
+			$CurrentValue = $this->_10_12M->CurrentValue;
+			$ViewValue = &$this->_10_12M->ViewValue;
+			$ViewAttrs = &$this->_10_12M->ViewAttrs;
+			$CellAttrs = &$this->_10_12M->CellAttrs;
+			$HrefValue = &$this->_10_12M->HrefValue;
+			$LinkAttrs = &$this->_10_12M->LinkAttrs;
+			$this->Cell_Rendered($this->_10_12M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 13-15M
+			$CurrentValue = $this->_13_15M->CurrentValue;
+			$ViewValue = &$this->_13_15M->ViewValue;
+			$ViewAttrs = &$this->_13_15M->ViewAttrs;
+			$CellAttrs = &$this->_13_15M->CellAttrs;
+			$HrefValue = &$this->_13_15M->HrefValue;
+			$LinkAttrs = &$this->_13_15M->LinkAttrs;
+			$this->Cell_Rendered($this->_13_15M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 16-18M
+			$CurrentValue = $this->_16_18M->CurrentValue;
+			$ViewValue = &$this->_16_18M->ViewValue;
+			$ViewAttrs = &$this->_16_18M->ViewAttrs;
+			$CellAttrs = &$this->_16_18M->CellAttrs;
+			$HrefValue = &$this->_16_18M->HrefValue;
+			$LinkAttrs = &$this->_16_18M->LinkAttrs;
+			$this->Cell_Rendered($this->_16_18M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// 19M
+			$CurrentValue = $this->_19M->CurrentValue;
+			$ViewValue = &$this->_19M->ViewValue;
+			$ViewAttrs = &$this->_19M->ViewAttrs;
+			$CellAttrs = &$this->_19M->CellAttrs;
+			$HrefValue = &$this->_19M->HrefValue;
+			$LinkAttrs = &$this->_19M->LinkAttrs;
+			$this->Cell_Rendered($this->_19M, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1292,9 +1580,21 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 		$this->GrpColumnCount = 0;
 		$this->SubGrpColumnCount = 0;
 		$this->DtlColumnCount = 0;
-		if ($this->edad->Visible) $this->DtlColumnCount += 1;
-		if ($this->etareo->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombreinstitucion->Visible) $this->DtlColumnCount += 1;
+		if ($this->_0_3F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_4_6F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_7_9F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_10_12F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_13_15F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_16_18F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_19F->Visible) $this->DtlColumnCount += 1;
+		if ($this->_0_3M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_4_6M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_7_9M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_10_12M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_13_15M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_16_18M->Visible) $this->DtlColumnCount += 1;
+		if ($this->_19M->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1339,17 +1639,41 @@ class crviewestudiantesetareo_rpt extends crviewestudiantesetareo {
 		if ($bResetSort) {
 			$this->setOrderBy("");
 			$this->setStartGroup(1);
-			$this->edad->setSort("");
-			$this->etareo->setSort("");
 			$this->nombreinstitucion->setSort("");
+			$this->_0_3F->setSort("");
+			$this->_4_6F->setSort("");
+			$this->_7_9F->setSort("");
+			$this->_10_12F->setSort("");
+			$this->_13_15F->setSort("");
+			$this->_16_18F->setSort("");
+			$this->_19F->setSort("");
+			$this->_0_3M->setSort("");
+			$this->_4_6M->setSort("");
+			$this->_7_9M->setSort("");
+			$this->_10_12M->setSort("");
+			$this->_13_15M->setSort("");
+			$this->_16_18M->setSort("");
+			$this->_19M->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
 			$this->CurrentOrder = $orderBy;
 			$this->CurrentOrderType = $orderType;
-			$this->UpdateSort($this->edad); // edad
-			$this->UpdateSort($this->etareo); // etareo
 			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
+			$this->UpdateSort($this->_0_3F); // 0-3F
+			$this->UpdateSort($this->_4_6F); // 4-6F
+			$this->UpdateSort($this->_7_9F); // 7-9F
+			$this->UpdateSort($this->_10_12F); // 10-12F
+			$this->UpdateSort($this->_13_15F); // 13-15F
+			$this->UpdateSort($this->_16_18F); // 16-18F
+			$this->UpdateSort($this->_19F); // 19F
+			$this->UpdateSort($this->_0_3M); // 0-3M
+			$this->UpdateSort($this->_4_6M); // 4-6M
+			$this->UpdateSort($this->_7_9M); // 7-9M
+			$this->UpdateSort($this->_10_12M); // 10-12M
+			$this->UpdateSort($this->_13_15M); // 13-15M
+			$this->UpdateSort($this->_16_18M); // 16-18M
+			$this->UpdateSort($this->_19M); // 19M
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
@@ -1667,42 +1991,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <thead>
 	<!-- Table header -->
 	<tr class="ewTableHeader">
-<?php if ($Page->edad->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="edad"><div class="viewestudiantesetareo_edad"><span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="edad">
-<?php if ($Page->SortUrl($Page->edad) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareo_edad">
-			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->edad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->edad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->etareo->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="etareo"><div class="viewestudiantesetareo_etareo"><span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="etareo">
-<?php if ($Page->SortUrl($Page->etareo) == "") { ?>
-		<div class="ewTableHeaderBtn viewestudiantesetareo_etareo">
-			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo_etareo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->etareo) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->etareo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->etareo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
 <?php if ($Page->nombreinstitucion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
 	<td data-field="nombreinstitucion"><div class="viewestudiantesetareo_nombreinstitucion"><span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span></div></td>
@@ -1716,6 +2004,258 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombreinstitucion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombreinstitucion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_0_3F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_0_3F"><div class="viewestudiantesetareo__0_3F"><span class="ewTableHeaderCaption"><?php echo $Page->_0_3F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_0_3F">
+<?php if ($Page->SortUrl($Page->_0_3F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__0_3F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_0_3F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__0_3F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_0_3F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_0_3F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_0_3F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_0_3F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_4_6F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_4_6F"><div class="viewestudiantesetareo__4_6F"><span class="ewTableHeaderCaption"><?php echo $Page->_4_6F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_4_6F">
+<?php if ($Page->SortUrl($Page->_4_6F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__4_6F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_4_6F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__4_6F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_4_6F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_4_6F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_4_6F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_4_6F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_7_9F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_7_9F"><div class="viewestudiantesetareo__7_9F"><span class="ewTableHeaderCaption"><?php echo $Page->_7_9F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_7_9F">
+<?php if ($Page->SortUrl($Page->_7_9F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__7_9F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_7_9F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__7_9F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_7_9F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_7_9F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_7_9F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_7_9F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_10_12F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_10_12F"><div class="viewestudiantesetareo__10_12F"><span class="ewTableHeaderCaption"><?php echo $Page->_10_12F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_10_12F">
+<?php if ($Page->SortUrl($Page->_10_12F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__10_12F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_10_12F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__10_12F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_10_12F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_10_12F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_10_12F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_10_12F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_13_15F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_13_15F"><div class="viewestudiantesetareo__13_15F"><span class="ewTableHeaderCaption"><?php echo $Page->_13_15F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_13_15F">
+<?php if ($Page->SortUrl($Page->_13_15F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__13_15F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_13_15F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__13_15F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_13_15F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_13_15F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_13_15F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_13_15F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_16_18F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_16_18F"><div class="viewestudiantesetareo__16_18F"><span class="ewTableHeaderCaption"><?php echo $Page->_16_18F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_16_18F">
+<?php if ($Page->SortUrl($Page->_16_18F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__16_18F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_16_18F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__16_18F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_16_18F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_16_18F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_16_18F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_16_18F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_19F->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_19F"><div class="viewestudiantesetareo__19F"><span class="ewTableHeaderCaption"><?php echo $Page->_19F->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_19F">
+<?php if ($Page->SortUrl($Page->_19F) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__19F">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_19F->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__19F" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_19F) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_19F->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_19F->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_19F->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_0_3M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_0_3M"><div class="viewestudiantesetareo__0_3M"><span class="ewTableHeaderCaption"><?php echo $Page->_0_3M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_0_3M">
+<?php if ($Page->SortUrl($Page->_0_3M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__0_3M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_0_3M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__0_3M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_0_3M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_0_3M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_0_3M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_0_3M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_4_6M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_4_6M"><div class="viewestudiantesetareo__4_6M"><span class="ewTableHeaderCaption"><?php echo $Page->_4_6M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_4_6M">
+<?php if ($Page->SortUrl($Page->_4_6M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__4_6M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_4_6M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__4_6M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_4_6M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_4_6M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_4_6M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_4_6M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_7_9M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_7_9M"><div class="viewestudiantesetareo__7_9M"><span class="ewTableHeaderCaption"><?php echo $Page->_7_9M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_7_9M">
+<?php if ($Page->SortUrl($Page->_7_9M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__7_9M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_7_9M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__7_9M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_7_9M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_7_9M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_7_9M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_7_9M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_10_12M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_10_12M"><div class="viewestudiantesetareo__10_12M"><span class="ewTableHeaderCaption"><?php echo $Page->_10_12M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_10_12M">
+<?php if ($Page->SortUrl($Page->_10_12M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__10_12M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_10_12M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__10_12M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_10_12M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_10_12M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_10_12M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_10_12M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_13_15M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_13_15M"><div class="viewestudiantesetareo__13_15M"><span class="ewTableHeaderCaption"><?php echo $Page->_13_15M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_13_15M">
+<?php if ($Page->SortUrl($Page->_13_15M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__13_15M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_13_15M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__13_15M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_13_15M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_13_15M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_13_15M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_13_15M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_16_18M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_16_18M"><div class="viewestudiantesetareo__16_18M"><span class="ewTableHeaderCaption"><?php echo $Page->_16_18M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_16_18M">
+<?php if ($Page->SortUrl($Page->_16_18M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__16_18M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_16_18M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__16_18M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_16_18M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_16_18M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_16_18M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_16_18M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->_19M->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="_19M"><div class="viewestudiantesetareo__19M"><span class="ewTableHeaderCaption"><?php echo $Page->_19M->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="_19M">
+<?php if ($Page->SortUrl($Page->_19M) == "") { ?>
+		<div class="ewTableHeaderBtn viewestudiantesetareo__19M">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_19M->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewestudiantesetareo__19M" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->_19M) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->_19M->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->_19M->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->_19M->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1739,17 +2279,65 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		$Page->RenderRow();
 ?>
 	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>
-<span<?php echo $Page->edad->ViewAttributes() ?>><?php echo $Page->edad->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->etareo->Visible) { ?>
-		<td data-field="etareo"<?php echo $Page->etareo->CellAttributes() ?>>
-<span<?php echo $Page->etareo->ViewAttributes() ?>><?php echo $Page->etareo->ListViewValue() ?></span></td>
-<?php } ?>
 <?php if ($Page->nombreinstitucion->Visible) { ?>
 		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>
 <span<?php echo $Page->nombreinstitucion->ViewAttributes() ?>><?php echo $Page->nombreinstitucion->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_0_3F->Visible) { ?>
+		<td data-field="_0_3F"<?php echo $Page->_0_3F->CellAttributes() ?>>
+<span<?php echo $Page->_0_3F->ViewAttributes() ?>><?php echo $Page->_0_3F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_4_6F->Visible) { ?>
+		<td data-field="_4_6F"<?php echo $Page->_4_6F->CellAttributes() ?>>
+<span<?php echo $Page->_4_6F->ViewAttributes() ?>><?php echo $Page->_4_6F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_7_9F->Visible) { ?>
+		<td data-field="_7_9F"<?php echo $Page->_7_9F->CellAttributes() ?>>
+<span<?php echo $Page->_7_9F->ViewAttributes() ?>><?php echo $Page->_7_9F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_10_12F->Visible) { ?>
+		<td data-field="_10_12F"<?php echo $Page->_10_12F->CellAttributes() ?>>
+<span<?php echo $Page->_10_12F->ViewAttributes() ?>><?php echo $Page->_10_12F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_13_15F->Visible) { ?>
+		<td data-field="_13_15F"<?php echo $Page->_13_15F->CellAttributes() ?>>
+<span<?php echo $Page->_13_15F->ViewAttributes() ?>><?php echo $Page->_13_15F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_16_18F->Visible) { ?>
+		<td data-field="_16_18F"<?php echo $Page->_16_18F->CellAttributes() ?>>
+<span<?php echo $Page->_16_18F->ViewAttributes() ?>><?php echo $Page->_16_18F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_19F->Visible) { ?>
+		<td data-field="_19F"<?php echo $Page->_19F->CellAttributes() ?>>
+<span<?php echo $Page->_19F->ViewAttributes() ?>><?php echo $Page->_19F->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_0_3M->Visible) { ?>
+		<td data-field="_0_3M"<?php echo $Page->_0_3M->CellAttributes() ?>>
+<span<?php echo $Page->_0_3M->ViewAttributes() ?>><?php echo $Page->_0_3M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_4_6M->Visible) { ?>
+		<td data-field="_4_6M"<?php echo $Page->_4_6M->CellAttributes() ?>>
+<span<?php echo $Page->_4_6M->ViewAttributes() ?>><?php echo $Page->_4_6M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_7_9M->Visible) { ?>
+		<td data-field="_7_9M"<?php echo $Page->_7_9M->CellAttributes() ?>>
+<span<?php echo $Page->_7_9M->ViewAttributes() ?>><?php echo $Page->_7_9M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_10_12M->Visible) { ?>
+		<td data-field="_10_12M"<?php echo $Page->_10_12M->CellAttributes() ?>>
+<span<?php echo $Page->_10_12M->ViewAttributes() ?>><?php echo $Page->_10_12M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_13_15M->Visible) { ?>
+		<td data-field="_13_15M"<?php echo $Page->_13_15M->CellAttributes() ?>>
+<span<?php echo $Page->_13_15M->ViewAttributes() ?>><?php echo $Page->_13_15M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_16_18M->Visible) { ?>
+		<td data-field="_16_18M"<?php echo $Page->_16_18M->CellAttributes() ?>>
+<span<?php echo $Page->_16_18M->ViewAttributes() ?>><?php echo $Page->_16_18M->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->_19M->Visible) { ?>
+		<td data-field="_19M"<?php echo $Page->_19M->CellAttributes() ?>>
+<span<?php echo $Page->_19M->ViewAttributes() ?>><?php echo $Page->_19M->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

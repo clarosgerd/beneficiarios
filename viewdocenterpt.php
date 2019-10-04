@@ -3026,6 +3026,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_deoartamento" id="sv_deoartamento" name="sv_deoartamento" size="30" maxlength="100" placeholder="<?php echo $Page->deoartamento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->deoartamento->SearchValue) ?>"<?php echo $Page->deoartamento->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_unidadeducativa" class="ewCell form-group">
 	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
@@ -3034,6 +3036,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_nombres" class="ewCell form-group">
 	<label for="sv_nombres" class="ewSearchCaption ewLabel"><?php echo $Page->nombres->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombres" id="so_nombres" value="LIKE"></span>
@@ -3042,6 +3046,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_nombres" id="sv_nombres" name="sv_nombres" size="30" maxlength="100" placeholder="<?php echo $Page->nombres->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombres->SearchValue) ?>"<?php echo $Page->nombres->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_apellidopaterno" class="ewCell form-group">
 	<label for="sv_apellidopaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidopaterno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidopaterno" id="so_apellidopaterno" value="LIKE"></span>
@@ -3050,6 +3056,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_apellidopaterno" id="sv_apellidopaterno" name="sv_apellidopaterno" size="30" maxlength="100" placeholder="<?php echo $Page->apellidopaterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->apellidopaterno->SearchValue) ?>"<?php echo $Page->apellidopaterno->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_5" class="ewRow">
 <div id="c_apellidomaterno" class="ewCell form-group">
 	<label for="sv_apellidomaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidomaterno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidomaterno" id="so_apellidomaterno" value="LIKE"></span>
@@ -3058,6 +3066,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_apellidomaterno" id="sv_apellidomaterno" name="sv_apellidomaterno" size="30" maxlength="100" placeholder="<?php echo $Page->apellidomaterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->apellidomaterno->SearchValue) ?>"<?php echo $Page->apellidomaterno->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_6" class="ewRow">
 <div id="c_nrodiscapacidad" class="ewCell form-group">
 	<label for="sv_nrodiscapacidad" class="ewSearchCaption ewLabel"><?php echo $Page->nrodiscapacidad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nrodiscapacidad" id="so_nrodiscapacidad" value="LIKE"></span>
@@ -3066,6 +3076,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_nrodiscapacidad" id="sv_nrodiscapacidad" name="sv_nrodiscapacidad" size="30" maxlength="15" placeholder="<?php echo $Page->nrodiscapacidad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nrodiscapacidad->SearchValue) ?>"<?php echo $Page->nrodiscapacidad->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_7" class="ewRow">
 <div id="c_ci" class="ewCell form-group">
 	<label for="sv_ci" class="ewSearchCaption ewLabel"><?php echo $Page->ci->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_ci" id="so_ci" value="LIKE"></span>
@@ -3074,6 +3086,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_ci" id="sv_ci" name="sv_ci" size="30" maxlength="15" placeholder="<?php echo $Page->ci->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->ci->SearchValue) ?>"<?php echo $Page->ci->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_8" class="ewRow">
 <div id="c_materias" class="ewCell form-group">
 	<label for="sv_materias" class="ewSearchCaption ewLabel"><?php echo $Page->materias->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_materias" id="so_materias" value="LIKE"></span>

@@ -2731,6 +2731,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_sector" id="sv_sector" name="sv_sector" size="30" maxlength="100" placeholder="<?php echo $Page->sector->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->sector->SearchValue) ?>"<?php echo $Page->sector->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_actividad" class="ewCell form-group">
 	<label for="sv_actividad" class="ewSearchCaption ewLabel"><?php echo $Page->actividad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_actividad" id="so_actividad" value="LIKE"></span>
@@ -2739,6 +2741,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_actividad" id="sv_actividad" name="sv_actividad" size="30" maxlength="100" placeholder="<?php echo $Page->actividad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->actividad->SearchValue) ?>"<?php echo $Page->actividad->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_categoria" class="ewCell form-group">
 	<label for="sv_categoria" class="ewSearchCaption ewLabel"><?php echo $Page->categoria->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_categoria" id="so_categoria" value="LIKE"></span>
@@ -2747,6 +2751,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_categoria" id="sv_categoria" name="sv_categoria" size="30" maxlength="100" placeholder="<?php echo $Page->categoria->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->categoria->SearchValue) ?>"<?php echo $Page->categoria->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>

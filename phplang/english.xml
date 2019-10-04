@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/3" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/4" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -2401,14 +2401,50 @@
     </table>
     <table id="viewestudiantesetareo">
       <phrase id="tblcaption" value="viewestudiantesetareo" />
-      <field id="edad">
-        <phrase id="fldcaption" value="edad" />
-      </field>
-      <field id="etareo">
-        <phrase id="fldcaption" value="etareo" />
-      </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="_0_3f">
+        <phrase id="fldcaption" value="0 3F" />
+      </field>
+      <field id="_4_6f">
+        <phrase id="fldcaption" value="4 6F" />
+      </field>
+      <field id="_7_9f">
+        <phrase id="fldcaption" value="7 9F" />
+      </field>
+      <field id="_10_12f">
+        <phrase id="fldcaption" value="10 12F" />
+      </field>
+      <field id="_13_15f">
+        <phrase id="fldcaption" value="13 15F" />
+      </field>
+      <field id="_16_18f">
+        <phrase id="fldcaption" value="16 18F" />
+      </field>
+      <field id="_19f">
+        <phrase id="fldcaption" value="19F" />
+      </field>
+      <field id="_0_3m">
+        <phrase id="fldcaption" value="0 3M" />
+      </field>
+      <field id="_4_6m">
+        <phrase id="fldcaption" value="4 6M" />
+      </field>
+      <field id="_7_9m">
+        <phrase id="fldcaption" value="7 9M" />
+      </field>
+      <field id="_10_12m">
+        <phrase id="fldcaption" value="10 12M" />
+      </field>
+      <field id="_13_15m">
+        <phrase id="fldcaption" value="13 15M" />
+      </field>
+      <field id="_16_18m">
+        <phrase id="fldcaption" value="16 18M" />
+      </field>
+      <field id="_19m">
+        <phrase id="fldcaption" value="19M" />
       </field>
     </table>
     <table id="viewestudiantesetareocurso">
@@ -2523,6 +2559,15 @@
       </field>
       <field id="_email">
         <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="cantidad">
+        <phrase id="fldcaption" value="cantidad" />
+      </field>
+      <field id="sind">
+        <phrase id="fldcaption" value="sind" />
+      </field>
+      <field id="cond">
+        <phrase id="fldcaption" value="cond" />
       </field>
     </table>
   </project>
