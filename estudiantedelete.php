@@ -337,6 +337,7 @@ class cestudiante_delete extends cestudiante {
 		$this->discapacidad->SetVisibility();
 		$this->tipodiscapacidad->SetVisibility();
 		$this->observaciones->SetVisibility();
+		$this->fecha->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -535,6 +536,9 @@ class cestudiante_delete extends cestudiante {
 		$this->tipodiscapacidad->setDbValue($row['tipodiscapacidad']);
 		$this->observaciones->setDbValue($row['observaciones']);
 		$this->id_centro->setDbValue($row['id_centro']);
+		$this->gestion->setDbValue($row['gestion']);
+		$this->esincritoespecial->setDbValue($row['esincritoespecial']);
+		$this->fecha->setDbValue($row['fecha']);
 	}
 
 	// Return a row with default values
@@ -559,6 +563,9 @@ class cestudiante_delete extends cestudiante {
 		$row['tipodiscapacidad'] = NULL;
 		$row['observaciones'] = NULL;
 		$row['id_centro'] = NULL;
+		$row['gestion'] = NULL;
+		$row['esincritoespecial'] = NULL;
+		$row['fecha'] = NULL;
 		return $row;
 	}
 
@@ -586,6 +593,9 @@ class cestudiante_delete extends cestudiante {
 		$this->tipodiscapacidad->DbValue = $row['tipodiscapacidad'];
 		$this->observaciones->DbValue = $row['observaciones'];
 		$this->id_centro->DbValue = $row['id_centro'];
+		$this->gestion->DbValue = $row['gestion'];
+		$this->esincritoespecial->DbValue = $row['esincritoespecial'];
+		$this->fecha->DbValue = $row['fecha'];
 	}
 
 	// Render row values based on field settings
@@ -622,6 +632,14 @@ class cestudiante_delete extends cestudiante {
 		// id_centro
 
 		$this->id_centro->CellCssStyle = "white-space: nowrap;";
+
+		// gestion
+		$this->gestion->CellCssStyle = "white-space: nowrap;";
+
+		// esincritoespecial
+		$this->esincritoespecial->CellCssStyle = "white-space: nowrap;";
+
+		// fecha
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
 		// codigorude
@@ -758,7 +776,26 @@ class cestudiante_delete extends cestudiante {
 		$this->sexo->ViewCustomAttributes = "";
 
 		// curso
-		$this->curso->ViewValue = $this->curso->CurrentValue;
+		if (strval($this->curso->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->curso->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `curso` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `curso`";
+		$sWhereWrk = "";
+		$this->curso->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->curso, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->curso->ViewValue = $this->curso->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->curso->ViewValue = $this->curso->CurrentValue;
+			}
+		} else {
+			$this->curso->ViewValue = NULL;
+		}
 		$this->curso->ViewCustomAttributes = "";
 
 		// discapacidad
@@ -811,6 +848,11 @@ class cestudiante_delete extends cestudiante {
 		// observaciones
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
 		$this->observaciones->ViewCustomAttributes = "";
+
+		// fecha
+		$this->fecha->ViewValue = $this->fecha->CurrentValue;
+		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
+		$this->fecha->ViewCustomAttributes = "";
 
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
@@ -896,6 +938,11 @@ class cestudiante_delete extends cestudiante {
 			$this->observaciones->LinkCustomAttributes = "";
 			$this->observaciones->HrefValue = "";
 			$this->observaciones->TooltipValue = "";
+
+			// fecha
+			$this->fecha->LinkCustomAttributes = "";
+			$this->fecha->HrefValue = "";
+			$this->fecha->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1117,6 +1164,8 @@ festudiantedelete.Lists["x_unidadeducativa"] = {"LinkField":"x_id","Ajax":true,"
 festudiantedelete.Lists["x_unidadeducativa"].Data = "<?php echo $estudiante_delete->unidadeducativa->LookupFilterQuery(FALSE, "delete") ?>";
 festudiantedelete.Lists["x_sexo"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 festudiantedelete.Lists["x_sexo"].Options = <?php echo json_encode($estudiante_delete->sexo->Options()) ?>;
+festudiantedelete.Lists["x_curso"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_curso","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"curso"};
+festudiantedelete.Lists["x_curso"].Data = "<?php echo $estudiante_delete->curso->LookupFilterQuery(FALSE, "delete") ?>";
 festudiantedelete.Lists["x_discapacidad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"discapacidad"};
 festudiantedelete.Lists["x_discapacidad"].Data = "<?php echo $estudiante_delete->discapacidad->LookupFilterQuery(FALSE, "delete") ?>";
 festudiantedelete.AutoSuggests["x_discapacidad"] = <?php echo json_encode(array("data" => "ajax=autosuggest&" . $estudiante_delete->discapacidad->LookupFilterQuery(TRUE, "delete"))) ?>;
@@ -1198,6 +1247,9 @@ $estudiante_delete->ShowMessage();
 <?php } ?>
 <?php if ($estudiante->observaciones->Visible) { // observaciones ?>
 		<th class="<?php echo $estudiante->observaciones->HeaderCellClass() ?>"><span id="elh_estudiante_observaciones" class="estudiante_observaciones"><?php echo $estudiante->observaciones->FldCaption() ?></span></th>
+<?php } ?>
+<?php if ($estudiante->fecha->Visible) { // fecha ?>
+		<th class="<?php echo $estudiante->fecha->HeaderCellClass() ?>"><span id="elh_estudiante_fecha" class="estudiante_fecha"><?php echo $estudiante->fecha->FldCaption() ?></span></th>
 <?php } ?>
 	</tr>
 	</thead>
@@ -1353,6 +1405,14 @@ while (!$estudiante_delete->Recordset->EOF) {
 <span id="el<?php echo $estudiante_delete->RowCnt ?>_estudiante_observaciones" class="estudiante_observaciones">
 <span<?php echo $estudiante->observaciones->ViewAttributes() ?>>
 <?php echo $estudiante->observaciones->ListViewValue() ?></span>
+</span>
+</td>
+<?php } ?>
+<?php if ($estudiante->fecha->Visible) { // fecha ?>
+		<td<?php echo $estudiante->fecha->CellAttributes() ?>>
+<span id="el<?php echo $estudiante_delete->RowCnt ?>_estudiante_fecha" class="estudiante_fecha">
+<span<?php echo $estudiante->fecha->ViewAttributes() ?>>
+<?php echo $estudiante->fecha->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

@@ -68,6 +68,12 @@ ewr_GetCss("<?php echo ewr_CssFile(EWR_PROJECT_STYLESHEET_FILENAME) ?>");
 <script type="text/javascript">ewr_GetScript("<?php echo $jsfile ?>");</script>
 <?php } ?>
 <?php } ?>
+<?php if (@$gsExport == "") { ?>
+<script type="text/javascript">
+ewr_GetCss("phprptcss/bootstrap-datetimepicker.css");
+ewr_GetScript("phprptjs/bootstrap-datetimepicker.js");
+</script>
+<?php } ?>
 <?php if (@$gsExport == "" || @$gsExport == "print" || @$gsExport == "email" && @$gsEmailContentType == "url") { ?>
 <?php if (@$gsCustomExport == "") { ?>
 <script type="text/javascript" src="<?php echo $EWR_RELATIVE_PATH . $EWR_FUSIONCHARTS_PATH ?>fusioncharts.js"></script>

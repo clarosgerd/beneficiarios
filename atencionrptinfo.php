@@ -14,6 +14,7 @@ class cratencion extends crTableBase {
 	var $id_otros;
 	var $id_escolar;
 	var $id_especialista;
+	var $id_referencia;
 
 	//
 	// Table class constructor
@@ -74,6 +75,15 @@ class cratencion extends crTableBase {
 		$this->id_especialista->SqlSelect = "";
 		$this->id_especialista->SqlOrderBy = "";
 		$this->fields['id_especialista'] = &$this->id_especialista;
+
+		// id_referencia
+		$this->id_referencia = new crField('atencion', 'atencion', 'x_id_referencia', 'id_referencia', '`id_referencia`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->id_referencia->Sortable = TRUE; // Allow sort
+		$this->id_referencia->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->id_referencia->DateFilter = "";
+		$this->id_referencia->SqlSelect = "";
+		$this->id_referencia->SqlOrderBy = "";
+		$this->fields['id_referencia'] = &$this->id_referencia;
 	}
 
 	// Set Field Visibility

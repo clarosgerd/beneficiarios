@@ -593,12 +593,15 @@ class crestudiante_rpt extends crestudiante {
 		$this->codigorude->SetVisibility();
 		$this->codigorude_es->SetVisibility();
 		$this->id_centro->SetVisibility();
+		$this->gestion->SetVisibility();
+		$this->esincritoespecial->SetVisibility();
+		$this->fecha->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 20;
+		$nDtls = 23;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -611,7 +614,7 @@ class crestudiante_rpt extends crestudiante {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -826,13 +829,16 @@ class crestudiante_rpt extends crestudiante {
 				$this->FirstRowData['ci'] = ewr_Conv($rs->fields('ci'), 200);
 				$this->FirstRowData['fechanacimiento'] = ewr_Conv($rs->fields('fechanacimiento'), 133);
 				$this->FirstRowData['sexo'] = ewr_Conv($rs->fields('sexo'), 200);
-				$this->FirstRowData['curso'] = ewr_Conv($rs->fields('curso'), 200);
+				$this->FirstRowData['curso'] = ewr_Conv($rs->fields('curso'), 3);
 				$this->FirstRowData['discapacidad'] = ewr_Conv($rs->fields('discapacidad'), 3);
 				$this->FirstRowData['tipodiscapacidad'] = ewr_Conv($rs->fields('tipodiscapacidad'), 3);
 				$this->FirstRowData['observaciones'] = ewr_Conv($rs->fields('observaciones'), 200);
 				$this->FirstRowData['codigorude'] = ewr_Conv($rs->fields('codigorude'), 200);
 				$this->FirstRowData['codigorude_es'] = ewr_Conv($rs->fields('codigorude_es'), 200);
 				$this->FirstRowData['id_centro'] = ewr_Conv($rs->fields('id_centro'), 3);
+				$this->FirstRowData['gestion'] = ewr_Conv($rs->fields('gestion'), 3);
+				$this->FirstRowData['esincritoespecial'] = ewr_Conv($rs->fields('esincritoespecial'), 3);
+				$this->FirstRowData['fecha'] = ewr_Conv($rs->fields('fecha'), 133);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -856,6 +862,9 @@ class crestudiante_rpt extends crestudiante {
 			$this->codigorude->setDbValue($rs->fields('codigorude'));
 			$this->codigorude_es->setDbValue($rs->fields('codigorude_es'));
 			$this->id_centro->setDbValue($rs->fields('id_centro'));
+			$this->gestion->setDbValue($rs->fields('gestion'));
+			$this->esincritoespecial->setDbValue($rs->fields('esincritoespecial'));
+			$this->fecha->setDbValue($rs->fields('fecha'));
 			$this->Val[1] = $this->id->CurrentValue;
 			$this->Val[2] = $this->departamento->CurrentValue;
 			$this->Val[3] = $this->provincisa->CurrentValue;
@@ -875,6 +884,9 @@ class crestudiante_rpt extends crestudiante {
 			$this->Val[17] = $this->codigorude->CurrentValue;
 			$this->Val[18] = $this->codigorude_es->CurrentValue;
 			$this->Val[19] = $this->id_centro->CurrentValue;
+			$this->Val[20] = $this->gestion->CurrentValue;
+			$this->Val[21] = $this->esincritoespecial->CurrentValue;
+			$this->Val[22] = $this->fecha->CurrentValue;
 		} else {
 			$this->id->setDbValue("");
 			$this->departamento->setDbValue("");
@@ -895,6 +907,9 @@ class crestudiante_rpt extends crestudiante {
 			$this->codigorude->setDbValue("");
 			$this->codigorude_es->setDbValue("");
 			$this->id_centro->setDbValue("");
+			$this->gestion->setDbValue("");
+			$this->esincritoespecial->setDbValue("");
+			$this->fecha->setDbValue("");
 		}
 	}
 
@@ -1138,6 +1153,15 @@ class crestudiante_rpt extends crestudiante {
 
 			// id_centro
 			$this->id_centro->HrefValue = "";
+
+			// gestion
+			$this->gestion->HrefValue = "";
+
+			// esincritoespecial
+			$this->esincritoespecial->HrefValue = "";
+
+			// fecha
+			$this->fecha->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1220,6 +1244,19 @@ class crestudiante_rpt extends crestudiante {
 			$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
 			$this->id_centro->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// gestion
+			$this->gestion->ViewValue = $this->gestion->CurrentValue;
+			$this->gestion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// esincritoespecial
+			$this->esincritoespecial->ViewValue = $this->esincritoespecial->CurrentValue;
+			$this->esincritoespecial->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// fecha
+			$this->fecha->ViewValue = $this->fecha->CurrentValue;
+			$this->fecha->ViewValue = ewr_FormatDateTime($this->fecha->ViewValue, 0);
+			$this->fecha->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// id
 			$this->id->HrefValue = "";
 
@@ -1276,6 +1313,15 @@ class crestudiante_rpt extends crestudiante {
 
 			// id_centro
 			$this->id_centro->HrefValue = "";
+
+			// gestion
+			$this->gestion->HrefValue = "";
+
+			// esincritoespecial
+			$this->esincritoespecial->HrefValue = "";
+
+			// fecha
+			$this->fecha->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1452,6 +1498,33 @@ class crestudiante_rpt extends crestudiante {
 			$HrefValue = &$this->id_centro->HrefValue;
 			$LinkAttrs = &$this->id_centro->LinkAttrs;
 			$this->Cell_Rendered($this->id_centro, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// gestion
+			$CurrentValue = $this->gestion->CurrentValue;
+			$ViewValue = &$this->gestion->ViewValue;
+			$ViewAttrs = &$this->gestion->ViewAttrs;
+			$CellAttrs = &$this->gestion->CellAttrs;
+			$HrefValue = &$this->gestion->HrefValue;
+			$LinkAttrs = &$this->gestion->LinkAttrs;
+			$this->Cell_Rendered($this->gestion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// esincritoespecial
+			$CurrentValue = $this->esincritoespecial->CurrentValue;
+			$ViewValue = &$this->esincritoespecial->ViewValue;
+			$ViewAttrs = &$this->esincritoespecial->ViewAttrs;
+			$CellAttrs = &$this->esincritoespecial->CellAttrs;
+			$HrefValue = &$this->esincritoespecial->HrefValue;
+			$LinkAttrs = &$this->esincritoespecial->LinkAttrs;
+			$this->Cell_Rendered($this->esincritoespecial, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// fecha
+			$CurrentValue = $this->fecha->CurrentValue;
+			$ViewValue = &$this->fecha->ViewValue;
+			$ViewAttrs = &$this->fecha->ViewAttrs;
+			$CellAttrs = &$this->fecha->CellAttrs;
+			$HrefValue = &$this->fecha->HrefValue;
+			$LinkAttrs = &$this->fecha->LinkAttrs;
+			$this->Cell_Rendered($this->fecha, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1483,6 +1556,9 @@ class crestudiante_rpt extends crestudiante {
 		if ($this->codigorude->Visible) $this->DtlColumnCount += 1;
 		if ($this->codigorude_es->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_centro->Visible) $this->DtlColumnCount += 1;
+		if ($this->gestion->Visible) $this->DtlColumnCount += 1;
+		if ($this->esincritoespecial->Visible) $this->DtlColumnCount += 1;
+		if ($this->fecha->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1546,6 +1622,9 @@ class crestudiante_rpt extends crestudiante {
 			$this->codigorude->setSort("");
 			$this->codigorude_es->setSort("");
 			$this->id_centro->setSort("");
+			$this->gestion->setSort("");
+			$this->esincritoespecial->setSort("");
+			$this->fecha->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -2132,6 +2211,60 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
+<?php if ($Page->gestion->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="gestion"><div class="estudiante_gestion"><span class="ewTableHeaderCaption"><?php echo $Page->gestion->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="gestion">
+<?php if ($Page->SortUrl($Page->gestion) == "") { ?>
+		<div class="ewTableHeaderBtn estudiante_gestion">
+			<span class="ewTableHeaderCaption"><?php echo $Page->gestion->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer estudiante_gestion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->gestion) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->gestion->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->gestion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->gestion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->esincritoespecial->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="esincritoespecial"><div class="estudiante_esincritoespecial"><span class="ewTableHeaderCaption"><?php echo $Page->esincritoespecial->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="esincritoespecial">
+<?php if ($Page->SortUrl($Page->esincritoespecial) == "") { ?>
+		<div class="ewTableHeaderBtn estudiante_esincritoespecial">
+			<span class="ewTableHeaderCaption"><?php echo $Page->esincritoespecial->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer estudiante_esincritoespecial" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->esincritoespecial) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->esincritoespecial->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->esincritoespecial->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->esincritoespecial->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->fecha->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="fecha"><div class="estudiante_fecha"><span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="fecha">
+<?php if ($Page->SortUrl($Page->fecha) == "") { ?>
+		<div class="ewTableHeaderBtn estudiante_fecha">
+			<span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer estudiante_fecha" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->fecha->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fecha->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -2225,6 +2358,18 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->id_centro->Visible) { ?>
 		<td data-field="id_centro"<?php echo $Page->id_centro->CellAttributes() ?>>
 <span<?php echo $Page->id_centro->ViewAttributes() ?>><?php echo $Page->id_centro->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->gestion->Visible) { ?>
+		<td data-field="gestion"<?php echo $Page->gestion->CellAttributes() ?>>
+<span<?php echo $Page->gestion->ViewAttributes() ?>><?php echo $Page->gestion->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->esincritoespecial->Visible) { ?>
+		<td data-field="esincritoespecial"<?php echo $Page->esincritoespecial->CellAttributes() ?>>
+<span<?php echo $Page->esincritoespecial->ViewAttributes() ?>><?php echo $Page->esincritoespecial->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->fecha->Visible) { ?>
+		<td data-field="fecha"<?php echo $Page->fecha->CellAttributes() ?>>
+<span<?php echo $Page->fecha->ViewAttributes() ?>><?php echo $Page->fecha->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

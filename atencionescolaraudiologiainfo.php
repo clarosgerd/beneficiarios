@@ -10,6 +10,7 @@ class catencionescolaraudiologia extends cTable {
 	var $id;
 	var $id_escolar;
 	var $id_especialista;
+	var $id_referencia;
 
 	//
 	// Table class constructor
@@ -64,6 +65,14 @@ class catencionescolaraudiologia extends cTable {
 		$this->id_especialista->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_especialista->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_especialista'] = &$this->id_especialista;
+
+		// id_referencia
+		$this->id_referencia = new cField('atencionescolaraudiologia', 'atencionescolaraudiologia', 'x_id_referencia', 'id_referencia', '`id_referencia`', '`id_referencia`', 3, -1, FALSE, '`id_referencia`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->id_referencia->Sortable = TRUE; // Allow sort
+		$this->id_referencia->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->id_referencia->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->id_referencia->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['id_referencia'] = &$this->id_referencia;
 	}
 
 	// Field Visibility
@@ -675,6 +684,7 @@ class catencionescolaraudiologia extends cTable {
 		$this->id->setDbValue($rs->fields('id'));
 		$this->id_escolar->setDbValue($rs->fields('id_escolar'));
 		$this->id_especialista->setDbValue($rs->fields('id_especialista'));
+		$this->id_referencia->setDbValue($rs->fields('id_referencia'));
 	}
 
 	// Render list row values
@@ -688,6 +698,7 @@ class catencionescolaraudiologia extends cTable {
 		// id
 		// id_escolar
 		// id_especialista
+		// id_referencia
 		// id
 
 		$this->id->ViewValue = $this->id->CurrentValue;
@@ -752,6 +763,30 @@ class catencionescolaraudiologia extends cTable {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		if (strval($this->id_referencia->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_referencia->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `referencia`";
+		$sWhereWrk = "";
+		$this->id_referencia->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$arwrk[2] = $rswrk->fields('Disp2Fld');
+				$this->id_referencia->ViewValue = $this->id_referencia->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+			}
+		} else {
+			$this->id_referencia->ViewValue = NULL;
+		}
+		$this->id_referencia->ViewCustomAttributes = "";
+
 		// id
 		$this->id->LinkCustomAttributes = "";
 		$this->id->HrefValue = "";
@@ -766,6 +801,11 @@ class catencionescolaraudiologia extends cTable {
 		$this->id_especialista->LinkCustomAttributes = "";
 		$this->id_especialista->HrefValue = "";
 		$this->id_especialista->TooltipValue = "";
+
+		// id_referencia
+		$this->id_referencia->LinkCustomAttributes = "";
+		$this->id_referencia->HrefValue = "";
+		$this->id_referencia->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -794,6 +834,9 @@ class catencionescolaraudiologia extends cTable {
 		// id_especialista
 		$this->id_especialista->EditAttrs["class"] = "form-control";
 		$this->id_especialista->EditCustomAttributes = "";
+
+		// id_referencia
+		$this->id_referencia->EditCustomAttributes = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -825,10 +868,12 @@ class catencionescolaraudiologia extends cTable {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
 					if ($this->id_escolar->Exportable) $Doc->ExportCaption($this->id_escolar);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
 					if ($this->id_escolar->Exportable) $Doc->ExportCaption($this->id_escolar);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				}
 				$Doc->EndExportRow();
 			}
@@ -863,10 +908,12 @@ class catencionescolaraudiologia extends cTable {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
 						if ($this->id_escolar->Exportable) $Doc->ExportField($this->id_escolar);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					} else {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
 						if ($this->id_escolar->Exportable) $Doc->ExportField($this->id_escolar);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}

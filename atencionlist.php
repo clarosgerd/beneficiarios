@@ -415,6 +415,7 @@ class catencion_list extends catencion {
 		$this->id_otros->SetVisibility();
 		$this->id_escolar->SetVisibility();
 		$this->id_especialista->SetVisibility();
+		$this->id_referencia->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -699,6 +700,7 @@ class catencion_list extends catencion {
 			$this->UpdateSort($this->id_otros, $bCtrl); // id_otros
 			$this->UpdateSort($this->id_escolar, $bCtrl); // id_escolar
 			$this->UpdateSort($this->id_especialista, $bCtrl); // id_especialista
+			$this->UpdateSort($this->id_referencia, $bCtrl); // id_referencia
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -733,6 +735,7 @@ class catencion_list extends catencion {
 				$this->id_otros->setSort("");
 				$this->id_escolar->setSort("");
 				$this->id_especialista->setSort("");
+				$this->id_referencia->setSort("");
 			}
 
 			// Reset start position
@@ -1171,6 +1174,7 @@ class catencion_list extends catencion {
 		} else {
 			$this->id_especialista->VirtualValue = ""; // Clear value
 		}
+		$this->id_referencia->setDbValue($row['id_referencia']);
 	}
 
 	// Return a row with default values
@@ -1181,6 +1185,7 @@ class catencion_list extends catencion {
 		$row['id_otros'] = NULL;
 		$row['id_escolar'] = NULL;
 		$row['id_especialista'] = NULL;
+		$row['id_referencia'] = NULL;
 		return $row;
 	}
 
@@ -1194,6 +1199,7 @@ class catencion_list extends catencion {
 		$this->id_otros->DbValue = $row['id_otros'];
 		$this->id_escolar->DbValue = $row['id_escolar'];
 		$this->id_especialista->DbValue = $row['id_especialista'];
+		$this->id_referencia->DbValue = $row['id_referencia'];
 	}
 
 	// Load old record
@@ -1239,6 +1245,7 @@ class catencion_list extends catencion {
 		// id_otros
 		// id_escolar
 		// id_especialista
+		// id_referencia
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -1337,6 +1344,10 @@ class catencion_list extends catencion {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+		$this->id_referencia->ViewCustomAttributes = "";
+
 			// id
 			$this->id->LinkCustomAttributes = "";
 			$this->id->HrefValue = "";
@@ -1361,6 +1372,11 @@ class catencion_list extends catencion {
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
 			$this->id_especialista->TooltipValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
+			$this->id_referencia->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1737,6 +1753,15 @@ $atencion_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
+<?php if ($atencion->id_referencia->Visible) { // id_referencia ?>
+	<?php if ($atencion->SortUrl($atencion->id_referencia) == "") { ?>
+		<th data-name="id_referencia" class="<?php echo $atencion->id_referencia->HeaderCellClass() ?>"><div id="elh_atencion_id_referencia" class="atencion_id_referencia"><div class="ewTableHeaderCaption"><?php echo $atencion->id_referencia->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="id_referencia" class="<?php echo $atencion->id_referencia->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $atencion->SortUrl($atencion->id_referencia) ?>',2);"><div id="elh_atencion_id_referencia" class="atencion_id_referencia">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $atencion->id_referencia->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($atencion->id_referencia->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($atencion->id_referencia->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
 <?php
 
 // Render list options (header, right)
@@ -1839,6 +1864,14 @@ $atencion_list->ListOptions->Render("body", "left", $atencion_list->RowCnt);
 <span id="el<?php echo $atencion_list->RowCnt ?>_atencion_id_especialista" class="atencion_id_especialista">
 <span<?php echo $atencion->id_especialista->ViewAttributes() ?>>
 <?php echo $atencion->id_especialista->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($atencion->id_referencia->Visible) { // id_referencia ?>
+		<td data-name="id_referencia"<?php echo $atencion->id_referencia->CellAttributes() ?>>
+<span id="el<?php echo $atencion_list->RowCnt ?>_atencion_id_referencia" class="atencion_id_referencia">
+<span<?php echo $atencion->id_referencia->ViewAttributes() ?>>
+<?php echo $atencion->id_referencia->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

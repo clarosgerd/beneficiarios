@@ -759,6 +759,10 @@ class cviewestudiante_list extends cviewestudiante {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "fviewestudiantelistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->departamento->AdvancedSearch->ToJson(), ","); // Field departamento
 		$sFilterList = ew_Concat($sFilterList, $this->codigorude->AdvancedSearch->ToJson(), ","); // Field codigorude
 		$sFilterList = ew_Concat($sFilterList, $this->codigorude_es->AdvancedSearch->ToJson(), ","); // Field codigorude_es

@@ -3572,8 +3572,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_sector" id="sv_sector" name="sv_sector" size="30" maxlength="100" placeholder="<?php echo $Page->sector->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->sector->SearchValue) ?>"<?php echo $Page->sector->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_tipoactividad" class="ewCell form-group">
 	<label for="sv_tipoactividad" class="ewSearchCaption ewLabel"><?php echo $Page->tipoactividad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_tipoactividad" id="so_tipoactividad" value="LIKE"></span>
@@ -3582,8 +3580,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_tipoactividad" id="sv_tipoactividad" name="sv_tipoactividad" size="30" maxlength="100" placeholder="<?php echo $Page->tipoactividad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->tipoactividad->SearchValue) ?>"<?php echo $Page->tipoactividad->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_organizador" class="ewCell form-group">
 	<label for="sv_organizador" class="ewSearchCaption ewLabel"><?php echo $Page->organizador->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_organizador" id="so_organizador" value="="></span>
@@ -3592,8 +3588,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_organizador" id="sv_organizador" name="sv_organizador" size="30" placeholder="<?php echo $Page->organizador->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->organizador->SearchValue) ?>"<?php echo $Page->organizador->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_4" class="ewRow">
 <div id="c_nombreactividad" class="ewCell form-group">
 	<label for="sv_nombreactividad" class="ewSearchCaption ewLabel"><?php echo $Page->nombreactividad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreactividad" id="so_nombreactividad" value="LIKE"></span>
@@ -3603,7 +3597,7 @@ if (!$Page->DrillDownInPanel) {
 </span>
 </div>
 </div>
-<div id="r_5" class="ewRow">
+<div id="r_2" class="ewRow">
 <div id="c_fecha_inicio" class="ewCell form-group">
 	<label for="sv_fecha_inicio" class="ewSearchCaption ewLabel"><?php echo $Page->fecha_inicio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fecha_inicio" id="so_fecha_inicio" value="="></span>
@@ -3612,8 +3606,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_fecha_inicio" id="sv_fecha_inicio" name="sv_fecha_inicio" placeholder="<?php echo $Page->fecha_inicio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_inicio->SearchValue) ?>"<?php echo $Page->fecha_inicio->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_6" class="ewRow">
 <div id="c_fecha_fin" class="ewCell form-group">
 	<label for="sv_fecha_fin" class="ewSearchCaption ewLabel"><?php echo $Page->fecha_fin->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fecha_fin" id="so_fecha_fin" value="="></span>
@@ -3622,8 +3614,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_fecha_fin" id="sv_fecha_fin" name="sv_fecha_fin" placeholder="<?php echo $Page->fecha_fin->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_fin->SearchValue) ?>"<?php echo $Page->fecha_fin->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_7" class="ewRow">
 <div id="c_contenido" class="ewCell form-group">
 	<label for="sv_contenido" class="ewSearchCaption ewLabel"><?php echo $Page->contenido->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_contenido" id="so_contenido" value="LIKE"></span>
@@ -3632,8 +3622,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_contenido" id="sv_contenido" name="sv_contenido" size="30" maxlength="100" placeholder="<?php echo $Page->contenido->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->contenido->SearchValue) ?>"<?php echo $Page->contenido->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_8" class="ewRow">
 <div id="c_observaciones" class="ewCell form-group">
 	<label for="sv_observaciones" class="ewSearchCaption ewLabel"><?php echo $Page->observaciones->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_observaciones" id="so_observaciones" value="LIKE"></span>
@@ -3643,7 +3631,7 @@ if (!$Page->DrillDownInPanel) {
 </span>
 </div>
 </div>
-<div id="r_9" class="ewRow">
+<div id="r_3" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>

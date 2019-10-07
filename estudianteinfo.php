@@ -26,6 +26,9 @@ class cestudiante extends cTable {
 	var $tipodiscapacidad;
 	var $observaciones;
 	var $id_centro;
+	var $gestion;
+	var $esincritoespecial;
+	var $fecha;
 
 	//
 	// Table class constructor
@@ -145,8 +148,10 @@ class cestudiante extends cTable {
 		$this->fields['sexo'] = &$this->sexo;
 
 		// curso
-		$this->curso = new cField('estudiante', 'estudiante', 'x_curso', 'curso', '`curso`', '`curso`', 200, -1, FALSE, '`curso`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->curso = new cField('estudiante', 'estudiante', 'x_curso', 'curso', '`curso`', '`curso`', 3, -1, FALSE, '`curso`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
 		$this->curso->Sortable = TRUE; // Allow sort
+		$this->curso->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->curso->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->fields['curso'] = &$this->curso;
 
 		// discapacidad
@@ -167,10 +172,35 @@ class cestudiante extends cTable {
 		$this->fields['observaciones'] = &$this->observaciones;
 
 		// id_centro
-		$this->id_centro = new cField('estudiante', 'estudiante', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->id_centro = new cField('estudiante', 'estudiante', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
 		$this->id_centro->Sortable = FALSE; // Allow sort
+		$this->id_centro->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->id_centro->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_centro->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_centro'] = &$this->id_centro;
+
+		// gestion
+		$this->gestion = new cField('estudiante', 'estudiante', 'x_gestion', 'gestion', '`gestion`', '`gestion`', 3, -1, FALSE, '`gestion`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->gestion->Sortable = FALSE; // Allow sort
+		$this->gestion->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->gestion->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->gestion->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['gestion'] = &$this->gestion;
+
+		// esincritoespecial
+		$this->esincritoespecial = new cField('estudiante', 'estudiante', 'x_esincritoespecial', 'esincritoespecial', '`esincritoespecial`', '`esincritoespecial`', 3, -1, FALSE, '`esincritoespecial`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->esincritoespecial->Sortable = FALSE; // Allow sort
+		$this->esincritoespecial->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->esincritoespecial->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->esincritoespecial->OptionCount = 2;
+		$this->esincritoespecial->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['esincritoespecial'] = &$this->esincritoespecial;
+
+		// fecha
+		$this->fecha = new cField('estudiante', 'estudiante', 'x_fecha', 'fecha', '`fecha`', ew_CastDateFieldForLike('`fecha`', 0, "DB"), 133, 0, FALSE, '`fecha`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EW_DATE_FORMAT"], $Language->Phrase("IncorrectDate"));
+		$this->fields['fecha'] = &$this->fecha;
 	}
 
 	// Field Visibility
@@ -728,6 +758,9 @@ class cestudiante extends cTable {
 		$this->tipodiscapacidad->setDbValue($rs->fields('tipodiscapacidad'));
 		$this->observaciones->setDbValue($rs->fields('observaciones'));
 		$this->id_centro->setDbValue($rs->fields('id_centro'));
+		$this->gestion->setDbValue($rs->fields('gestion'));
+		$this->esincritoespecial->setDbValue($rs->fields('esincritoespecial'));
+		$this->fecha->setDbValue($rs->fields('fecha'));
 	}
 
 	// Render list row values
@@ -763,7 +796,15 @@ class cestudiante extends cTable {
 
 		$this->id_centro->CellCssStyle = "white-space: nowrap;";
 
+		// gestion
+		$this->gestion->CellCssStyle = "white-space: nowrap;";
+
+		// esincritoespecial
+		$this->esincritoespecial->CellCssStyle = "white-space: nowrap;";
+
+		// fecha
 		// id
+
 		$this->id->ViewValue = $this->id->CurrentValue;
 		$this->id->ViewCustomAttributes = "";
 
@@ -901,7 +942,26 @@ class cestudiante extends cTable {
 		$this->sexo->ViewCustomAttributes = "";
 
 		// curso
-		$this->curso->ViewValue = $this->curso->CurrentValue;
+		if (strval($this->curso->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->curso->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `curso` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `curso`";
+		$sWhereWrk = "";
+		$this->curso->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->curso, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->curso->ViewValue = $this->curso->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->curso->ViewValue = $this->curso->CurrentValue;
+			}
+		} else {
+			$this->curso->ViewValue = NULL;
+		}
 		$this->curso->ViewCustomAttributes = "";
 
 		// discapacidad
@@ -956,8 +1016,63 @@ class cestudiante extends cTable {
 		$this->observaciones->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
+
+		// gestion
+		if (strval($this->gestion->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->gestion->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `id` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `gestion`";
+		$sWhereWrk = "";
+		$this->gestion->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->gestion, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->gestion->ViewValue = $this->gestion->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->gestion->ViewValue = $this->gestion->CurrentValue;
+			}
+		} else {
+			$this->gestion->ViewValue = NULL;
+		}
+		$this->gestion->ViewCustomAttributes = "";
+
+		// esincritoespecial
+		if (strval($this->esincritoespecial->CurrentValue) <> "") {
+			$this->esincritoespecial->ViewValue = $this->esincritoespecial->OptionCaption($this->esincritoespecial->CurrentValue);
+		} else {
+			$this->esincritoespecial->ViewValue = NULL;
+		}
+		$this->esincritoespecial->ViewCustomAttributes = "";
+
+		// fecha
+		$this->fecha->ViewValue = $this->fecha->CurrentValue;
+		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
+		$this->fecha->ViewCustomAttributes = "";
 
 		// id
 		$this->id->LinkCustomAttributes = "";
@@ -1054,6 +1169,21 @@ class cestudiante extends cTable {
 		$this->id_centro->HrefValue = "";
 		$this->id_centro->TooltipValue = "";
 
+		// gestion
+		$this->gestion->LinkCustomAttributes = "";
+		$this->gestion->HrefValue = "";
+		$this->gestion->TooltipValue = "";
+
+		// esincritoespecial
+		$this->esincritoespecial->LinkCustomAttributes = "";
+		$this->esincritoespecial->HrefValue = "";
+		$this->esincritoespecial->TooltipValue = "";
+
+		// fecha
+		$this->fecha->LinkCustomAttributes = "";
+		$this->fecha->HrefValue = "";
+		$this->fecha->TooltipValue = "";
+
 		// Call Row Rendered event
 		$this->Row_Rendered();
 
@@ -1146,8 +1276,6 @@ class cestudiante extends cTable {
 		// curso
 		$this->curso->EditAttrs["class"] = "form-control";
 		$this->curso->EditCustomAttributes = "";
-		$this->curso->EditValue = $this->curso->CurrentValue;
-		$this->curso->PlaceHolder = ew_RemoveHtml($this->curso->FldCaption());
 
 		// discapacidad
 		$this->discapacidad->EditAttrs["class"] = "form-control";
@@ -1168,8 +1296,21 @@ class cestudiante extends cTable {
 		// id_centro
 		$this->id_centro->EditAttrs["class"] = "form-control";
 		$this->id_centro->EditCustomAttributes = "";
-		$this->id_centro->EditValue = $this->id_centro->CurrentValue;
-		$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
+
+		// gestion
+		$this->gestion->EditAttrs["class"] = "form-control";
+		$this->gestion->EditCustomAttributes = "";
+
+		// esincritoespecial
+		$this->esincritoespecial->EditAttrs["class"] = "form-control";
+		$this->esincritoespecial->EditCustomAttributes = "";
+		$this->esincritoespecial->EditValue = $this->esincritoespecial->Options(TRUE);
+
+		// fecha
+		$this->fecha->EditAttrs["class"] = "form-control";
+		$this->fecha->EditCustomAttributes = "";
+		$this->fecha->EditValue = ew_FormatDateTime($this->fecha->CurrentValue, 8);
+		$this->fecha->PlaceHolder = ew_RemoveHtml($this->fecha->FldCaption());
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -1215,6 +1356,7 @@ class cestudiante extends cTable {
 					if ($this->discapacidad->Exportable) $Doc->ExportCaption($this->discapacidad);
 					if ($this->tipodiscapacidad->Exportable) $Doc->ExportCaption($this->tipodiscapacidad);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
+					if ($this->fecha->Exportable) $Doc->ExportCaption($this->fecha);
 				} else {
 					if ($this->codigorude->Exportable) $Doc->ExportCaption($this->codigorude);
 					if ($this->codigorude_es->Exportable) $Doc->ExportCaption($this->codigorude_es);
@@ -1233,6 +1375,7 @@ class cestudiante extends cTable {
 					if ($this->discapacidad->Exportable) $Doc->ExportCaption($this->discapacidad);
 					if ($this->tipodiscapacidad->Exportable) $Doc->ExportCaption($this->tipodiscapacidad);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
+					if ($this->fecha->Exportable) $Doc->ExportCaption($this->fecha);
 				}
 				$Doc->EndExportRow();
 			}
@@ -1281,6 +1424,7 @@ class cestudiante extends cTable {
 						if ($this->discapacidad->Exportable) $Doc->ExportField($this->discapacidad);
 						if ($this->tipodiscapacidad->Exportable) $Doc->ExportField($this->tipodiscapacidad);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
+						if ($this->fecha->Exportable) $Doc->ExportField($this->fecha);
 					} else {
 						if ($this->codigorude->Exportable) $Doc->ExportField($this->codigorude);
 						if ($this->codigorude_es->Exportable) $Doc->ExportField($this->codigorude_es);
@@ -1299,6 +1443,7 @@ class cestudiante extends cTable {
 						if ($this->discapacidad->Exportable) $Doc->ExportField($this->discapacidad);
 						if ($this->tipodiscapacidad->Exportable) $Doc->ExportField($this->tipodiscapacidad);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
+						if ($this->fecha->Exportable) $Doc->ExportField($this->fecha);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}
@@ -1407,6 +1552,16 @@ class cestudiante extends cTable {
 	function Row_Updated($rsold, &$rsnew) {
 
 		//echo "Row Updated";
+		$sql="SELECT COUNT(*) FROM inscripcionestudiante WHERE id_estudiante='".$rsold["id"]."' and id_gestion='".$rsnew["gestion"]."' and id_curso='".$rsnew["curso"]."'";
+	$MyCount = ew_ExecuteScalar($sql);
+	if ($MyCount==0){
+
+	// Insert record
+	// NOTE: Modify your SQL here, replace the table name, field name and field values
+
+	$sql_insert="INSERT INTO `inscripcionestudiante`(`id_estudiante`, `id_curso`, `id_gestion`) VALUES ('".$rsold["id"]."','".$rsnew["curso"]."','".$rsnew["gestion"]."')";
+	$MyResult = ew_Execute($sql_insert);
+	}
 	}
 
 	// Row Update Conflict event

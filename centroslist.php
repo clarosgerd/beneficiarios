@@ -738,6 +738,10 @@ class ccentros_list extends ccentros {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "fcentroslistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->nombreinstitucion->AdvancedSearch->ToJson(), ","); // Field nombreinstitucion
 		$sFilterList = ew_Concat($sFilterList, $this->direccion->AdvancedSearch->ToJson(), ","); // Field direccion
 		$sFilterList = ew_Concat($sFilterList, $this->telefono->AdvancedSearch->ToJson(), ","); // Field telefono

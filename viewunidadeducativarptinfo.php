@@ -18,9 +18,6 @@ class crviewunidadeducativa extends crTableBase {
 	var $direccion;
 	var $telefono;
 	var $_email;
-	var $cantidad;
-	var $sind;
-	var $cond;
 
 	//
 	// Table class constructor
@@ -108,33 +105,6 @@ class crviewunidadeducativa extends crTableBase {
 		$this->_email->SqlSelect = "";
 		$this->_email->SqlOrderBy = "";
 		$this->fields['email'] = &$this->_email;
-
-		// cantidad
-		$this->cantidad = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidad', 'cantidad', '`cantidad`', 20, EWR_DATATYPE_NUMBER, -1);
-		$this->cantidad->Sortable = TRUE; // Allow sort
-		$this->cantidad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
-		$this->cantidad->DateFilter = "";
-		$this->cantidad->SqlSelect = "";
-		$this->cantidad->SqlOrderBy = "";
-		$this->fields['cantidad'] = &$this->cantidad;
-
-		// sind
-		$this->sind = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_sind', 'sind', '`sind`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->sind->Sortable = TRUE; // Allow sort
-		$this->sind->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->sind->DateFilter = "";
-		$this->sind->SqlSelect = "";
-		$this->sind->SqlOrderBy = "";
-		$this->fields['sind'] = &$this->sind;
-
-		// cond
-		$this->cond = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cond', 'cond', '`cond`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->cond->Sortable = TRUE; // Allow sort
-		$this->cond->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->cond->DateFilter = "";
-		$this->cond->SqlSelect = "";
-		$this->cond->SqlOrderBy = "";
-		$this->fields['cond'] = &$this->cond;
 	}
 
 	// Set Field Visibility

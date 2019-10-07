@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/4" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/7" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -618,6 +618,9 @@
   <project>
     <phrase id="bodytitle" value="Inderbo" />
     <phrase id="footertext" value="&amp;copy;2018 Inderbo. All rights reserved." />
+    <menu id="10069">
+      <phrase id="menutext" value="turno" />
+    </menu>
     <menu id="10058">
       <phrase id="menutext" value="viewactividad" />
     </menu>
@@ -674,6 +677,9 @@
     </menu>
     <menu id="10">
       <phrase id="menutext" value="Especialista" />
+    </menu>
+    <menu id="10067">
+      <phrase id="menutext" value="Inscripcion Estudiante" />
     </menu>
     <menu id="28">
       <phrase id="menutext" value="Tamizaje" />
@@ -756,6 +762,12 @@
     <menu id="69">
       <phrase id="menutext" value="tipo especialidad" />
     </menu>
+    <menu id="10068">
+      <phrase id="menutext" value="gestion" />
+    </menu>
+    <menu id="10066">
+      <phrase id="menutext" value="curso" />
+    </menu>
     <menu id="53">
       <phrase id="menutext" value="Servicios de Atencion" />
     </menu>
@@ -794,6 +806,18 @@
     </menu>
     <menu id="121">
       <phrase id="menutext" value="Reportes" />
+    </menu>
+    <menu id="10070">
+      <phrase id="menutext" value="gestion" />
+    </menu>
+    <menu id="10071">
+      <phrase id="menutext" value="curso" />
+    </menu>
+    <menu id="10072">
+      <phrase id="menutext" value="turno" />
+    </menu>
+    <menu id="10073">
+      <phrase id="menutext" value="inscripcionestudiante" />
     </menu>
     <menu id="10049">
       <phrase id="menutext" value="Dashboard 1" />
@@ -1522,6 +1546,19 @@
       <field id="id_centro">
         <phrase id="fldcaption" value="CENTRO" />
       </field>
+      <field id="gestion">
+        <phrase id="fldcaption" value="GESTION" />
+      </field>
+      <field id="esincritoespecial">
+        <phrase id="fldcaption" value="esincritoespecial" />
+        <phrase id="fldtagvalue1" value="1" />
+        <phrase id="fldtagcaption1" value="si" />
+        <phrase id="fldtagvalue2" value="0" />
+        <phrase id="fldtagcaption2" value="no" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="FECHA INSCRIPCION" />
+      </field>
     </table>
     <table id="actividad">
       <phrase id="tblcaption" value="actividad" />
@@ -1859,10 +1896,10 @@
         <phrase id="fldcaption" value="password" />
       </field>
       <field id="id_rol">
-        <phrase id="fldcaption" value="id rol" />
+        <phrase id="fldcaption" value="rol" />
       </field>
       <field id="id_centro">
-        <phrase id="fldcaption" value="id centro" />
+        <phrase id="fldcaption" value="centro" />
       </field>
       <field id="ci">
         <phrase id="fldcaption" value="ci" />
@@ -1972,6 +2009,9 @@
       <field id="id_especialista">
         <phrase id="fldcaption" value="ESPECIALISTA" />
       </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="id referencia" />
+      </field>
     </table>
     <table id="ticket_php">
       <phrase id="tblcaption" value="ticket" />
@@ -2063,6 +2103,9 @@
       <field id="id_especialista">
         <phrase id="fldcaption" value="ESPECIALISTA" />
       </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="REFERENCIA" />
+      </field>
     </table>
     <table id="atencionotrosaudiologia">
       <phrase id="tblcaption" value="ATENCION OTROS" />
@@ -2075,6 +2118,9 @@
       <field id="id_especialista">
         <phrase id="fldcaption" value="ESPECIALISTA" />
       </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="REFERENCIA" />
+      </field>
     </table>
     <table id="atencionescolaraudiologia">
       <phrase id="tblcaption" value="ATENCION ESCOLAR" />
@@ -2086,6 +2132,9 @@
       </field>
       <field id="id_especialista">
         <phrase id="fldcaption" value="ESPECIALISTA" />
+      </field>
+      <field id="id_referencia">
+        <phrase id="fldcaption" value="REFERENCIA" />
       </field>
     </table>
     <table id="pruebasaudiologia">
@@ -2236,9 +2285,6 @@
         <phrase id="fldtagvalue2" value="MASCULINO" />
         <phrase id="fldtagcaption2" value="MASCULINO" />
       </field>
-      <field id="curso">
-        <phrase id="fldcaption" value="CURSO" />
-      </field>
       <field id="discapacidad">
         <phrase id="fldcaption" value="nombre" />
       </field>
@@ -2247,6 +2293,18 @@
       </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="NOMBRE INSTITUCION" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="id_estudiante">
+        <phrase id="fldcaption" value="id estudiante" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
       </field>
     </table>
     <table id="viewactividad">
@@ -2401,8 +2459,8 @@
     </table>
     <table id="viewestudiantesetareo">
       <phrase id="tblcaption" value="viewestudiantesetareo" />
-      <field id="nombreinstitucion">
-        <phrase id="fldcaption" value="nombreinstitucion" />
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
       </field>
       <field id="_0_3f">
         <phrase id="fldcaption" value="0 3F" />
@@ -2446,6 +2504,9 @@
       <field id="_19m">
         <phrase id="fldcaption" value="19M" />
       </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
     </table>
     <table id="viewestudiantesetareocurso">
       <phrase id="tblcaption" value="viewestudiantesetareocurso" />
@@ -2464,14 +2525,41 @@
     </table>
     <table id="viewmarcologico">
       <phrase id="tblcaption" value="viewmarcologico" />
-      <field id="edad">
-        <phrase id="fldcaption" value="edad" />
-      </field>
-      <field id="etareo">
-        <phrase id="fldcaption" value="etareo" />
-      </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="cuadro1">
+        <phrase id="fldcaption" value="cuadro 1" />
+      </field>
+      <field id="cuadro2">
+        <phrase id="fldcaption" value="cuadro 2" />
+      </field>
+      <field id="cuadro3">
+        <phrase id="fldcaption" value="cuadro 3" />
+      </field>
+      <field id="cuadro4">
+        <phrase id="fldcaption" value="cuadro 4" />
+      </field>
+      <field id="cuadro5">
+        <phrase id="fldcaption" value="cuadro 5" />
+      </field>
+      <field id="cuadro6">
+        <phrase id="fldcaption" value="cuadro 6" />
+      </field>
+      <field id="cuadro7">
+        <phrase id="fldcaption" value="cuadro 7" />
+      </field>
+      <field id="cuadro8">
+        <phrase id="fldcaption" value="cuadro 8" />
+      </field>
+      <field id="cuadro9">
+        <phrase id="fldcaption" value="cuadro 9" />
+      </field>
+      <field id="cuadro10">
+        <phrase id="fldcaption" value="cuadro 10" />
       </field>
     </table>
     <table id="viewparticipante">
@@ -2560,14 +2648,47 @@
       <field id="_email">
         <phrase id="fldcaption" value="email" />
       </field>
-      <field id="cantidad">
-        <phrase id="fldcaption" value="cantidad" />
+    </table>
+    <table id="curso">
+      <phrase id="tblcaption" value="curso" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
       </field>
-      <field id="sind">
-        <phrase id="fldcaption" value="sind" />
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
       </field>
-      <field id="cond">
-        <phrase id="fldcaption" value="cond" />
+    </table>
+    <table id="gestion">
+      <phrase id="tblcaption" value="gestion" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+    </table>
+    <table id="inscripcionestudiante">
+      <phrase id="tblcaption" value="Inscripcion Estudiante" />
+      <field id="id_estudiante">
+        <phrase id="fldcaption" value="estudiante" />
+      </field>
+      <field id="id_curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="id_gestion">
+        <phrase id="fldcaption" value="gestion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="esincritoespecial">
+        <phrase id="fldcaption" value="esincritoespecial" />
+      </field>
+    </table>
+    <table id="turno">
+      <phrase id="tblcaption" value="turno" />
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="turno">
+        <phrase id="fldcaption" value="turno" />
       </field>
     </table>
   </project>

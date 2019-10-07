@@ -83,8 +83,10 @@ class creferencia extends cTable {
 		$this->fields['telefono'] = &$this->telefono;
 
 		// id_centro
-		$this->id_centro = new cField('referencia', 'referencia', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->id_centro = new cField('referencia', 'referencia', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
 		$this->id_centro->Sortable = FALSE; // Allow sort
+		$this->id_centro->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->id_centro->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_centro->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_centro'] = &$this->id_centro;
 	}
@@ -696,7 +698,26 @@ class creferencia extends cTable {
 		$this->telefono->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 		// id
@@ -785,8 +806,6 @@ class creferencia extends cTable {
 		// id_centro
 		$this->id_centro->EditAttrs["class"] = "form-control";
 		$this->id_centro->EditCustomAttributes = "";
-		$this->id_centro->EditValue = $this->id_centro->CurrentValue;
-		$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
 
 		// Call Row Rendered event
 		$this->Row_Rendered();

@@ -666,10 +666,6 @@ class cusuario_list extends cusuario {
 			$sFilter = "(0=1)"; // Filter all records
 		ew_AddFilter($sFilter, $this->DbDetailFilter);
 		ew_AddFilter($sFilter, $this->SearchWhere);
-		if ($sFilter == "") {
-			$sFilter = "0=101";
-			$this->SearchWhere = $sFilter;
-		}
 
 		// Set up filter
 		if ($this->Command == "json") {
@@ -738,6 +734,10 @@ class cusuario_list extends cusuario {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "fusuariolistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->nombre->AdvancedSearch->ToJson(), ","); // Field nombre
 		$sFilterList = ew_Concat($sFilterList, $this->_login->AdvancedSearch->ToJson(), ","); // Field login
 		$sFilterList = ew_Concat($sFilterList, $this->password->AdvancedSearch->ToJson(), ","); // Field password
@@ -1341,7 +1341,7 @@ class cusuario_list extends cusuario {
 
 		// Show all button
 		$item = &$this->SearchOptions->Add("showall");
-		$item->Body = "<a class=\"btn btn-default ewShowAll\" title=\"" . $Language->Phrase("ResetSearch") . "\" data-caption=\"" . $Language->Phrase("ResetSearch") . "\" href=\"" . $this->PageUrl() . "cmd=reset\">" . $Language->Phrase("ResetSearchBtn") . "</a>";
+		$item->Body = "<a class=\"btn btn-default ewShowAll\" title=\"" . $Language->Phrase("ShowAll") . "\" data-caption=\"" . $Language->Phrase("ShowAll") . "\" href=\"" . $this->PageUrl() . "cmd=reset\">" . $Language->Phrase("ShowAllBtn") . "</a>";
 		$item->Visible = ($this->SearchWhere <> $this->DefaultSearchWhere && $this->SearchWhere <> "0=101");
 
 		// Button group for search
@@ -1599,7 +1599,26 @@ class cusuario_list extends cusuario {
 		$this->id_rol->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 		// ci
@@ -1860,6 +1879,8 @@ fusuariolist.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) ?>;
 // Dynamic selection lists
 fusuariolist.Lists["x_id_rol"] = {"LinkField":"x_userlevelid","Ajax":true,"AutoFill":false,"DisplayFields":["x_userlevelname","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"userlevels"};
 fusuariolist.Lists["x_id_rol"].Data = "<?php echo $usuario_list->id_rol->LookupFilterQuery(FALSE, "list") ?>";
+fusuariolist.Lists["x_id_centro"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+fusuariolist.Lists["x_id_centro"].Data = "<?php echo $usuario_list->id_centro->LookupFilterQuery(FALSE, "list") ?>";
 
 // Form object for search
 var CurrentSearchForm = fusuariolistsrch = new ew_Form("fusuariolistsrch");

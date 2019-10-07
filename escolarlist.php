@@ -753,6 +753,10 @@ class cescolar_list extends cescolar {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "fescolarlistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->fecha->AdvancedSearch->ToJson(), ","); // Field fecha
 		$sFilterList = ew_Concat($sFilterList, $this->id_departamento->AdvancedSearch->ToJson(), ","); // Field id_departamento
 		$sFilterList = ew_Concat($sFilterList, $this->unidadeducativa->AdvancedSearch->ToJson(), ","); // Field unidadeducativa

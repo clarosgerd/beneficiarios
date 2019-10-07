@@ -810,15 +810,12 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 		$this->_email->SetVisibility();
-		$this->cantidad->SetVisibility();
-		$this->sind->SetVisibility();
-		$this->cond->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 13;
+		$nDtls = 10;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -831,7 +828,7 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -1050,9 +1047,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 				$this->FirstRowData['direccion'] = ewr_Conv($rs->fields('direccion'), 200);
 				$this->FirstRowData['telefono'] = ewr_Conv($rs->fields('telefono'), 200);
 				$this->FirstRowData['_email'] = ewr_Conv($rs->fields('email'), 200);
-				$this->FirstRowData['cantidad'] = ewr_Conv($rs->fields('cantidad'), 20);
-				$this->FirstRowData['sind'] = ewr_Conv($rs->fields('sind'), 131);
-				$this->FirstRowData['cond'] = ewr_Conv($rs->fields('cond'), 131);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -1066,9 +1060,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setDbValue($rs->fields('direccion'));
 			$this->telefono->setDbValue($rs->fields('telefono'));
 			$this->_email->setDbValue($rs->fields('email'));
-			$this->cantidad->setDbValue($rs->fields('cantidad'));
-			$this->sind->setDbValue($rs->fields('sind'));
-			$this->cond->setDbValue($rs->fields('cond'));
 			$this->Val[1] = $this->centro->CurrentValue;
 			$this->Val[2] = $this->unidadeducativa->CurrentValue;
 			$this->Val[3] = $this->codigo_sie->CurrentValue;
@@ -1078,9 +1069,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->Val[7] = $this->direccion->CurrentValue;
 			$this->Val[8] = $this->telefono->CurrentValue;
 			$this->Val[9] = $this->_email->CurrentValue;
-			$this->Val[10] = $this->cantidad->CurrentValue;
-			$this->Val[11] = $this->sind->CurrentValue;
-			$this->Val[12] = $this->cond->CurrentValue;
 		} else {
 			$this->centro->setDbValue("");
 			$this->unidadeducativa->setDbValue("");
@@ -1091,9 +1079,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setDbValue("");
 			$this->telefono->setDbValue("");
 			$this->_email->setDbValue("");
-			$this->cantidad->setDbValue("");
-			$this->sind->setDbValue("");
-			$this->cond->setDbValue("");
 		}
 	}
 
@@ -1314,15 +1299,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 
 			// email
 			$this->_email->HrefValue = "";
-
-			// cantidad
-			$this->cantidad->HrefValue = "";
-
-			// sind
-			$this->sind->HrefValue = "";
-
-			// cond
-			$this->cond->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1364,18 +1340,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->_email->ViewValue = $this->_email->CurrentValue;
 			$this->_email->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// cantidad
-			$this->cantidad->ViewValue = $this->cantidad->CurrentValue;
-			$this->cantidad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// sind
-			$this->sind->ViewValue = $this->sind->CurrentValue;
-			$this->sind->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// cond
-			$this->cond->ViewValue = $this->cond->CurrentValue;
-			$this->cond->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// centro
 			$this->centro->HrefValue = "";
 
@@ -1402,15 +1366,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 
 			// email
 			$this->_email->HrefValue = "";
-
-			// cantidad
-			$this->cantidad->HrefValue = "";
-
-			// sind
-			$this->sind->HrefValue = "";
-
-			// cond
-			$this->cond->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1497,33 +1452,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$HrefValue = &$this->_email->HrefValue;
 			$LinkAttrs = &$this->_email->LinkAttrs;
 			$this->Cell_Rendered($this->_email, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// cantidad
-			$CurrentValue = $this->cantidad->CurrentValue;
-			$ViewValue = &$this->cantidad->ViewValue;
-			$ViewAttrs = &$this->cantidad->ViewAttrs;
-			$CellAttrs = &$this->cantidad->CellAttrs;
-			$HrefValue = &$this->cantidad->HrefValue;
-			$LinkAttrs = &$this->cantidad->LinkAttrs;
-			$this->Cell_Rendered($this->cantidad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// sind
-			$CurrentValue = $this->sind->CurrentValue;
-			$ViewValue = &$this->sind->ViewValue;
-			$ViewAttrs = &$this->sind->ViewAttrs;
-			$CellAttrs = &$this->sind->CellAttrs;
-			$HrefValue = &$this->sind->HrefValue;
-			$LinkAttrs = &$this->sind->LinkAttrs;
-			$this->Cell_Rendered($this->sind, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// cond
-			$CurrentValue = $this->cond->CurrentValue;
-			$ViewValue = &$this->cond->ViewValue;
-			$ViewAttrs = &$this->cond->ViewAttrs;
-			$CellAttrs = &$this->cond->CellAttrs;
-			$HrefValue = &$this->cond->HrefValue;
-			$LinkAttrs = &$this->cond->LinkAttrs;
-			$this->Cell_Rendered($this->cond, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1545,9 +1473,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		if ($this->direccion->Visible) $this->DtlColumnCount += 1;
 		if ($this->telefono->Visible) $this->DtlColumnCount += 1;
 		if ($this->_email->Visible) $this->DtlColumnCount += 1;
-		if ($this->cantidad->Visible) $this->DtlColumnCount += 1;
-		if ($this->sind->Visible) $this->DtlColumnCount += 1;
-		if ($this->cond->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -2291,9 +2216,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setSort("");
 			$this->telefono->setSort("");
 			$this->_email->setSort("");
-			$this->cantidad->setSort("");
-			$this->sind->setSort("");
-			$this->cond->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -2308,9 +2230,6 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->UpdateSort($this->direccion); // direccion
 			$this->UpdateSort($this->telefono); // telefono
 			$this->UpdateSort($this->_email); // email
-			$this->UpdateSort($this->cantidad); // cantidad
-			$this->UpdateSort($this->sind); // sind
-			$this->UpdateSort($this->cond); // cond
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
@@ -2624,8 +2543,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewunidadeducativa" data-field="x_centro" id="sv_centro" name="sv_centro" size="30" maxlength="100" placeholder="<?php echo $Page->centro->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->centro->SearchValue) ?>"<?php echo $Page->centro->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_unidadeducativa" class="ewCell form-group">
 	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
@@ -2634,8 +2551,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewunidadeducativa" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_codigo_sie" class="ewCell form-group">
 	<label for="sv_codigo_sie" class="ewSearchCaption ewLabel"><?php echo $Page->codigo_sie->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_codigo_sie" id="so_codigo_sie" value="LIKE"></span>
@@ -2644,8 +2559,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewunidadeducativa" data-field="x_codigo_sie" id="sv_codigo_sie" name="sv_codigo_sie" size="30" maxlength="100" placeholder="<?php echo $Page->codigo_sie->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->codigo_sie->SearchValue) ?>"<?php echo $Page->codigo_sie->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_4" class="ewRow">
 <div id="c_departamento" class="ewCell form-group">
 	<label for="sv_departamento" class="ewSearchCaption ewLabel"><?php echo $Page->departamento->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_departamento" id="so_departamento" value="LIKE"></span>
@@ -2655,7 +2568,7 @@ if (!$Page->DrillDownInPanel) {
 </span>
 </div>
 </div>
-<div id="r_5" class="ewRow">
+<div id="r_2" class="ewRow">
 <div id="c_municipio" class="ewCell form-group">
 	<label for="sv_municipio" class="ewSearchCaption ewLabel"><?php echo $Page->municipio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_municipio" id="so_municipio" value="LIKE"></span>
@@ -2885,60 +2798,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->cantidad->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="cantidad"><div class="viewunidadeducativa_cantidad"><span class="ewTableHeaderCaption"><?php echo $Page->cantidad->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="cantidad">
-<?php if ($Page->SortUrl($Page->cantidad) == "") { ?>
-		<div class="ewTableHeaderBtn viewunidadeducativa_cantidad">
-			<span class="ewTableHeaderCaption"><?php echo $Page->cantidad->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidad) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->cantidad->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->cantidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->sind->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="sind"><div class="viewunidadeducativa_sind"><span class="ewTableHeaderCaption"><?php echo $Page->sind->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="sind">
-<?php if ($Page->SortUrl($Page->sind) == "") { ?>
-		<div class="ewTableHeaderBtn viewunidadeducativa_sind">
-			<span class="ewTableHeaderCaption"><?php echo $Page->sind->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_sind" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sind) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->sind->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->sind->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->sind->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->cond->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="cond"><div class="viewunidadeducativa_cond"><span class="ewTableHeaderCaption"><?php echo $Page->cond->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="cond">
-<?php if ($Page->SortUrl($Page->cond) == "") { ?>
-		<div class="ewTableHeaderBtn viewunidadeducativa_cond">
-			<span class="ewTableHeaderCaption"><?php echo $Page->cond->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cond" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cond) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->cond->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->cond->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cond->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -2992,18 +2851,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->_email->Visible) { ?>
 		<td data-field="_email"<?php echo $Page->_email->CellAttributes() ?>>
 <span<?php echo $Page->_email->ViewAttributes() ?>><?php echo $Page->_email->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->cantidad->Visible) { ?>
-		<td data-field="cantidad"<?php echo $Page->cantidad->CellAttributes() ?>>
-<span<?php echo $Page->cantidad->ViewAttributes() ?>><?php echo $Page->cantidad->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->sind->Visible) { ?>
-		<td data-field="sind"<?php echo $Page->sind->CellAttributes() ?>>
-<span<?php echo $Page->sind->ViewAttributes() ?>><?php echo $Page->sind->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->cond->Visible) { ?>
-		<td data-field="cond"<?php echo $Page->cond->CellAttributes() ?>>
-<span<?php echo $Page->cond->ViewAttributes() ?>><?php echo $Page->cond->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

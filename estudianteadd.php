@@ -581,6 +581,11 @@ class cestudiante_add extends cestudiante {
 		$this->observaciones->CurrentValue = NULL;
 		$this->observaciones->OldValue = $this->observaciones->CurrentValue;
 		$this->id_centro->CurrentValue = SESSION["centro"];
+		$this->gestion->CurrentValue = NULL;
+		$this->gestion->OldValue = $this->gestion->CurrentValue;
+		$this->esincritoespecial->CurrentValue = 1;
+		$this->fecha->CurrentValue = NULL;
+		$this->fecha->OldValue = $this->fecha->CurrentValue;
 	}
 
 	// Load form values
@@ -721,6 +726,9 @@ class cestudiante_add extends cestudiante {
 		$this->tipodiscapacidad->setDbValue($row['tipodiscapacidad']);
 		$this->observaciones->setDbValue($row['observaciones']);
 		$this->id_centro->setDbValue($row['id_centro']);
+		$this->gestion->setDbValue($row['gestion']);
+		$this->esincritoespecial->setDbValue($row['esincritoespecial']);
+		$this->fecha->setDbValue($row['fecha']);
 	}
 
 	// Return a row with default values
@@ -746,6 +754,9 @@ class cestudiante_add extends cestudiante {
 		$row['tipodiscapacidad'] = $this->tipodiscapacidad->CurrentValue;
 		$row['observaciones'] = $this->observaciones->CurrentValue;
 		$row['id_centro'] = $this->id_centro->CurrentValue;
+		$row['gestion'] = $this->gestion->CurrentValue;
+		$row['esincritoespecial'] = $this->esincritoespecial->CurrentValue;
+		$row['fecha'] = $this->fecha->CurrentValue;
 		return $row;
 	}
 
@@ -773,6 +784,9 @@ class cestudiante_add extends cestudiante {
 		$this->tipodiscapacidad->DbValue = $row['tipodiscapacidad'];
 		$this->observaciones->DbValue = $row['observaciones'];
 		$this->id_centro->DbValue = $row['id_centro'];
+		$this->gestion->DbValue = $row['gestion'];
+		$this->esincritoespecial->DbValue = $row['esincritoespecial'];
+		$this->fecha->DbValue = $row['fecha'];
 	}
 
 	// Load old record
@@ -826,6 +840,9 @@ class cestudiante_add extends cestudiante {
 		// tipodiscapacidad
 		// observaciones
 		// id_centro
+		// gestion
+		// esincritoespecial
+		// fecha
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -963,7 +980,26 @@ class cestudiante_add extends cestudiante {
 		$this->sexo->ViewCustomAttributes = "";
 
 		// curso
-		$this->curso->ViewValue = $this->curso->CurrentValue;
+		if (strval($this->curso->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->curso->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `curso` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `curso`";
+		$sWhereWrk = "";
+		$this->curso->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->curso, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->curso->ViewValue = $this->curso->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->curso->ViewValue = $this->curso->CurrentValue;
+			}
+		} else {
+			$this->curso->ViewValue = NULL;
+		}
 		$this->curso->ViewCustomAttributes = "";
 
 		// discapacidad
@@ -1018,8 +1054,32 @@ class cestudiante_add extends cestudiante {
 		$this->observaciones->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
+
+		// fecha
+		$this->fecha->ViewValue = $this->fecha->CurrentValue;
+		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
+		$this->fecha->ViewCustomAttributes = "";
 
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
@@ -1244,8 +1304,21 @@ class cestudiante_add extends cestudiante {
 			// curso
 			$this->curso->EditAttrs["class"] = "form-control";
 			$this->curso->EditCustomAttributes = "";
-			$this->curso->EditValue = ew_HtmlEncode($this->curso->CurrentValue);
-			$this->curso->PlaceHolder = ew_RemoveHtml($this->curso->FldCaption());
+			if (trim(strval($this->curso->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->curso->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `curso` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `curso`";
+			$sWhereWrk = "";
+			$this->curso->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->curso, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->curso->EditValue = $arwrk;
 
 			// discapacidad
 			$this->discapacidad->EditAttrs["class"] = "form-control";
@@ -1301,8 +1374,21 @@ class cestudiante_add extends cestudiante {
 			// id_centro
 			$this->id_centro->EditAttrs["class"] = "form-control";
 			$this->id_centro->EditCustomAttributes = "";
-			$this->id_centro->EditValue = ew_HtmlEncode($this->id_centro->CurrentValue);
-			$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
+			if (trim(strval($this->id_centro->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sWhereWrk = "";
+			$this->id_centro->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_centro->EditValue = $arwrk;
 
 			// Add refer script
 			// codigorude
@@ -1423,9 +1509,6 @@ class cestudiante_add extends cestudiante {
 		if (!$this->id_centro->FldIsDetailKey && !is_null($this->id_centro->FormValue) && $this->id_centro->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_centro->FldCaption(), $this->id_centro->ReqErrMsg));
 		}
-		if (!ew_CheckInteger($this->id_centro->FormValue)) {
-			ew_AddMessage($gsFormError, $this->id_centro->FldErrMsg());
-		}
 
 		// Return validate result
 		$ValidateForm = ($gsFormError == "");
@@ -1490,7 +1573,7 @@ class cestudiante_add extends cestudiante {
 		$this->sexo->SetDbValueDef($rsnew, $this->sexo->CurrentValue, "", FALSE);
 
 		// curso
-		$this->curso->SetDbValueDef($rsnew, $this->curso->CurrentValue, "", FALSE);
+		$this->curso->SetDbValueDef($rsnew, $this->curso->CurrentValue, 0, FALSE);
 
 		// discapacidad
 		$this->discapacidad->SetDbValueDef($rsnew, $this->discapacidad->CurrentValue, NULL, FALSE);
@@ -1597,6 +1680,18 @@ class cestudiante_add extends cestudiante {
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
 			break;
+		case "x_curso":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `curso` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `curso`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->curso, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
 		case "x_discapacidad":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `discapacidad`";
@@ -1617,6 +1712,18 @@ class cestudiante_add extends cestudiante {
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->tipodiscapacidad, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_id_centro":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
@@ -1779,9 +1886,6 @@ festudianteadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_centro");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $estudiante->id_centro->FldCaption(), $estudiante->id_centro->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_id_centro");
-			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($estudiante->id_centro->FldErrMsg()) ?>");
 
 			// Fire Form_CustomValidate event
 			if (!this.Form_CustomValidate(fobj))
@@ -1821,11 +1925,15 @@ festudianteadd.Lists["x_unidadeducativa"] = {"LinkField":"x_id","Ajax":true,"Aut
 festudianteadd.Lists["x_unidadeducativa"].Data = "<?php echo $estudiante_add->unidadeducativa->LookupFilterQuery(FALSE, "add") ?>";
 festudianteadd.Lists["x_sexo"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 festudianteadd.Lists["x_sexo"].Options = <?php echo json_encode($estudiante_add->sexo->Options()) ?>;
+festudianteadd.Lists["x_curso"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_curso","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"curso"};
+festudianteadd.Lists["x_curso"].Data = "<?php echo $estudiante_add->curso->LookupFilterQuery(FALSE, "add") ?>";
 festudianteadd.Lists["x_discapacidad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"discapacidad"};
 festudianteadd.Lists["x_discapacidad"].Data = "<?php echo $estudiante_add->discapacidad->LookupFilterQuery(FALSE, "add") ?>";
 festudianteadd.AutoSuggests["x_discapacidad"] = <?php echo json_encode(array("data" => "ajax=autosuggest&" . $estudiante_add->discapacidad->LookupFilterQuery(TRUE, "add"))) ?>;
 festudianteadd.Lists["x_tipodiscapacidad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"tipodiscapacidad"};
 festudianteadd.Lists["x_tipodiscapacidad"].Data = "<?php echo $estudiante_add->tipodiscapacidad->LookupFilterQuery(FALSE, "add") ?>";
+festudianteadd.Lists["x_id_centro"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+festudianteadd.Lists["x_id_centro"].Data = "<?php echo $estudiante_add->id_centro->LookupFilterQuery(FALSE, "add") ?>";
 
 // Form object for search
 </script>
@@ -1995,7 +2103,9 @@ ew_CreateDateTimePicker("festudianteadd", "x_fechanacimiento", {"ignoreReadonly"
 		<label id="elh_estudiante_curso" for="x_curso" class="<?php echo $estudiante_add->LeftColumnClass ?>"><?php echo $estudiante->curso->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $estudiante_add->RightColumnClass ?>"><div<?php echo $estudiante->curso->CellAttributes() ?>>
 <span id="el_estudiante_curso">
-<input type="text" data-table="estudiante" data-field="x_curso" name="x_curso" id="x_curso" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($estudiante->curso->getPlaceHolder()) ?>" value="<?php echo $estudiante->curso->EditValue ?>"<?php echo $estudiante->curso->EditAttributes() ?>>
+<select data-table="estudiante" data-field="x_curso" data-value-separator="<?php echo $estudiante->curso->DisplayValueSeparatorAttribute() ?>" id="x_curso" name="x_curso"<?php echo $estudiante->curso->EditAttributes() ?>>
+<?php echo $estudiante->curso->SelectOptionListHtml("x_curso") ?>
+</select>
 </span>
 <?php echo $estudiante->curso->CustomMsg ?></div></div>
 	</div>
@@ -2048,7 +2158,9 @@ festudianteadd.CreateAutoSuggest({"id":"x_discapacidad","forceSelect":false});
 		<label id="elh_estudiante_id_centro" for="x_id_centro" class="<?php echo $estudiante_add->LeftColumnClass ?>"><?php echo $estudiante->id_centro->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $estudiante_add->RightColumnClass ?>"><div<?php echo $estudiante->id_centro->CellAttributes() ?>>
 <span id="el_estudiante_id_centro">
-<input type="text" data-table="estudiante" data-field="x_id_centro" name="x_id_centro" id="x_id_centro" size="30" placeholder="<?php echo ew_HtmlEncode($estudiante->id_centro->getPlaceHolder()) ?>" value="<?php echo $estudiante->id_centro->EditValue ?>"<?php echo $estudiante->id_centro->EditAttributes() ?>>
+<select data-table="estudiante" data-field="x_id_centro" data-value-separator="<?php echo $estudiante->id_centro->DisplayValueSeparatorAttribute() ?>" id="x_id_centro" name="x_id_centro"<?php echo $estudiante->id_centro->EditAttributes() ?>>
+<?php echo $estudiante->id_centro->SelectOptionListHtml("x_id_centro") ?>
+</select>
 </span>
 <?php echo $estudiante->id_centro->CustomMsg ?></div></div>
 	</div>

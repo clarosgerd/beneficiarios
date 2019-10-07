@@ -4317,7 +4317,7 @@ class cAdvancedSecurity {
 			$this->setSessionParentUserID($parentUserID);
 		if (!is_null($userLevel)) {
 			$this->setSessionUserLevelID(intval($userLevel));
-			$this->SetupUserLevel();
+			SetupUserLevel();
 		}
 	}
 
@@ -6934,9 +6934,9 @@ function ew_ExtractScript(&$html, $class = "") {
 }
 
 // Include PHPMailer class
-include_once $EW_RELATIVE_PATH . "phpmailer605/src/PHPMailer.php";
-include_once $EW_RELATIVE_PATH . "phpmailer605/src/SMTP.php";
-include_once $EW_RELATIVE_PATH . "phpmailer605/src/Exception.php";
+include_once $EW_RELATIVE_PATH . "phpmailer603/src/PHPMailer.php";
+include_once $EW_RELATIVE_PATH . "phpmailer603/src/SMTP.php";
+include_once $EW_RELATIVE_PATH . "phpmailer603/src/Exception.php";
 
 // Function to send email
 function ew_SendEmail($sFrEmail, $sToEmail, $sCcEmail, $sBccEmail, $sSubject, $sMail, $sFormat, $sCharset, $sSmtpSecure = "", $arAttachments = array(), $arImages = array(), $arProperties = NULL) {
@@ -6951,7 +6951,7 @@ function ew_SendEmail($sFrEmail, $sToEmail, $sCcEmail, $sBccEmail, $sSubject, $s
 	$mail->Port = EW_SMTP_SERVER_PORT;
 	if (EW_DEBUG_ENABLED) {
 		$mail->SMTPDebug = 2;
-		$mail->Debugoutput = "ew_SetDebugMsg";
+		$mail->Debugoutput = ew_SetDebugMsg;
 	}
 	if ($sSmtpSecure <> "") {
 		$mail->SMTPSecure = $sSmtpSecure;

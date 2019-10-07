@@ -739,7 +739,26 @@ class creferencia_add extends creferencia {
 		$this->telefono->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 			// id_medio
@@ -825,8 +844,21 @@ class creferencia_add extends creferencia {
 			// id_centro
 			$this->id_centro->EditAttrs["class"] = "form-control";
 			$this->id_centro->EditCustomAttributes = "";
-			$this->id_centro->EditValue = ew_HtmlEncode($this->id_centro->CurrentValue);
-			$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
+			if (trim(strval($this->id_centro->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sWhereWrk = "";
+			$this->id_centro->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_centro->EditValue = $arwrk;
 
 			// Add refer script
 			// id_medio
@@ -883,9 +915,6 @@ class creferencia_add extends creferencia {
 		}
 		if (!$this->id_centro->FldIsDetailKey && !is_null($this->id_centro->FormValue) && $this->id_centro->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_centro->FldCaption(), $this->id_centro->ReqErrMsg));
-		}
-		if (!ew_CheckInteger($this->id_centro->FormValue)) {
-			ew_AddMessage($gsFormError, $this->id_centro->FldErrMsg());
 		}
 
 		// Return validate result
@@ -982,6 +1011,18 @@ class creferencia_add extends creferencia {
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->id_medio, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_id_centro":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
@@ -1117,9 +1158,6 @@ freferenciaadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_centro");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $referencia->id_centro->FldCaption(), $referencia->id_centro->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_id_centro");
-			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($referencia->id_centro->FldErrMsg()) ?>");
 
 			// Fire Form_CustomValidate event
 			if (!this.Form_CustomValidate(fobj))
@@ -1151,6 +1189,8 @@ freferenciaadd.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) ?>;
 // Dynamic selection lists
 freferenciaadd.Lists["x_id_medio"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"medio"};
 freferenciaadd.Lists["x_id_medio"].Data = "<?php echo $referencia_add->id_medio->LookupFilterQuery(FALSE, "add") ?>";
+freferenciaadd.Lists["x_id_centro"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+freferenciaadd.Lists["x_id_centro"].Data = "<?php echo $referencia_add->id_centro->LookupFilterQuery(FALSE, "add") ?>";
 
 // Form object for search
 </script>
@@ -1229,7 +1269,9 @@ $referencia_add->ShowMessage();
 		<label id="elh_referencia_id_centro" for="x_id_centro" class="<?php echo $referencia_add->LeftColumnClass ?>"><?php echo $referencia->id_centro->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $referencia_add->RightColumnClass ?>"><div<?php echo $referencia->id_centro->CellAttributes() ?>>
 <span id="el_referencia_id_centro">
-<input type="text" data-table="referencia" data-field="x_id_centro" name="x_id_centro" id="x_id_centro" size="30" placeholder="<?php echo ew_HtmlEncode($referencia->id_centro->getPlaceHolder()) ?>" value="<?php echo $referencia->id_centro->EditValue ?>"<?php echo $referencia->id_centro->EditAttributes() ?>>
+<select data-table="referencia" data-field="x_id_centro" data-value-separator="<?php echo $referencia->id_centro->DisplayValueSeparatorAttribute() ?>" id="x_id_centro" name="x_id_centro"<?php echo $referencia->id_centro->EditAttributes() ?>>
+<?php echo $referencia->id_centro->SelectOptionListHtml("x_id_centro") ?>
+</select>
 </span>
 <?php echo $referencia->id_centro->CustomMsg ?></div></div>
 	</div>

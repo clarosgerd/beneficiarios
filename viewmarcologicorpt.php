@@ -331,8 +331,9 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		$gsEmailContentType = @$_POST["contenttype"]; // Get email content type
 
 		// Setup placeholder
-		// Setup export options
+		$this->fecha->PlaceHolder = $this->fecha->FldCaption();
 
+		// Setup export options
 		$this->SetupExportOptions();
 
 		// Global Page Loading event (in userfn*.php)
@@ -382,7 +383,7 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 				}
 			}
 			$ReportOptions["UserNameList"] = $UserNameList;
-			$ReportOptions["ShowFilter"] = FALSE;
+			$ReportOptions["ShowFilter"] = TRUE;
 			return FALSE;
 		}
 
@@ -536,7 +537,12 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 
 	// Set up generate filter
 	function SetupGenFilterList($ar) {
-		return FALSE;
+		$filter = array();
+		$keys = preg_grep('/^(sv|sv2|so|so2|sc|sel)_/', array_keys($ar));
+		foreach ($keys as $key) {
+			$filter[$key] = @$ar[$key];
+		}
+		return $this->SetupFilterList($filter); 
 	}
 
 	// Write generate response
@@ -653,12 +659,12 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		$item = &$this->SearchOptions->Add("searchtoggle");
 		$SearchToggleClass = $this->FilterApplied ? " active" : " active";
 		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-caption=\"" . $ReportLanguage->Phrase("SearchBtn", TRUE) . "\" data-toggle=\"button\" data-form=\"fviewmarcologicorpt\">" . $ReportLanguage->Phrase("SearchBtn") . "</button>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 
 		// Reset filter
 		$item = &$this->SearchOptions->Add("resetfilter");
 		$item->Body = "<button type=\"button\" class=\"btn btn-default\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ResetAllFilter", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ResetAllFilter", TRUE)) . "\" onclick=\"location='" . ewr_CurrentPage() . "?cmd=reset'\">" . $ReportLanguage->Phrase("ResetAllFilter") . "</button>";
-		$item->Visible = FALSE && $this->FilterApplied;
+		$item->Visible = TRUE && $this->FilterApplied;
 
 		// Button group for reset filter
 		$this->SearchOptions->UseButtonGroup = TRUE;
@@ -791,15 +797,24 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		global $grDashboardReport;
 
 		// Set field visibility for detail fields
-		$this->edad->SetVisibility();
-		$this->etareo->SetVisibility();
 		$this->nombreinstitucion->SetVisibility();
+		$this->fecha->SetVisibility();
+		$this->cuadro1->SetVisibility();
+		$this->cuadro2->SetVisibility();
+		$this->cuadro3->SetVisibility();
+		$this->cuadro4->SetVisibility();
+		$this->cuadro5->SetVisibility();
+		$this->cuadro6->SetVisibility();
+		$this->cuadro7->SetVisibility();
+		$this->cuadro8->SetVisibility();
+		$this->cuadro9->SetVisibility();
+		$this->cuadro10->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 4;
+		$nDtls = 13;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -812,7 +827,7 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -820,6 +835,12 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		// Set up Breadcrumb
 		if ($this->Export == "")
 			$this->SetupBreadcrumb();
+
+		// Check if search command
+		$this->SearchCommand = (@$_GET["cmd"] == "search");
+
+		// Load default filter values
+		$this->LoadDefaultFilters();
 
 		// Load custom filters
 		$this->Page_FilterLoad();
@@ -836,16 +857,21 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		// Extended filter
 		$sExtendedFilter = "";
 
+		// Restore filter list
+		$this->RestoreFilterList();
+
+		// Build extended filter
+		$sExtendedFilter = $this->GetExtendedFilter();
+		ewr_AddFilter($this->Filter, $sExtendedFilter);
+
 		// Build popup filter
 		$sPopupFilter = $this->GetPopupFilter();
 
 		//ewr_SetDebugMsg("popup filter: " . $sPopupFilter);
 		ewr_AddFilter($this->Filter, $sPopupFilter);
 
-		// No filter
-		$this->FilterApplied = FALSE;
-		$this->FilterOptions->GetItem("savecurrentfilter")->Visible = FALSE;
-		$this->FilterOptions->GetItem("deletefilter")->Visible = FALSE;
+		// Check if filter applied
+		$this->FilterApplied = $this->CheckFilter();
 
 		// Call Page Selecting event
 		$this->Page_Selecting($this->Filter);
@@ -1011,23 +1037,59 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 			return;
 		if ($opt == 1) { // Get first row
 				$this->FirstRowData = array();
-				$this->FirstRowData['edad'] = ewr_Conv($rs->fields('edad'), 20);
-				$this->FirstRowData['etareo'] = ewr_Conv($rs->fields('etareo'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
+				$this->FirstRowData['fecha'] = ewr_Conv($rs->fields('fecha'), 133);
+				$this->FirstRowData['cuadro1'] = ewr_Conv($rs->fields('cuadro1'), 20);
+				$this->FirstRowData['cuadro2'] = ewr_Conv($rs->fields('cuadro2'), 20);
+				$this->FirstRowData['cuadro3'] = ewr_Conv($rs->fields('cuadro3'), 20);
+				$this->FirstRowData['cuadro4'] = ewr_Conv($rs->fields('cuadro4'), 20);
+				$this->FirstRowData['cuadro5'] = ewr_Conv($rs->fields('cuadro5'), 20);
+				$this->FirstRowData['cuadro6'] = ewr_Conv($rs->fields('cuadro6'), 20);
+				$this->FirstRowData['cuadro7'] = ewr_Conv($rs->fields('cuadro7'), 20);
+				$this->FirstRowData['cuadro8'] = ewr_Conv($rs->fields('cuadro8'), 20);
+				$this->FirstRowData['cuadro9'] = ewr_Conv($rs->fields('cuadro9'), 20);
+				$this->FirstRowData['cuadro10'] = ewr_Conv($rs->fields('cuadro10'), 20);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
 		if (!$rs->EOF) {
-			$this->edad->setDbValue($rs->fields('edad'));
-			$this->etareo->setDbValue($rs->fields('etareo'));
 			$this->nombreinstitucion->setDbValue($rs->fields('nombreinstitucion'));
-			$this->Val[1] = $this->edad->CurrentValue;
-			$this->Val[2] = $this->etareo->CurrentValue;
-			$this->Val[3] = $this->nombreinstitucion->CurrentValue;
+			$this->fecha->setDbValue($rs->fields('fecha'));
+			$this->cuadro1->setDbValue($rs->fields('cuadro1'));
+			$this->cuadro2->setDbValue($rs->fields('cuadro2'));
+			$this->cuadro3->setDbValue($rs->fields('cuadro3'));
+			$this->cuadro4->setDbValue($rs->fields('cuadro4'));
+			$this->cuadro5->setDbValue($rs->fields('cuadro5'));
+			$this->cuadro6->setDbValue($rs->fields('cuadro6'));
+			$this->cuadro7->setDbValue($rs->fields('cuadro7'));
+			$this->cuadro8->setDbValue($rs->fields('cuadro8'));
+			$this->cuadro9->setDbValue($rs->fields('cuadro9'));
+			$this->cuadro10->setDbValue($rs->fields('cuadro10'));
+			$this->Val[1] = $this->nombreinstitucion->CurrentValue;
+			$this->Val[2] = $this->fecha->CurrentValue;
+			$this->Val[3] = $this->cuadro1->CurrentValue;
+			$this->Val[4] = $this->cuadro2->CurrentValue;
+			$this->Val[5] = $this->cuadro3->CurrentValue;
+			$this->Val[6] = $this->cuadro4->CurrentValue;
+			$this->Val[7] = $this->cuadro5->CurrentValue;
+			$this->Val[8] = $this->cuadro6->CurrentValue;
+			$this->Val[9] = $this->cuadro7->CurrentValue;
+			$this->Val[10] = $this->cuadro8->CurrentValue;
+			$this->Val[11] = $this->cuadro9->CurrentValue;
+			$this->Val[12] = $this->cuadro10->CurrentValue;
 		} else {
-			$this->edad->setDbValue("");
-			$this->etareo->setDbValue("");
 			$this->nombreinstitucion->setDbValue("");
+			$this->fecha->setDbValue("");
+			$this->cuadro1->setDbValue("");
+			$this->cuadro2->setDbValue("");
+			$this->cuadro3->setDbValue("");
+			$this->cuadro4->setDbValue("");
+			$this->cuadro5->setDbValue("");
+			$this->cuadro6->setDbValue("");
+			$this->cuadro7->setDbValue("");
+			$this->cuadro8->setDbValue("");
+			$this->cuadro9->setDbValue("");
+			$this->cuadro10->setDbValue("");
 		}
 	}
 
@@ -1116,6 +1178,13 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 					$arValues = $_POST["sel_$sName"];
 					if (trim($arValues[0]) == "") // Select all
 						$arValues = EWR_INIT_VALUE;
+					$this->PopupName = $sName;
+					if (ewr_IsAdvancedFilterValue($arValues) || $arValues == EWR_INIT_VALUE)
+						$this->PopupValue = $arValues;
+					if (!ewr_MatchedArray($arValues, $_SESSION["sel_$sName"])) {
+						if ($this->HasSessionFilterValues($sName))
+							$this->ClearExtFilter = $sName; // Clear extended filter for this field
+					}
 					$_SESSION["sel_$sName"] = $arValues;
 					$_SESSION["rf_$sName"] = @$_POST["rf_$sName"];
 					$_SESSION["rt_$sName"] = @$_POST["rt_$sName"];
@@ -1215,62 +1284,135 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		if ($this->RowType == EWR_ROWTYPE_TOTAL && !($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER)) { // Summary row
 			ewr_PrependClass($this->RowAttrs["class"], ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : ""); // Set up row class
 
-			// edad
-			$this->edad->HrefValue = "";
-
-			// etareo
-			$this->etareo->HrefValue = "";
-
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
+
+			// fecha
+			$this->fecha->HrefValue = "";
+
+			// cuadro1
+			$this->cuadro1->HrefValue = "";
+
+			// cuadro2
+			$this->cuadro2->HrefValue = "";
+
+			// cuadro3
+			$this->cuadro3->HrefValue = "";
+
+			// cuadro4
+			$this->cuadro4->HrefValue = "";
+
+			// cuadro5
+			$this->cuadro5->HrefValue = "";
+
+			// cuadro6
+			$this->cuadro6->HrefValue = "";
+
+			// cuadro7
+			$this->cuadro7->HrefValue = "";
+
+			// cuadro8
+			$this->cuadro8->HrefValue = "";
+
+			// cuadro9
+			$this->cuadro9->HrefValue = "";
+
+			// cuadro10
+			$this->cuadro10->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
 			}
 
-			// edad
-			$this->edad->ViewValue = $this->edad->CurrentValue;
-			$this->edad->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// etareo
-			$this->etareo->ViewValue = $this->etareo->CurrentValue;
-			$this->etareo->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// nombreinstitucion
 			$this->nombreinstitucion->ViewValue = $this->nombreinstitucion->CurrentValue;
 			$this->nombreinstitucion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// edad
-			$this->edad->HrefValue = "";
+			// fecha
+			$this->fecha->ViewValue = $this->fecha->CurrentValue;
+			$this->fecha->ViewValue = ewr_FormatDateTime($this->fecha->ViewValue, 0);
+			$this->fecha->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// etareo
-			$this->etareo->HrefValue = "";
+			// cuadro1
+			$this->cuadro1->ViewValue = $this->cuadro1->CurrentValue;
+			$this->cuadro1->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro2
+			$this->cuadro2->ViewValue = $this->cuadro2->CurrentValue;
+			$this->cuadro2->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro3
+			$this->cuadro3->ViewValue = $this->cuadro3->CurrentValue;
+			$this->cuadro3->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro4
+			$this->cuadro4->ViewValue = $this->cuadro4->CurrentValue;
+			$this->cuadro4->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro5
+			$this->cuadro5->ViewValue = $this->cuadro5->CurrentValue;
+			$this->cuadro5->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro6
+			$this->cuadro6->ViewValue = $this->cuadro6->CurrentValue;
+			$this->cuadro6->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro7
+			$this->cuadro7->ViewValue = $this->cuadro7->CurrentValue;
+			$this->cuadro7->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro8
+			$this->cuadro8->ViewValue = $this->cuadro8->CurrentValue;
+			$this->cuadro8->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro9
+			$this->cuadro9->ViewValue = $this->cuadro9->CurrentValue;
+			$this->cuadro9->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cuadro10
+			$this->cuadro10->ViewValue = $this->cuadro10->CurrentValue;
+			$this->cuadro10->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// nombreinstitucion
 			$this->nombreinstitucion->HrefValue = "";
+
+			// fecha
+			$this->fecha->HrefValue = "";
+
+			// cuadro1
+			$this->cuadro1->HrefValue = "";
+
+			// cuadro2
+			$this->cuadro2->HrefValue = "";
+
+			// cuadro3
+			$this->cuadro3->HrefValue = "";
+
+			// cuadro4
+			$this->cuadro4->HrefValue = "";
+
+			// cuadro5
+			$this->cuadro5->HrefValue = "";
+
+			// cuadro6
+			$this->cuadro6->HrefValue = "";
+
+			// cuadro7
+			$this->cuadro7->HrefValue = "";
+
+			// cuadro8
+			$this->cuadro8->HrefValue = "";
+
+			// cuadro9
+			$this->cuadro9->HrefValue = "";
+
+			// cuadro10
+			$this->cuadro10->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
 		if ($this->RowType == EWR_ROWTYPE_TOTAL) { // Summary row
 		} else {
-
-			// edad
-			$CurrentValue = $this->edad->CurrentValue;
-			$ViewValue = &$this->edad->ViewValue;
-			$ViewAttrs = &$this->edad->ViewAttrs;
-			$CellAttrs = &$this->edad->CellAttrs;
-			$HrefValue = &$this->edad->HrefValue;
-			$LinkAttrs = &$this->edad->LinkAttrs;
-			$this->Cell_Rendered($this->edad, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// etareo
-			$CurrentValue = $this->etareo->CurrentValue;
-			$ViewValue = &$this->etareo->ViewValue;
-			$ViewAttrs = &$this->etareo->ViewAttrs;
-			$CellAttrs = &$this->etareo->CellAttrs;
-			$HrefValue = &$this->etareo->HrefValue;
-			$LinkAttrs = &$this->etareo->LinkAttrs;
-			$this->Cell_Rendered($this->etareo, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// nombreinstitucion
 			$CurrentValue = $this->nombreinstitucion->CurrentValue;
@@ -1280,6 +1422,105 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 			$HrefValue = &$this->nombreinstitucion->HrefValue;
 			$LinkAttrs = &$this->nombreinstitucion->LinkAttrs;
 			$this->Cell_Rendered($this->nombreinstitucion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// fecha
+			$CurrentValue = $this->fecha->CurrentValue;
+			$ViewValue = &$this->fecha->ViewValue;
+			$ViewAttrs = &$this->fecha->ViewAttrs;
+			$CellAttrs = &$this->fecha->CellAttrs;
+			$HrefValue = &$this->fecha->HrefValue;
+			$LinkAttrs = &$this->fecha->LinkAttrs;
+			$this->Cell_Rendered($this->fecha, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro1
+			$CurrentValue = $this->cuadro1->CurrentValue;
+			$ViewValue = &$this->cuadro1->ViewValue;
+			$ViewAttrs = &$this->cuadro1->ViewAttrs;
+			$CellAttrs = &$this->cuadro1->CellAttrs;
+			$HrefValue = &$this->cuadro1->HrefValue;
+			$LinkAttrs = &$this->cuadro1->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro1, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro2
+			$CurrentValue = $this->cuadro2->CurrentValue;
+			$ViewValue = &$this->cuadro2->ViewValue;
+			$ViewAttrs = &$this->cuadro2->ViewAttrs;
+			$CellAttrs = &$this->cuadro2->CellAttrs;
+			$HrefValue = &$this->cuadro2->HrefValue;
+			$LinkAttrs = &$this->cuadro2->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro2, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro3
+			$CurrentValue = $this->cuadro3->CurrentValue;
+			$ViewValue = &$this->cuadro3->ViewValue;
+			$ViewAttrs = &$this->cuadro3->ViewAttrs;
+			$CellAttrs = &$this->cuadro3->CellAttrs;
+			$HrefValue = &$this->cuadro3->HrefValue;
+			$LinkAttrs = &$this->cuadro3->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro3, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro4
+			$CurrentValue = $this->cuadro4->CurrentValue;
+			$ViewValue = &$this->cuadro4->ViewValue;
+			$ViewAttrs = &$this->cuadro4->ViewAttrs;
+			$CellAttrs = &$this->cuadro4->CellAttrs;
+			$HrefValue = &$this->cuadro4->HrefValue;
+			$LinkAttrs = &$this->cuadro4->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro4, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro5
+			$CurrentValue = $this->cuadro5->CurrentValue;
+			$ViewValue = &$this->cuadro5->ViewValue;
+			$ViewAttrs = &$this->cuadro5->ViewAttrs;
+			$CellAttrs = &$this->cuadro5->CellAttrs;
+			$HrefValue = &$this->cuadro5->HrefValue;
+			$LinkAttrs = &$this->cuadro5->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro5, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro6
+			$CurrentValue = $this->cuadro6->CurrentValue;
+			$ViewValue = &$this->cuadro6->ViewValue;
+			$ViewAttrs = &$this->cuadro6->ViewAttrs;
+			$CellAttrs = &$this->cuadro6->CellAttrs;
+			$HrefValue = &$this->cuadro6->HrefValue;
+			$LinkAttrs = &$this->cuadro6->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro6, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro7
+			$CurrentValue = $this->cuadro7->CurrentValue;
+			$ViewValue = &$this->cuadro7->ViewValue;
+			$ViewAttrs = &$this->cuadro7->ViewAttrs;
+			$CellAttrs = &$this->cuadro7->CellAttrs;
+			$HrefValue = &$this->cuadro7->HrefValue;
+			$LinkAttrs = &$this->cuadro7->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro7, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro8
+			$CurrentValue = $this->cuadro8->CurrentValue;
+			$ViewValue = &$this->cuadro8->ViewValue;
+			$ViewAttrs = &$this->cuadro8->ViewAttrs;
+			$CellAttrs = &$this->cuadro8->CellAttrs;
+			$HrefValue = &$this->cuadro8->HrefValue;
+			$LinkAttrs = &$this->cuadro8->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro8, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro9
+			$CurrentValue = $this->cuadro9->CurrentValue;
+			$ViewValue = &$this->cuadro9->ViewValue;
+			$ViewAttrs = &$this->cuadro9->ViewAttrs;
+			$CellAttrs = &$this->cuadro9->CellAttrs;
+			$HrefValue = &$this->cuadro9->HrefValue;
+			$LinkAttrs = &$this->cuadro9->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro9, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cuadro10
+			$CurrentValue = $this->cuadro10->CurrentValue;
+			$ViewValue = &$this->cuadro10->ViewValue;
+			$ViewAttrs = &$this->cuadro10->ViewAttrs;
+			$CellAttrs = &$this->cuadro10->CellAttrs;
+			$HrefValue = &$this->cuadro10->HrefValue;
+			$LinkAttrs = &$this->cuadro10->LinkAttrs;
+			$this->Cell_Rendered($this->cuadro10, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1292,9 +1533,18 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		$this->GrpColumnCount = 0;
 		$this->SubGrpColumnCount = 0;
 		$this->DtlColumnCount = 0;
-		if ($this->edad->Visible) $this->DtlColumnCount += 1;
-		if ($this->etareo->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombreinstitucion->Visible) $this->DtlColumnCount += 1;
+		if ($this->fecha->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro1->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro2->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro3->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro4->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro5->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro6->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro7->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro8->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro9->Visible) $this->DtlColumnCount += 1;
+		if ($this->cuadro10->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1319,6 +1569,543 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 	}
 
+	// Return extended filter
+	function GetExtendedFilter() {
+		global $grFormError;
+		$sFilter = "";
+		if ($this->DrillDown)
+			return "";
+		$bPostBack = ewr_IsHttpPost();
+		$bRestoreSession = TRUE;
+		$bSetupFilter = FALSE;
+
+		// Reset extended filter if filter changed
+		if ($bPostBack) {
+
+		// Reset search command
+		} elseif (@$_GET["cmd"] == "reset") {
+
+			// Load default values
+			$this->SetSessionDropDownValue($this->nombreinstitucion->DropDownValue, $this->nombreinstitucion->SearchOperator, 'nombreinstitucion'); // Field nombreinstitucion
+			$this->SetSessionFilterValues($this->fecha->SearchValue, $this->fecha->SearchOperator, $this->fecha->SearchCondition, $this->fecha->SearchValue2, $this->fecha->SearchOperator2, 'fecha'); // Field fecha
+
+			//$bSetupFilter = TRUE; // No need to set up, just use default
+		} else {
+			$bRestoreSession = !$this->SearchCommand;
+
+			// Field nombreinstitucion
+			if ($this->GetDropDownValue($this->nombreinstitucion)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->nombreinstitucion->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewmarcologico_nombreinstitucion'])) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field fecha
+			if ($this->GetFilterValues($this->fecha)) {
+				$bSetupFilter = TRUE;
+			}
+			if (!$this->ValidateForm()) {
+				$this->setFailureMessage($grFormError);
+				return $sFilter;
+			}
+		}
+
+		// Restore session
+		if ($bRestoreSession) {
+			$this->GetSessionDropDownValue($this->nombreinstitucion); // Field nombreinstitucion
+			$this->GetSessionFilterValues($this->fecha); // Field fecha
+		}
+
+		// Call page filter validated event
+		$this->Page_FilterValidated();
+
+		// Build SQL
+		$this->BuildDropDownFilter($this->nombreinstitucion, $sFilter, $this->nombreinstitucion->SearchOperator, FALSE, TRUE); // Field nombreinstitucion
+		$this->BuildExtendedFilter($this->fecha, $sFilter, FALSE, TRUE); // Field fecha
+
+		// Save parms to session
+		$this->SetSessionDropDownValue($this->nombreinstitucion->DropDownValue, $this->nombreinstitucion->SearchOperator, 'nombreinstitucion'); // Field nombreinstitucion
+		$this->SetSessionFilterValues($this->fecha->SearchValue, $this->fecha->SearchOperator, $this->fecha->SearchCondition, $this->fecha->SearchValue2, $this->fecha->SearchOperator2, 'fecha'); // Field fecha
+
+		// Setup filter
+		if ($bSetupFilter) {
+		}
+
+		// Field nombreinstitucion
+		ewr_LoadDropDownList($this->nombreinstitucion->DropDownList, $this->nombreinstitucion->DropDownValue);
+		return $sFilter;
+	}
+
+	// Build dropdown filter
+	function BuildDropDownFilter(&$fld, &$FilterClause, $FldOpr, $Default = FALSE, $SaveFilter = FALSE) {
+		$FldVal = ($Default) ? $fld->DefaultDropDownValue : $fld->DropDownValue;
+		$sSql = "";
+		if (is_array($FldVal)) {
+			foreach ($FldVal as $val) {
+				$sWrk = $this->GetDropDownFilter($fld, $val, $FldOpr);
+
+				// Call Page Filtering event
+				if (substr($val, 0, 2) <> "@@")
+					$this->Page_Filtering($fld, $sWrk, "dropdown", $FldOpr, $val);
+				if ($sWrk <> "") {
+					if ($sSql <> "")
+						$sSql .= " OR " . $sWrk;
+					else
+						$sSql = $sWrk;
+				}
+			}
+		} else {
+			$sSql = $this->GetDropDownFilter($fld, $FldVal, $FldOpr);
+
+			// Call Page Filtering event
+			if (substr($FldVal, 0, 2) <> "@@")
+				$this->Page_Filtering($fld, $sSql, "dropdown", $FldOpr, $FldVal);
+		}
+		if ($sSql <> "") {
+			ewr_AddFilter($FilterClause, $sSql);
+			if ($SaveFilter) $fld->CurrentFilter = $sSql;
+		}
+	}
+
+	function GetDropDownFilter(&$fld, $FldVal, $FldOpr) {
+		$FldName = $fld->FldName;
+		$FldExpression = $fld->FldExpression;
+		$FldDataType = $fld->FldDataType;
+		$FldDelimiter = $fld->FldDelimiter;
+		$FldVal = strval($FldVal);
+		if ($FldOpr == "") $FldOpr = "=";
+		$sWrk = "";
+		if (ewr_SameStr($FldVal, EWR_NULL_VALUE)) {
+			$sWrk = $FldExpression . " IS NULL";
+		} elseif (ewr_SameStr($FldVal, EWR_NOT_NULL_VALUE)) {
+			$sWrk = $FldExpression . " IS NOT NULL";
+		} elseif (ewr_SameStr($FldVal, EWR_EMPTY_VALUE)) {
+			$sWrk = $FldExpression . " = ''";
+		} elseif (ewr_SameStr($FldVal, EWR_ALL_VALUE)) {
+			$sWrk = "1 = 1";
+		} else {
+			if (substr($FldVal, 0, 2) == "@@") {
+				$sWrk = $this->GetCustomFilter($fld, $FldVal, $this->DBID);
+			} elseif ($FldDelimiter <> "" && trim($FldVal) <> "" && ($FldDataType == EWR_DATATYPE_STRING || $FldDataType == EWR_DATATYPE_MEMO)) {
+				$sWrk = ewr_GetMultiSearchSql($FldExpression, trim($FldVal), $this->DBID);
+			} else {
+				if ($FldVal <> "" && $FldVal <> EWR_INIT_VALUE) {
+					if ($FldDataType == EWR_DATATYPE_DATE && $FldOpr <> "") {
+						$sWrk = ewr_DateFilterString($FldExpression, $FldOpr, $FldVal, $FldDataType, $this->DBID);
+					} else {
+						$sWrk = ewr_FilterString($FldOpr, $FldVal, $FldDataType, $this->DBID);
+						if ($sWrk <> "") $sWrk = $FldExpression . $sWrk;
+					}
+				}
+			}
+		}
+		return $sWrk;
+	}
+
+	// Get custom filter
+	function GetCustomFilter(&$fld, $FldVal, $dbid = 0) {
+		$sWrk = "";
+		if (is_array($fld->AdvancedFilters)) {
+			foreach ($fld->AdvancedFilters as $filter) {
+				if ($filter->ID == $FldVal && $filter->Enabled) {
+					$sFld = $fld->FldExpression;
+					$sFn = $filter->FunctionName;
+					$wrkid = (substr($filter->ID, 0, 2) == "@@") ? substr($filter->ID,2) : $filter->ID;
+					if ($sFn <> "")
+						$sWrk = $sFn($sFld, $dbid);
+					else
+						$sWrk = "";
+					$this->Page_Filtering($fld, $sWrk, "custom", $wrkid);
+					break;
+				}
+			}
+		}
+		return $sWrk;
+	}
+
+	// Build extended filter
+	function BuildExtendedFilter(&$fld, &$FilterClause, $Default = FALSE, $SaveFilter = FALSE) {
+		$sWrk = ewr_GetExtendedFilter($fld, $Default, $this->DBID);
+		if (!$Default)
+			$this->Page_Filtering($fld, $sWrk, "extended", $fld->SearchOperator, $fld->SearchValue, $fld->SearchCondition, $fld->SearchOperator2, $fld->SearchValue2);
+		if ($sWrk <> "") {
+			ewr_AddFilter($FilterClause, $sWrk);
+			if ($SaveFilter) $fld->CurrentFilter = $sWrk;
+		}
+	}
+
+	// Get drop down value from querystring
+	function GetDropDownValue(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		if (ewr_IsHttpPost())
+			return FALSE; // Skip post back
+		if (isset($_GET["so_$parm"]))
+			$fld->SearchOperator = @$_GET["so_$parm"];
+		if (isset($_GET["sv_$parm"])) {
+			$fld->DropDownValue = @$_GET["sv_$parm"];
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	// Get filter values from querystring
+	function GetFilterValues(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		if (ewr_IsHttpPost())
+			return; // Skip post back
+		$got = FALSE;
+		if (isset($_GET["sv_$parm"])) {
+			$fld->SearchValue = @$_GET["sv_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["so_$parm"])) {
+			$fld->SearchOperator = @$_GET["so_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["sc_$parm"])) {
+			$fld->SearchCondition = @$_GET["sc_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["sv2_$parm"])) {
+			$fld->SearchValue2 = @$_GET["sv2_$parm"];
+			$got = TRUE;
+		}
+		if (isset($_GET["so2_$parm"])) {
+			$fld->SearchOperator2 = $_GET["so2_$parm"];
+			$got = TRUE;
+		}
+		return $got;
+	}
+
+	// Set default ext filter
+	function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2) {
+		$fld->DefaultSearchValue = $sv1; // Default ext filter value 1
+		$fld->DefaultSearchValue2 = $sv2; // Default ext filter value 2 (if operator 2 is enabled)
+		$fld->DefaultSearchOperator = $so1; // Default search operator 1
+		$fld->DefaultSearchOperator2 = $so2; // Default search operator 2 (if operator 2 is enabled)
+		$fld->DefaultSearchCondition = $sc; // Default search condition (if operator 2 is enabled)
+	}
+
+	// Apply default ext filter
+	function ApplyDefaultExtFilter(&$fld) {
+		$fld->SearchValue = $fld->DefaultSearchValue;
+		$fld->SearchValue2 = $fld->DefaultSearchValue2;
+		$fld->SearchOperator = $fld->DefaultSearchOperator;
+		$fld->SearchOperator2 = $fld->DefaultSearchOperator2;
+		$fld->SearchCondition = $fld->DefaultSearchCondition;
+	}
+
+	// Check if Text Filter applied
+	function TextFilterApplied(&$fld) {
+		return (strval($fld->SearchValue) <> strval($fld->DefaultSearchValue) ||
+			strval($fld->SearchValue2) <> strval($fld->DefaultSearchValue2) ||
+			(strval($fld->SearchValue) <> "" &&
+				strval($fld->SearchOperator) <> strval($fld->DefaultSearchOperator)) ||
+			(strval($fld->SearchValue2) <> "" &&
+				strval($fld->SearchOperator2) <> strval($fld->DefaultSearchOperator2)) ||
+			strval($fld->SearchCondition) <> strval($fld->DefaultSearchCondition));
+	}
+
+	// Check if Non-Text Filter applied
+	function NonTextFilterApplied(&$fld) {
+		if (is_array($fld->DropDownValue)) {
+			if (is_array($fld->DefaultDropDownValue)) {
+				if (count($fld->DefaultDropDownValue) <> count($fld->DropDownValue))
+					return TRUE;
+				else
+					return (count(array_diff($fld->DefaultDropDownValue, $fld->DropDownValue)) <> 0);
+			} else {
+				return TRUE;
+			}
+		} else {
+			if (is_array($fld->DefaultDropDownValue))
+				return TRUE;
+			else
+				$v1 = strval($fld->DefaultDropDownValue);
+			if ($v1 == EWR_INIT_VALUE)
+				$v1 = "";
+			$v2 = strval($fld->DropDownValue);
+			if ($v2 == EWR_INIT_VALUE || $v2 == EWR_ALL_VALUE)
+				$v2 = "";
+			return ($v1 <> $v2);
+		}
+	}
+
+	// Get dropdown value from session
+	function GetSessionDropDownValue(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		$this->GetSessionValue($fld->DropDownValue, 'sv_viewmarcologico_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator, 'so_viewmarcologico_' . $parm);
+	}
+
+	// Get filter values from session
+	function GetSessionFilterValues(&$fld) {
+		$parm = substr($fld->FldVar, 2);
+		$this->GetSessionValue($fld->SearchValue, 'sv_viewmarcologico_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator, 'so_viewmarcologico_' . $parm);
+		$this->GetSessionValue($fld->SearchCondition, 'sc_viewmarcologico_' . $parm);
+		$this->GetSessionValue($fld->SearchValue2, 'sv2_viewmarcologico_' . $parm);
+		$this->GetSessionValue($fld->SearchOperator2, 'so2_viewmarcologico_' . $parm);
+	}
+
+	// Get value from session
+	function GetSessionValue(&$sv, $sn) {
+		if (array_key_exists($sn, $_SESSION))
+			$sv = $_SESSION[$sn];
+	}
+
+	// Set dropdown value to session
+	function SetSessionDropDownValue($sv, $so, $parm) {
+		$_SESSION['sv_viewmarcologico_' . $parm] = $sv;
+		$_SESSION['so_viewmarcologico_' . $parm] = $so;
+	}
+
+	// Set filter values to session
+	function SetSessionFilterValues($sv1, $so1, $sc, $sv2, $so2, $parm) {
+		$_SESSION['sv_viewmarcologico_' . $parm] = $sv1;
+		$_SESSION['so_viewmarcologico_' . $parm] = $so1;
+		$_SESSION['sc_viewmarcologico_' . $parm] = $sc;
+		$_SESSION['sv2_viewmarcologico_' . $parm] = $sv2;
+		$_SESSION['so2_viewmarcologico_' . $parm] = $so2;
+	}
+
+	// Check if has Session filter values
+	function HasSessionFilterValues($parm) {
+		return ((@$_SESSION['sv_' . $parm] <> "" && @$_SESSION['sv_' . $parm] <> EWR_INIT_VALUE) ||
+			(@$_SESSION['sv_' . $parm] <> "" && @$_SESSION['sv_' . $parm] <> EWR_INIT_VALUE) ||
+			(@$_SESSION['sv2_' . $parm] <> "" && @$_SESSION['sv2_' . $parm] <> EWR_INIT_VALUE));
+	}
+
+	// Dropdown filter exist
+	function DropDownFilterExist(&$fld, $FldOpr) {
+		$sWrk = "";
+		$this->BuildDropDownFilter($fld, $sWrk, $FldOpr);
+		return ($sWrk <> "");
+	}
+
+	// Extended filter exist
+	function ExtendedFilterExist(&$fld) {
+		$sExtWrk = "";
+		$this->BuildExtendedFilter($fld, $sExtWrk);
+		return ($sExtWrk <> "");
+	}
+
+	// Validate form
+	function ValidateForm() {
+		global $ReportLanguage, $grFormError;
+
+		// Initialize form error message
+		$grFormError = "";
+
+		// Check if validation required
+		if (!EWR_SERVER_VALIDATE)
+			return ($grFormError == "");
+		if (!ewr_CheckDateDef($this->fecha->SearchValue)) {
+			if ($grFormError <> "") $grFormError .= "<br>";
+			$grFormError .= $this->fecha->FldErrMsg();
+		}
+		if (!ewr_CheckDateDef($this->fecha->SearchValue2)) {
+			if ($grFormError <> "") $grFormError .= "<br>";
+			$grFormError .= $this->fecha->FldErrMsg();
+		}
+
+		// Return validate result
+		$ValidateForm = ($grFormError == "");
+
+		// Call Form_CustomValidate event
+		$sFormCustomError = "";
+		$ValidateForm = $ValidateForm && $this->Form_CustomValidate($sFormCustomError);
+		if ($sFormCustomError <> "") {
+			$grFormError .= ($grFormError <> "") ? "<p>&nbsp;</p>" : "";
+			$grFormError .= $sFormCustomError;
+		}
+		return $ValidateForm;
+	}
+
+	// Clear selection stored in session
+	function ClearSessionSelection($parm) {
+		$_SESSION["sel_viewmarcologico_$parm"] = "";
+		$_SESSION["rf_viewmarcologico_$parm"] = "";
+		$_SESSION["rt_viewmarcologico_$parm"] = "";
+	}
+
+	// Load selection from session
+	function LoadSelectionFromSession($parm) {
+		$fld = &$this->FieldByParm($parm);
+		$fld->SelectionList = @$_SESSION["sel_viewmarcologico_$parm"];
+		$fld->RangeFrom = @$_SESSION["rf_viewmarcologico_$parm"];
+		$fld->RangeTo = @$_SESSION["rt_viewmarcologico_$parm"];
+	}
+
+	// Load default value for filters
+	function LoadDefaultFilters() {
+		/**
+		* Set up default values for non Text filters
+		*/
+
+		// Field nombreinstitucion
+		$this->nombreinstitucion->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->nombreinstitucion->DropDownValue = $this->nombreinstitucion->DefaultDropDownValue;
+		/**
+		* Set up default values for extended filters
+		* function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2)
+		* Parameters:
+		* $fld - Field object
+		* $so1 - Default search operator 1
+		* $sv1 - Default ext filter value 1
+		* $sc - Default search condition (if operator 2 is enabled)
+		* $so2 - Default search operator 2 (if operator 2 is enabled)
+		* $sv2 - Default ext filter value 2 (if operator 2 is enabled)
+		*/
+
+		// Field fecha
+		$this->SetDefaultExtFilter($this->fecha, "BETWEEN", NULL, 'AND', "=", NULL);
+		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->fecha);
+		/**
+		* Set up default values for popup filters
+		*/
+	}
+
+	// Check if filter applied
+	function CheckFilter() {
+
+		// Check nombreinstitucion extended filter
+		if ($this->NonTextFilterApplied($this->nombreinstitucion))
+			return TRUE;
+
+		// Check fecha text filter
+		if ($this->TextFilterApplied($this->fecha))
+			return TRUE;
+		return FALSE;
+	}
+
+	// Show list of filters
+	function ShowFilterList($showDate = FALSE) {
+		global $ReportLanguage;
+
+		// Initialize
+		$sFilterList = "";
+
+		// Field nombreinstitucion
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->nombreinstitucion, $sExtWrk, $this->nombreinstitucion->SearchOperator);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombreinstitucion->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field fecha
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildExtendedFilter($this->fecha, $sExtWrk);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->fecha->FldCaption() . "</span>" . $sFilter . "</div>";
+		$divstyle = "";
+		$divdataclass = "";
+
+		// Show Filters
+		if ($sFilterList <> "" || $showDate) {
+			$sMessage = "<div" . $divstyle . $divdataclass . "><div id=\"ewrFilterList\" class=\"alert alert-info\">";
+			if ($showDate)
+				$sMessage .= "<div id=\"ewrCurrentDate\">" . $ReportLanguage->Phrase("ReportGeneratedDate") . ewr_FormatDateTime(date("Y-m-d H:i:s"), 1) . "</div>";
+			if ($sFilterList <> "")
+				$sMessage .= "<div id=\"ewrCurrentFilters\">" . $ReportLanguage->Phrase("CurrentFilters") . "</div>" . $sFilterList;
+			$sMessage .= "</div></div>";
+			$this->Message_Showing($sMessage, "");
+			echo $sMessage;
+		}
+	}
+
+	// Get list of filters
+	function GetFilterList() {
+
+		// Initialize
+		$sFilterList = "";
+
+		// Field nombreinstitucion
+		$sWrk = "";
+		$sWrk = ($this->nombreinstitucion->DropDownValue <> EWR_INIT_VALUE) ? $this->nombreinstitucion->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_nombreinstitucion\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field fecha
+		$sWrk = "";
+		if ($this->fecha->SearchValue <> "" || $this->fecha->SearchValue2 <> "") {
+			$sWrk = "\"sv_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchValue) . "\"," .
+				"\"so_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchOperator) . "\"," .
+				"\"sc_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchCondition) . "\"," .
+				"\"sv2_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchValue2) . "\"," .
+				"\"so2_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchOperator2) . "\"";
+		}
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Return filter list in json
+		if ($sFilterList <> "")
+			return "{" . $sFilterList . "}";
+		else
+			return "null";
+	}
+
+	// Restore list of filters
+	function RestoreFilterList() {
+
+		// Return if not reset filter
+		if (@$_POST["cmd"] <> "resetfilter")
+			return FALSE;
+		$filter = json_decode(@$_POST["filter"], TRUE);
+		return $this->SetupFilterList($filter);
+	}
+
+	// Setup list of filters
+	function SetupFilterList($filter) {
+		if (!is_array($filter))
+			return FALSE;
+
+		// Field nombreinstitucion
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_nombreinstitucion", $filter)) {
+			$sWrk = $filter["sv_nombreinstitucion"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_nombreinstitucion"], "nombreinstitucion");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "nombreinstitucion");
+		}
+
+		// Field fecha
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_fecha", $filter) || array_key_exists("so_fecha", $filter) ||
+			array_key_exists("sc_fecha", $filter) ||
+			array_key_exists("sv2_fecha", $filter) || array_key_exists("so2_fecha", $filter)) {
+			$this->SetSessionFilterValues(@$filter["sv_fecha"], @$filter["so_fecha"], @$filter["sc_fecha"], @$filter["sv2_fecha"], @$filter["so2_fecha"], "fecha");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionFilterValues("", "=", "AND", "", "=", "fecha");
+		}
+		return TRUE;
+	}
+
 	// Return popup filter
 	function GetPopupFilter() {
 		$sWrk = "";
@@ -1339,17 +2126,35 @@ class crviewmarcologico_rpt extends crviewmarcologico {
 		if ($bResetSort) {
 			$this->setOrderBy("");
 			$this->setStartGroup(1);
-			$this->edad->setSort("");
-			$this->etareo->setSort("");
 			$this->nombreinstitucion->setSort("");
+			$this->fecha->setSort("");
+			$this->cuadro1->setSort("");
+			$this->cuadro2->setSort("");
+			$this->cuadro3->setSort("");
+			$this->cuadro4->setSort("");
+			$this->cuadro5->setSort("");
+			$this->cuadro6->setSort("");
+			$this->cuadro7->setSort("");
+			$this->cuadro8->setSort("");
+			$this->cuadro9->setSort("");
+			$this->cuadro10->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
 			$this->CurrentOrder = $orderBy;
 			$this->CurrentOrderType = $orderType;
-			$this->UpdateSort($this->edad); // edad
-			$this->UpdateSort($this->etareo); // etareo
 			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
+			$this->UpdateSort($this->fecha); // fecha
+			$this->UpdateSort($this->cuadro1); // cuadro1
+			$this->UpdateSort($this->cuadro2); // cuadro2
+			$this->UpdateSort($this->cuadro3); // cuadro3
+			$this->UpdateSort($this->cuadro4); // cuadro4
+			$this->UpdateSort($this->cuadro5); // cuadro5
+			$this->UpdateSort($this->cuadro6); // cuadro6
+			$this->UpdateSort($this->cuadro7); // cuadro7
+			$this->UpdateSort($this->cuadro8); // cuadro8
+			$this->UpdateSort($this->cuadro9); // cuadro9
+			$this->UpdateSort($this->cuadro10); // cuadro10
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
@@ -1683,6 +2488,50 @@ var EWR_PAGE_ID = viewmarcologico_rpt.PageID;
 </script>
 <?php } ?>
 <?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
+<script type="text/javascript">
+
+// Form object
+var CurrentForm = fviewmarcologicorpt = new ewr_Form("fviewmarcologicorpt");
+
+// Validate method
+fviewmarcologicorpt.Validate = function() {
+	if (!this.ValidateRequired)
+		return true; // Ignore validation
+	var $ = jQuery, fobj = this.GetForm(), $fobj = $(fobj);
+	var elm = fobj.sv_fecha;
+	if (elm && !ewr_CheckDateDef(elm.value)) {
+		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fecha->FldErrMsg()) ?>"))
+			return false;
+	}
+	var elm = fobj.sv2_fecha;
+	if (elm && !ewr_CheckDateDef(elm.value)) {
+		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fecha->FldErrMsg()) ?>"))
+			return false;
+	}
+
+	// Call Form Custom Validate event
+	if (!this.Form_CustomValidate(fobj))
+		return false;
+	return true;
+}
+
+// Form_CustomValidate method
+fviewmarcologicorpt.Form_CustomValidate = 
+ function(fobj) { // DO NOT CHANGE THIS LINE!
+
+ 	// Your custom validation code here, return false if invalid.
+ 	return true;
+ }
+<?php if (EWR_CLIENT_VALIDATE) { ?>
+fviewmarcologicorpt.ValidateRequired = true; // Uses JavaScript validation
+<?php } else { ?>
+fviewmarcologicorpt.ValidateRequired = false; // No JavaScript validation
+<?php } ?>
+
+// Use Ajax
+fviewmarcologicorpt.Lists["sv_nombreinstitucion"] = {"LinkField":"sv_nombreinstitucion","Ajax":true,"DisplayFields":["sv_nombreinstitucion","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
+fviewmarcologicorpt.AutoSuggests["sv_nombreinstitucion"] = <?php echo json_encode(array("data" => "ajax=autosuggest&" . $viewmarcologico_rpt->nombreinstitucion->LookupFilterQuery(TRUE))) ?>;
+</script>
 <?php } ?>
 <?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
@@ -1720,6 +2569,77 @@ if (!$Page->DrillDownInPanel) {
 <!-- Summary Report begins -->
 <?php if ($Page->Export <> "pdf") { ?>
 <div id="report_summary">
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
+<!-- Search form (begin) -->
+<form name="fviewmarcologicorpt" id="fviewmarcologicorpt" class="form-inline ewForm ewExtFilterForm" action="<?php echo ewr_CurrentPage() ?>">
+<?php $SearchPanelClass = ($Page->Filter <> "") ? " in" : " in"; ?>
+<div id="fviewmarcologicorpt_SearchPanel" class="ewSearchPanel collapse<?php echo $SearchPanelClass ?>">
+<input type="hidden" name="cmd" value="search">
+<div id="r_1" class="ewRow">
+<div id="c_nombreinstitucion" class="ewCell form-group">
+	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->nombreinstitucion->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewmarcologico" data-field="x_nombreinstitucion" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->nombreinstitucion->DisplayValueSeparator) ? json_encode($Page->nombreinstitucion->DisplayValueSeparator) : $Page->nombreinstitucion->DisplayValueSeparator) ?>" id="sv_nombreinstitucion" name="sv_nombreinstitucion"<?php echo $Page->nombreinstitucion->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->nombreinstitucion->AdvancedFilters) ? count($Page->nombreinstitucion->AdvancedFilters) : 0;
+	$cntd = is_array($Page->nombreinstitucion->DropDownList) ? count($Page->nombreinstitucion->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->nombreinstitucion->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->nombreinstitucion->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->nombreinstitucion->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->nombreinstitucion->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_nombreinstitucion" id="s_sv_nombreinstitucion" value="<?php echo $Page->nombreinstitucion->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewmarcologicorpt.Lists["sv_nombreinstitucion"].Options = <?php echo ewr_ArrayToJson($Page->nombreinstitucion->LookupFilterOptions) ?>;
+</script>
+</span>
+</div>
+<div id="c_fecha" class="ewCell form-group">
+	<label for="sv_fecha" class="ewSearchCaption ewLabel"><?php echo $Page->fecha->FldCaption() ?></label>
+	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("BETWEEN"); ?><input type="hidden" name="so_fecha" id="so_fecha" value="BETWEEN"></span>
+	<span class="control-group ewSearchField">
+<?php ewr_PrependClass($Page->fecha->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewmarcologico" data-field="x_fecha" id="sv_fecha" name="sv_fecha" placeholder="<?php echo $Page->fecha->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha->SearchValue) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha->EditAttributes() ?>>
+</span>
+	<span class="ewSearchCond btw1_fecha"><?php echo $ReportLanguage->Phrase("AND") ?></span>
+	<span class="ewSearchField btw1_fecha">
+<?php ewr_PrependClass($Page->fecha->EditAttrs["class"], "form-control"); // PR8 ?>
+<input type="text" data-table="viewmarcologico" data-field="x_fecha" id="sv2_fecha" name="sv2_fecha" placeholder="<?php echo $Page->fecha->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha->SearchValue2) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha->EditAttributes() ?>>
+</span>
+</div>
+</div>
+<div class="ewRow"><input type="submit" name="btnsubmit" id="btnsubmit" class="btn btn-primary" value="<?php echo $ReportLanguage->Phrase("Search") ?>">
+<input type="reset" name="btnreset" id="btnreset" class="btn hide" value="<?php echo $ReportLanguage->Phrase("Reset") ?>"></div>
+</div>
+</form>
+<script type="text/javascript">
+fviewmarcologicorpt.Init();
+fviewmarcologicorpt.FilterList = <?php echo $Page->GetFilterList() ?>;
+</script>
+<!-- Search form (end) -->
+<?php } ?>
+<?php if ($Page->ShowCurrentFilter) { ?>
+<?php $Page->ShowFilterList() ?>
 <?php } ?>
 <?php
 
@@ -1766,42 +2686,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <thead>
 	<!-- Table header -->
 	<tr class="ewTableHeader">
-<?php if ($Page->edad->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="edad"><div class="viewmarcologico_edad"><span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="edad">
-<?php if ($Page->SortUrl($Page->edad) == "") { ?>
-		<div class="ewTableHeaderBtn viewmarcologico_edad">
-			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewmarcologico_edad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->edad) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->edad->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->edad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->edad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->etareo->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="etareo"><div class="viewmarcologico_etareo"><span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="etareo">
-<?php if ($Page->SortUrl($Page->etareo) == "") { ?>
-		<div class="ewTableHeaderBtn viewmarcologico_etareo">
-			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewmarcologico_etareo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->etareo) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->etareo->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->etareo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->etareo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
 <?php if ($Page->nombreinstitucion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
 	<td data-field="nombreinstitucion"><div class="viewmarcologico_nombreinstitucion"><span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span></div></td>
@@ -1815,6 +2699,204 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<div class="ewTableHeaderBtn ewPointer viewmarcologico_nombreinstitucion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombreinstitucion) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombreinstitucion->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombreinstitucion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombreinstitucion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->fecha->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="fecha"><div class="viewmarcologico_fecha"><span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="fecha">
+<?php if ($Page->SortUrl($Page->fecha) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_fecha">
+			<span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_fecha" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->fecha->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fecha->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro1->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro1"><div class="viewmarcologico_cuadro1"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro1->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro1">
+<?php if ($Page->SortUrl($Page->cuadro1) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro1">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro1->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro1" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro1) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro1->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro1->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro1->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro2->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro2"><div class="viewmarcologico_cuadro2"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro2->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro2">
+<?php if ($Page->SortUrl($Page->cuadro2) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro2">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro2->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro2" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro2) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro2->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro2->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro2->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro3->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro3"><div class="viewmarcologico_cuadro3"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro3->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro3">
+<?php if ($Page->SortUrl($Page->cuadro3) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro3">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro3->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro3" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro3) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro3->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro3->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro3->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro4->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro4"><div class="viewmarcologico_cuadro4"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro4->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro4">
+<?php if ($Page->SortUrl($Page->cuadro4) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro4">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro4->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro4" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro4) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro4->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro4->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro4->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro5->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro5"><div class="viewmarcologico_cuadro5"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro5->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro5">
+<?php if ($Page->SortUrl($Page->cuadro5) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro5">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro5->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro5" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro5) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro5->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro5->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro5->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro6->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro6"><div class="viewmarcologico_cuadro6"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro6->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro6">
+<?php if ($Page->SortUrl($Page->cuadro6) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro6">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro6->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro6" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro6) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro6->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro6->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro6->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro7->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro7"><div class="viewmarcologico_cuadro7"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro7->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro7">
+<?php if ($Page->SortUrl($Page->cuadro7) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro7">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro7->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro7" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro7) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro7->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro7->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro7->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro8->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro8"><div class="viewmarcologico_cuadro8"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro8->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro8">
+<?php if ($Page->SortUrl($Page->cuadro8) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro8">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro8->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro8" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro8) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro8->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro8->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro8->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro9->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro9"><div class="viewmarcologico_cuadro9"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro9->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro9">
+<?php if ($Page->SortUrl($Page->cuadro9) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro9">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro9->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro9" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro9) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro9->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro9->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro9->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cuadro10->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cuadro10"><div class="viewmarcologico_cuadro10"><span class="ewTableHeaderCaption"><?php echo $Page->cuadro10->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cuadro10">
+<?php if ($Page->SortUrl($Page->cuadro10) == "") { ?>
+		<div class="ewTableHeaderBtn viewmarcologico_cuadro10">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro10->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewmarcologico_cuadro10" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cuadro10) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cuadro10->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cuadro10->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cuadro10->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1838,17 +2920,53 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		$Page->RenderRow();
 ?>
 	<tr<?php echo $Page->RowAttributes(); ?>>
-<?php if ($Page->edad->Visible) { ?>
-		<td data-field="edad"<?php echo $Page->edad->CellAttributes() ?>>
-<span<?php echo $Page->edad->ViewAttributes() ?>><?php echo $Page->edad->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->etareo->Visible) { ?>
-		<td data-field="etareo"<?php echo $Page->etareo->CellAttributes() ?>>
-<span<?php echo $Page->etareo->ViewAttributes() ?>><?php echo $Page->etareo->ListViewValue() ?></span></td>
-<?php } ?>
 <?php if ($Page->nombreinstitucion->Visible) { ?>
 		<td data-field="nombreinstitucion"<?php echo $Page->nombreinstitucion->CellAttributes() ?>>
 <span<?php echo $Page->nombreinstitucion->ViewAttributes() ?>><?php echo $Page->nombreinstitucion->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->fecha->Visible) { ?>
+		<td data-field="fecha"<?php echo $Page->fecha->CellAttributes() ?>>
+<span<?php echo $Page->fecha->ViewAttributes() ?>><?php echo $Page->fecha->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro1->Visible) { ?>
+		<td data-field="cuadro1"<?php echo $Page->cuadro1->CellAttributes() ?>>
+<span<?php echo $Page->cuadro1->ViewAttributes() ?>><?php echo $Page->cuadro1->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro2->Visible) { ?>
+		<td data-field="cuadro2"<?php echo $Page->cuadro2->CellAttributes() ?>>
+<span<?php echo $Page->cuadro2->ViewAttributes() ?>><?php echo $Page->cuadro2->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro3->Visible) { ?>
+		<td data-field="cuadro3"<?php echo $Page->cuadro3->CellAttributes() ?>>
+<span<?php echo $Page->cuadro3->ViewAttributes() ?>><?php echo $Page->cuadro3->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro4->Visible) { ?>
+		<td data-field="cuadro4"<?php echo $Page->cuadro4->CellAttributes() ?>>
+<span<?php echo $Page->cuadro4->ViewAttributes() ?>><?php echo $Page->cuadro4->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro5->Visible) { ?>
+		<td data-field="cuadro5"<?php echo $Page->cuadro5->CellAttributes() ?>>
+<span<?php echo $Page->cuadro5->ViewAttributes() ?>><?php echo $Page->cuadro5->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro6->Visible) { ?>
+		<td data-field="cuadro6"<?php echo $Page->cuadro6->CellAttributes() ?>>
+<span<?php echo $Page->cuadro6->ViewAttributes() ?>><?php echo $Page->cuadro6->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro7->Visible) { ?>
+		<td data-field="cuadro7"<?php echo $Page->cuadro7->CellAttributes() ?>>
+<span<?php echo $Page->cuadro7->ViewAttributes() ?>><?php echo $Page->cuadro7->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro8->Visible) { ?>
+		<td data-field="cuadro8"<?php echo $Page->cuadro8->CellAttributes() ?>>
+<span<?php echo $Page->cuadro8->ViewAttributes() ?>><?php echo $Page->cuadro8->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro9->Visible) { ?>
+		<td data-field="cuadro9"<?php echo $Page->cuadro9->CellAttributes() ?>>
+<span<?php echo $Page->cuadro9->ViewAttributes() ?>><?php echo $Page->cuadro9->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cuadro10->Visible) { ?>
+		<td data-field="cuadro10"<?php echo $Page->cuadro10->CellAttributes() ?>>
+<span<?php echo $Page->cuadro10->ViewAttributes() ?>><?php echo $Page->cuadro10->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

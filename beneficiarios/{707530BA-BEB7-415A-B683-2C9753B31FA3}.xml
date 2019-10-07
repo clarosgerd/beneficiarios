@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2019/10/04" author="e.World Technology Ltd.">
-  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/10/04 13:29:05" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2019/10/07" author="e.World Technology Ltd.">
+  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/10/07 06:49:08" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="actividad" name="actividad" caption="actividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="apoderado" name="apoderado" caption="apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="atencion" name="atencion" caption="atencion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -56,5 +56,9 @@
     <table id="viewestudiantesetareo" name="viewestudiantesetareo" caption="GRUPODISCAPACIDAD" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewestudiantesetareocurso" name="viewestudiantesetareocurso" caption="GRUPOTOTALES" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewmarcologico" name="viewmarcologico" caption="MARCO LOGICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="curso" name="curso" caption="curso" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="gestion" name="gestion" caption="gestion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="inscripcionestudiante" name="inscripcionestudiante" caption="inscripcionestudiante" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="turno" name="turno" caption="turno" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

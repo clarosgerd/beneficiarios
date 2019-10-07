@@ -664,10 +664,6 @@ class ctipoprueba_list extends ctipoprueba {
 			$sFilter = "(0=1)"; // Filter all records
 		ew_AddFilter($sFilter, $this->DbDetailFilter);
 		ew_AddFilter($sFilter, $this->SearchWhere);
-		if ($sFilter == "") {
-			$sFilter = "0=101";
-			$this->SearchWhere = $sFilter;
-		}
 
 		// Set up filter
 		if ($this->Command == "json") {
@@ -738,6 +734,10 @@ class ctipoprueba_list extends ctipoprueba {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "ftipopruebalistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->id->AdvancedSearch->ToJson(), ","); // Field id
 		$sFilterList = ew_Concat($sFilterList, $this->descripcion->AdvancedSearch->ToJson(), ","); // Field descripcion
 		$sFilterList = ew_Concat($sFilterList, $this->id_audiologia->AdvancedSearch->ToJson(), ","); // Field id_audiologia
@@ -1273,7 +1273,7 @@ class ctipoprueba_list extends ctipoprueba {
 
 		// Show all button
 		$item = &$this->SearchOptions->Add("showall");
-		$item->Body = "<a class=\"btn btn-default ewShowAll\" title=\"" . $Language->Phrase("ResetSearch") . "\" data-caption=\"" . $Language->Phrase("ResetSearch") . "\" href=\"" . $this->PageUrl() . "cmd=reset\">" . $Language->Phrase("ResetSearchBtn") . "</a>";
+		$item->Body = "<a class=\"btn btn-default ewShowAll\" title=\"" . $Language->Phrase("ShowAll") . "\" data-caption=\"" . $Language->Phrase("ShowAll") . "\" href=\"" . $this->PageUrl() . "cmd=reset\">" . $Language->Phrase("ShowAllBtn") . "</a>";
 		$item->Visible = ($this->SearchWhere <> $this->DefaultSearchWhere && $this->SearchWhere <> "0=101");
 
 		// Button group for search

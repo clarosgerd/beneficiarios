@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2019 at 08:16 PM
+-- Generation Time: Oct 07, 2019 at 12:52 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -98,97 +98,98 @@ CREATE TABLE `atencion` (
   `id_neonato` int(11) DEFAULT NULL,
   `id_otros` int(11) DEFAULT NULL,
   `id_escolar` int(11) DEFAULT NULL,
-  `id_especialista` int(11) NOT NULL
+  `id_especialista` int(11) NOT NULL,
+  `id_referencia` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `atencion`
 --
 
-INSERT INTO `atencion` (`id`, `id_neonato`, `id_otros`, `id_escolar`, `id_especialista`) VALUES
-(1, NULL, NULL, NULL, 0),
-(2, NULL, NULL, NULL, 0),
-(3, 1, NULL, NULL, 11111),
-(4, 1, NULL, NULL, 11111),
-(5, 1, NULL, NULL, 11111),
-(6, 1, NULL, NULL, 11111),
-(7, 1, NULL, NULL, 11111),
-(8, 1, NULL, NULL, 11111),
-(9, 1, NULL, NULL, 11111),
-(10, 1, NULL, NULL, 11111),
-(11, 1, NULL, NULL, 11111),
-(12, 1, NULL, NULL, 11111),
-(13, 1, NULL, NULL, 11111),
-(14, 1, NULL, NULL, 11111),
-(15, 1, NULL, NULL, 11111),
-(16, 1, NULL, NULL, 11111),
-(17, 1, NULL, NULL, 11111),
-(18, 1, NULL, NULL, 11111),
-(19, 1, NULL, NULL, 11111),
-(20, 1, NULL, NULL, 11111),
-(21, 1, NULL, NULL, 11111),
-(22, 1, NULL, NULL, 11111),
-(23, 1, NULL, NULL, 11111),
-(24, 1, NULL, NULL, 11111),
-(25, 1, NULL, NULL, 11111),
-(26, 1, NULL, NULL, 11111),
-(27, 1, NULL, NULL, 11111),
-(28, 1, NULL, NULL, 11111),
-(29, 1, NULL, NULL, 11111),
-(30, 1, NULL, NULL, 11111),
-(31, 1, NULL, NULL, 11115),
-(32, 1, NULL, NULL, 11114),
-(33, 1, NULL, NULL, 11116),
-(34, 1, NULL, NULL, 11116),
-(35, 1, NULL, NULL, 11116),
-(36, 1, NULL, NULL, 11117),
-(37, 1, NULL, NULL, 11117),
-(38, NULL, NULL, 1, 11115),
-(39, 1, NULL, NULL, 11117),
-(40, 1, NULL, NULL, 11116),
-(41, 1, NULL, NULL, 11117),
-(42, 2, NULL, NULL, 11117),
-(43, 2, NULL, NULL, 11117),
-(44, NULL, NULL, 1, 11116),
-(45, 2, NULL, NULL, 11117),
-(46, 2, NULL, NULL, 11115),
-(47, NULL, NULL, NULL, 11117),
-(48, NULL, NULL, 1, 11117),
-(49, NULL, NULL, 2, 11115),
-(50, NULL, NULL, 1, 11117),
-(51, NULL, NULL, 2, 11115),
-(52, 3, NULL, NULL, 11115),
-(53, NULL, NULL, 1, 11117),
-(54, 3, NULL, NULL, 11117),
-(55, NULL, NULL, NULL, 11117),
-(56, NULL, NULL, 3, 11116),
-(57, NULL, NULL, NULL, 11116),
-(58, NULL, NULL, NULL, 11115),
-(59, NULL, NULL, NULL, 11115),
-(60, NULL, NULL, NULL, 11115),
-(61, NULL, NULL, 2, 11115),
-(62, NULL, NULL, 1, 11114),
-(63, 3, NULL, NULL, 11117),
-(64, NULL, 2, NULL, 11117),
-(65, NULL, NULL, 3, 11116),
-(66, NULL, NULL, 4, 11119),
-(67, NULL, NULL, 1, 11120),
-(68, NULL, 3, NULL, 11120),
-(69, NULL, NULL, 4, 11120),
-(70, NULL, 3, NULL, 11120),
-(71, NULL, NULL, 1, 11119),
-(72, NULL, NULL, 4, 11116),
-(73, 1, NULL, NULL, 11121),
-(74, 1, NULL, NULL, 11121),
-(75, NULL, 1, NULL, 11122),
-(76, 1, NULL, NULL, 11120),
-(77, 1, NULL, NULL, 11119),
-(78, NULL, NULL, NULL, 11111),
-(79, NULL, NULL, NULL, 11116),
-(80, NULL, NULL, NULL, 11117),
-(81, NULL, NULL, NULL, 11117),
-(82, NULL, NULL, NULL, 11119),
-(83, NULL, 3, NULL, 11120);
+INSERT INTO `atencion` (`id`, `id_neonato`, `id_otros`, `id_escolar`, `id_especialista`, `id_referencia`) VALUES
+(1, NULL, NULL, NULL, 0, NULL),
+(2, NULL, NULL, NULL, 0, NULL),
+(3, 1, NULL, NULL, 11111, NULL),
+(4, 1, NULL, NULL, 11111, NULL),
+(5, 1, NULL, NULL, 11111, NULL),
+(6, 1, NULL, NULL, 11111, NULL),
+(7, 1, NULL, NULL, 11111, NULL),
+(8, 1, NULL, NULL, 11111, NULL),
+(9, 1, NULL, NULL, 11111, NULL),
+(10, 1, NULL, NULL, 11111, NULL),
+(11, 1, NULL, NULL, 11111, NULL),
+(12, 1, NULL, NULL, 11111, NULL),
+(13, 1, NULL, NULL, 11111, NULL),
+(14, 1, NULL, NULL, 11111, NULL),
+(15, 1, NULL, NULL, 11111, NULL),
+(16, 1, NULL, NULL, 11111, NULL),
+(17, 1, NULL, NULL, 11111, NULL),
+(18, 1, NULL, NULL, 11111, NULL),
+(19, 1, NULL, NULL, 11111, NULL),
+(20, 1, NULL, NULL, 11111, NULL),
+(21, 1, NULL, NULL, 11111, NULL),
+(22, 1, NULL, NULL, 11111, NULL),
+(23, 1, NULL, NULL, 11111, NULL),
+(24, 1, NULL, NULL, 11111, NULL),
+(25, 1, NULL, NULL, 11111, NULL),
+(26, 1, NULL, NULL, 11111, NULL),
+(27, 1, NULL, NULL, 11111, NULL),
+(28, 1, NULL, NULL, 11111, NULL),
+(29, 1, NULL, NULL, 11111, NULL),
+(30, 1, NULL, NULL, 11111, NULL),
+(31, 1, NULL, NULL, 11115, NULL),
+(32, 1, NULL, NULL, 11114, NULL),
+(33, 1, NULL, NULL, 11116, NULL),
+(34, 1, NULL, NULL, 11116, NULL),
+(35, 1, NULL, NULL, 11116, NULL),
+(36, 1, NULL, NULL, 11117, NULL),
+(37, 1, NULL, NULL, 11117, NULL),
+(38, NULL, NULL, 1, 11115, NULL),
+(39, 1, NULL, NULL, 11117, NULL),
+(40, 1, NULL, NULL, 11116, NULL),
+(41, 1, NULL, NULL, 11117, NULL),
+(42, 2, NULL, NULL, 11117, NULL),
+(43, 2, NULL, NULL, 11117, NULL),
+(44, NULL, NULL, 1, 11116, NULL),
+(45, 2, NULL, NULL, 11117, NULL),
+(46, 2, NULL, NULL, 11115, NULL),
+(47, NULL, NULL, NULL, 11117, NULL),
+(48, NULL, NULL, 1, 11117, NULL),
+(49, NULL, NULL, 2, 11115, NULL),
+(50, NULL, NULL, 1, 11117, NULL),
+(51, NULL, NULL, 2, 11115, NULL),
+(52, 3, NULL, NULL, 11115, NULL),
+(53, NULL, NULL, 1, 11117, NULL),
+(54, 3, NULL, NULL, 11117, NULL),
+(55, NULL, NULL, NULL, 11117, NULL),
+(56, NULL, NULL, 3, 11116, NULL),
+(57, NULL, NULL, NULL, 11116, NULL),
+(58, NULL, NULL, NULL, 11115, NULL),
+(59, NULL, NULL, NULL, 11115, NULL),
+(60, NULL, NULL, NULL, 11115, NULL),
+(61, NULL, NULL, 2, 11115, NULL),
+(62, NULL, NULL, 1, 11114, NULL),
+(63, 3, NULL, NULL, 11117, NULL),
+(64, NULL, 2, NULL, 11117, NULL),
+(65, NULL, NULL, 3, 11116, NULL),
+(66, NULL, NULL, 4, 11119, NULL),
+(67, NULL, NULL, 1, 11120, NULL),
+(68, NULL, 3, NULL, 11120, NULL),
+(69, NULL, NULL, 4, 11120, NULL),
+(70, NULL, 3, NULL, 11120, NULL),
+(71, NULL, NULL, 1, 11119, NULL),
+(72, NULL, NULL, 4, 11116, NULL),
+(73, 1, NULL, NULL, 11121, NULL),
+(74, 1, NULL, NULL, 11121, NULL),
+(75, NULL, 1, NULL, 11122, NULL),
+(76, 1, NULL, NULL, 11120, NULL),
+(77, 1, NULL, NULL, 11119, NULL),
+(78, NULL, NULL, NULL, 11111, NULL),
+(79, NULL, NULL, NULL, 11116, NULL),
+(80, NULL, NULL, NULL, 11117, NULL),
+(81, NULL, NULL, NULL, 11117, NULL),
+(82, NULL, NULL, NULL, 11119, NULL),
+(83, NULL, 3, NULL, 11120, NULL);
 
 -- --------------------------------------------------------
 
@@ -200,6 +201,7 @@ CREATE TABLE `atencionescolaraudiologia` (
 `id` int(11)
 ,`id_escolar` int(11)
 ,`id_especialista` int(11)
+,`id_referencia` int(11)
 );
 
 -- --------------------------------------------------------
@@ -212,6 +214,7 @@ CREATE TABLE `atencionneonatoaudiologia` (
 `id1` int(11)
 ,`id_neonato` int(11)
 ,`id_especialista` int(11)
+,`id_referencia` int(11)
 );
 
 -- --------------------------------------------------------
@@ -224,6 +227,7 @@ CREATE TABLE `atencionotrosaudiologia` (
 `id` int(11)
 ,`id_otros` int(11)
 ,`id_especialista` int(11)
+,`id_referencia` int(11)
 );
 
 -- --------------------------------------------------------
@@ -379,6 +383,38 @@ CREATE TABLE `ciudad` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `curso`
+--
+
+CREATE TABLE `curso` (
+  `id` int(11) NOT NULL,
+  `curso` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `curso`
+--
+
+INSERT INTO `curso` (`id`, `curso`) VALUES
+(1, '1 Inicial'),
+(2, '2 Inicial'),
+(3, '1 Primaria'),
+(4, '2 Primaria'),
+(5, '3 Primaria'),
+(6, '4 Primaria'),
+(7, '5 Primaria'),
+(8, '6A Primaria'),
+(9, '6 B'),
+(10, 'PRIMERO'),
+(11, 'SEGUNDO'),
+(12, 'TERCERO'),
+(13, 'CUARTO'),
+(14, 'QUINTO'),
+(15, 'SEXTO');
 
 -- --------------------------------------------------------
 
@@ -644,67 +680,139 @@ CREATE TABLE `estudiante` (
   `ci` varchar(15) DEFAULT NULL,
   `fechanacimiento` date NOT NULL,
   `sexo` varchar(100) NOT NULL,
-  `curso` varchar(100) NOT NULL,
   `discapacidad` int(11) DEFAULT NULL,
   `tipodiscapacidad` int(11) DEFAULT NULL,
   `observaciones` varchar(100) DEFAULT NULL,
   `codigorude` varchar(100) DEFAULT NULL,
   `codigorude_es` varchar(100) DEFAULT NULL,
-  `id_centro` int(11) NOT NULL
+  `id_centro` int(11) NOT NULL,
+  `curso` int(11) NOT NULL,
+  `gestion` int(11) NOT NULL,
+  `esincritoespecial` int(11) NOT NULL DEFAULT '1',
+  `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `estudiante`
 --
 
-INSERT INTO `estudiante` (`id`, `departamento`, `provincisa`, `municipio`, `unidadeducativa`, `apellidopaterno`, `apellidomaterno`, `nombres`, `nrodiscapacidad`, `ci`, `fechanacimiento`, `sexo`, `curso`, `discapacidad`, `tipodiscapacidad`, `observaciones`, `codigorude`, `codigorude_es`, `id_centro`) VALUES
-(1, 2, 1, 1, 7, 'Arevalo', 'Guayacuma', 'Miguel Mateo', 'Xxxxxx', '15670725', '2004-02-08', '0', '1 Inicial', 1, 4, NULL, NULL, '8098044620198087', 0),
-(2, 2, 1, 1, 7, 'Paz', 'Lupe', 'Erick', 'Xxxxx', '15201417', '2013-01-11', '0', '1 Inicial', 1, 4, NULL, NULL, '8098044620166947', 0),
-(3, 2, 1, 1, 7, 'Rios', 'Carrión', 'Miguel Jhudid', '03-2014012JMRC', '15072278', '2014-01-20', '0', '1 Inicial', 1, 4, NULL, NULL, '8098044620186900', 0),
-(4, 2, 1, 1, 7, 'Zurita', 'Cuba', 'Damián Fernando', 'Xxxx', '14992163', '2013-04-19', '0', '1 Inicial', 1, 4, NULL, NULL, '8098044620195001', 0),
-(5, 2, 1, 1, 7, 'Toledo', 'Dorado', 'Reyna', 'Xxxx', '15607858', '2015-05-14', '0', '1 Inicial', 1, 4, NULL, NULL, '809804462019513', 0),
-(6, 2, 1, 1, 7, 'Gonzales', 'Salazar', 'Kendra Thais', 'Xxxx', 'Xxxxx', '2015-09-06', '0', '1 Inicial', 1, 4, NULL, NULL, '809800452018081', 0),
-(7, 2, 1, 1, 7, 'Huaranca', 'Cáceres', 'Abril Adriana', 'Xxxx', '14645960', '2013-02-09', '0', '2 Inicial', 1, 6, NULL, NULL, '809804462016471', 0),
-(8, 2, 3, 2, 7, 'Guardia', 'Cadima', 'Jhosua', '03-20120801JGC', '12811234', '2012-08-01', '0', '2 Inicial', 1, 4, NULL, NULL, '809804092017027', 0),
-(9, 2, 1, 1, 7, 'Sanchez', 'Huanca', 'Jhessica', '03-20100909JSH', '14818438', '2010-09-09', '0', '2 Inicial', 2, 4, NULL, NULL, '8089011720174024', 0),
-(10, 2, 1, 1, 7, 'Avalos', 'Quisbert', 'Katherine', '03-20110922KAQ', '14265014', '2011-09-22', '0', '1 Primaria', 1, 4, NULL, NULL, '8098044620168391', 0),
-(11, 2, 1, 1, 7, 'Garnica', 'Huanca', 'Diana Evelin', '03/20100115DGH', '14265317', '2010-01-15', '0', '1 Primaria', 1, 6, NULL, NULL, '8098044620168310', 0),
-(12, 2, 3, 2, 7, 'Mercado', 'Calle', 'Noemi', '03-20110522NMC', '13256487', '2011-05-22', '0', '1 Primaria', 1, 4, NULL, NULL, '8098044620175271', 0),
-(13, 2, 1, 1, 7, 'Xxxxx', 'Tapia', 'Samuel Alejandro', 'Xxxx', 'Xxxxx', '2008-06-06', '0', '1 Primaria', 1, 4, NULL, NULL, '809804462014262', 0),
-(14, 2, 3, 2, 7, 'Huanca', 'Chipana', 'Juana', '03-20101124JHC', '12812507', '2010-11-24', '0', '1 Primaria', 1, 4, NULL, NULL, '8098044620165345', 0),
-(15, 2, 1, 1, 7, 'Teran', 'Maturano', 'Fabricio Lautaro', '03-20110826FTM', '14812536', '2011-08-28', '0', '1 Primaria', 1, 4, NULL, NULL, '809801992017026', 0),
-(16, 2, 3, 2, 7, 'Alejo', 'Condori', 'Camila', 'Xxxx', '14852636', '2009-07-10', '0', '2 Primaria', 1, 4, NULL, NULL, '8089044620169844', 0),
-(17, 2, 2, 7, 7, 'Arévalo', 'Garcia', 'Eloyda', '03-20100604EAG', '9849916', '2010-07-04', '0', '2 Primaria', 1, 4, NULL, NULL, '8098044620165510', 0),
-(18, 2, 1, 1, 7, 'Calle', 'Villcarani', 'Nico! Wendy', 'Xxxx', '14093700', '2009-08-30', '0', '2 Primaria', 1, 4, NULL, NULL, '8098044620167484', 0),
-(19, 2, 1, 1, 7, 'Choque', 'Martinez', 'Kevin Marcelo', '03-20081007KCM', '9493960', '2008-10-07', '0', '2 Primaria', 1, 4, NULL, NULL, '80980446201459', 0),
-(20, 2, 1, 1, 7, 'Mamani', 'Rojas', 'David Alejandro', '03-20110629DMR', '13418485', '2011-08-29', '0', '2 Primaria', 1, 4, NULL, NULL, '80980446201488', 0),
-(21, 2, 1, 1, 7, 'Saenez', 'Flores', 'Cristhian Ronaldo', '03-20080704CSF', '13528952', '2009-07-04', '0', '2 Primaria', 1, 4, NULL, NULL, '80980446201442', 0),
-(22, 2, 1, 1, 7, 'Vallejos', 'Mamani', 'Sara', '03-20060816SVM', '13623808', '2006-08-16', '0', '2 Primaria', 1, 4, NULL, NULL, '8098044620167387', 0),
-(23, 2, 1, 1, 7, 'Santillan', 'López', 'Hugo Daniel', 'Xxxx', '12442356', '2010-11-14', '0', '2 Primaria', 1, 4, NULL, NULL, '80980324201596', 0),
-(24, 2, 1, 1, 7, 'Corrales', 'Vargas', 'José Miguel', 'Xxxx', 'Xxxxx', '2009-08-15', '0', '2 Primaria', 1, 4, NULL, NULL, '819802742014194', 0),
-(25, 2, 1, 1, 7, 'Xxxxx', 'Miranda', 'Alvaro', 'Xxxx', '14093039', '2007-05-09', '0', '3 Primaria', 1, 4, NULL, NULL, '8098044620161456', 0),
-(26, 2, 1, 1, 7, 'Aguilar', 'Yampa', 'Carlos Gerardo', 'Xxxxx', 'Xxxxx', '2006-12-01', '0', '3 Primaria', 1, 6, NULL, NULL, '80980446201413', 0),
-(27, 2, 1, 1, 7, 'Escalera', 'Choque', 'Martin', 'Xxxxx', 'Xxxx', '2006-07-27', '0', '3 Primaria', 1, 6, NULL, NULL, '8098044620166997', 0),
-(28, 2, 1, 1, 7, 'Pozo', 'Martínez', 'Marcelo Rodolfo', '03-20081209MPM', '9416512', '2008-12-09', '0', '3 Primaria', 1, 6, NULL, NULL, '809803242013191', 0),
-(29, 2, 1, 1, 7, 'Ramirez', 'Perez', 'Mauricio Fernando', '03-20060616MRP', '13001946', '2006-06-16', '0', '4 Primaria', 1, 4, NULL, NULL, '80980446201465', 0),
-(30, 2, 1, 1, 7, 'Terrazas', 'Higueras', 'Yessenia Nicol', '03-20090408YTH', '13378613', '2009-04-08', '0', '4 Primaria', 1, 4, NULL, NULL, '8098044620165676', 0),
-(31, 2, 1, 1, 7, 'Tola', 'Vallejos', 'Juan Daniel', '03-20090025JTV', '13378422', '2009-03-25', '0', '4 Primaria', 1, 4, NULL, NULL, '809804462016839', 0),
-(32, NULL, 1, 1, 7, 'Torrez', 'Reynaga', 'Matías Gerardo', '03-20090924MTR', '13002404', '2009-09-24', '0', '4 Primaria', 2, 4, NULL, NULL, '8098044620139140', 0),
-(33, 2, 1, 1, 7, 'Esquivel', 'Canasi', 'Humberto', 'Xxxx', '15129296', '2009-07-04', '0', '4 Primaria', 1, 4, NULL, NULL, '714500012016038', 0),
-(34, 2, 1, 1, 7, 'Guzmán', 'Aranibar', 'Sophia Belen', 'Xxxxx', 'Xxxx', '2004-07-26', '0', '4 Primaria', 1, 4, NULL, NULL, '809804742018633', 0),
-(35, 2, 1, 1, 7, 'Xxxxx', 'Illanes', 'Jhonatan Cristian', '03-20070425JI', '13226100', '2007-04-25', '0', '5 Primaria', 1, 4, NULL, NULL, '80980446201436', 0),
-(36, 2, 1, 1, 7, 'Mirabal', 'Chocotea', 'Marializ', '03-20090103MMC', '13289308', '2009-01-03', '0', '5 Primaria', 1, 4, NULL, NULL, '8098044620139098', 0),
-(37, 2, 1, 1, 7, 'Reynaga', 'Alvarez', 'Etmar Marcelo', '03-20071130ERA', '13260877', '2007-11-30', '0', '5 Primaria', 1, 4, NULL, NULL, '8098044620139155', 0),
-(38, 2, 1, 1, 7, 'Sossa', 'Cayo', 'José Miguel', 'Xxxx', 'Xxxx', '2003-08-27', '0', '5 Primaria', 1, 4, NULL, NULL, '80980446201494', 0),
-(39, 2, 1, 1, 7, 'Jiménez', 'Espinoza', 'Jeison Guido', '03-20070321JJE', '13418357', '2007-03-21', '0', '5 Primaria', 1, 4, NULL, NULL, '71860012201279', 0),
-(40, 2, 1, 1, 7, 'Barrientos', 'Segales', 'Cristóbal Alejandro', 'Xxxx', '13228266', '2008-09-11', '0', '5 Primaria', 1, 4, NULL, NULL, '80980446201163', 0),
-(41, 2, 1, 1, 7, 'Xxxx', 'Chambi', 'Angelica', '03-20070104LC', '12342908', '2007-01-04', '0', '6A Primaria', 1, 6, NULL, NULL, '809804462013916A', 0),
-(42, 2, 1, 1, 7, 'Anampa', 'Quinteros', 'Leonardo Leonel', 'Xxxx', 'Xxxx', '2006-06-09', '0', '6A Primaria', 1, 4, NULL, NULL, '80980446201225', 0),
-(43, 2, 1, 1, 7, 'Delgadillo', 'Cerrudo', 'Alejandra', '03-20089110ADC', '9422534', '2006-01-13', '0', '6A Primaria', 1, 4, NULL, NULL, '80980446201157', 0),
-(44, 2, 1, 1, 7, 'Mamani', 'Rojas', 'Isac', 'Xxx', '8850390', '2005-03-30', '0', '6A Primaria', 1, 4, NULL, NULL, '809804462011119', 0),
-(45, 2, 1, 1, 7, 'Olivarez', 'Alavi', 'Gabriel Melvin', '03-20051108GOA', '13097801', '2005-11-08', '0', '6A Primaria', 1, 4, NULL, NULL, '8098044620139174', 0),
-(46, 2, 1, 1, 7, 'Ojeda', 'Bernabe', 'Gabriel', '03-20071208GOB', '12714561', '2007-12-06', '0', '6A Primaria', 1, 4, NULL, NULL, '8098044620139189', 0),
-(47, 2, 1, 1, 7, 'Cayuba', 'Roca', 'Matilde', 'xxxx', 'Xxxxx', '2004-03-31', '0', '6A Primaria', 1, 4, NULL, NULL, '8219013020112193', 0);
+INSERT INTO `estudiante` (`id`, `departamento`, `provincisa`, `municipio`, `unidadeducativa`, `apellidopaterno`, `apellidomaterno`, `nombres`, `nrodiscapacidad`, `ci`, `fechanacimiento`, `sexo`, `discapacidad`, `tipodiscapacidad`, `observaciones`, `codigorude`, `codigorude_es`, `id_centro`, `curso`, `gestion`, `esincritoespecial`, `fecha`) VALUES
+(1, 2, 1, 1, 7, 'Arevalo', 'Guayacuma', 'Miguel Mateo', 'Xxxxxx', '15670725', '2004-02-08', 'MASCULINO', 1, 4, NULL, NULL, '8098044620198087', 3, 1, 2018, 1, '0000-00-00'),
+(2, 2, 1, 1, 7, 'Paz', 'Lupe', 'Erick', 'Xxxxx', '15201417', '2013-01-11', 'MASCULINO', 1, 4, NULL, NULL, '8098044620166947', 3, 1, 2018, 1, '0000-00-00'),
+(3, 2, 1, 1, 7, 'Rios', 'Carrión', 'Miguel Jhudid', '03-2014012JMRC', '15072278', '2014-01-20', 'MASCULINO', 1, 4, NULL, NULL, '8098044620186900', 3, 1, 2018, 1, '0000-00-00'),
+(4, 2, 1, 1, 7, 'Zurita', 'Cuba', 'Damián Fernando', 'Xxxx', '14992163', '2013-04-19', 'MASCULINO', 1, 4, NULL, NULL, '8098044620195001', 3, 1, 2018, 1, '0000-00-00'),
+(5, 2, 1, 1, 7, 'Toledo', 'Dorado', 'Reyna', 'Xxxx', '15607858', '2015-05-14', 'FEMENINO', 1, 4, NULL, NULL, '809804462019513', 3, 1, 2018, 1, '0000-00-00'),
+(6, 2, 1, 1, 7, 'Gonzales', 'Salazar', 'Kendra Thais', 'Xxxx', 'Xxxxx', '2015-09-06', 'FEMENINO', 1, 4, NULL, NULL, '809800452018081', 3, 1, 2018, 1, '0000-00-00'),
+(7, 2, 1, 1, 7, 'Huaranca', 'Cáceres', 'Abril Adriana', 'Xxxx', '14645960', '2013-02-09', 'FEMENINO', 1, 6, NULL, NULL, '809804462016471', 3, 0, 0, 1, '0000-00-00'),
+(8, 2, 3, 2, 7, 'Guardia', 'Cadima', 'Jhosua', '03-20120801JGC', '12811234', '2012-08-01', 'MASCULINO', 1, 4, NULL, NULL, '809804092017027', 3, 0, 0, 1, '0000-00-00'),
+(9, 2, 1, 1, 7, 'Sanchez', 'Huanca', 'Jhessica', '03-20100909JSH', '14818438', '2010-09-09', 'FEMENINO', 2, 4, NULL, NULL, '8089011720174024', 3, 0, 0, 1, '0000-00-00'),
+(10, 2, 1, 1, 7, 'Avalos', 'Quisbert', 'Katherine', '03-20110922KAQ', '14265014', '2011-09-22', 'FEMENINO', 1, 4, NULL, NULL, '8098044620168391', 3, 0, 0, 1, '0000-00-00'),
+(11, 2, 1, 1, 7, 'Garnica', 'Huanca', 'Diana Evelin', '03/20100115DGH', '14265317', '2010-01-15', 'FEMENINO', 1, 6, NULL, NULL, '8098044620168310', 3, 0, 0, 1, '0000-00-00'),
+(12, 2, 3, 2, 7, 'Mercado', 'Calle', 'Noemi', '03-20110522NMC', '13256487', '2011-05-22', 'FEMENINO', 1, 4, NULL, NULL, '8098044620175271', 3, 0, 0, 1, '0000-00-00'),
+(13, 2, 1, 1, 7, 'Xxxxx', 'Tapia', 'Samuel Alejandro', 'Xxxx', 'Xxxxx', '2008-06-06', 'MASCULINO', 1, 4, NULL, NULL, '809804462014262', 3, 0, 0, 1, '0000-00-00'),
+(14, 2, 3, 2, 7, 'Huanca', 'Chipana', 'Juana', '03-20101124JHC', '12812507', '2010-11-24', 'FEMENINO', 1, 4, NULL, NULL, '8098044620165345', 3, 0, 0, 1, '0000-00-00'),
+(15, 2, 1, 1, 7, 'Teran', 'Maturano', 'Fabricio Lautaro', '03-20110826FTM', '14812536', '2011-08-28', 'MASCULINO', 1, 4, NULL, NULL, '809801992017026', 3, 0, 0, 1, '0000-00-00'),
+(16, 2, 3, 2, 7, 'Alejo', 'Condori', 'Camila', 'Xxxx', '14852636', '2009-07-10', 'FEMENINO', 1, 4, NULL, NULL, '8089044620169844', 3, 0, 0, 1, '0000-00-00'),
+(17, 2, 2, 7, 7, 'Arévalo', 'Garcia', 'Eloyda', '03-20100604EAG', '9849916', '2010-07-04', 'FEMENINO', 1, 4, NULL, NULL, '8098044620165510', 3, 0, 0, 1, '0000-00-00'),
+(18, 2, 1, 1, 7, 'Calle', 'Villcarani', 'Nico! Wendy', 'Xxxx', '14093700', '2009-08-30', 'FEMENINO', 1, 4, NULL, NULL, '8098044620167484', 3, 0, 0, 1, '0000-00-00'),
+(19, 2, 1, 1, 7, 'Choque', 'Martinez', 'Kevin Marcelo', '03-20081007KCM', '9493960', '2008-10-07', 'MASCULINO', 1, 4, NULL, NULL, '80980446201459', 3, 0, 0, 1, '0000-00-00'),
+(20, 2, 1, 1, 7, 'Mamani', 'Rojas', 'David Alejandro', '03-20110629DMR', '13418485', '2011-08-29', 'MASCULINO', 1, 4, NULL, NULL, '80980446201488', 3, 0, 0, 1, '0000-00-00'),
+(21, 2, 1, 1, 7, 'Saenez', 'Flores', 'Cristhian Ronaldo', '03-20080704CSF', '13528952', '2009-07-04', 'MASCULINO', 1, 4, NULL, NULL, '80980446201442', 3, 0, 0, 1, '0000-00-00'),
+(22, 2, 1, 1, 7, 'Vallejos', 'Mamani', 'Sara', '03-20060816SVM', '13623808', '2006-08-16', 'FEMENINO', 1, 4, NULL, NULL, '8098044620167387', 3, 0, 0, 1, '0000-00-00'),
+(23, 2, 1, 1, 7, 'Santillan', 'López', 'Hugo Daniel', 'Xxxx', '12442356', '2010-11-14', 'MASCULINO', 1, 4, NULL, NULL, '80980324201596', 3, 0, 0, 1, '0000-00-00'),
+(24, 2, 1, 1, 7, 'Corrales', 'Vargas', 'José Miguel', 'Xxxx', 'Xxxxx', '2009-08-15', 'MASCULINO', 1, 4, NULL, NULL, '819802742014194', 3, 0, 0, 1, '0000-00-00'),
+(25, 2, 1, 1, 7, 'Xxxxx', 'Miranda', 'Alvaro', 'Xxxx', '14093039', '2007-05-09', 'MASCULINO', 1, 4, NULL, NULL, '8098044620161456', 3, 0, 0, 1, '0000-00-00'),
+(26, 2, 1, 1, 7, 'Aguilar', 'Yampa', 'Carlos Gerardo', 'Xxxxx', 'Xxxxx', '2006-12-01', 'MASCULINO', 1, 6, NULL, NULL, '80980446201413', 3, 0, 0, 1, '0000-00-00'),
+(27, 2, 1, 1, 7, 'Escalera', 'Choque', 'Martin', 'Xxxxx', 'Xxxx', '2006-07-27', 'MASCULINO', 1, 6, NULL, NULL, '8098044620166997', 3, 0, 0, 1, '0000-00-00'),
+(28, 2, 1, 1, 7, 'Pozo', 'Martínez', 'Marcelo Rodolfo', '03-20081209MPM', '9416512', '2008-12-09', 'MASCULINO', 1, 6, NULL, NULL, '809803242013191', 3, 0, 0, 1, '0000-00-00'),
+(29, 2, 1, 1, 7, 'Ramirez', 'Perez', 'Mauricio Fernando', '03-20060616MRP', '13001946', '2006-06-16', 'MASCULINO', 1, 4, NULL, NULL, '80980446201465', 3, 0, 0, 1, '0000-00-00'),
+(30, 2, 1, 1, 7, 'Terrazas', 'Higueras', 'Yessenia Nicol', '03-20090408YTH', '13378613', '2009-04-08', 'MASCULINO', 1, 4, NULL, NULL, '8098044620165676', 3, 0, 0, 1, '0000-00-00'),
+(31, 2, 1, 1, 7, 'Tola', 'Vallejos', 'Juan Daniel', '03-20090025JTV', '13378422', '2009-03-25', 'MASCULINO', 1, 4, NULL, NULL, '809804462016839', 3, 0, 0, 1, '0000-00-00'),
+(32, NULL, 1, 1, 7, 'Torrez', 'Reynaga', 'Matías Gerardo', '03-20090924MTR', '13002404', '2009-09-24', 'MASCULINO', 2, 4, NULL, NULL, '8098044620139140', 3, 0, 0, 1, '0000-00-00'),
+(33, 2, 1, 1, 7, 'Esquivel', 'Canasi', 'Humberto', 'Xxxx', '15129296', '2009-07-04', 'MASCULINO', 1, 4, NULL, NULL, '714500012016038', 3, 0, 0, 1, '0000-00-00'),
+(34, 2, 1, 1, 7, 'Guzmán', 'Aranibar', 'Sophia Belen', 'Xxxxx', 'Xxxx', '2004-07-26', 'MASCULINO', 1, 4, NULL, NULL, '809804742018633', 3, 0, 0, 1, '0000-00-00'),
+(35, 2, 1, 1, 7, 'Xxxxx', 'Illanes', 'Jhonatan Cristian', '03-20070425JI', '13226100', '2007-04-25', 'MASCULINO', 1, 4, NULL, NULL, '80980446201436', 3, 0, 0, 1, '0000-00-00'),
+(36, 2, 1, 1, 7, 'Mirabal', 'Chocotea', 'Marializ', '03-20090103MMC', '13289308', '2009-01-03', 'MASCULINO', 1, 4, NULL, NULL, '8098044620139098', 3, 0, 0, 1, '0000-00-00'),
+(37, 2, 1, 1, 7, 'Reynaga', 'Alvarez', 'Etmar Marcelo', '03-20071130ERA', '13260877', '2007-11-30', 'MASCULINO', 1, 4, NULL, NULL, '8098044620139155', 3, 0, 0, 1, '0000-00-00'),
+(38, 2, 1, 1, 7, 'Sossa', 'Cayo', 'José Miguel', 'Xxxx', 'Xxxx', '2003-08-27', 'FEMENINO', 1, 4, NULL, NULL, '80980446201494', 3, 0, 0, 1, '0000-00-00'),
+(39, 2, 1, 1, 7, 'Jiménez', 'Espinoza', 'Jeison Guido', '03-20070321JJE', '13418357', '2007-03-21', 'FEMENINO', 1, 4, NULL, NULL, '71860012201279', 3, 0, 0, 1, '0000-00-00'),
+(40, 2, 1, 1, 7, 'Barrientos', 'Segales', 'Cristóbal Alejandro', 'Xxxx', '13228266', '2008-09-11', 'FEMENINO', 1, 4, NULL, NULL, '80980446201163', 3, 0, 0, 1, '0000-00-00'),
+(41, 2, 1, 1, 7, 'Xxxx', 'Chambi', 'Angelica', '03-20070104LC', '12342908', '2007-01-04', 'FEMENINO', 1, 6, NULL, NULL, '809804462013916A', 3, 0, 0, 1, '0000-00-00'),
+(42, 2, 1, 1, 7, 'Anampa', 'Quinteros', 'Leonardo Leonel', 'Xxxx', 'Xxxx', '2006-06-09', 'FEMENINO', 1, 4, NULL, NULL, '80980446201225', 3, 0, 0, 1, '0000-00-00'),
+(43, 2, 1, 1, 7, 'Delgadillo', 'Cerrudo', 'Alejandra', '03-20089110ADC', '9422534', '2006-01-13', 'FEMENINO', 1, 4, NULL, NULL, '80980446201157', 3, 0, 0, 1, '0000-00-00'),
+(44, 2, 1, 1, 7, 'Mamani', 'Rojas', 'Isac', 'Xxx', '8850390', '2005-03-30', 'FEMENINO', 1, 4, NULL, NULL, '809804462011119', 3, 0, 0, 1, '0000-00-00'),
+(45, 2, 1, 1, 7, 'Olivarez', 'Alavi', 'Gabriel Melvin', '03-20051108GOA', '13097801', '2005-11-08', 'FEMENINO', 1, 4, NULL, NULL, '8098044620139174', 3, 0, 0, 1, '0000-00-00'),
+(46, 2, 1, 1, 7, 'Ojeda', 'Bernabe', 'Gabriel', '03-20071208GOB', '12714561', '2007-12-06', 'FEMENINO', 1, 4, NULL, NULL, '8098044620139189', 3, 0, 0, 1, '0000-00-00'),
+(47, 2, 1, 1, 7, 'Cayuba', 'Roca', 'Matilde', 'xxxx', 'Xxxxx', '2004-03-31', 'FEMENINO', 1, 4, NULL, NULL, '8219013020112193', 3, 0, 0, 1, '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gestion`
+--
+
+CREATE TABLE `gestion` (
+  `id` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `gestion`
+--
+
+INSERT INTO `gestion` (`id`) VALUES
+(1),
+(2),
+(2000),
+(2001),
+(2002),
+(2003),
+(2004),
+(2005),
+(2006),
+(2007),
+(2008),
+(2009),
+(2010),
+(2011),
+(2012),
+(2013),
+(2014),
+(2015),
+(2016),
+(2017),
+(2018),
+(2019);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inscripcionestudiante`
+--
+
+CREATE TABLE `inscripcionestudiante` (
+  `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `id_gestion` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `esincritoespecial` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inscripcionestudiante`
+--
+
+INSERT INTO `inscripcionestudiante` (`id_estudiante`, `id_curso`, `id_gestion`, `fecha`, `esincritoespecial`) VALUES
+(1, 1, 2018, '2019-10-06', 1),
+(1, 1, 2019, '2019-10-06', 1),
+(2, 1, 2018, '2019-10-06', 1),
+(3, 1, 2018, '2019-10-06', 1),
+(3, 1, 2019, '2019-10-06', 1),
+(4, 1, 2018, '2019-10-06', 1),
+(4, 1, 2019, '2019-10-06', 1),
+(5, 1, 2018, '2019-10-06', 1),
+(5, 1, 2019, '2019-10-06', 1),
+(6, 1, 2018, '2019-10-06', 1),
+(6, 1, 2019, '2019-10-06', 1);
 
 -- --------------------------------------------------------
 
@@ -1319,6 +1427,17 @@ INSERT INTO `tratamiento` (`id`, `id_audiologia`, `id_tipotratamientoaudiologia`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `turno`
+--
+
+CREATE TABLE `turno` (
+  `id` int(11) NOT NULL,
+  `turno` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `unidadeducativa`
 --
 
@@ -1367,93 +1486,118 @@ CREATE TABLE `userlevelpermissions` (
 INSERT INTO `userlevelpermissions` (`userlevelid`, `tablename`, `permission`) VALUES
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}actividad', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}apoderado', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencion', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionescolaraudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionneonatoaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionotrosaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}audiologia', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}categoria', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}centros', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ciudad', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}curso', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}departamento', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}derivacion', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}diagnosticoaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}discapacidad', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}estudiante', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}gestion', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}inscripcionestudiante', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}institucionesdesalud', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}medio', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}municipio', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}neonatal', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otrasorganizaciones', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}persona', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}provincia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}pruebasaudiologia', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}referencia', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}sector', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tapon', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ticket.php', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoactividad', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipocentro', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiagnosticoaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiscapacidad', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoespecialidad', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoprueba', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipopruebasaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipotratamientoaudiologia', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tratamiento', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}unidadeducativa', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevelpermissions', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevels', 0),
 (-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}usuario', 0),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}actividad', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}apoderado', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}categoria', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}centros', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}estudiante', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}institucionesdesalud', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}neonatal', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otrasorganizaciones', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}persona', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}referencia', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}sector', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipocentro', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}unidadeducativa', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevelpermissions', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevels', 71),
-(4, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}usuario', 71),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}actividad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}apoderado', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencion', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionescolaraudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionneonatoaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionotrosaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}audiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}categoria', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}centros', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ciudad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}departamento', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}derivacion', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}diagnosticoaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}discapacidad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}estudiante', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}institucionesdesalud', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}medio', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}municipio', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}neonatal', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otrasorganizaciones', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}persona', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}provincia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}pruebasaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}referencia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}Report Neonatal', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}Reporte Neontal', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}sector', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tapon', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ticket.php', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoactividad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipocentro', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiagnosticoaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiscapacidad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoespecialidad', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoprueba', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipopruebasaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipotratamientoaudiologia', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tratamiento', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}unidadeducativa', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevelpermissions', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevels', 109),
-(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}usuario', 109);
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewactividad', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewdocente', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiante', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantecurso', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareo', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareocurso', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewmarcologico', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewparticipante', 0),
+(-2, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewunidadeducativa', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}actividad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}apoderado', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencion', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionescolaraudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionneonatoaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionotrosaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}audiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}categoria', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}centros', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ciudad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}curso', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}departamento', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}derivacion', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}diagnosticoaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}discapacidad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}estudiante', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}gestion', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}inscripcionestudiante', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}institucionesdesalud', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}medio', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}municipio', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}neonatal', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otrasorganizaciones', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}persona', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}provincia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}pruebasaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}referencia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}sector', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tapon', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ticket.php', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoactividad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipocentro', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiagnosticoaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiscapacidad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoespecialidad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoprueba', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipopruebasaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipotratamientoaudiologia', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tratamiento', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}unidadeducativa', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevelpermissions', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevels', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}usuario', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewactividad', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewdocente', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiante', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantecurso', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareo', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareocurso', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewmarcologico', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewparticipante', 0),
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewunidadeducativa', 0);
 
 -- --------------------------------------------------------
 
@@ -1463,7 +1607,7 @@ INSERT INTO `userlevelpermissions` (`userlevelid`, `tablename`, `permission`) VA
 
 CREATE TABLE `userlevels` (
   `userlevelid` int(11) NOT NULL,
-  `userlevelname` varchar(255) NOT NULL
+  `userlevelname` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1473,9 +1617,7 @@ CREATE TABLE `userlevels` (
 INSERT INTO `userlevels` (`userlevelid`, `userlevelname`) VALUES
 (-2, 'Anonymous'),
 (-1, 'Administrator'),
-(0, 'Default'),
-(4, 'test'),
-(9, 'nodelete');
+(0, 'Default');
 
 -- --------------------------------------------------------
 
@@ -1575,10 +1717,13 @@ CREATE TABLE `viewestudiante` (
 ,`fechanacimiento` date
 ,`edad` bigint(21)
 ,`sexo` varchar(100)
-,`curso` varchar(100)
 ,`discapacidad` varchar(100)
 ,`tipodiscapcidad` varchar(100)
 ,`nombreinstitucion` varchar(100)
+,`observaciones` varchar(100)
+,`id_estudiante` int(11)
+,`curso` varchar(50)
+,`fecha` date
 );
 
 -- --------------------------------------------------------
@@ -1602,7 +1747,7 @@ CREATE TABLE `viewestudiantecurso` (
 ,`fechanacimiento` date
 ,`edad` bigint(21)
 ,`sexo` varchar(100)
-,`curso` varchar(100)
+,`curso` int(11)
 ,`discapacidad` varchar(100)
 ,`tipodiscapcidad` varchar(100)
 ,`nombreinstitucion` varchar(100)
@@ -1615,9 +1760,22 @@ CREATE TABLE `viewestudiantecurso` (
 -- (See below for the actual view)
 --
 CREATE TABLE `viewestudiantesetareo` (
-`edad` bigint(21)
-,`etareo` varchar(5)
-,`nombreinstitucion` varchar(100)
+`unidadeducativa` varchar(100)
+,`0-3F` decimal(23,0)
+,`4-6F` decimal(23,0)
+,`7-9F` decimal(23,0)
+,`10-12F` decimal(23,0)
+,`13-15F` decimal(23,0)
+,`16-18F` decimal(23,0)
+,`19F` decimal(23,0)
+,`0-3M` decimal(23,0)
+,`4-6M` decimal(23,0)
+,`7-9M` decimal(23,0)
+,`10-12M` bigint(21)
+,`13-15M` decimal(23,0)
+,`16-18M` decimal(23,0)
+,`19M` decimal(23,0)
+,`fecha` date
 );
 
 -- --------------------------------------------------------
@@ -1630,7 +1788,7 @@ CREATE TABLE `viewestudiantesetareocurso` (
 `edad` bigint(21)
 ,`etareo` varchar(5)
 ,`nombreinstitucion` varchar(100)
-,`curso` varchar(100)
+,`curso` int(11)
 );
 
 -- --------------------------------------------------------
@@ -1640,9 +1798,18 @@ CREATE TABLE `viewestudiantesetareocurso` (
 -- (See below for the actual view)
 --
 CREATE TABLE `viewmarcologico` (
-`edad` bigint(21)
-,`etareo` varchar(5)
-,`nombreinstitucion` varchar(100)
+`nombreinstitucion` varchar(100)
+,`fecha` date
+,`cuadro1` bigint(21)
+,`cuadro2` bigint(20)
+,`cuadro3` bigint(20)
+,`cuadro4` bigint(20)
+,`cuadro5` bigint(20)
+,`cuadro6` bigint(20)
+,`cuadro7` bigint(20)
+,`cuadro8` bigint(20)
+,`cuadro9` bigint(20)
+,`cuadro10` bigint(20)
 );
 
 -- --------------------------------------------------------
@@ -1697,7 +1864,7 @@ CREATE TABLE `viewunidadeducativa` (
 --
 DROP TABLE IF EXISTS `atencionescolaraudiologia`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionescolaraudiologia`  AS  select `atencion`.`id` AS `id`,`atencion`.`id_escolar` AS `id_escolar`,`atencion`.`id_especialista` AS `id_especialista` from `atencion` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionescolaraudiologia`  AS  select `atencion`.`id` AS `id`,`atencion`.`id_escolar` AS `id_escolar`,`atencion`.`id_especialista` AS `id_especialista`,`atencion`.`id_referencia` AS `id_referencia` from `atencion` ;
 
 -- --------------------------------------------------------
 
@@ -1706,7 +1873,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `atencionneonatoaudiologia`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionneonatoaudiologia`  AS  select `atencion`.`id` AS `id1`,`atencion`.`id_neonato` AS `id_neonato`,`atencion`.`id_especialista` AS `id_especialista` from `atencion` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionneonatoaudiologia`  AS  select `atencion`.`id` AS `id1`,`atencion`.`id_neonato` AS `id_neonato`,`atencion`.`id_especialista` AS `id_especialista`,`atencion`.`id_referencia` AS `id_referencia` from `atencion` ;
 
 -- --------------------------------------------------------
 
@@ -1715,7 +1882,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `atencionotrosaudiologia`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionotrosaudiologia`  AS  select `atencion`.`id` AS `id`,`atencion`.`id_otros` AS `id_otros`,`atencion`.`id_especialista` AS `id_especialista` from `atencion` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `atencionotrosaudiologia`  AS  select `atencion`.`id` AS `id`,`atencion`.`id_otros` AS `id_otros`,`atencion`.`id_especialista` AS `id_especialista`,`atencion`.`id_referencia` AS `id_referencia` from `atencion` ;
 
 -- --------------------------------------------------------
 
@@ -1742,7 +1909,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `viewestudiante`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewestudiante`  AS  select `departamento`.`nombre` AS `departamento`,`estudiante`.`codigorude` AS `codigorude`,`estudiante`.`codigorude_es` AS `codigorude_es`,`municipio`.`descripcion` AS `municipio`,`provincia`.`nombre` AS `provincia`,`unidadeducativa`.`nombre` AS `unidadeducativa`,`estudiante`.`nombres` AS `nombre`,`estudiante`.`apellidomaterno` AS `materno`,`estudiante`.`apellidopaterno` AS `paterno`,`estudiante`.`nrodiscapacidad` AS `nrodiscapacidad`,`estudiante`.`ci` AS `ci`,`estudiante`.`fechanacimiento` AS `fechanacimiento`,timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) AS `edad`,`estudiante`.`sexo` AS `sexo`,`estudiante`.`curso` AS `curso`,`discapacidad`.`nombre` AS `discapacidad`,`tipodiscapacidad`.`nombre` AS `tipodiscapcidad`,`centros`.`nombreinstitucion` AS `nombreinstitucion` from (((((((`estudiante` left join `departamento` on((`departamento`.`id` = `estudiante`.`departamento`))) left join `municipio` on((`municipio`.`id` = `estudiante`.`municipio`))) left join `provincia` on((`provincia`.`id` = `estudiante`.`provincisa`))) left join `unidadeducativa` on((`unidadeducativa`.`id` = `estudiante`.`unidadeducativa`))) left join `discapacidad` on((`discapacidad`.`id` = `estudiante`.`discapacidad`))) left join `tipodiscapacidad` on((`tipodiscapacidad`.`id` = `estudiante`.`tipodiscapacidad`))) left join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewestudiante`  AS  select `departamento`.`nombre` AS `departamento`,`estudiante`.`codigorude` AS `codigorude`,`estudiante`.`codigorude_es` AS `codigorude_es`,`municipio`.`descripcion` AS `municipio`,`provincia`.`nombre` AS `provincia`,`unidadeducativa`.`nombre` AS `unidadeducativa`,`estudiante`.`nombres` AS `nombre`,`estudiante`.`apellidomaterno` AS `materno`,`estudiante`.`apellidopaterno` AS `paterno`,`estudiante`.`nrodiscapacidad` AS `nrodiscapacidad`,`estudiante`.`ci` AS `ci`,`estudiante`.`fechanacimiento` AS `fechanacimiento`,timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) AS `edad`,`estudiante`.`sexo` AS `sexo`,`discapacidad`.`nombre` AS `discapacidad`,`tipodiscapacidad`.`nombre` AS `tipodiscapcidad`,`centros`.`nombreinstitucion` AS `nombreinstitucion`,`estudiante`.`observaciones` AS `observaciones`,`inscripcionestudiante`.`id_estudiante` AS `id_estudiante`,`curso`.`curso` AS `curso`,`inscripcionestudiante`.`fecha` AS `fecha` from (((((((((`estudiante` join `departamento` on((`departamento`.`id` = `estudiante`.`departamento`))) join `municipio` on((`municipio`.`id` = `estudiante`.`municipio`))) join `provincia` on((`provincia`.`id` = `estudiante`.`provincisa`))) join `unidadeducativa` on((`unidadeducativa`.`id` = `estudiante`.`unidadeducativa`))) join `discapacidad` on((`discapacidad`.`id` = `estudiante`.`discapacidad`))) join `tipodiscapacidad` on((`tipodiscapacidad`.`id` = `estudiante`.`tipodiscapacidad`))) join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) join `inscripcionestudiante` on((`inscripcionestudiante`.`id_estudiante` = `estudiante`.`id`))) join `curso` on((`inscripcionestudiante`.`id_curso` = `curso`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -1760,7 +1927,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `viewestudiantesetareo`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewestudiantesetareo`  AS  select timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) AS `edad`,(case when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) then '19-X' else '19-X' end) AS `etareo`,`centros`.`nombreinstitucion` AS `nombreinstitucion` from (((((((`estudiante` left join `departamento` on((`departamento`.`id` = `estudiante`.`departamento`))) left join `municipio` on((`municipio`.`id` = `estudiante`.`municipio`))) left join `provincia` on((`provincia`.`id` = `estudiante`.`provincisa`))) left join `unidadeducativa` on((`unidadeducativa`.`id` = `estudiante`.`unidadeducativa`))) left join `discapacidad` on((`discapacidad`.`id` = `estudiante`.`discapacidad`))) left join `tipodiscapacidad` on((`tipodiscapacidad`.`id` = `estudiante`.`tipodiscapacidad`))) left join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) group by timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()),`centros`.`nombreinstitucion` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewestudiantesetareo`  AS  select `unidadeducativa`.`nombre` AS `unidadeducativa`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `0-3F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `4-6F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `7-9F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `10-12F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `13-15F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 else 0 end)) AS `16-18F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'FEMENINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'FEMENINO')) then 1 else 1 end)) AS `19F`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `0-3M`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `4-6M`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `7-9M`,count((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `10-12M`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `13-15M`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 else 0 end)) AS `16-18M`,sum((case when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) and (`estudiante`.`sexo` = 'MASCULINO')) then 0 when ((timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) and (`estudiante`.`sexo` = 'MASCULINO')) then 1 else 1 end)) AS `19M`,`inscripcionestudiante`.`fecha` AS `fecha` from ((`estudiante` left join `unidadeducativa` on((`unidadeducativa`.`id` = `estudiante`.`unidadeducativa`))) join `inscripcionestudiante` on((`inscripcionestudiante`.`id_estudiante` = `estudiante`.`id`))) group by `unidadeducativa`.`nombre`,`inscripcionestudiante`.`fecha` ;
 
 -- --------------------------------------------------------
 
@@ -1778,7 +1945,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `viewmarcologico`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewmarcologico`  AS  select timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) AS `edad`,(case when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 0) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 1) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 2) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 3) then '0-3' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 4) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 5) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 6) then '4-6' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 7) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 8) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 9) then '7-9' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 10) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 11) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 12) then '9-12' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 13) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 14) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 15) then '13-15' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 16) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 17) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) = 18) then '16-18' when (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) >= 19) then '19-X' else '19-X' end) AS `etareo`,`centros`.`nombreinstitucion` AS `nombreinstitucion` from (((((((`estudiante` left join `departamento` on((`departamento`.`id` = `estudiante`.`departamento`))) left join `municipio` on((`municipio`.`id` = `estudiante`.`municipio`))) left join `provincia` on((`provincia`.`id` = `estudiante`.`provincisa`))) left join `unidadeducativa` on((`unidadeducativa`.`id` = `estudiante`.`unidadeducativa`))) left join `discapacidad` on((`discapacidad`.`id` = `estudiante`.`discapacidad`))) left join `tipodiscapacidad` on((`tipodiscapacidad`.`id` = `estudiante`.`tipodiscapacidad`))) left join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) group by timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()),`centros`.`nombreinstitucion`,`estudiante`.`curso` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewmarcologico`  AS  select `centros`.`nombreinstitucion` AS `nombreinstitucion`,`inscripcionestudiante`.`fecha` AS `fecha`,count(`estudiante`.`id`) AS `cuadro1`,0 AS `cuadro2`,0 AS `cuadro3`,0 AS `cuadro4`,0 AS `cuadro5`,0 AS `cuadro6`,0 AS `cuadro7`,0 AS `cuadro8`,0 AS `cuadro9`,0 AS `cuadro10` from (((`estudiante` join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) join `inscripcionestudiante` on((`inscripcionestudiante`.`id_estudiante` = `estudiante`.`id`))) join `curso` on((`inscripcionestudiante`.`id_curso` = `curso`.`id`))) where (timestampdiff(YEAR,`estudiante`.`fechanacimiento`,curdate()) in (0,1,2,3,4)) group by `centros`.`nombreinstitucion`,`inscripcionestudiante`.`fecha` union all select `centros`.`nombreinstitucion` AS `nombreinstitucion`,`inscripcionestudiante`.`fecha` AS `fecha`,0 AS `cuadro1`,count(`estudiante`.`id`) AS `cuadro2`,0 AS `cuadro3`,0 AS `cuadro4`,0 AS `cuadro5`,0 AS `cuadro6`,0 AS `cuadro7`,0 AS `cuadro8`,0 AS `cuadro9`,0 AS `cuadro10` from (((`estudiante` join `centros` on((`centros`.`id` = `estudiante`.`id_centro`))) join `inscripcionestudiante` on((`inscripcionestudiante`.`id_estudiante` = `estudiante`.`id`))) join `curso` on((`inscripcionestudiante`.`id_curso` = `curso`.`id`))) where (`estudiante`.`discapacidad` = 1) group by `centros`.`nombreinstitucion`,`inscripcionestudiante`.`fecha` union all select `centros`.`nombreinstitucion` AS `nombreinstitucion`,`actividad`.`fecha_fin` AS `fecha`,0 AS `cuadro1`,0 AS `cuadro2`,count(`participante`.`id`) AS `cuadro3`,0 AS `cuadro4`,0 AS `cuadro5`,0 AS `cuadro6`,0 AS `cuadro7`,0 AS `cuadro8`,0 AS `cuadro9`,0 AS `cuadro10` from ((`actividad` join `participante` on((`actividad`.`id` = `participante`.`id_actividad`))) join `centros` on((`centros`.`id` = `participante`.`id_centro`))) group by `centros`.`nombreinstitucion`,`actividad`.`fecha_fin` ;
 
 -- --------------------------------------------------------
 
@@ -1845,6 +2012,12 @@ ALTER TABLE `ciudad`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `curso`
+--
+ALTER TABLE `curso`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `departamento`
 --
 ALTER TABLE `departamento`
@@ -1891,6 +2064,18 @@ ALTER TABLE `especialista`
 --
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gestion`
+--
+ALTER TABLE `gestion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inscripcionestudiante`
+--
+ALTER TABLE `inscripcionestudiante`
+  ADD PRIMARY KEY (`id_estudiante`,`id_curso`,`id_gestion`);
 
 --
 -- Indexes for table `institucionesdesalud`
@@ -2088,6 +2273,11 @@ ALTER TABLE `centros`
 ALTER TABLE `ciudad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `curso`
+--
+ALTER TABLE `curso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
 -- AUTO_INCREMENT for table `departamento`
 --
 ALTER TABLE `departamento`
@@ -2127,6 +2317,11 @@ ALTER TABLE `especialista`
 --
 ALTER TABLE `estudiante`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+--
+-- AUTO_INCREMENT for table `gestion`
+--
+ALTER TABLE `gestion`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2020;
 --
 -- AUTO_INCREMENT for table `institucionesdesalud`
 --

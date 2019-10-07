@@ -617,10 +617,6 @@ class cmunicipio_list extends cmunicipio {
 			$sFilter = "(0=1)"; // Filter all records
 		ew_AddFilter($sFilter, $this->DbDetailFilter);
 		ew_AddFilter($sFilter, $this->SearchWhere);
-		if ($sFilter == "") {
-			$sFilter = "0=101";
-			$this->SearchWhere = $sFilter;
-		}
 
 		// Set up filter
 		if ($this->Command == "json") {

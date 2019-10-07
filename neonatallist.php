@@ -754,6 +754,10 @@ class cneonatal_list extends cneonatal {
 		// Initialize
 		$sFilterList = "";
 		$sSavedFilterList = "";
+
+		// Load server side filters
+		if (EW_SEARCH_FILTER_OPTION == "Server" && isset($UserProfile))
+			$sSavedFilterList = $UserProfile->GetSearchFilters(CurrentUserName(), "fneonatallistsrch");
 		$sFilterList = ew_Concat($sFilterList, $this->id->AdvancedSearch->ToJson(), ","); // Field id
 		$sFilterList = ew_Concat($sFilterList, $this->fecha_tamizaje->AdvancedSearch->ToJson(), ","); // Field fecha_tamizaje
 		$sFilterList = ew_Concat($sFilterList, $this->id_centro->AdvancedSearch->ToJson(), ","); // Field id_centro

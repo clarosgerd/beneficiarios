@@ -579,12 +579,13 @@ class cratencion_rpt extends cratencion {
 		$this->id_otros->SetVisibility();
 		$this->id_escolar->SetVisibility();
 		$this->id_especialista->SetVisibility();
+		$this->id_referencia->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 6;
+		$nDtls = 7;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -597,7 +598,7 @@ class cratencion_rpt extends cratencion {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -805,6 +806,7 @@ class cratencion_rpt extends cratencion {
 				$this->FirstRowData['id_otros'] = ewr_Conv($rs->fields('id_otros'), 3);
 				$this->FirstRowData['id_escolar'] = ewr_Conv($rs->fields('id_escolar'), 3);
 				$this->FirstRowData['id_especialista'] = ewr_Conv($rs->fields('id_especialista'), 3);
+				$this->FirstRowData['id_referencia'] = ewr_Conv($rs->fields('id_referencia'), 3);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -814,17 +816,20 @@ class cratencion_rpt extends cratencion {
 			$this->id_otros->setDbValue($rs->fields('id_otros'));
 			$this->id_escolar->setDbValue($rs->fields('id_escolar'));
 			$this->id_especialista->setDbValue($rs->fields('id_especialista'));
+			$this->id_referencia->setDbValue($rs->fields('id_referencia'));
 			$this->Val[1] = $this->id->CurrentValue;
 			$this->Val[2] = $this->id_neonato->CurrentValue;
 			$this->Val[3] = $this->id_otros->CurrentValue;
 			$this->Val[4] = $this->id_escolar->CurrentValue;
 			$this->Val[5] = $this->id_especialista->CurrentValue;
+			$this->Val[6] = $this->id_referencia->CurrentValue;
 		} else {
 			$this->id->setDbValue("");
 			$this->id_neonato->setDbValue("");
 			$this->id_otros->setDbValue("");
 			$this->id_escolar->setDbValue("");
 			$this->id_especialista->setDbValue("");
+			$this->id_referencia->setDbValue("");
 		}
 	}
 
@@ -1026,6 +1031,9 @@ class cratencion_rpt extends cratencion {
 
 			// id_especialista
 			$this->id_especialista->HrefValue = "";
+
+			// id_referencia
+			$this->id_referencia->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1051,6 +1059,10 @@ class cratencion_rpt extends cratencion {
 			$this->id_especialista->ViewValue = $this->id_especialista->CurrentValue;
 			$this->id_especialista->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// id_referencia
+			$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+			$this->id_referencia->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// id
 			$this->id->HrefValue = "";
 
@@ -1065,6 +1077,9 @@ class cratencion_rpt extends cratencion {
 
 			// id_especialista
 			$this->id_especialista->HrefValue = "";
+
+			// id_referencia
+			$this->id_referencia->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1115,6 +1130,15 @@ class cratencion_rpt extends cratencion {
 			$HrefValue = &$this->id_especialista->HrefValue;
 			$LinkAttrs = &$this->id_especialista->LinkAttrs;
 			$this->Cell_Rendered($this->id_especialista, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// id_referencia
+			$CurrentValue = $this->id_referencia->CurrentValue;
+			$ViewValue = &$this->id_referencia->ViewValue;
+			$ViewAttrs = &$this->id_referencia->ViewAttrs;
+			$CellAttrs = &$this->id_referencia->CellAttrs;
+			$HrefValue = &$this->id_referencia->HrefValue;
+			$LinkAttrs = &$this->id_referencia->LinkAttrs;
+			$this->Cell_Rendered($this->id_referencia, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1132,6 +1156,7 @@ class cratencion_rpt extends cratencion {
 		if ($this->id_otros->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_escolar->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_especialista->Visible) $this->DtlColumnCount += 1;
+		if ($this->id_referencia->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1181,6 +1206,7 @@ class cratencion_rpt extends cratencion {
 			$this->id_otros->setSort("");
 			$this->id_escolar->setSort("");
 			$this->id_especialista->setSort("");
+			$this->id_referencia->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -1515,6 +1541,24 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
+<?php if ($Page->id_referencia->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="id_referencia"><div class="atencion_id_referencia"><span class="ewTableHeaderCaption"><?php echo $Page->id_referencia->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="id_referencia">
+<?php if ($Page->SortUrl($Page->id_referencia) == "") { ?>
+		<div class="ewTableHeaderBtn atencion_id_referencia">
+			<span class="ewTableHeaderCaption"><?php echo $Page->id_referencia->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer atencion_id_referencia" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->id_referencia) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->id_referencia->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->id_referencia->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->id_referencia->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -1552,6 +1596,10 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->id_especialista->Visible) { ?>
 		<td data-field="id_especialista"<?php echo $Page->id_especialista->CellAttributes() ?>>
 <span<?php echo $Page->id_especialista->ViewAttributes() ?>><?php echo $Page->id_especialista->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->id_referencia->Visible) { ?>
+		<td data-field="id_referencia"<?php echo $Page->id_referencia->CellAttributes() ?>>
+<span<?php echo $Page->id_referencia->ViewAttributes() ?>><?php echo $Page->id_referencia->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

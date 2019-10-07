@@ -158,7 +158,7 @@ class crviewestudiantecurso extends crTableBase {
 		$this->fields['sexo'] = &$this->sexo;
 
 		// curso
-		$this->curso = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_curso', 'curso', '`curso`', 200, EWR_DATATYPE_STRING, -1);
+		$this->curso = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_curso', 'curso', '`curso`', 3, EWR_DATATYPE_NUMBER, -1);
 		$this->curso->Sortable = TRUE; // Allow sort
 		$this->curso->DateFilter = "";
 		$this->curso->SqlSelect = "SELECT DISTINCT `curso`, `curso` AS `DispFld` FROM " . $this->getSqlFrom();

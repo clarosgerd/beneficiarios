@@ -9,7 +9,7 @@ $viewestudiantesetareo = NULL;
 class crviewestudiantesetareo extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
 	var $ShowCompactSummaryFooter = FALSE;
-	var $nombreinstitucion;
+	var $unidadeducativa;
 	var $_0_3F;
 	var $_4_6F;
 	var $_7_9F;
@@ -24,6 +24,7 @@ class crviewestudiantesetareo extends crTableBase {
 	var $_13_15M;
 	var $_16_18M;
 	var $_19M;
+	var $fecha;
 
 	//
 	// Table class constructor
@@ -40,13 +41,13 @@ class crviewestudiantesetareo extends crTableBase {
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
-		// nombreinstitucion
-		$this->nombreinstitucion = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
-		$this->nombreinstitucion->DateFilter = "";
-		$this->nombreinstitucion->SqlSelect = "";
-		$this->nombreinstitucion->SqlOrderBy = "";
-		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
+		// unidadeducativa
+		$this->unidadeducativa = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x_unidadeducativa', 'unidadeducativa', '`unidadeducativa`', 200, EWR_DATATYPE_STRING, -1);
+		$this->unidadeducativa->Sortable = TRUE; // Allow sort
+		$this->unidadeducativa->DateFilter = "";
+		$this->unidadeducativa->SqlSelect = "";
+		$this->unidadeducativa->SqlOrderBy = "";
+		$this->fields['unidadeducativa'] = &$this->unidadeducativa;
 
 		// 0-3F
 		$this->_0_3F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__0_3F', '0-3F', '`0-3F`', 131, EWR_DATATYPE_NUMBER, -1);
@@ -173,6 +174,15 @@ class crviewestudiantesetareo extends crTableBase {
 		$this->_19M->SqlSelect = "";
 		$this->_19M->SqlOrderBy = "";
 		$this->fields['19M'] = &$this->_19M;
+
+		// fecha
+		$this->fecha = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
+		$this->fecha->DateFilter = "";
+		$this->fecha->SqlSelect = "";
+		$this->fecha->SqlOrderBy = "";
+		$this->fields['fecha'] = &$this->fecha;
 	}
 
 	// Set Field Visibility

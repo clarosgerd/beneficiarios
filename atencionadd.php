@@ -329,6 +329,7 @@ class catencion_add extends catencion {
 		$this->id_otros->SetVisibility();
 		$this->id_escolar->SetVisibility();
 		$this->id_especialista->SetVisibility();
+		$this->id_referencia->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -540,6 +541,8 @@ class catencion_add extends catencion {
 		$this->id_escolar->OldValue = $this->id_escolar->CurrentValue;
 		$this->id_especialista->CurrentValue = NULL;
 		$this->id_especialista->OldValue = $this->id_especialista->CurrentValue;
+		$this->id_referencia->CurrentValue = NULL;
+		$this->id_referencia->OldValue = $this->id_referencia->CurrentValue;
 	}
 
 	// Load form values
@@ -559,6 +562,9 @@ class catencion_add extends catencion {
 		if (!$this->id_especialista->FldIsDetailKey) {
 			$this->id_especialista->setFormValue($objForm->GetValue("x_id_especialista"));
 		}
+		if (!$this->id_referencia->FldIsDetailKey) {
+			$this->id_referencia->setFormValue($objForm->GetValue("x_id_referencia"));
+		}
 	}
 
 	// Restore form values
@@ -568,6 +574,7 @@ class catencion_add extends catencion {
 		$this->id_otros->CurrentValue = $this->id_otros->FormValue;
 		$this->id_escolar->CurrentValue = $this->id_escolar->FormValue;
 		$this->id_especialista->CurrentValue = $this->id_especialista->FormValue;
+		$this->id_referencia->CurrentValue = $this->id_referencia->FormValue;
 	}
 
 	// Load row based on key values
@@ -623,6 +630,7 @@ class catencion_add extends catencion {
 		} else {
 			$this->id_especialista->VirtualValue = ""; // Clear value
 		}
+		$this->id_referencia->setDbValue($row['id_referencia']);
 	}
 
 	// Return a row with default values
@@ -634,6 +642,7 @@ class catencion_add extends catencion {
 		$row['id_otros'] = $this->id_otros->CurrentValue;
 		$row['id_escolar'] = $this->id_escolar->CurrentValue;
 		$row['id_especialista'] = $this->id_especialista->CurrentValue;
+		$row['id_referencia'] = $this->id_referencia->CurrentValue;
 		return $row;
 	}
 
@@ -647,6 +656,7 @@ class catencion_add extends catencion {
 		$this->id_otros->DbValue = $row['id_otros'];
 		$this->id_escolar->DbValue = $row['id_escolar'];
 		$this->id_especialista->DbValue = $row['id_especialista'];
+		$this->id_referencia->DbValue = $row['id_referencia'];
 	}
 
 	// Load old record
@@ -686,6 +696,7 @@ class catencion_add extends catencion {
 		// id_otros
 		// id_escolar
 		// id_especialista
+		// id_referencia
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -784,6 +795,10 @@ class catencion_add extends catencion {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+		$this->id_referencia->ViewCustomAttributes = "";
+
 			// id_neonato
 			$this->id_neonato->LinkCustomAttributes = "";
 			$this->id_neonato->HrefValue = "";
@@ -803,6 +818,11 @@ class catencion_add extends catencion {
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
 			$this->id_especialista->TooltipValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
+			$this->id_referencia->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_ADD) { // Add row
 
 			// id_neonato
@@ -892,6 +912,12 @@ class catencion_add extends catencion {
 			if ($rswrk) $rswrk->Close();
 			$this->id_especialista->EditValue = $arwrk;
 
+			// id_referencia
+			$this->id_referencia->EditAttrs["class"] = "form-control";
+			$this->id_referencia->EditCustomAttributes = "";
+			$this->id_referencia->EditValue = ew_HtmlEncode($this->id_referencia->CurrentValue);
+			$this->id_referencia->PlaceHolder = ew_RemoveHtml($this->id_referencia->FldCaption());
+
 			// Add refer script
 			// id_neonato
 
@@ -909,6 +935,10 @@ class catencion_add extends catencion {
 			// id_especialista
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -933,6 +963,9 @@ class catencion_add extends catencion {
 		}
 		if (!$this->id_especialista->FldIsDetailKey && !is_null($this->id_especialista->FormValue) && $this->id_especialista->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_especialista->FldCaption(), $this->id_especialista->ReqErrMsg));
+		}
+		if (!ew_CheckInteger($this->id_referencia->FormValue)) {
+			ew_AddMessage($gsFormError, $this->id_referencia->FldErrMsg());
 		}
 
 		// Return validate result
@@ -969,6 +1002,9 @@ class catencion_add extends catencion {
 
 		// id_especialista
 		$this->id_especialista->SetDbValueDef($rsnew, $this->id_especialista->CurrentValue, 0, FALSE);
+
+		// id_referencia
+		$this->id_referencia->SetDbValueDef($rsnew, $this->id_referencia->CurrentValue, NULL, FALSE);
 
 		// Call Row Inserting event
 		$rs = ($rsold == NULL) ? NULL : $rsold->fields;
@@ -1176,6 +1212,9 @@ fatencionadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_especialista");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $atencion->id_especialista->FldCaption(), $atencion->id_especialista->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_id_referencia");
+			if (elm && !ew_CheckInteger(elm.value))
+				return this.OnError(elm, "<?php echo ew_JsEncode2($atencion->id_referencia->FldErrMsg()) ?>");
 
 			// Fire Form_CustomValidate event
 			if (!this.Form_CustomValidate(fobj))
@@ -1286,6 +1325,16 @@ $atencion_add->ShowMessage();
 <input type="hidden" data-table="atencion" data-field="x_id_especialista" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $atencion->id_especialista->DisplayValueSeparatorAttribute() ?>" name="x_id_especialista" id="x_id_especialista" value="<?php echo $atencion->id_especialista->CurrentValue ?>"<?php echo $atencion->id_especialista->EditAttributes() ?>>
 </span>
 <?php echo $atencion->id_especialista->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($atencion->id_referencia->Visible) { // id_referencia ?>
+	<div id="r_id_referencia" class="form-group">
+		<label id="elh_atencion_id_referencia" for="x_id_referencia" class="<?php echo $atencion_add->LeftColumnClass ?>"><?php echo $atencion->id_referencia->FldCaption() ?></label>
+		<div class="<?php echo $atencion_add->RightColumnClass ?>"><div<?php echo $atencion->id_referencia->CellAttributes() ?>>
+<span id="el_atencion_id_referencia">
+<input type="text" data-table="atencion" data-field="x_id_referencia" name="x_id_referencia" id="x_id_referencia" size="30" placeholder="<?php echo ew_HtmlEncode($atencion->id_referencia->getPlaceHolder()) ?>" value="<?php echo $atencion->id_referencia->EditValue ?>"<?php echo $atencion->id_referencia->EditAttributes() ?>>
+</span>
+<?php echo $atencion->id_referencia->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->

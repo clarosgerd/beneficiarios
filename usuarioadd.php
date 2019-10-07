@@ -750,7 +750,26 @@ class cusuario_add extends cusuario {
 		$this->id_rol->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 		// ci
@@ -854,8 +873,21 @@ class cusuario_add extends cusuario {
 			// id_centro
 			$this->id_centro->EditAttrs["class"] = "form-control";
 			$this->id_centro->EditCustomAttributes = "";
-			$this->id_centro->EditValue = ew_HtmlEncode($this->id_centro->CurrentValue);
-			$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
+			if (trim(strval($this->id_centro->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sWhereWrk = "";
+			$this->id_centro->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_centro->EditValue = $arwrk;
 
 			// ci
 			$this->ci->EditAttrs["class"] = "form-control";
@@ -931,9 +963,6 @@ class cusuario_add extends cusuario {
 		}
 		if (!$this->id_centro->FldIsDetailKey && !is_null($this->id_centro->FormValue) && $this->id_centro->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_centro->FldCaption(), $this->id_centro->ReqErrMsg));
-		}
-		if (!ew_CheckInteger($this->id_centro->FormValue)) {
-			ew_AddMessage($gsFormError, $this->id_centro->FldErrMsg());
 		}
 		if (!$this->ci->FldIsDetailKey && !is_null($this->ci->FormValue) && $this->ci->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->ci->FldCaption(), $this->ci->ReqErrMsg));
@@ -1095,6 +1124,18 @@ class cusuario_add extends cusuario {
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
 			break;
+		case "x_id_centro":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
 		}
 	}
 
@@ -1229,9 +1270,6 @@ fusuarioadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_centro");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $usuario->id_centro->FldCaption(), $usuario->id_centro->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_id_centro");
-			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($usuario->id_centro->FldErrMsg()) ?>");
 			elm = this.GetElements("x" + infix + "_ci");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $usuario->ci->FldCaption(), $usuario->ci->ReqErrMsg)) ?>");
@@ -1269,6 +1307,8 @@ fusuarioadd.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) ?>;
 // Dynamic selection lists
 fusuarioadd.Lists["x_id_rol"] = {"LinkField":"x_userlevelid","Ajax":true,"AutoFill":false,"DisplayFields":["x_userlevelname","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"userlevels"};
 fusuarioadd.Lists["x_id_rol"].Data = "<?php echo $usuario_add->id_rol->LookupFilterQuery(FALSE, "add") ?>";
+fusuarioadd.Lists["x_id_centro"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+fusuarioadd.Lists["x_id_centro"].Data = "<?php echo $usuario_add->id_centro->LookupFilterQuery(FALSE, "add") ?>";
 
 // Form object for search
 </script>
@@ -1366,7 +1406,9 @@ $usuario_add->ShowMessage();
 		<label id="elh_usuario_id_centro" for="x_id_centro" class="<?php echo $usuario_add->LeftColumnClass ?>"><?php echo $usuario->id_centro->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $usuario_add->RightColumnClass ?>"><div<?php echo $usuario->id_centro->CellAttributes() ?>>
 <span id="el_usuario_id_centro">
-<input type="text" data-table="usuario" data-field="x_id_centro" name="x_id_centro" id="x_id_centro" size="30" placeholder="<?php echo ew_HtmlEncode($usuario->id_centro->getPlaceHolder()) ?>" value="<?php echo $usuario->id_centro->EditValue ?>"<?php echo $usuario->id_centro->EditAttributes() ?>>
+<select data-table="usuario" data-field="x_id_centro" data-value-separator="<?php echo $usuario->id_centro->DisplayValueSeparatorAttribute() ?>" id="x_id_centro" name="x_id_centro"<?php echo $usuario->id_centro->EditAttributes() ?>>
+<?php echo $usuario->id_centro->SelectOptionListHtml("x_id_centro") ?>
+</select>
 </span>
 <?php echo $usuario->id_centro->CustomMsg ?></div></div>
 	</div>

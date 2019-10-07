@@ -413,6 +413,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 			$this->id1->Visible = FALSE;
 		$this->id_neonato->SetVisibility();
 		$this->id_especialista->SetVisibility();
+		$this->id_referencia->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -695,6 +696,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 			$this->UpdateSort($this->id1, $bCtrl); // id1
 			$this->UpdateSort($this->id_neonato, $bCtrl); // id_neonato
 			$this->UpdateSort($this->id_especialista, $bCtrl); // id_especialista
+			$this->UpdateSort($this->id_referencia, $bCtrl); // id_referencia
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -727,6 +729,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 				$this->id1->setSort("");
 				$this->id_neonato->setSort("");
 				$this->id_especialista->setSort("");
+				$this->id_referencia->setSort("");
 			}
 
 			// Reset start position
@@ -1133,6 +1136,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 		} else {
 			$this->id_especialista->VirtualValue = ""; // Clear value
 		}
+		$this->id_referencia->setDbValue($row['id_referencia']);
 	}
 
 	// Return a row with default values
@@ -1141,6 +1145,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 		$row['id1'] = NULL;
 		$row['id_neonato'] = NULL;
 		$row['id_especialista'] = NULL;
+		$row['id_referencia'] = NULL;
 		return $row;
 	}
 
@@ -1152,6 +1157,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 		$this->id1->DbValue = $row['id1'];
 		$this->id_neonato->DbValue = $row['id_neonato'];
 		$this->id_especialista->DbValue = $row['id_especialista'];
+		$this->id_referencia->DbValue = $row['id_referencia'];
 	}
 
 	// Load old record
@@ -1195,6 +1201,7 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 		// id1
 		// id_neonato
 		// id_especialista
+		// id_referencia
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -1261,6 +1268,30 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		if (strval($this->id_referencia->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_referencia->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `referencia`";
+		$sWhereWrk = "";
+		$this->id_referencia->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$arwrk[2] = $rswrk->fields('Disp2Fld');
+				$this->id_referencia->ViewValue = $this->id_referencia->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+			}
+		} else {
+			$this->id_referencia->ViewValue = NULL;
+		}
+		$this->id_referencia->ViewCustomAttributes = "";
+
 			// id1
 			$this->id1->LinkCustomAttributes = "";
 			$this->id1->HrefValue = "";
@@ -1275,6 +1306,11 @@ class catencionneonatoaudiologia_list extends catencionneonatoaudiologia {
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
 			$this->id_especialista->TooltipValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
+			$this->id_referencia->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1478,6 +1514,8 @@ fatencionneonatoaudiologialist.Lists["x_id_neonato"] = {"LinkField":"x_id","Ajax
 fatencionneonatoaudiologialist.Lists["x_id_neonato"].Data = "<?php echo $atencionneonatoaudiologia_list->id_neonato->LookupFilterQuery(FALSE, "list") ?>";
 fatencionneonatoaudiologialist.Lists["x_id_especialista"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombres","x_apellidopaterno","x_apellidomaterno","x_nombreespecialidad"],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"especialista"};
 fatencionneonatoaudiologialist.Lists["x_id_especialista"].Data = "<?php echo $atencionneonatoaudiologia_list->id_especialista->LookupFilterQuery(FALSE, "list") ?>";
+fatencionneonatoaudiologialist.Lists["x_id_referencia"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombrescompleto","x_nombrescentromedico","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"referencia"};
+fatencionneonatoaudiologialist.Lists["x_id_referencia"].Data = "<?php echo $atencionneonatoaudiologia_list->id_referencia->LookupFilterQuery(FALSE, "list") ?>";
 
 // Form object for search
 </script>
@@ -1631,6 +1669,15 @@ $atencionneonatoaudiologia_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
+<?php if ($atencionneonatoaudiologia->id_referencia->Visible) { // id_referencia ?>
+	<?php if ($atencionneonatoaudiologia->SortUrl($atencionneonatoaudiologia->id_referencia) == "") { ?>
+		<th data-name="id_referencia" class="<?php echo $atencionneonatoaudiologia->id_referencia->HeaderCellClass() ?>"><div id="elh_atencionneonatoaudiologia_id_referencia" class="atencionneonatoaudiologia_id_referencia"><div class="ewTableHeaderCaption"><?php echo $atencionneonatoaudiologia->id_referencia->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="id_referencia" class="<?php echo $atencionneonatoaudiologia->id_referencia->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $atencionneonatoaudiologia->SortUrl($atencionneonatoaudiologia->id_referencia) ?>',2);"><div id="elh_atencionneonatoaudiologia_id_referencia" class="atencionneonatoaudiologia_id_referencia">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $atencionneonatoaudiologia->id_referencia->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($atencionneonatoaudiologia->id_referencia->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($atencionneonatoaudiologia->id_referencia->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
 <?php
 
 // Render list options (header, right)
@@ -1717,6 +1764,14 @@ $atencionneonatoaudiologia_list->ListOptions->Render("body", "left", $atencionne
 <span id="el<?php echo $atencionneonatoaudiologia_list->RowCnt ?>_atencionneonatoaudiologia_id_especialista" class="atencionneonatoaudiologia_id_especialista">
 <span<?php echo $atencionneonatoaudiologia->id_especialista->ViewAttributes() ?>>
 <?php echo $atencionneonatoaudiologia->id_especialista->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($atencionneonatoaudiologia->id_referencia->Visible) { // id_referencia ?>
+		<td data-name="id_referencia"<?php echo $atencionneonatoaudiologia->id_referencia->CellAttributes() ?>>
+<span id="el<?php echo $atencionneonatoaudiologia_list->RowCnt ?>_atencionneonatoaudiologia_id_referencia" class="atencionneonatoaudiologia_id_referencia">
+<span<?php echo $atencionneonatoaudiologia->id_referencia->ViewAttributes() ?>>
+<?php echo $atencionneonatoaudiologia->id_referencia->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

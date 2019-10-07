@@ -10,6 +10,7 @@ class catencionneonatoaudiologia extends cTable {
 	var $id1;
 	var $id_neonato;
 	var $id_especialista;
+	var $id_referencia;
 
 	//
 	// Table class constructor
@@ -64,6 +65,14 @@ class catencionneonatoaudiologia extends cTable {
 		$this->id_especialista->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_especialista->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_especialista'] = &$this->id_especialista;
+
+		// id_referencia
+		$this->id_referencia = new cField('atencionneonatoaudiologia', 'atencionneonatoaudiologia', 'x_id_referencia', 'id_referencia', '`id_referencia`', '`id_referencia`', 3, -1, FALSE, '`id_referencia`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
+		$this->id_referencia->Sortable = TRUE; // Allow sort
+		$this->id_referencia->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->id_referencia->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
+		$this->id_referencia->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['id_referencia'] = &$this->id_referencia;
 	}
 
 	// Field Visibility
@@ -675,6 +684,7 @@ class catencionneonatoaudiologia extends cTable {
 		$this->id1->setDbValue($rs->fields('id1'));
 		$this->id_neonato->setDbValue($rs->fields('id_neonato'));
 		$this->id_especialista->setDbValue($rs->fields('id_especialista'));
+		$this->id_referencia->setDbValue($rs->fields('id_referencia'));
 	}
 
 	// Render list row values
@@ -688,6 +698,7 @@ class catencionneonatoaudiologia extends cTable {
 		// id1
 		// id_neonato
 		// id_especialista
+		// id_referencia
 		// id1
 
 		$this->id1->ViewValue = $this->id1->CurrentValue;
@@ -752,6 +763,30 @@ class catencionneonatoaudiologia extends cTable {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		if (strval($this->id_referencia->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_referencia->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `referencia`";
+		$sWhereWrk = "";
+		$this->id_referencia->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$arwrk[2] = $rswrk->fields('Disp2Fld');
+				$this->id_referencia->ViewValue = $this->id_referencia->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+			}
+		} else {
+			$this->id_referencia->ViewValue = NULL;
+		}
+		$this->id_referencia->ViewCustomAttributes = "";
+
 		// id1
 		$this->id1->LinkCustomAttributes = "";
 		$this->id1->HrefValue = "";
@@ -766,6 +801,11 @@ class catencionneonatoaudiologia extends cTable {
 		$this->id_especialista->LinkCustomAttributes = "";
 		$this->id_especialista->HrefValue = "";
 		$this->id_especialista->TooltipValue = "";
+
+		// id_referencia
+		$this->id_referencia->LinkCustomAttributes = "";
+		$this->id_referencia->HrefValue = "";
+		$this->id_referencia->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -794,6 +834,10 @@ class catencionneonatoaudiologia extends cTable {
 		// id_especialista
 		$this->id_especialista->EditAttrs["class"] = "form-control";
 		$this->id_especialista->EditCustomAttributes = "";
+
+		// id_referencia
+		$this->id_referencia->EditAttrs["class"] = "form-control";
+		$this->id_referencia->EditCustomAttributes = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -825,10 +869,12 @@ class catencionneonatoaudiologia extends cTable {
 					if ($this->id1->Exportable) $Doc->ExportCaption($this->id1);
 					if ($this->id_neonato->Exportable) $Doc->ExportCaption($this->id_neonato);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				} else {
 					if ($this->id1->Exportable) $Doc->ExportCaption($this->id1);
 					if ($this->id_neonato->Exportable) $Doc->ExportCaption($this->id_neonato);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				}
 				$Doc->EndExportRow();
 			}
@@ -863,10 +909,12 @@ class catencionneonatoaudiologia extends cTable {
 						if ($this->id1->Exportable) $Doc->ExportField($this->id1);
 						if ($this->id_neonato->Exportable) $Doc->ExportField($this->id_neonato);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					} else {
 						if ($this->id1->Exportable) $Doc->ExportField($this->id1);
 						if ($this->id_neonato->Exportable) $Doc->ExportField($this->id_neonato);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}

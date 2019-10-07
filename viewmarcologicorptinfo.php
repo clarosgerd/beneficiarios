@@ -9,9 +9,18 @@ $viewmarcologico = NULL;
 class crviewmarcologico extends crTableBase {
 	var $ShowGroupHeaderAsRow = TRUE;
 	var $ShowCompactSummaryFooter = TRUE;
-	var $edad;
-	var $etareo;
 	var $nombreinstitucion;
+	var $fecha;
+	var $cuadro1;
+	var $cuadro2;
+	var $cuadro3;
+	var $cuadro4;
+	var $cuadro5;
+	var $cuadro6;
+	var $cuadro7;
+	var $cuadro8;
+	var $cuadro9;
+	var $cuadro10;
 
 	//
 	// Table class constructor
@@ -28,23 +37,6 @@ class crviewmarcologico extends crTableBase {
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
-		// edad
-		$this->edad = new crField('viewmarcologico', 'viewmarcologico', 'x_edad', 'edad', '`edad`', 20, EWR_DATATYPE_NUMBER, -1);
-		$this->edad->Sortable = TRUE; // Allow sort
-		$this->edad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
-		$this->edad->DateFilter = "";
-		$this->edad->SqlSelect = "";
-		$this->edad->SqlOrderBy = "";
-		$this->fields['edad'] = &$this->edad;
-
-		// etareo
-		$this->etareo = new crField('viewmarcologico', 'viewmarcologico', 'x_etareo', 'etareo', '`etareo`', 200, EWR_DATATYPE_STRING, -1);
-		$this->etareo->Sortable = TRUE; // Allow sort
-		$this->etareo->DateFilter = "";
-		$this->etareo->SqlSelect = "";
-		$this->etareo->SqlOrderBy = "";
-		$this->fields['etareo'] = &$this->etareo;
-
 		// nombreinstitucion
 		$this->nombreinstitucion = new crField('viewmarcologico', 'viewmarcologico', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
@@ -52,6 +44,105 @@ class crviewmarcologico extends crTableBase {
 		$this->nombreinstitucion->SqlSelect = "";
 		$this->nombreinstitucion->SqlOrderBy = "";
 		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
+
+		// fecha
+		$this->fecha = new crField('viewmarcologico', 'viewmarcologico', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
+		$this->fecha->DateFilter = "";
+		$this->fecha->SqlSelect = "";
+		$this->fecha->SqlOrderBy = "";
+		$this->fields['fecha'] = &$this->fecha;
+
+		// cuadro1
+		$this->cuadro1 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro1', 'cuadro1', '`cuadro1`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro1->Sortable = TRUE; // Allow sort
+		$this->cuadro1->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro1->DateFilter = "";
+		$this->cuadro1->SqlSelect = "";
+		$this->cuadro1->SqlOrderBy = "";
+		$this->fields['cuadro1'] = &$this->cuadro1;
+
+		// cuadro2
+		$this->cuadro2 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro2', 'cuadro2', '`cuadro2`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro2->Sortable = TRUE; // Allow sort
+		$this->cuadro2->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro2->DateFilter = "";
+		$this->cuadro2->SqlSelect = "";
+		$this->cuadro2->SqlOrderBy = "";
+		$this->fields['cuadro2'] = &$this->cuadro2;
+
+		// cuadro3
+		$this->cuadro3 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro3', 'cuadro3', '`cuadro3`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro3->Sortable = TRUE; // Allow sort
+		$this->cuadro3->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro3->DateFilter = "";
+		$this->cuadro3->SqlSelect = "";
+		$this->cuadro3->SqlOrderBy = "";
+		$this->fields['cuadro3'] = &$this->cuadro3;
+
+		// cuadro4
+		$this->cuadro4 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro4', 'cuadro4', '`cuadro4`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro4->Sortable = TRUE; // Allow sort
+		$this->cuadro4->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro4->DateFilter = "";
+		$this->cuadro4->SqlSelect = "";
+		$this->cuadro4->SqlOrderBy = "";
+		$this->fields['cuadro4'] = &$this->cuadro4;
+
+		// cuadro5
+		$this->cuadro5 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro5', 'cuadro5', '`cuadro5`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro5->Sortable = TRUE; // Allow sort
+		$this->cuadro5->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro5->DateFilter = "";
+		$this->cuadro5->SqlSelect = "";
+		$this->cuadro5->SqlOrderBy = "";
+		$this->fields['cuadro5'] = &$this->cuadro5;
+
+		// cuadro6
+		$this->cuadro6 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro6', 'cuadro6', '`cuadro6`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro6->Sortable = TRUE; // Allow sort
+		$this->cuadro6->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro6->DateFilter = "";
+		$this->cuadro6->SqlSelect = "";
+		$this->cuadro6->SqlOrderBy = "";
+		$this->fields['cuadro6'] = &$this->cuadro6;
+
+		// cuadro7
+		$this->cuadro7 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro7', 'cuadro7', '`cuadro7`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro7->Sortable = TRUE; // Allow sort
+		$this->cuadro7->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro7->DateFilter = "";
+		$this->cuadro7->SqlSelect = "";
+		$this->cuadro7->SqlOrderBy = "";
+		$this->fields['cuadro7'] = &$this->cuadro7;
+
+		// cuadro8
+		$this->cuadro8 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro8', 'cuadro8', '`cuadro8`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro8->Sortable = TRUE; // Allow sort
+		$this->cuadro8->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro8->DateFilter = "";
+		$this->cuadro8->SqlSelect = "";
+		$this->cuadro8->SqlOrderBy = "";
+		$this->fields['cuadro8'] = &$this->cuadro8;
+
+		// cuadro9
+		$this->cuadro9 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro9', 'cuadro9', '`cuadro9`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro9->Sortable = TRUE; // Allow sort
+		$this->cuadro9->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro9->DateFilter = "";
+		$this->cuadro9->SqlSelect = "";
+		$this->cuadro9->SqlOrderBy = "";
+		$this->fields['cuadro9'] = &$this->cuadro9;
+
+		// cuadro10
+		$this->cuadro10 = new crField('viewmarcologico', 'viewmarcologico', 'x_cuadro10', 'cuadro10', '`cuadro10`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro10->Sortable = TRUE; // Allow sort
+		$this->cuadro10->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro10->DateFilter = "";
+		$this->cuadro10->SqlSelect = "";
+		$this->cuadro10->SqlOrderBy = "";
+		$this->fields['cuadro10'] = &$this->cuadro10;
 	}
 
 	// Set Field Visibility
@@ -311,6 +402,17 @@ class crviewmarcologico extends crTableBase {
 	function SetupLookupFilters($fld) {
 		global $grLanguage;
 		switch ($fld->FldVar) {
+		case "x_nombreinstitucion":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`nombreinstitucion` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewmarcologico`",
+			"where" => $sWhereWrk,
+			"orderby" => "`nombreinstitucion` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		}
 	}
 

@@ -28,6 +28,9 @@ class crestudiante extends crTableBase {
 	var $codigorude;
 	var $codigorude_es;
 	var $id_centro;
+	var $gestion;
+	var $esincritoespecial;
+	var $fecha;
 
 	//
 	// Table class constructor
@@ -147,7 +150,7 @@ class crestudiante extends crTableBase {
 		$this->fields['sexo'] = &$this->sexo;
 
 		// curso
-		$this->curso = new crField('estudiante', 'estudiante', 'x_curso', 'curso', '`curso`', 200, EWR_DATATYPE_STRING, -1);
+		$this->curso = new crField('estudiante', 'estudiante', 'x_curso', 'curso', '`curso`', 3, EWR_DATATYPE_NUMBER, -1);
 		$this->curso->Sortable = TRUE; // Allow sort
 		$this->curso->DateFilter = "";
 		$this->curso->SqlSelect = "";
@@ -204,6 +207,33 @@ class crestudiante extends crTableBase {
 		$this->id_centro->SqlSelect = "";
 		$this->id_centro->SqlOrderBy = "";
 		$this->fields['id_centro'] = &$this->id_centro;
+
+		// gestion
+		$this->gestion = new crField('estudiante', 'estudiante', 'x_gestion', 'gestion', '`gestion`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->gestion->Sortable = TRUE; // Allow sort
+		$this->gestion->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->gestion->DateFilter = "";
+		$this->gestion->SqlSelect = "";
+		$this->gestion->SqlOrderBy = "";
+		$this->fields['gestion'] = &$this->gestion;
+
+		// esincritoespecial
+		$this->esincritoespecial = new crField('estudiante', 'estudiante', 'x_esincritoespecial', 'esincritoespecial', '`esincritoespecial`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->esincritoespecial->Sortable = TRUE; // Allow sort
+		$this->esincritoespecial->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->esincritoespecial->DateFilter = "";
+		$this->esincritoespecial->SqlSelect = "";
+		$this->esincritoespecial->SqlOrderBy = "";
+		$this->fields['esincritoespecial'] = &$this->esincritoespecial;
+
+		// fecha
+		$this->fecha = new crField('estudiante', 'estudiante', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
+		$this->fecha->DateFilter = "";
+		$this->fecha->SqlSelect = "";
+		$this->fecha->SqlOrderBy = "";
+		$this->fields['fecha'] = &$this->fecha;
 	}
 
 	// Set Field Visibility

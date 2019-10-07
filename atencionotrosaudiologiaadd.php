@@ -327,6 +327,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"]; // Set up current action
 		$this->id_otros->SetVisibility();
 		$this->id_especialista->SetVisibility();
+		$this->id_referencia->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -534,6 +535,8 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		$this->id_otros->OldValue = $this->id_otros->CurrentValue;
 		$this->id_especialista->CurrentValue = NULL;
 		$this->id_especialista->OldValue = $this->id_especialista->CurrentValue;
+		$this->id_referencia->CurrentValue = NULL;
+		$this->id_referencia->OldValue = $this->id_referencia->CurrentValue;
 	}
 
 	// Load form values
@@ -547,6 +550,9 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		if (!$this->id_especialista->FldIsDetailKey) {
 			$this->id_especialista->setFormValue($objForm->GetValue("x_id_especialista"));
 		}
+		if (!$this->id_referencia->FldIsDetailKey) {
+			$this->id_referencia->setFormValue($objForm->GetValue("x_id_referencia"));
+		}
 	}
 
 	// Restore form values
@@ -554,6 +560,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		global $objForm;
 		$this->id_otros->CurrentValue = $this->id_otros->FormValue;
 		$this->id_especialista->CurrentValue = $this->id_especialista->FormValue;
+		$this->id_referencia->CurrentValue = $this->id_referencia->FormValue;
 	}
 
 	// Load row based on key values
@@ -602,6 +609,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		} else {
 			$this->id_especialista->VirtualValue = ""; // Clear value
 		}
+		$this->id_referencia->setDbValue($row['id_referencia']);
 	}
 
 	// Return a row with default values
@@ -611,6 +619,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		$row['id'] = $this->id->CurrentValue;
 		$row['id_otros'] = $this->id_otros->CurrentValue;
 		$row['id_especialista'] = $this->id_especialista->CurrentValue;
+		$row['id_referencia'] = $this->id_referencia->CurrentValue;
 		return $row;
 	}
 
@@ -622,6 +631,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		$this->id->DbValue = $row['id'];
 		$this->id_otros->DbValue = $row['id_otros'];
 		$this->id_especialista->DbValue = $row['id_especialista'];
+		$this->id_referencia->DbValue = $row['id_referencia'];
 	}
 
 	// Load old record
@@ -659,6 +669,7 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		// id
 		// id_otros
 		// id_especialista
+		// id_referencia
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -725,6 +736,30 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		if (strval($this->id_referencia->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_referencia->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `referencia`";
+		$sWhereWrk = "";
+		$this->id_referencia->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$arwrk[2] = $rswrk->fields('Disp2Fld');
+				$this->id_referencia->ViewValue = $this->id_referencia->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+			}
+		} else {
+			$this->id_referencia->ViewValue = NULL;
+		}
+		$this->id_referencia->ViewCustomAttributes = "";
+
 			// id_otros
 			$this->id_otros->LinkCustomAttributes = "";
 			$this->id_otros->HrefValue = "";
@@ -734,6 +769,11 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
 			$this->id_especialista->TooltipValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
+			$this->id_referencia->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_ADD) { // Add row
 
 			// id_otros
@@ -791,6 +831,25 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 			if ($rswrk) $rswrk->Close();
 			$this->id_especialista->EditValue = $arwrk;
 
+			// id_referencia
+			$this->id_referencia->EditAttrs["class"] = "form-control";
+			$this->id_referencia->EditCustomAttributes = "";
+			if (trim(strval($this->id_referencia->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_referencia->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `referencia`";
+			$sWhereWrk = "";
+			$this->id_referencia->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_referencia->EditValue = $arwrk;
+
 			// Add refer script
 			// id_otros
 
@@ -800,6 +859,10 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 			// id_especialista
 			$this->id_especialista->LinkCustomAttributes = "";
 			$this->id_especialista->HrefValue = "";
+
+			// id_referencia
+			$this->id_referencia->LinkCustomAttributes = "";
+			$this->id_referencia->HrefValue = "";
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -851,6 +914,9 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 
 		// id_especialista
 		$this->id_especialista->SetDbValueDef($rsnew, $this->id_especialista->CurrentValue, 0, FALSE);
+
+		// id_referencia
+		$this->id_referencia->SetDbValueDef($rsnew, $this->id_referencia->CurrentValue, NULL, FALSE);
 
 		// Call Row Inserting event
 		$rs = ($rsold == NULL) ? NULL : $rsold->fields;
@@ -917,6 +983,18 @@ class catencionotrosaudiologia_add extends catencionotrosaudiologia {
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->id_especialista, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_id_referencia":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombrescompleto` AS `DispFld`, `nombrescentromedico` AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `referencia`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_referencia, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
@@ -1076,6 +1154,8 @@ fatencionotrosaudiologiaadd.Lists["x_id_otros"] = {"LinkField":"x_id","Ajax":tru
 fatencionotrosaudiologiaadd.Lists["x_id_otros"].Data = "<?php echo $atencionotrosaudiologia_add->id_otros->LookupFilterQuery(FALSE, "add") ?>";
 fatencionotrosaudiologiaadd.Lists["x_id_especialista"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombres","x_apellidopaterno","x_apellidomaterno","x_nombreespecialidad"],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"especialista"};
 fatencionotrosaudiologiaadd.Lists["x_id_especialista"].Data = "<?php echo $atencionotrosaudiologia_add->id_especialista->LookupFilterQuery(FALSE, "add") ?>";
+fatencionotrosaudiologiaadd.Lists["x_id_referencia"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombrescompleto","x_nombrescentromedico","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"referencia"};
+fatencionotrosaudiologiaadd.Lists["x_id_referencia"].Data = "<?php echo $atencionotrosaudiologia_add->id_referencia->LookupFilterQuery(FALSE, "add") ?>";
 
 // Form object for search
 </script>
@@ -1124,6 +1204,21 @@ $atencionotrosaudiologia_add->ShowMessage();
 <input type="hidden" data-table="atencionotrosaudiologia" data-field="x_id_especialista" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $atencionotrosaudiologia->id_especialista->DisplayValueSeparatorAttribute() ?>" name="x_id_especialista" id="x_id_especialista" value="<?php echo $atencionotrosaudiologia->id_especialista->CurrentValue ?>"<?php echo $atencionotrosaudiologia->id_especialista->EditAttributes() ?>>
 </span>
 <?php echo $atencionotrosaudiologia->id_especialista->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($atencionotrosaudiologia->id_referencia->Visible) { // id_referencia ?>
+	<div id="r_id_referencia" class="form-group">
+		<label id="elh_atencionotrosaudiologia_id_referencia" for="x_id_referencia" class="<?php echo $atencionotrosaudiologia_add->LeftColumnClass ?>"><?php echo $atencionotrosaudiologia->id_referencia->FldCaption() ?></label>
+		<div class="<?php echo $atencionotrosaudiologia_add->RightColumnClass ?>"><div<?php echo $atencionotrosaudiologia->id_referencia->CellAttributes() ?>>
+<span id="el_atencionotrosaudiologia_id_referencia">
+<select data-table="atencionotrosaudiologia" data-field="x_id_referencia" data-value-separator="<?php echo $atencionotrosaudiologia->id_referencia->DisplayValueSeparatorAttribute() ?>" id="x_id_referencia" name="x_id_referencia"<?php echo $atencionotrosaudiologia->id_referencia->EditAttributes() ?>>
+<?php echo $atencionotrosaudiologia->id_referencia->SelectOptionListHtml("x_id_referencia") ?>
+</select>
+<?php if (AllowAdd(CurrentProjectID() . "referencia") && !$atencionotrosaudiologia->id_referencia->ReadOnly) { ?>
+<button type="button" title="<?php echo ew_HtmlTitle($Language->Phrase("AddLink")) . "&nbsp;" . $atencionotrosaudiologia->id_referencia->FldCaption() ?>" onclick="ew_AddOptDialogShow({lnk:this,el:'x_id_referencia',url:'referenciaaddopt.php'});" class="ewAddOptBtn btn btn-default btn-sm" id="aol_x_id_referencia"><span class="glyphicon glyphicon-plus ewIcon"></span><span class="hide"><?php echo $Language->Phrase("AddLink") ?>&nbsp;<?php echo $atencionotrosaudiologia->id_referencia->FldCaption() ?></span></button>
+<?php } ?>
+</span>
+<?php echo $atencionotrosaudiologia->id_referencia->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->

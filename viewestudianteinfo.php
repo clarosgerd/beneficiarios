@@ -135,7 +135,7 @@ class cviewestudiante extends cTable {
 		$this->fields['sexo'] = &$this->sexo;
 
 		// curso
-		$this->curso = new cField('viewestudiante', 'viewestudiante', 'x_curso', 'curso', '`curso`', '`curso`', 200, -1, FALSE, '`curso`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->curso = new cField('viewestudiante', 'viewestudiante', 'x_curso', 'curso', '`curso`', '`curso`', 3, -1, FALSE, '`curso`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
 		$this->curso->Sortable = TRUE; // Allow sort
 		$this->fields['curso'] = &$this->curso;
 

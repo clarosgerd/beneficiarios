@@ -12,6 +12,7 @@ class catencion extends cTable {
 	var $id_otros;
 	var $id_escolar;
 	var $id_especialista;
+	var $id_referencia;
 
 	//
 	// Table class constructor
@@ -80,6 +81,12 @@ class catencion extends cTable {
 		$this->id_especialista->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_especialista->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_especialista'] = &$this->id_especialista;
+
+		// id_referencia
+		$this->id_referencia = new cField('atencion', 'atencion', 'x_id_referencia', 'id_referencia', '`id_referencia`', '`id_referencia`', 3, -1, FALSE, '`id_referencia`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->id_referencia->Sortable = TRUE; // Allow sort
+		$this->id_referencia->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['id_referencia'] = &$this->id_referencia;
 	}
 
 	// Field Visibility
@@ -699,6 +706,7 @@ class catencion extends cTable {
 		$this->id_otros->setDbValue($rs->fields('id_otros'));
 		$this->id_escolar->setDbValue($rs->fields('id_escolar'));
 		$this->id_especialista->setDbValue($rs->fields('id_especialista'));
+		$this->id_referencia->setDbValue($rs->fields('id_referencia'));
 	}
 
 	// Render list row values
@@ -714,6 +722,7 @@ class catencion extends cTable {
 		// id_otros
 		// id_escolar
 		// id_especialista
+		// id_referencia
 		// id
 
 		$this->id->ViewValue = $this->id->CurrentValue;
@@ -810,6 +819,10 @@ class catencion extends cTable {
 		}
 		$this->id_especialista->ViewCustomAttributes = "";
 
+		// id_referencia
+		$this->id_referencia->ViewValue = $this->id_referencia->CurrentValue;
+		$this->id_referencia->ViewCustomAttributes = "";
+
 		// id
 		$this->id->LinkCustomAttributes = "";
 		$this->id->HrefValue = "";
@@ -834,6 +847,11 @@ class catencion extends cTable {
 		$this->id_especialista->LinkCustomAttributes = "";
 		$this->id_especialista->HrefValue = "";
 		$this->id_especialista->TooltipValue = "";
+
+		// id_referencia
+		$this->id_referencia->LinkCustomAttributes = "";
+		$this->id_referencia->HrefValue = "";
+		$this->id_referencia->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -873,6 +891,12 @@ class catencion extends cTable {
 		$this->id_especialista->EditAttrs["class"] = "form-control";
 		$this->id_especialista->EditCustomAttributes = "";
 
+		// id_referencia
+		$this->id_referencia->EditAttrs["class"] = "form-control";
+		$this->id_referencia->EditCustomAttributes = "";
+		$this->id_referencia->EditValue = $this->id_referencia->CurrentValue;
+		$this->id_referencia->PlaceHolder = ew_RemoveHtml($this->id_referencia->FldCaption());
+
 		// Call Row Rendered event
 		$this->Row_Rendered();
 	}
@@ -905,12 +929,14 @@ class catencion extends cTable {
 					if ($this->id_otros->Exportable) $Doc->ExportCaption($this->id_otros);
 					if ($this->id_escolar->Exportable) $Doc->ExportCaption($this->id_escolar);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
 					if ($this->id_neonato->Exportable) $Doc->ExportCaption($this->id_neonato);
 					if ($this->id_otros->Exportable) $Doc->ExportCaption($this->id_otros);
 					if ($this->id_escolar->Exportable) $Doc->ExportCaption($this->id_escolar);
 					if ($this->id_especialista->Exportable) $Doc->ExportCaption($this->id_especialista);
+					if ($this->id_referencia->Exportable) $Doc->ExportCaption($this->id_referencia);
 				}
 				$Doc->EndExportRow();
 			}
@@ -947,12 +973,14 @@ class catencion extends cTable {
 						if ($this->id_otros->Exportable) $Doc->ExportField($this->id_otros);
 						if ($this->id_escolar->Exportable) $Doc->ExportField($this->id_escolar);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					} else {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
 						if ($this->id_neonato->Exportable) $Doc->ExportField($this->id_neonato);
 						if ($this->id_otros->Exportable) $Doc->ExportField($this->id_otros);
 						if ($this->id_escolar->Exportable) $Doc->ExportField($this->id_escolar);
 						if ($this->id_especialista->Exportable) $Doc->ExportField($this->id_especialista);
+						if ($this->id_referencia->Exportable) $Doc->ExportField($this->id_referencia);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}
