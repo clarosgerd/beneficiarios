@@ -5382,6 +5382,8 @@ fviewestudiantecursorpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayT
 <input type="text" data-table="viewestudiantecurso" data-field="x_codigorude_es" id="sv_codigorude_es" name="sv_codigorude_es" size="30" maxlength="100" placeholder="<?php echo $Page->codigorude_es->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->codigorude_es->SearchValue) ?>"<?php echo $Page->codigorude_es->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_municipio" class="ewCell form-group">
 	<label for="sv_municipio" class="ewSearchCaption ewLabel"><?php echo $Page->municipio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_municipio" id="so_municipio" value="LIKE"></span>
@@ -5390,8 +5392,6 @@ fviewestudiantecursorpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayT
 <input type="text" data-table="viewestudiantecurso" data-field="x_municipio" id="sv_municipio" name="sv_municipio" size="30" maxlength="100" placeholder="<?php echo $Page->municipio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->municipio->SearchValue) ?>"<?php echo $Page->municipio->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_provincia" class="ewCell form-group">
 	<label for="sv_provincia" class="ewSearchCaption ewLabel"><?php echo $Page->provincia->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_provincia" id="so_provincia" value="LIKE"></span>
@@ -5408,6 +5408,8 @@ fviewestudiantecursorpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayT
 <input type="text" data-table="viewestudiantecurso" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_fechanacimiento" class="ewCell form-group">
 	<label for="sv_fechanacimiento" class="ewSearchCaption ewLabel"><?php echo $Page->fechanacimiento->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fechanacimiento" id="so_fechanacimiento" value="="></span>
@@ -5424,8 +5426,6 @@ fviewestudiantecursorpt.Lists["sv_departamento"].Options = <?php echo ewr_ArrayT
 <input type="text" data-table="viewestudiantecurso" data-field="x_edad" id="sv_edad" name="sv_edad" size="30" placeholder="<?php echo $Page->edad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->edad->SearchValue) ?>"<?php echo $Page->edad->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_sexo" class="ewCell form-group">
 	<label for="sv_sexo" class="ewSearchCaption ewLabel"><?php echo $Page->sexo->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -5440,6 +5440,8 @@ fviewestudiantecursorpt.Lists["sv_sexo"].Options = <?php echo ewr_ArrayToJson($P
 </script>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_curso" class="ewCell form-group">
 	<label for="sv_curso" class="ewSearchCaption ewLabel"><?php echo $Page->curso->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_curso" id="so_curso" value="LIKE"></span>

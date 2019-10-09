@@ -1063,8 +1063,8 @@ class crviewdocente_rpt extends crviewdocente {
 				$this->FirstRowData['sexo'] = ewr_Conv($rs->fields('sexo'), 3);
 				$this->FirstRowData['celular'] = ewr_Conv($rs->fields('celular'), 200);
 				$this->FirstRowData['materias'] = ewr_Conv($rs->fields('materias'), 200);
-				$this->FirstRowData['discapacidad'] = ewr_Conv($rs->fields('discapacidad'), 3);
-				$this->FirstRowData['tipodiscapacidad'] = ewr_Conv($rs->fields('tipodiscapacidad'), 3);
+				$this->FirstRowData['discapacidad'] = ewr_Conv($rs->fields('discapacidad'), 200);
+				$this->FirstRowData['tipodiscapacidad'] = ewr_Conv($rs->fields('tipodiscapacidad'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
 		} else { // Get next row
 			$rs->MoveNext();
@@ -1657,6 +1657,7 @@ class crviewdocente_rpt extends crviewdocente {
 			$this->SetSessionFilterValues($this->nrodiscapacidad->SearchValue, $this->nrodiscapacidad->SearchOperator, $this->nrodiscapacidad->SearchCondition, $this->nrodiscapacidad->SearchValue2, $this->nrodiscapacidad->SearchOperator2, 'nrodiscapacidad'); // Field nrodiscapacidad
 			$this->SetSessionFilterValues($this->ci->SearchValue, $this->ci->SearchOperator, $this->ci->SearchCondition, $this->ci->SearchValue2, $this->ci->SearchOperator2, 'ci'); // Field ci
 			$this->SetSessionFilterValues($this->materias->SearchValue, $this->materias->SearchOperator, $this->materias->SearchCondition, $this->materias->SearchValue2, $this->materias->SearchOperator2, 'materias'); // Field materias
+			$this->SetSessionDropDownValue($this->discapacidad->DropDownValue, $this->discapacidad->SearchOperator, 'discapacidad'); // Field discapacidad
 
 			//$bSetupFilter = TRUE; // No need to set up, just use default
 		} else {
@@ -1701,6 +1702,13 @@ class crviewdocente_rpt extends crviewdocente {
 			if ($this->GetFilterValues($this->materias)) {
 				$bSetupFilter = TRUE;
 			}
+
+			// Field discapacidad
+			if ($this->GetDropDownValue($this->discapacidad)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->discapacidad->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewdocente_discapacidad'])) {
+				$bSetupFilter = TRUE;
+			}
 			if (!$this->ValidateForm()) {
 				$this->setFailureMessage($grFormError);
 				return $sFilter;
@@ -1717,6 +1725,7 @@ class crviewdocente_rpt extends crviewdocente {
 			$this->GetSessionFilterValues($this->nrodiscapacidad); // Field nrodiscapacidad
 			$this->GetSessionFilterValues($this->ci); // Field ci
 			$this->GetSessionFilterValues($this->materias); // Field materias
+			$this->GetSessionDropDownValue($this->discapacidad); // Field discapacidad
 		}
 
 		// Call page filter validated event
@@ -1731,6 +1740,7 @@ class crviewdocente_rpt extends crviewdocente {
 		$this->BuildExtendedFilter($this->nrodiscapacidad, $sFilter, FALSE, TRUE); // Field nrodiscapacidad
 		$this->BuildExtendedFilter($this->ci, $sFilter, FALSE, TRUE); // Field ci
 		$this->BuildExtendedFilter($this->materias, $sFilter, FALSE, TRUE); // Field materias
+		$this->BuildDropDownFilter($this->discapacidad, $sFilter, $this->discapacidad->SearchOperator, FALSE, TRUE); // Field discapacidad
 
 		// Save parms to session
 		$this->SetSessionFilterValues($this->deoartamento->SearchValue, $this->deoartamento->SearchOperator, $this->deoartamento->SearchCondition, $this->deoartamento->SearchValue2, $this->deoartamento->SearchOperator2, 'deoartamento'); // Field deoartamento
@@ -1741,10 +1751,14 @@ class crviewdocente_rpt extends crviewdocente {
 		$this->SetSessionFilterValues($this->nrodiscapacidad->SearchValue, $this->nrodiscapacidad->SearchOperator, $this->nrodiscapacidad->SearchCondition, $this->nrodiscapacidad->SearchValue2, $this->nrodiscapacidad->SearchOperator2, 'nrodiscapacidad'); // Field nrodiscapacidad
 		$this->SetSessionFilterValues($this->ci->SearchValue, $this->ci->SearchOperator, $this->ci->SearchCondition, $this->ci->SearchValue2, $this->ci->SearchOperator2, 'ci'); // Field ci
 		$this->SetSessionFilterValues($this->materias->SearchValue, $this->materias->SearchOperator, $this->materias->SearchCondition, $this->materias->SearchValue2, $this->materias->SearchOperator2, 'materias'); // Field materias
+		$this->SetSessionDropDownValue($this->discapacidad->DropDownValue, $this->discapacidad->SearchOperator, 'discapacidad'); // Field discapacidad
 
 		// Setup filter
 		if ($bSetupFilter) {
 		}
+
+		// Field discapacidad
+		ewr_LoadDropDownList($this->discapacidad->DropDownList, $this->discapacidad->DropDownValue);
 		return $sFilter;
 	}
 
@@ -2046,6 +2060,10 @@ class crviewdocente_rpt extends crviewdocente {
 		/**
 		* Set up default values for non Text filters
 		*/
+
+		// Field discapacidad
+		$this->discapacidad->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->discapacidad->DropDownValue = $this->discapacidad->DefaultDropDownValue;
 		/**
 		* Set up default values for extended filters
 		* function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2)
@@ -2127,6 +2145,10 @@ class crviewdocente_rpt extends crviewdocente {
 
 		// Check materias text filter
 		if ($this->TextFilterApplied($this->materias))
+			return TRUE;
+
+		// Check discapacidad extended filter
+		if ($this->NonTextFilterApplied($this->discapacidad))
 			return TRUE;
 		return FALSE;
 	}
@@ -2233,6 +2255,18 @@ class crviewdocente_rpt extends crviewdocente {
 			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
 		if ($sFilter <> "")
 			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->materias->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field discapacidad
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->discapacidad, $sExtWrk, $this->discapacidad->SearchOperator);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->discapacidad->FldCaption() . "</span>" . $sFilter . "</div>";
 		$divstyle = "";
 		$divdataclass = "";
 
@@ -2367,6 +2401,18 @@ class crviewdocente_rpt extends crviewdocente {
 			$sFilterList .= $sWrk;
 		}
 
+		// Field discapacidad
+		$sWrk = "";
+		$sWrk = ($this->discapacidad->DropDownValue <> EWR_INIT_VALUE) ? $this->discapacidad->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_discapacidad\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
 		// Return filter list in json
 		if ($sFilterList <> "")
 			return "{" . $sFilterList . "}";
@@ -2483,6 +2529,19 @@ class crviewdocente_rpt extends crviewdocente {
 		}
 		if (!$bRestoreFilter) { // Clear filter
 			$this->SetSessionFilterValues("", "=", "AND", "", "=", "materias");
+		}
+
+		// Field discapacidad
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_discapacidad", $filter)) {
+			$sWrk = $filter["sv_discapacidad"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_discapacidad"], "discapacidad");
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "discapacidad");
 		}
 		return TRUE;
 	}
@@ -2969,6 +3028,7 @@ fviewdocenterpt.ValidateRequired = false; // No JavaScript validation
 <?php } ?>
 
 // Use Ajax
+fviewdocenterpt.Lists["sv_discapacidad"] = {"LinkField":"sv_discapacidad","Ajax":true,"DisplayFields":["sv_discapacidad","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
 </script>
 <?php } ?>
 <?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
@@ -3026,6 +3086,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_deoartamento" id="sv_deoartamento" name="sv_deoartamento" size="30" maxlength="100" placeholder="<?php echo $Page->deoartamento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->deoartamento->SearchValue) ?>"<?php echo $Page->deoartamento->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_unidadeducativa" class="ewCell form-group">
 	<label for="sv_unidadeducativa" class="ewSearchCaption ewLabel"><?php echo $Page->unidadeducativa->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_unidadeducativa" id="so_unidadeducativa" value="LIKE"></span>
@@ -3034,6 +3096,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_unidadeducativa" id="sv_unidadeducativa" name="sv_unidadeducativa" size="30" maxlength="100" placeholder="<?php echo $Page->unidadeducativa->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->unidadeducativa->SearchValue) ?>"<?php echo $Page->unidadeducativa->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_nombres" class="ewCell form-group">
 	<label for="sv_nombres" class="ewSearchCaption ewLabel"><?php echo $Page->nombres->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombres" id="so_nombres" value="LIKE"></span>
@@ -3042,6 +3106,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_nombres" id="sv_nombres" name="sv_nombres" size="30" maxlength="100" placeholder="<?php echo $Page->nombres->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombres->SearchValue) ?>"<?php echo $Page->nombres->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_apellidopaterno" class="ewCell form-group">
 	<label for="sv_apellidopaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidopaterno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidopaterno" id="so_apellidopaterno" value="LIKE"></span>
@@ -3051,7 +3117,7 @@ if (!$Page->DrillDownInPanel) {
 </span>
 </div>
 </div>
-<div id="r_2" class="ewRow">
+<div id="r_5" class="ewRow">
 <div id="c_apellidomaterno" class="ewCell form-group">
 	<label for="sv_apellidomaterno" class="ewSearchCaption ewLabel"><?php echo $Page->apellidomaterno->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_apellidomaterno" id="so_apellidomaterno" value="LIKE"></span>
@@ -3060,6 +3126,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_apellidomaterno" id="sv_apellidomaterno" name="sv_apellidomaterno" size="30" maxlength="100" placeholder="<?php echo $Page->apellidomaterno->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->apellidomaterno->SearchValue) ?>"<?php echo $Page->apellidomaterno->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_6" class="ewRow">
 <div id="c_nrodiscapacidad" class="ewCell form-group">
 	<label for="sv_nrodiscapacidad" class="ewSearchCaption ewLabel"><?php echo $Page->nrodiscapacidad->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nrodiscapacidad" id="so_nrodiscapacidad" value="LIKE"></span>
@@ -3068,6 +3136,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_nrodiscapacidad" id="sv_nrodiscapacidad" name="sv_nrodiscapacidad" size="30" maxlength="15" placeholder="<?php echo $Page->nrodiscapacidad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nrodiscapacidad->SearchValue) ?>"<?php echo $Page->nrodiscapacidad->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_7" class="ewRow">
 <div id="c_ci" class="ewCell form-group">
 	<label for="sv_ci" class="ewSearchCaption ewLabel"><?php echo $Page->ci->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_ci" id="so_ci" value="LIKE"></span>
@@ -3076,12 +3146,56 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewdocente" data-field="x_ci" id="sv_ci" name="sv_ci" size="30" maxlength="15" placeholder="<?php echo $Page->ci->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->ci->SearchValue) ?>"<?php echo $Page->ci->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_8" class="ewRow">
 <div id="c_materias" class="ewCell form-group">
 	<label for="sv_materias" class="ewSearchCaption ewLabel"><?php echo $Page->materias->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_materias" id="so_materias" value="LIKE"></span>
 	<span class="control-group ewSearchField">
 <?php ewr_PrependClass($Page->materias->EditAttrs["class"], "form-control"); // PR8 ?>
 <input type="text" data-table="viewdocente" data-field="x_materias" id="sv_materias" name="sv_materias" size="30" maxlength="100" placeholder="<?php echo $Page->materias->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->materias->SearchValue) ?>"<?php echo $Page->materias->EditAttributes() ?>>
+</span>
+</div>
+</div>
+<div id="r_9" class="ewRow">
+<div id="c_discapacidad" class="ewCell form-group">
+	<label class="ewSearchCaption ewLabel"><?php echo $Page->discapacidad->FldCaption() ?></label>
+	<span class="ewSearchField">
+<div id="tp_sv_discapacidad" class="<?php echo EWR_ITEM_TEMPLATE_CLASSNAME ?>"><input type="radio" data-table="viewdocente" data-field="x_discapacidad" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->discapacidad->DisplayValueSeparator) ? json_encode($Page->discapacidad->DisplayValueSeparator) : $Page->discapacidad->DisplayValueSeparator) ?>" name="sv_discapacidad" id="sv_discapacidad" value="{value}"<?php echo $Page->discapacidad->EditAttributes() ?>></div>
+<div id="dsl_sv_discapacidad" data-repeatcolumn="5" class="ewItemList"><div>
+<?php
+	$cntf = is_array($Page->discapacidad->AdvancedFilters) ? count($Page->discapacidad->AdvancedFilters) : 0;
+	$cntd = is_array($Page->discapacidad->DropDownList) ? count($Page->discapacidad->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->discapacidad->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->discapacidad->DropDownValue, $filter->ID) ? " checked" : "";
+?>
+<?php echo ewr_RepeatColumnTable($totcnt, $wrkcnt, 5, 1) ?>
+<label class="radio-inline"><input type="radio" data-table="viewdocente" data-field="x_discapacidad" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->discapacidad->DisplayValueSeparator) ? json_encode($Page->discapacidad->DisplayValueSeparator) : $Page->discapacidad->DisplayValueSeparator) ?>" name="sv_discapacidad" value="<?php echo $filter->ID ?>"<?php echo $selwrk ?><?php echo $Page->discapacidad->EditAttributes() ?>><?php echo $filter->Name ?></label>
+<?php echo ewr_RepeatColumnTable($totcnt, $wrkcnt, 5, 2) ?>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " checked";
+?>
+<?php echo ewr_RepeatColumnTable($totcnt, $wrkcnt, 5, 1) ?>
+<label class="radio-inline"><input type="radio" data-table="viewdocente" data-field="x_discapacidad" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->discapacidad->DisplayValueSeparator) ? json_encode($Page->discapacidad->DisplayValueSeparator) : $Page->discapacidad->DisplayValueSeparator) ?>" name="sv_discapacidad" value="<?php echo $Page->discapacidad->DropDownList[$i] ?>"<?php echo $selwrk ?><?php echo $Page->discapacidad->EditAttributes() ?>><?php echo ewr_DropDownDisplayValue($Page->discapacidad->DropDownList[$i], "", 0) ?></label>
+<?php echo ewr_RepeatColumnTable($totcnt, $wrkcnt, 5, 2) ?>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</div></div>
+<input type="hidden" name="s_sv_discapacidad" id="s_sv_discapacidad" value="<?php echo $Page->discapacidad->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewdocenterpt.Lists["sv_discapacidad"].Options = <?php echo ewr_ArrayToJson($Page->discapacidad->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 </div>

@@ -2210,6 +2210,11 @@ festudianteedit.CreateAutoSuggest({"id":"x_discapacidad","forceSelect":false});
 		<div class="<?php echo $estudiante_edit->RightColumnClass ?>"><div<?php echo $estudiante->fecha->CellAttributes() ?>>
 <span id="el_estudiante_fecha">
 <input type="text" data-table="estudiante" data-field="x_fecha" name="x_fecha" id="x_fecha" placeholder="<?php echo ew_HtmlEncode($estudiante->fecha->getPlaceHolder()) ?>" value="<?php echo $estudiante->fecha->EditValue ?>"<?php echo $estudiante->fecha->EditAttributes() ?>>
+<?php if (!$estudiante->fecha->ReadOnly && !$estudiante->fecha->Disabled && !isset($estudiante->fecha->EditAttrs["readonly"]) && !isset($estudiante->fecha->EditAttrs["disabled"])) { ?>
+<script type="text/javascript">
+ew_CreateDateTimePicker("festudianteedit", "x_fecha", {"ignoreReadonly":true,"useCurrent":false,"format":0});
+</script>
+<?php } ?>
 </span>
 <?php echo $estudiante->fecha->CustomMsg ?></div></div>
 	</div>

@@ -2559,6 +2559,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewunidadeducativa" data-field="x_codigo_sie" id="sv_codigo_sie" name="sv_codigo_sie" size="30" maxlength="100" placeholder="<?php echo $Page->codigo_sie->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->codigo_sie->SearchValue) ?>"<?php echo $Page->codigo_sie->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_departamento" class="ewCell form-group">
 	<label for="sv_departamento" class="ewSearchCaption ewLabel"><?php echo $Page->departamento->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_departamento" id="so_departamento" value="LIKE"></span>
@@ -2567,8 +2569,6 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewunidadeducativa" data-field="x_departamento" id="sv_departamento" name="sv_departamento" size="30" maxlength="100" placeholder="<?php echo $Page->departamento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->departamento->SearchValue) ?>"<?php echo $Page->departamento->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_municipio" class="ewCell form-group">
 	<label for="sv_municipio" class="ewSearchCaption ewLabel"><?php echo $Page->municipio->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_municipio" id="so_municipio" value="LIKE"></span>

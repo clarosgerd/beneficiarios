@@ -71,7 +71,7 @@ if (!defined("EW_USE_MYSQLI"))
 	define('EW_USE_MYSQLI', extension_loaded("mysqli"), TRUE); // Use MySQLi
 if (!defined("EW_USE_MSSQL_NATIVE"))
 	define("EW_USE_MSSQL_NATIVE", FALSE, TRUE); // Use ADOdb "mssqlnative" driver for MSSQL
-$EWR_CONN["DB"] = array("conn" => NULL, "id" => "DB", "type" => "MYSQL", "host" => "localhost", "port" => 3306, "user" => "root", "pass" => "usbw", "db" => "benificiaries", "qs" => "`", "qe" => "`");
+$EWR_CONN["DB"] = array("conn" => NULL, "id" => "DB", "type" => "MYSQL", "host" => "localhost", "port" => 3306, "user" => "communit_wrdp1", "pass" => "p4ssw0rdgerd", "db" => "communit_beneficiariosV1", "qs" => "`", "qe" => "`");
 $EWR_CONN[0] = &$EWR_CONN["DB"];
 
 // Set up database error function
@@ -109,7 +109,7 @@ define("EWR_SESSION_TIMEOUT_COUNTDOWN", 60, TRUE); // Session timeout count down
 // General
 $EWR_ROOT_RELATIVE_PATH = "."; // Relative path of app root
 define("EWR_UNFORMAT_YEAR", 50, TRUE); // Unformat year
-define("EWR_RANDOM_KEY", 'zP3iH20ZeEAs3Dds', TRUE); // Random key for encryption
+define("EWR_RANDOM_KEY", 'a0k9I5493CbX6a9k', TRUE); // Random key for encryption
 define("EWR_PROJECT_STYLESHEET_FILENAME", "phprptcss/beneficiarios.css", TRUE); // Project stylesheet file name
 define("EWR_CHART_WIDTH", 600, TRUE);
 define("EWR_CHART_HEIGHT", 500, TRUE);

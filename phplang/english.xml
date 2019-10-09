@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/7" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/9" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -810,17 +810,14 @@
     <menu id="10070">
       <phrase id="menutext" value="gestion" />
     </menu>
-    <menu id="10071">
+    <menu id="10072">
       <phrase id="menutext" value="curso" />
     </menu>
-    <menu id="10072">
+    <menu id="10073">
       <phrase id="menutext" value="turno" />
     </menu>
-    <menu id="10073">
+    <menu id="10074">
       <phrase id="menutext" value="inscripcionestudiante" />
-    </menu>
-    <menu id="10049">
-      <phrase id="menutext" value="Dashboard 1" />
     </menu>
     <menu id="10001">
       <phrase id="menutext" value="actividad" />
@@ -956,6 +953,12 @@
     </menu>
     <menu id="10047">
       <phrase id="menutext" value="Reportes" />
+    </menu>
+    <menu id="10049">
+      <phrase id="menutext" value="Dashboard 1" />
+    </menu>
+    <menu id="10071">
+      <phrase id="menutext" value="Dashboard 2" />
     </menu>
     <menu id="10054">
       <phrase id="menutext" value="UNIDADEDUCATIVA" />

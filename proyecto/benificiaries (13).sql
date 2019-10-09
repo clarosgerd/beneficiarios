@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2019 at 12:52 PM
+-- Generation Time: Oct 09, 2019 at 08:14 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -1597,7 +1597,125 @@ INSERT INTO `userlevelpermissions` (`userlevelid`, `tablename`, `permission`) VA
 (0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareocurso', 0),
 (0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewmarcologico', 0),
 (0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewparticipante', 0),
-(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewunidadeducativa', 0);
+(0, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewunidadeducativa', 0),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}actividad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}apoderado', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencion', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionescolaraudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionneonatoaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}atencionotrosaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}audiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}categoria', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}centros', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ciudad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}curso', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}departamento', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}derivacion', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}diagnosticoaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}discapacidad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}estudiante', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}gestion', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}inscripcionestudiante', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}institucionesdesalud', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}medio', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}municipio', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}neonatal', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otrasorganizaciones', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}persona', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}provincia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}pruebasaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}referencia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}sector', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tapon', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}ticket.php', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoactividad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipocentro', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiagnosticoaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipodiscapacidad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoespecialidad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipoprueba', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipopruebasaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tipotratamientoaudiologia', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}tratamiento', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}turno', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}unidadeducativa', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevelpermissions', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}userlevels', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}usuario', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewactividad', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewdocente', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiante', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantecurso', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareo', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewestudiantesetareocurso', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewmarcologico', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewparticipante', 111),
+(9, '{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}viewunidadeducativa', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}actividad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}apoderado', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}atencion', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}atencionescolaraudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}atencionneonatoaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}atencionotrosaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}audiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}categoria', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}centros', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}ciudad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}curso', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}Dashboard1', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}Dashboard2', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}departamento', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}derivacion', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}diagnosticoaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}discapacidad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}docente', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}escolar', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}especialista', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}estudiante', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}gestion', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}inscripcionestudiante', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}institucionesdesalud', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}medio', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}municipio', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}neonatal', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}otrasorganizaciones', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}otros', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}participante', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}persona', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}provincia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}pruebasaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}referencia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}ReportEstudiantes', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}sector', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tapon', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipoactividad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipocentro', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipodiagnosticoaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipodiscapacidad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipoespecialidad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipoprueba', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipopruebasaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tipotratamientoaudiologia', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}tratamiento', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}turno', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}unidadeducativa', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}userlevelpermissions', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}userlevels', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}usuario', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewactividad', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewdocente', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiante', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantecurso', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareo', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareocurso', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewmarcologico', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewparticipante', 111),
+(9, '{707530BA-BEB7-415A-B683-2C9753B31FA3}viewunidadeducativa', 111);
 
 -- --------------------------------------------------------
 
@@ -1617,7 +1735,8 @@ CREATE TABLE `userlevels` (
 INSERT INTO `userlevels` (`userlevelid`, `userlevelname`) VALUES
 (-2, 'Anonymous'),
 (-1, 'Administrator'),
-(0, 'Default');
+(0, 'Default'),
+(9, 'nodelete');
 
 -- --------------------------------------------------------
 
@@ -1691,9 +1810,9 @@ CREATE TABLE `viewdocente` (
 ,`sexo` int(11)
 ,`celular` varchar(100)
 ,`materias` varchar(100)
-,`discapacidad` int(11)
-,`tipodiscapacidad` int(11)
 ,`nombreinstitucion` varchar(100)
+,`discapacidad` varchar(100)
+,`tipodiscapacidad` varchar(100)
 );
 
 -- --------------------------------------------------------
@@ -1900,7 +2019,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFI
 --
 DROP TABLE IF EXISTS `viewdocente`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewdocente`  AS  select `departamento`.`nombre` AS `deoartamento`,`unidadeducativa`.`nombre` AS `unidadeducativa`,`docente`.`nombres` AS `nombres`,`docente`.`apellidopaterno` AS `apellidopaterno`,`docente`.`apellidomaterno` AS `apellidomaterno`,`docente`.`nrodiscapacidad` AS `nrodiscapacidad`,`docente`.`ci` AS `ci`,`docente`.`fechanacimiento` AS `fechanacimiento`,`docente`.`sexo` AS `sexo`,`docente`.`celular` AS `celular`,`docente`.`materias` AS `materias`,`docente`.`discapacidad` AS `discapacidad`,`docente`.`tipodiscapacidad` AS `tipodiscapacidad`,`centros`.`nombreinstitucion` AS `nombreinstitucion` from (((`docente` left join `departamento` on((`departamento`.`id` = `docente`.`id_departamento`))) left join `unidadeducativa` on((`unidadeducativa`.`id` = `docente`.`unidadeducativa`))) left join `centros` on((`centros`.`id` = `docente`.`id_centro`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`communitysoft`@`localhost` SQL SECURITY DEFINER VIEW `viewdocente`  AS  select `departamento`.`nombre` AS `deoartamento`,`unidadeducativa`.`nombre` AS `unidadeducativa`,`docente`.`nombres` AS `nombres`,`docente`.`apellidopaterno` AS `apellidopaterno`,`docente`.`apellidomaterno` AS `apellidomaterno`,`docente`.`nrodiscapacidad` AS `nrodiscapacidad`,`docente`.`ci` AS `ci`,`docente`.`fechanacimiento` AS `fechanacimiento`,`docente`.`sexo` AS `sexo`,`docente`.`celular` AS `celular`,`docente`.`materias` AS `materias`,`centros`.`nombreinstitucion` AS `nombreinstitucion`,`discapacidad`.`nombre` AS `discapacidad`,`tipodiscapacidad`.`nombre` AS `tipodiscapacidad` from (((((`docente` left join `departamento` on((`departamento`.`id` = `docente`.`id_departamento`))) left join `unidadeducativa` on((`unidadeducativa`.`id` = `docente`.`unidadeducativa`))) left join `centros` on((`centros`.`id` = `docente`.`id_centro`))) join `discapacidad` on((`discapacidad`.`id` = `docente`.`discapacidad`))) join `tipodiscapacidad` on((`tipodiscapacidad`.`id` = `docente`.`tipodiscapacidad`))) ;
 
 -- --------------------------------------------------------
 

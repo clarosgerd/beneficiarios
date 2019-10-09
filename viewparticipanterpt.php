@@ -2747,6 +2747,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewparticipante" data-field="x_categoria" id="sv_categoria" name="sv_categoria" size="30" maxlength="100" placeholder="<?php echo $Page->categoria->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->categoria->SearchValue) ?>"<?php echo $Page->categoria->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>

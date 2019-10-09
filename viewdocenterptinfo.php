@@ -130,7 +130,7 @@ class crviewdocente extends crTableBase {
 		$this->fields['materias'] = &$this->materias;
 
 		// discapacidad
-		$this->discapacidad = new crField('viewdocente', 'viewdocente', 'x_discapacidad', 'discapacidad', '`discapacidad`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->discapacidad = new crField('viewdocente', 'viewdocente', 'x_discapacidad', 'discapacidad', '`discapacidad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->discapacidad->Sortable = TRUE; // Allow sort
 		$this->discapacidad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->discapacidad->DateFilter = "";
@@ -139,7 +139,7 @@ class crviewdocente extends crTableBase {
 		$this->fields['discapacidad'] = &$this->discapacidad;
 
 		// tipodiscapacidad
-		$this->tipodiscapacidad = new crField('viewdocente', 'viewdocente', 'x_tipodiscapacidad', 'tipodiscapacidad', '`tipodiscapacidad`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->tipodiscapacidad = new crField('viewdocente', 'viewdocente', 'x_tipodiscapacidad', 'tipodiscapacidad', '`tipodiscapacidad`', 200, EWR_DATATYPE_STRING, -1);
 		$this->tipodiscapacidad->Sortable = TRUE; // Allow sort
 		$this->tipodiscapacidad->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->tipodiscapacidad->DateFilter = "";
@@ -413,6 +413,17 @@ class crviewdocente extends crTableBase {
 	function SetupLookupFilters($fld) {
 		global $grLanguage;
 		switch ($fld->FldVar) {
+		case "x_discapacidad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`discapacidad` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `discapacidad`, `discapacidad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewdocente`",
+			"where" => $sWhereWrk,
+			"orderby" => "`discapacidad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		}
 	}
 
