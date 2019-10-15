@@ -1076,11 +1076,6 @@ class cestudiante_add extends cestudiante {
 		}
 		$this->id_centro->ViewCustomAttributes = "";
 
-		// fecha
-		$this->fecha->ViewValue = $this->fecha->CurrentValue;
-		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
-		$this->fecha->ViewCustomAttributes = "";
-
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
 			$this->codigorude->HrefValue = "";

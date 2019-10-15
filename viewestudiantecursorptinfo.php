@@ -9,8 +9,8 @@ $viewestudiantecurso = NULL;
 class crviewestudiantecurso extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
 	var $ShowCompactSummaryFooter = FALSE;
+	var $nrodiscapacidad;
 	var $departamento;
-	var $codigorude;
 	var $codigorude_es;
 	var $municipio;
 	var $provincia;
@@ -18,7 +18,6 @@ class crviewestudiantecurso extends crTableBase {
 	var $nombre;
 	var $materno;
 	var $paterno;
-	var $nrodiscapacidad;
 	var $ci;
 	var $fechanacimiento;
 	var $edad;
@@ -26,7 +25,8 @@ class crviewestudiantecurso extends crTableBase {
 	var $curso;
 	var $discapacidad;
 	var $tipodiscapcidad;
-	var $nombreinstitucion;
+	var $centro;
+	var $fecha;
 
 	//
 	// Table class constructor
@@ -43,6 +43,14 @@ class crviewestudiantecurso extends crTableBase {
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
+		// nrodiscapacidad
+		$this->nrodiscapacidad = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_nrodiscapacidad', 'nrodiscapacidad', '`nrodiscapacidad`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nrodiscapacidad->Sortable = TRUE; // Allow sort
+		$this->nrodiscapacidad->DateFilter = "";
+		$this->nrodiscapacidad->SqlSelect = "SELECT DISTINCT `nrodiscapacidad`, `nrodiscapacidad` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->nrodiscapacidad->SqlOrderBy = "`nrodiscapacidad`";
+		$this->fields['nrodiscapacidad'] = &$this->nrodiscapacidad;
+
 		// departamento
 		$this->departamento = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_departamento', 'departamento', '`departamento`', 200, EWR_DATATYPE_STRING, -1);
 		$this->departamento->Sortable = TRUE; // Allow sort
@@ -50,14 +58,6 @@ class crviewestudiantecurso extends crTableBase {
 		$this->departamento->SqlSelect = "SELECT DISTINCT `departamento`, `departamento` AS `DispFld` FROM " . $this->getSqlFrom();
 		$this->departamento->SqlOrderBy = "`departamento`";
 		$this->fields['departamento'] = &$this->departamento;
-
-		// codigorude
-		$this->codigorude = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_codigorude', 'codigorude', '`codigorude`', 200, EWR_DATATYPE_STRING, -1);
-		$this->codigorude->Sortable = TRUE; // Allow sort
-		$this->codigorude->DateFilter = "";
-		$this->codigorude->SqlSelect = "SELECT DISTINCT `codigorude`, `codigorude` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->codigorude->SqlOrderBy = "`codigorude`";
-		$this->fields['codigorude'] = &$this->codigorude;
 
 		// codigorude_es
 		$this->codigorude_es = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_codigorude_es', 'codigorude_es', '`codigorude_es`', 200, EWR_DATATYPE_STRING, -1);
@@ -115,14 +115,6 @@ class crviewestudiantecurso extends crTableBase {
 		$this->paterno->SqlOrderBy = "`paterno`";
 		$this->fields['paterno'] = &$this->paterno;
 
-		// nrodiscapacidad
-		$this->nrodiscapacidad = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_nrodiscapacidad', 'nrodiscapacidad', '`nrodiscapacidad`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nrodiscapacidad->Sortable = TRUE; // Allow sort
-		$this->nrodiscapacidad->DateFilter = "";
-		$this->nrodiscapacidad->SqlSelect = "SELECT DISTINCT `nrodiscapacidad`, `nrodiscapacidad` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->nrodiscapacidad->SqlOrderBy = "`nrodiscapacidad`";
-		$this->fields['nrodiscapacidad'] = &$this->nrodiscapacidad;
-
 		// ci
 		$this->ci = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_ci', 'ci', '`ci`', 200, EWR_DATATYPE_STRING, -1);
 		$this->ci->Sortable = TRUE; // Allow sort
@@ -158,7 +150,7 @@ class crviewestudiantecurso extends crTableBase {
 		$this->fields['sexo'] = &$this->sexo;
 
 		// curso
-		$this->curso = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_curso', 'curso', '`curso`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->curso = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_curso', 'curso', '`curso`', 200, EWR_DATATYPE_STRING, -1);
 		$this->curso->Sortable = TRUE; // Allow sort
 		$this->curso->DateFilter = "";
 		$this->curso->SqlSelect = "SELECT DISTINCT `curso`, `curso` AS `DispFld` FROM " . $this->getSqlFrom();
@@ -181,13 +173,22 @@ class crviewestudiantecurso extends crTableBase {
 		$this->tipodiscapcidad->SqlOrderBy = "`tipodiscapcidad`";
 		$this->fields['tipodiscapcidad'] = &$this->tipodiscapcidad;
 
-		// nombreinstitucion
-		$this->nombreinstitucion = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
-		$this->nombreinstitucion->DateFilter = "";
-		$this->nombreinstitucion->SqlSelect = "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld` FROM " . $this->getSqlFrom();
-		$this->nombreinstitucion->SqlOrderBy = "`nombreinstitucion`";
-		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
+		// centro
+		$this->centro = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_centro', 'centro', '`centro`', 200, EWR_DATATYPE_STRING, -1);
+		$this->centro->Sortable = TRUE; // Allow sort
+		$this->centro->DateFilter = "";
+		$this->centro->SqlSelect = "";
+		$this->centro->SqlOrderBy = "";
+		$this->fields['centro'] = &$this->centro;
+
+		// fecha
+		$this->fecha = new crField('viewestudiantecurso', 'viewestudiantecurso', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
+		$this->fecha->DateFilter = "";
+		$this->fecha->SqlSelect = "";
+		$this->fecha->SqlOrderBy = "";
+		$this->fields['fecha'] = &$this->fecha;
 	}
 
 	// Set Field Visibility
@@ -338,7 +339,7 @@ class crviewestudiantecurso extends crTableBase {
 	var $_SqlSelectAgg = "";
 
 	function getSqlSelectAgg() {
-		return ($this->_SqlSelectAgg <> "") ? $this->_SqlSelectAgg : "SELECT COUNT(*) AS `cnt_discapacidad` FROM " . $this->getSqlFrom();
+		return ($this->_SqlSelectAgg <> "") ? $this->_SqlSelectAgg : "SELECT * FROM " . $this->getSqlFrom();
 	}
 
 	function SqlSelectAgg() { // For backward compatibility
@@ -459,6 +460,61 @@ class crviewestudiantecurso extends crTableBase {
 		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
 		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
 			break;
+		case "x_codigorude_es":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`codigorude_es` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `codigorude_es`, `codigorude_es` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`codigorude_es` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_municipio":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`municipio` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `municipio`, `municipio` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`municipio` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_provincia":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`provincia` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `provincia`, `provincia` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`provincia` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_unidadeducativa":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`unidadeducativa` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `unidadeducativa`, `unidadeducativa` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`unidadeducativa` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_edad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`edad` = {filter_value}', "t0" => "20", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `edad`, `edad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`edad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		case "x_sexo":
 			$fld->LookupFilters = array("d" => "DB", "f0" => '`sexo` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
 		$sWhereWrk = "{filter}";
@@ -467,6 +523,52 @@ class crviewestudiantecurso extends crTableBase {
 			"select" => "SELECT DISTINCT `sexo`, `sexo` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
 			"where" => $sWhereWrk,
 			"orderby" => "`sexo` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_curso":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`curso` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `curso`, `curso` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`curso` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_discapacidad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`discapacidad` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `discapacidad`, `discapacidad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`discapacidad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_tipodiscapcidad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`tipodiscapcidad` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "{filter}";
+		$fld->LookupFilters += array(
+			"dx1" => '`tipodiscapcidad`',
+			"select" => "SELECT DISTINCT `tipodiscapcidad`, `tipodiscapcidad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`tipodiscapcidad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_centro":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`centro` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "{filter}";
+		$fld->LookupFilters += array(
+			"dx1" => '`centro`',
+			"select" => "SELECT DISTINCT `centro`, `centro` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantecurso`",
+			"where" => $sWhereWrk,
+			"orderby" => "`centro` ASC"
 		);
 		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
 		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");

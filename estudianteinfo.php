@@ -198,7 +198,7 @@ class cestudiante extends cTable {
 
 		// fecha
 		$this->fecha = new cField('estudiante', 'estudiante', 'x_fecha', 'fecha', '`fecha`', ew_CastDateFieldForLike('`fecha`', 0, "DB"), 133, 0, FALSE, '`fecha`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->fecha->Sortable = TRUE; // Allow sort
+		$this->fecha->Sortable = FALSE; // Allow sort
 		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EW_DATE_FORMAT"], $Language->Phrase("IncorrectDate"));
 		$this->fields['fecha'] = &$this->fecha;
 	}
@@ -803,8 +803,9 @@ class cestudiante extends cTable {
 		$this->esincritoespecial->CellCssStyle = "white-space: nowrap;";
 
 		// fecha
-		// id
+		$this->fecha->CellCssStyle = "white-space: nowrap;";
 
+		// id
 		$this->id->ViewValue = $this->id->CurrentValue;
 		$this->id->ViewCustomAttributes = "";
 
@@ -1356,7 +1357,6 @@ class cestudiante extends cTable {
 					if ($this->discapacidad->Exportable) $Doc->ExportCaption($this->discapacidad);
 					if ($this->tipodiscapacidad->Exportable) $Doc->ExportCaption($this->tipodiscapacidad);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
-					if ($this->fecha->Exportable) $Doc->ExportCaption($this->fecha);
 				} else {
 					if ($this->codigorude->Exportable) $Doc->ExportCaption($this->codigorude);
 					if ($this->codigorude_es->Exportable) $Doc->ExportCaption($this->codigorude_es);
@@ -1375,7 +1375,6 @@ class cestudiante extends cTable {
 					if ($this->discapacidad->Exportable) $Doc->ExportCaption($this->discapacidad);
 					if ($this->tipodiscapacidad->Exportable) $Doc->ExportCaption($this->tipodiscapacidad);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
-					if ($this->fecha->Exportable) $Doc->ExportCaption($this->fecha);
 				}
 				$Doc->EndExportRow();
 			}
@@ -1424,7 +1423,6 @@ class cestudiante extends cTable {
 						if ($this->discapacidad->Exportable) $Doc->ExportField($this->discapacidad);
 						if ($this->tipodiscapacidad->Exportable) $Doc->ExportField($this->tipodiscapacidad);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
-						if ($this->fecha->Exportable) $Doc->ExportField($this->fecha);
 					} else {
 						if ($this->codigorude->Exportable) $Doc->ExportField($this->codigorude);
 						if ($this->codigorude_es->Exportable) $Doc->ExportField($this->codigorude_es);
@@ -1443,7 +1441,6 @@ class cestudiante extends cTable {
 						if ($this->discapacidad->Exportable) $Doc->ExportField($this->discapacidad);
 						if ($this->tipodiscapacidad->Exportable) $Doc->ExportField($this->tipodiscapacidad);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
-						if ($this->fecha->Exportable) $Doc->ExportField($this->fecha);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}
@@ -1549,17 +1546,17 @@ class cestudiante extends cTable {
 	}
 
 	// Row Updated event
-	function Row_Updated($rsold, &$rsnew) {
+	function C($rsold, &$rsnew) {
 
 		//echo "Row Updated";
-		$sql="SELECT COUNT(*) FROM inscripcionestudiante WHERE id_estudiante='".$rsold["id"]."' and id_gestion='".$rsnew["gestion"]."' and id_curso='".$rsnew["curso"]."'";
+		$sql="SELECT COUNT(*) FROM inscripcionestudiante WHERE id_estudiante='".$rsold["id"]."' and id_gestion=YEAR('".$rsnew["fecha"]."') and id_curso='".$rsnew["curso"]."'";
 	$MyCount = ew_ExecuteScalar($sql);
 	if ($MyCount==0){
 
 	// Insert record
 	// NOTE: Modify your SQL here, replace the table name, field name and field values
 
-	$sql_insert="INSERT INTO `inscripcionestudiante`(`id_estudiante`, `id_curso`, `id_gestion`) VALUES ('".$rsold["id"]."','".$rsnew["curso"]."','".$rsnew["gestion"]."')";
+	$sql_insert="INSERT INTO `inscripcionestudiante`(`id_estudiante`, `id_curso`, `id_gestion`,`fecha`) VALUES ('".$rsold["id"]."',YEAR('".$rsnew["fecha"]."'),'".$rsnew["gestion"]."','".$rsnew["fecha"]."')";
 	$MyResult = ew_Execute($sql_insert);
 	}
 	}

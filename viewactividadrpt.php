@@ -331,10 +331,6 @@ class crviewactividad_rpt extends crviewactividad {
 		$gsEmailContentType = @$_POST["contenttype"]; // Get email content type
 
 		// Setup placeholder
-		$this->sector->PlaceHolder = $this->sector->FldCaption();
-		$this->tipoactividad->PlaceHolder = $this->tipoactividad->FldCaption();
-		$this->organizador->PlaceHolder = $this->organizador->FldCaption();
-		$this->nombreactividad->PlaceHolder = $this->nombreactividad->FldCaption();
 		$this->fecha_inicio->PlaceHolder = $this->fecha_inicio->FldCaption();
 		$this->fecha_fin->PlaceHolder = $this->fecha_fin->FldCaption();
 		$this->contenido->PlaceHolder = $this->contenido->FldCaption();
@@ -814,9 +810,6 @@ class crviewactividad_rpt extends crviewactividad {
 		$this->fecha_inicio->SetVisibility();
 		$this->fecha_fin->SetVisibility();
 		$this->horasprogramadas->SetVisibility();
-		$this->perosnanombre->SetVisibility();
-		$this->personaapellidomaterno->SetVisibility();
-		$this->personaapellidopaterno->SetVisibility();
 		$this->contenido->SetVisibility();
 		$this->observaciones->SetVisibility();
 		$this->nombreinstitucion->SetVisibility();
@@ -831,7 +824,7 @@ class crviewactividad_rpt extends crviewactividad {
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 16;
+		$nDtls = 13;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -844,7 +837,7 @@ class crviewactividad_rpt extends crviewactividad {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -861,6 +854,9 @@ class crviewactividad_rpt extends crviewactividad {
 		$this->organizador->SelectionList = "";
 		$this->organizador->DefaultSelectionList = "";
 		$this->organizador->ValueList = "";
+		$this->nombrelocal->SelectionList = "";
+		$this->nombrelocal->DefaultSelectionList = "";
+		$this->nombrelocal->ValueList = "";
 		$this->fecha_inicio->SelectionList = "";
 		$this->fecha_inicio->DefaultSelectionList = "";
 		$this->fecha_inicio->ValueList = "";
@@ -1074,16 +1070,13 @@ class crviewactividad_rpt extends crviewactividad {
 				$this->FirstRowData = array();
 				$this->FirstRowData['sector'] = ewr_Conv($rs->fields('sector'), 200);
 				$this->FirstRowData['tipoactividad'] = ewr_Conv($rs->fields('tipoactividad'), 200);
-				$this->FirstRowData['organizador'] = ewr_Conv($rs->fields('organizador'), 3);
+				$this->FirstRowData['organizador'] = ewr_Conv($rs->fields('organizador'), 200);
 				$this->FirstRowData['nombreactividad'] = ewr_Conv($rs->fields('nombreactividad'), 200);
 				$this->FirstRowData['nombrelocal'] = ewr_Conv($rs->fields('nombrelocal'), 200);
 				$this->FirstRowData['direccionlocal'] = ewr_Conv($rs->fields('direccionlocal'), 200);
 				$this->FirstRowData['fecha_inicio'] = ewr_Conv($rs->fields('fecha_inicio'), 133);
 				$this->FirstRowData['fecha_fin'] = ewr_Conv($rs->fields('fecha_fin'), 133);
 				$this->FirstRowData['horasprogramadas'] = ewr_Conv($rs->fields('horasprogramadas'), 200);
-				$this->FirstRowData['perosnanombre'] = ewr_Conv($rs->fields('perosnanombre'), 200);
-				$this->FirstRowData['personaapellidomaterno'] = ewr_Conv($rs->fields('personaapellidomaterno'), 200);
-				$this->FirstRowData['personaapellidopaterno'] = ewr_Conv($rs->fields('personaapellidopaterno'), 200);
 				$this->FirstRowData['contenido'] = ewr_Conv($rs->fields('contenido'), 200);
 				$this->FirstRowData['observaciones'] = ewr_Conv($rs->fields('observaciones'), 200);
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
@@ -1100,9 +1093,7 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->fecha_inicio->setDbValue($rs->fields('fecha_inicio'));
 			$this->fecha_fin->setDbValue($rs->fields('fecha_fin'));
 			$this->horasprogramadas->setDbValue($rs->fields('horasprogramadas'));
-			$this->perosnanombre->setDbValue($rs->fields('perosnanombre'));
-			$this->personaapellidomaterno->setDbValue($rs->fields('personaapellidomaterno'));
-			$this->personaapellidopaterno->setDbValue($rs->fields('personaapellidopaterno'));
+			$this->facilitador->setDbValue($rs->fields('facilitador'));
 			$this->contenido->setDbValue($rs->fields('contenido'));
 			$this->observaciones->setDbValue($rs->fields('observaciones'));
 			$this->nombreinstitucion->setDbValue($rs->fields('nombreinstitucion'));
@@ -1115,12 +1106,9 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->Val[7] = $this->fecha_inicio->CurrentValue;
 			$this->Val[8] = $this->fecha_fin->CurrentValue;
 			$this->Val[9] = $this->horasprogramadas->CurrentValue;
-			$this->Val[10] = $this->perosnanombre->CurrentValue;
-			$this->Val[11] = $this->personaapellidomaterno->CurrentValue;
-			$this->Val[12] = $this->personaapellidopaterno->CurrentValue;
-			$this->Val[13] = $this->contenido->CurrentValue;
-			$this->Val[14] = $this->observaciones->CurrentValue;
-			$this->Val[15] = $this->nombreinstitucion->CurrentValue;
+			$this->Val[10] = $this->contenido->CurrentValue;
+			$this->Val[11] = $this->observaciones->CurrentValue;
+			$this->Val[12] = $this->nombreinstitucion->CurrentValue;
 		} else {
 			$this->sector->setDbValue("");
 			$this->tipoactividad->setDbValue("");
@@ -1131,9 +1119,7 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->fecha_inicio->setDbValue("");
 			$this->fecha_fin->setDbValue("");
 			$this->horasprogramadas->setDbValue("");
-			$this->perosnanombre->setDbValue("");
-			$this->personaapellidomaterno->setDbValue("");
-			$this->personaapellidopaterno->setDbValue("");
+			$this->facilitador->setDbValue("");
 			$this->contenido->setDbValue("");
 			$this->observaciones->setDbValue("");
 			$this->nombreinstitucion->setDbValue("");
@@ -1291,6 +1277,37 @@ class crviewactividad_rpt extends crviewactividad {
 				$fld = &$this->organizador;
 			}
 
+			// Build distinct values for nombrelocal
+			if ($popupname == 'viewactividad_nombrelocal') {
+				$bNullValue = FALSE;
+				$bEmptyValue = FALSE;
+				$sFilter = $this->Filter;
+
+				// Call Page Filtering event
+				$this->Page_Filtering($this->nombrelocal, $sFilter, "popup");
+				$sSql = ewr_BuildReportSql($this->nombrelocal->SqlSelect, $this->getSqlWhere(), $this->getSqlGroupBy(), $this->getSqlHaving(), $this->nombrelocal->SqlOrderBy, $sFilter, "");
+				$rswrk = $conn->Execute($sSql);
+				while ($rswrk && !$rswrk->EOF) {
+					$this->nombrelocal->setDbValue($rswrk->fields[0]);
+					$this->nombrelocal->ViewValue = @$rswrk->fields[1];
+					if (is_null($this->nombrelocal->CurrentValue)) {
+						$bNullValue = TRUE;
+					} elseif ($this->nombrelocal->CurrentValue == "") {
+						$bEmptyValue = TRUE;
+					} else {
+						ewr_SetupDistinctValues($this->nombrelocal->ValueList, $this->nombrelocal->CurrentValue, $this->nombrelocal->ViewValue, FALSE, $this->nombrelocal->FldDelimiter);
+					}
+					$rswrk->MoveNext();
+				}
+				if ($rswrk)
+					$rswrk->Close();
+				if ($bEmptyValue)
+					ewr_SetupDistinctValues($this->nombrelocal->ValueList, EWR_EMPTY_VALUE, $ReportLanguage->Phrase("EmptyLabel"), FALSE);
+				if ($bNullValue)
+					ewr_SetupDistinctValues($this->nombrelocal->ValueList, EWR_NULL_VALUE, $ReportLanguage->Phrase("NullLabel"), FALSE);
+				$fld = &$this->nombrelocal;
+			}
+
 			// Build distinct values for fecha_inicio
 			if ($popupname == 'viewactividad_fecha_inicio') {
 				$bNullValue = FALSE;
@@ -1432,6 +1449,7 @@ class crviewactividad_rpt extends crviewactividad {
 				$this->ClearSessionSelection('sector');
 				$this->ClearSessionSelection('tipoactividad');
 				$this->ClearSessionSelection('organizador');
+				$this->ClearSessionSelection('nombrelocal');
 				$this->ClearSessionSelection('fecha_inicio');
 				$this->ClearSessionSelection('fecha_fin');
 				$this->ClearSessionSelection('nombreinstitucion');
@@ -1460,6 +1478,13 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->LoadSelectionFromSession('organizador');
 		} elseif (@$_SESSION["sel_viewactividad_organizador"] == EWR_INIT_VALUE) { // Select all
 			$this->organizador->SelectionList = "";
+		}
+
+		// Get nombrelocal selected values
+		if (is_array(@$_SESSION["sel_viewactividad_nombrelocal"])) {
+			$this->LoadSelectionFromSession('nombrelocal');
+		} elseif (@$_SESSION["sel_viewactividad_nombrelocal"] == EWR_INIT_VALUE) { // Select all
+			$this->nombrelocal->SelectionList = "";
 		}
 
 		// Get fecha_inicio selected values
@@ -1592,15 +1617,6 @@ class crviewactividad_rpt extends crviewactividad {
 			// horasprogramadas
 			$this->horasprogramadas->HrefValue = "";
 
-			// perosnanombre
-			$this->perosnanombre->HrefValue = "";
-
-			// personaapellidomaterno
-			$this->personaapellidomaterno->HrefValue = "";
-
-			// personaapellidopaterno
-			$this->personaapellidopaterno->HrefValue = "";
-
 			// contenido
 			$this->contenido->HrefValue = "";
 
@@ -1652,18 +1668,6 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->horasprogramadas->ViewValue = $this->horasprogramadas->CurrentValue;
 			$this->horasprogramadas->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// perosnanombre
-			$this->perosnanombre->ViewValue = $this->perosnanombre->CurrentValue;
-			$this->perosnanombre->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// personaapellidomaterno
-			$this->personaapellidomaterno->ViewValue = $this->personaapellidomaterno->CurrentValue;
-			$this->personaapellidomaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// personaapellidopaterno
-			$this->personaapellidopaterno->ViewValue = $this->personaapellidopaterno->CurrentValue;
-			$this->personaapellidopaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// contenido
 			$this->contenido->ViewValue = $this->contenido->CurrentValue;
 			$this->contenido->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
@@ -1702,15 +1706,6 @@ class crviewactividad_rpt extends crviewactividad {
 
 			// horasprogramadas
 			$this->horasprogramadas->HrefValue = "";
-
-			// perosnanombre
-			$this->perosnanombre->HrefValue = "";
-
-			// personaapellidomaterno
-			$this->personaapellidomaterno->HrefValue = "";
-
-			// personaapellidopaterno
-			$this->personaapellidopaterno->HrefValue = "";
 
 			// contenido
 			$this->contenido->HrefValue = "";
@@ -1807,33 +1802,6 @@ class crviewactividad_rpt extends crviewactividad {
 			$LinkAttrs = &$this->horasprogramadas->LinkAttrs;
 			$this->Cell_Rendered($this->horasprogramadas, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// perosnanombre
-			$CurrentValue = $this->perosnanombre->CurrentValue;
-			$ViewValue = &$this->perosnanombre->ViewValue;
-			$ViewAttrs = &$this->perosnanombre->ViewAttrs;
-			$CellAttrs = &$this->perosnanombre->CellAttrs;
-			$HrefValue = &$this->perosnanombre->HrefValue;
-			$LinkAttrs = &$this->perosnanombre->LinkAttrs;
-			$this->Cell_Rendered($this->perosnanombre, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// personaapellidomaterno
-			$CurrentValue = $this->personaapellidomaterno->CurrentValue;
-			$ViewValue = &$this->personaapellidomaterno->ViewValue;
-			$ViewAttrs = &$this->personaapellidomaterno->ViewAttrs;
-			$CellAttrs = &$this->personaapellidomaterno->CellAttrs;
-			$HrefValue = &$this->personaapellidomaterno->HrefValue;
-			$LinkAttrs = &$this->personaapellidomaterno->LinkAttrs;
-			$this->Cell_Rendered($this->personaapellidomaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// personaapellidopaterno
-			$CurrentValue = $this->personaapellidopaterno->CurrentValue;
-			$ViewValue = &$this->personaapellidopaterno->ViewValue;
-			$ViewAttrs = &$this->personaapellidopaterno->ViewAttrs;
-			$CellAttrs = &$this->personaapellidopaterno->CellAttrs;
-			$HrefValue = &$this->personaapellidopaterno->HrefValue;
-			$LinkAttrs = &$this->personaapellidopaterno->LinkAttrs;
-			$this->Cell_Rendered($this->personaapellidopaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
 			// contenido
 			$CurrentValue = $this->contenido->CurrentValue;
 			$ViewValue = &$this->contenido->ViewValue;
@@ -1881,9 +1849,6 @@ class crviewactividad_rpt extends crviewactividad {
 		if ($this->fecha_inicio->Visible) $this->DtlColumnCount += 1;
 		if ($this->fecha_fin->Visible) $this->DtlColumnCount += 1;
 		if ($this->horasprogramadas->Visible) $this->DtlColumnCount += 1;
-		if ($this->perosnanombre->Visible) $this->DtlColumnCount += 1;
-		if ($this->personaapellidomaterno->Visible) $this->DtlColumnCount += 1;
-		if ($this->personaapellidopaterno->Visible) $this->DtlColumnCount += 1;
 		if ($this->contenido->Visible) $this->DtlColumnCount += 1;
 		if ($this->observaciones->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombreinstitucion->Visible) $this->DtlColumnCount += 1;
@@ -1924,17 +1889,49 @@ class crviewactividad_rpt extends crviewactividad {
 		// Reset extended filter if filter changed
 		if ($bPostBack) {
 
-			// Clear extended filter for field sector
-			if ($this->ClearExtFilter == 'viewactividad_sector')
-				$this->SetSessionFilterValues('', '=', 'AND', '', '=', 'sector');
+			// Set/clear dropdown for field sector
+			if ($this->PopupName == 'viewactividad_sector' && $this->PopupValue <> "") {
+				if ($this->PopupValue == EWR_INIT_VALUE)
+					$this->sector->DropDownValue = EWR_ALL_VALUE;
+				else
+					$this->sector->DropDownValue = $this->PopupValue;
+				$bRestoreSession = FALSE; // Do not restore
+			} elseif ($this->ClearExtFilter == 'viewactividad_sector') {
+				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'sector');
+			}
 
-			// Clear extended filter for field tipoactividad
-			if ($this->ClearExtFilter == 'viewactividad_tipoactividad')
-				$this->SetSessionFilterValues('', '=', 'AND', '', '=', 'tipoactividad');
+			// Set/clear dropdown for field tipoactividad
+			if ($this->PopupName == 'viewactividad_tipoactividad' && $this->PopupValue <> "") {
+				if ($this->PopupValue == EWR_INIT_VALUE)
+					$this->tipoactividad->DropDownValue = EWR_ALL_VALUE;
+				else
+					$this->tipoactividad->DropDownValue = $this->PopupValue;
+				$bRestoreSession = FALSE; // Do not restore
+			} elseif ($this->ClearExtFilter == 'viewactividad_tipoactividad') {
+				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'tipoactividad');
+			}
 
-			// Clear extended filter for field organizador
-			if ($this->ClearExtFilter == 'viewactividad_organizador')
-				$this->SetSessionFilterValues('', '=', 'AND', '', '=', 'organizador');
+			// Set/clear dropdown for field organizador
+			if ($this->PopupName == 'viewactividad_organizador' && $this->PopupValue <> "") {
+				if ($this->PopupValue == EWR_INIT_VALUE)
+					$this->organizador->DropDownValue = EWR_ALL_VALUE;
+				else
+					$this->organizador->DropDownValue = $this->PopupValue;
+				$bRestoreSession = FALSE; // Do not restore
+			} elseif ($this->ClearExtFilter == 'viewactividad_organizador') {
+				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'organizador');
+			}
+
+			// Set/clear dropdown for field nombrelocal
+			if ($this->PopupName == 'viewactividad_nombrelocal' && $this->PopupValue <> "") {
+				if ($this->PopupValue == EWR_INIT_VALUE)
+					$this->nombrelocal->DropDownValue = EWR_ALL_VALUE;
+				else
+					$this->nombrelocal->DropDownValue = $this->PopupValue;
+				$bRestoreSession = FALSE; // Do not restore
+			} elseif ($this->ClearExtFilter == 'viewactividad_nombrelocal') {
+				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'nombrelocal');
+			}
 
 			// Clear extended filter for field fecha_inicio
 			if ($this->ClearExtFilter == 'viewactividad_fecha_inicio')
@@ -1952,10 +1949,11 @@ class crviewactividad_rpt extends crviewactividad {
 		} elseif (@$_GET["cmd"] == "reset") {
 
 			// Load default values
-			$this->SetSessionFilterValues($this->sector->SearchValue, $this->sector->SearchOperator, $this->sector->SearchCondition, $this->sector->SearchValue2, $this->sector->SearchOperator2, 'sector'); // Field sector
-			$this->SetSessionFilterValues($this->tipoactividad->SearchValue, $this->tipoactividad->SearchOperator, $this->tipoactividad->SearchCondition, $this->tipoactividad->SearchValue2, $this->tipoactividad->SearchOperator2, 'tipoactividad'); // Field tipoactividad
-			$this->SetSessionFilterValues($this->organizador->SearchValue, $this->organizador->SearchOperator, $this->organizador->SearchCondition, $this->organizador->SearchValue2, $this->organizador->SearchOperator2, 'organizador'); // Field organizador
-			$this->SetSessionFilterValues($this->nombreactividad->SearchValue, $this->nombreactividad->SearchOperator, $this->nombreactividad->SearchCondition, $this->nombreactividad->SearchValue2, $this->nombreactividad->SearchOperator2, 'nombreactividad'); // Field nombreactividad
+			$this->SetSessionDropDownValue($this->sector->DropDownValue, $this->sector->SearchOperator, 'sector'); // Field sector
+			$this->SetSessionDropDownValue($this->tipoactividad->DropDownValue, $this->tipoactividad->SearchOperator, 'tipoactividad'); // Field tipoactividad
+			$this->SetSessionDropDownValue($this->organizador->DropDownValue, $this->organizador->SearchOperator, 'organizador'); // Field organizador
+			$this->SetSessionDropDownValue($this->nombreactividad->DropDownValue, $this->nombreactividad->SearchOperator, 'nombreactividad'); // Field nombreactividad
+			$this->SetSessionDropDownValue($this->nombrelocal->DropDownValue, $this->nombrelocal->SearchOperator, 'nombrelocal'); // Field nombrelocal
 			$this->SetSessionFilterValues($this->fecha_inicio->SearchValue, $this->fecha_inicio->SearchOperator, $this->fecha_inicio->SearchCondition, $this->fecha_inicio->SearchValue2, $this->fecha_inicio->SearchOperator2, 'fecha_inicio'); // Field fecha_inicio
 			$this->SetSessionFilterValues($this->fecha_fin->SearchValue, $this->fecha_fin->SearchOperator, $this->fecha_fin->SearchCondition, $this->fecha_fin->SearchValue2, $this->fecha_fin->SearchOperator2, 'fecha_fin'); // Field fecha_fin
 			$this->SetSessionFilterValues($this->contenido->SearchValue, $this->contenido->SearchOperator, $this->contenido->SearchCondition, $this->contenido->SearchValue2, $this->contenido->SearchOperator2, 'contenido'); // Field contenido
@@ -1967,22 +1965,37 @@ class crviewactividad_rpt extends crviewactividad {
 			$bRestoreSession = !$this->SearchCommand;
 
 			// Field sector
-			if ($this->GetFilterValues($this->sector)) {
+			if ($this->GetDropDownValue($this->sector)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->sector->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewactividad_sector'])) {
 				$bSetupFilter = TRUE;
 			}
 
 			// Field tipoactividad
-			if ($this->GetFilterValues($this->tipoactividad)) {
+			if ($this->GetDropDownValue($this->tipoactividad)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->tipoactividad->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewactividad_tipoactividad'])) {
 				$bSetupFilter = TRUE;
 			}
 
 			// Field organizador
-			if ($this->GetFilterValues($this->organizador)) {
+			if ($this->GetDropDownValue($this->organizador)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->organizador->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewactividad_organizador'])) {
 				$bSetupFilter = TRUE;
 			}
 
 			// Field nombreactividad
-			if ($this->GetFilterValues($this->nombreactividad)) {
+			if ($this->GetDropDownValue($this->nombreactividad)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->nombreactividad->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewactividad_nombreactividad'])) {
+				$bSetupFilter = TRUE;
+			}
+
+			// Field nombrelocal
+			if ($this->GetDropDownValue($this->nombrelocal)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->nombrelocal->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewactividad_nombrelocal'])) {
 				$bSetupFilter = TRUE;
 			}
 
@@ -2018,10 +2031,11 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Restore session
 		if ($bRestoreSession) {
-			$this->GetSessionFilterValues($this->sector); // Field sector
-			$this->GetSessionFilterValues($this->tipoactividad); // Field tipoactividad
-			$this->GetSessionFilterValues($this->organizador); // Field organizador
-			$this->GetSessionFilterValues($this->nombreactividad); // Field nombreactividad
+			$this->GetSessionDropDownValue($this->sector); // Field sector
+			$this->GetSessionDropDownValue($this->tipoactividad); // Field tipoactividad
+			$this->GetSessionDropDownValue($this->organizador); // Field organizador
+			$this->GetSessionDropDownValue($this->nombreactividad); // Field nombreactividad
+			$this->GetSessionDropDownValue($this->nombrelocal); // Field nombrelocal
 			$this->GetSessionFilterValues($this->fecha_inicio); // Field fecha_inicio
 			$this->GetSessionFilterValues($this->fecha_fin); // Field fecha_fin
 			$this->GetSessionFilterValues($this->contenido); // Field contenido
@@ -2033,10 +2047,11 @@ class crviewactividad_rpt extends crviewactividad {
 		$this->Page_FilterValidated();
 
 		// Build SQL
-		$this->BuildExtendedFilter($this->sector, $sFilter, FALSE, TRUE); // Field sector
-		$this->BuildExtendedFilter($this->tipoactividad, $sFilter, FALSE, TRUE); // Field tipoactividad
-		$this->BuildExtendedFilter($this->organizador, $sFilter, FALSE, TRUE); // Field organizador
-		$this->BuildExtendedFilter($this->nombreactividad, $sFilter, FALSE, TRUE); // Field nombreactividad
+		$this->BuildDropDownFilter($this->sector, $sFilter, $this->sector->SearchOperator, FALSE, TRUE); // Field sector
+		$this->BuildDropDownFilter($this->tipoactividad, $sFilter, $this->tipoactividad->SearchOperator, FALSE, TRUE); // Field tipoactividad
+		$this->BuildDropDownFilter($this->organizador, $sFilter, $this->organizador->SearchOperator, FALSE, TRUE); // Field organizador
+		$this->BuildDropDownFilter($this->nombreactividad, $sFilter, $this->nombreactividad->SearchOperator, FALSE, TRUE); // Field nombreactividad
+		$this->BuildDropDownFilter($this->nombrelocal, $sFilter, $this->nombrelocal->SearchOperator, FALSE, TRUE); // Field nombrelocal
 		$this->BuildExtendedFilter($this->fecha_inicio, $sFilter, FALSE, TRUE); // Field fecha_inicio
 		$this->BuildExtendedFilter($this->fecha_fin, $sFilter, FALSE, TRUE); // Field fecha_fin
 		$this->BuildExtendedFilter($this->contenido, $sFilter, FALSE, TRUE); // Field contenido
@@ -2044,10 +2059,11 @@ class crviewactividad_rpt extends crviewactividad {
 		$this->BuildExtendedFilter($this->nombreinstitucion, $sFilter, FALSE, TRUE); // Field nombreinstitucion
 
 		// Save parms to session
-		$this->SetSessionFilterValues($this->sector->SearchValue, $this->sector->SearchOperator, $this->sector->SearchCondition, $this->sector->SearchValue2, $this->sector->SearchOperator2, 'sector'); // Field sector
-		$this->SetSessionFilterValues($this->tipoactividad->SearchValue, $this->tipoactividad->SearchOperator, $this->tipoactividad->SearchCondition, $this->tipoactividad->SearchValue2, $this->tipoactividad->SearchOperator2, 'tipoactividad'); // Field tipoactividad
-		$this->SetSessionFilterValues($this->organizador->SearchValue, $this->organizador->SearchOperator, $this->organizador->SearchCondition, $this->organizador->SearchValue2, $this->organizador->SearchOperator2, 'organizador'); // Field organizador
-		$this->SetSessionFilterValues($this->nombreactividad->SearchValue, $this->nombreactividad->SearchOperator, $this->nombreactividad->SearchCondition, $this->nombreactividad->SearchValue2, $this->nombreactividad->SearchOperator2, 'nombreactividad'); // Field nombreactividad
+		$this->SetSessionDropDownValue($this->sector->DropDownValue, $this->sector->SearchOperator, 'sector'); // Field sector
+		$this->SetSessionDropDownValue($this->tipoactividad->DropDownValue, $this->tipoactividad->SearchOperator, 'tipoactividad'); // Field tipoactividad
+		$this->SetSessionDropDownValue($this->organizador->DropDownValue, $this->organizador->SearchOperator, 'organizador'); // Field organizador
+		$this->SetSessionDropDownValue($this->nombreactividad->DropDownValue, $this->nombreactividad->SearchOperator, 'nombreactividad'); // Field nombreactividad
+		$this->SetSessionDropDownValue($this->nombrelocal->DropDownValue, $this->nombrelocal->SearchOperator, 'nombrelocal'); // Field nombrelocal
 		$this->SetSessionFilterValues($this->fecha_inicio->SearchValue, $this->fecha_inicio->SearchOperator, $this->fecha_inicio->SearchCondition, $this->fecha_inicio->SearchValue2, $this->fecha_inicio->SearchOperator2, 'fecha_inicio'); // Field fecha_inicio
 		$this->SetSessionFilterValues($this->fecha_fin->SearchValue, $this->fecha_fin->SearchOperator, $this->fecha_fin->SearchCondition, $this->fecha_fin->SearchValue2, $this->fecha_fin->SearchOperator2, 'fecha_fin'); // Field fecha_fin
 		$this->SetSessionFilterValues($this->contenido->SearchValue, $this->contenido->SearchOperator, $this->contenido->SearchCondition, $this->contenido->SearchValue2, $this->contenido->SearchOperator2, 'contenido'); // Field contenido
@@ -2059,21 +2075,27 @@ class crviewactividad_rpt extends crviewactividad {
 
 			// Field sector
 			$sWrk = "";
-			$this->BuildExtendedFilter($this->sector, $sWrk);
-			ewr_LoadSelectionFromFilter($this->sector, $sWrk, $this->sector->SelectionList);
+			$this->BuildDropDownFilter($this->sector, $sWrk, $this->sector->SearchOperator);
+			ewr_LoadSelectionFromFilter($this->sector, $sWrk, $this->sector->SelectionList, $this->sector->DropDownValue);
 			$_SESSION['sel_viewactividad_sector'] = ($this->sector->SelectionList == "") ? EWR_INIT_VALUE : $this->sector->SelectionList;
 
 			// Field tipoactividad
 			$sWrk = "";
-			$this->BuildExtendedFilter($this->tipoactividad, $sWrk);
-			ewr_LoadSelectionFromFilter($this->tipoactividad, $sWrk, $this->tipoactividad->SelectionList);
+			$this->BuildDropDownFilter($this->tipoactividad, $sWrk, $this->tipoactividad->SearchOperator);
+			ewr_LoadSelectionFromFilter($this->tipoactividad, $sWrk, $this->tipoactividad->SelectionList, $this->tipoactividad->DropDownValue);
 			$_SESSION['sel_viewactividad_tipoactividad'] = ($this->tipoactividad->SelectionList == "") ? EWR_INIT_VALUE : $this->tipoactividad->SelectionList;
 
 			// Field organizador
 			$sWrk = "";
-			$this->BuildExtendedFilter($this->organizador, $sWrk);
-			ewr_LoadSelectionFromFilter($this->organizador, $sWrk, $this->organizador->SelectionList);
+			$this->BuildDropDownFilter($this->organizador, $sWrk, $this->organizador->SearchOperator);
+			ewr_LoadSelectionFromFilter($this->organizador, $sWrk, $this->organizador->SelectionList, $this->organizador->DropDownValue);
 			$_SESSION['sel_viewactividad_organizador'] = ($this->organizador->SelectionList == "") ? EWR_INIT_VALUE : $this->organizador->SelectionList;
+
+			// Field nombrelocal
+			$sWrk = "";
+			$this->BuildDropDownFilter($this->nombrelocal, $sWrk, $this->nombrelocal->SearchOperator);
+			ewr_LoadSelectionFromFilter($this->nombrelocal, $sWrk, $this->nombrelocal->SelectionList, $this->nombrelocal->DropDownValue);
+			$_SESSION['sel_viewactividad_nombrelocal'] = ($this->nombrelocal->SelectionList == "") ? EWR_INIT_VALUE : $this->nombrelocal->SelectionList;
 
 			// Field fecha_inicio
 			$sWrk = "";
@@ -2093,6 +2115,21 @@ class crviewactividad_rpt extends crviewactividad {
 			ewr_LoadSelectionFromFilter($this->nombreinstitucion, $sWrk, $this->nombreinstitucion->SelectionList);
 			$_SESSION['sel_viewactividad_nombreinstitucion'] = ($this->nombreinstitucion->SelectionList == "") ? EWR_INIT_VALUE : $this->nombreinstitucion->SelectionList;
 		}
+
+		// Field sector
+		ewr_LoadDropDownList($this->sector->DropDownList, $this->sector->DropDownValue);
+
+		// Field tipoactividad
+		ewr_LoadDropDownList($this->tipoactividad->DropDownList, $this->tipoactividad->DropDownValue);
+
+		// Field organizador
+		ewr_LoadDropDownList($this->organizador->DropDownList, $this->organizador->DropDownValue);
+
+		// Field nombreactividad
+		ewr_LoadDropDownList($this->nombreactividad->DropDownList, $this->nombreactividad->DropDownValue);
+
+		// Field nombrelocal
+		ewr_LoadDropDownList($this->nombrelocal->DropDownList, $this->nombrelocal->DropDownValue);
 		return $sFilter;
 	}
 
@@ -2360,10 +2397,6 @@ class crviewactividad_rpt extends crviewactividad {
 		// Check if validation required
 		if (!EWR_SERVER_VALIDATE)
 			return ($grFormError == "");
-		if (!ewr_CheckInteger($this->organizador->SearchValue)) {
-			if ($grFormError <> "") $grFormError .= "<br>";
-			$grFormError .= $this->organizador->FldErrMsg();
-		}
 		if (!ewr_CheckDateDef($this->fecha_inicio->SearchValue)) {
 			if ($grFormError <> "") $grFormError .= "<br>";
 			$grFormError .= $this->fecha_inicio->FldErrMsg();
@@ -2406,6 +2439,42 @@ class crviewactividad_rpt extends crviewactividad {
 		/**
 		* Set up default values for non Text filters
 		*/
+
+		// Field sector
+		$this->sector->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->sector->DropDownValue = $this->sector->DefaultDropDownValue;
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->sector, $sWrk, $this->sector->SearchOperator, TRUE);
+		ewr_LoadSelectionFromFilter($this->sector, $sWrk, $this->sector->DefaultSelectionList);
+		if (!$this->SearchCommand) $this->sector->SelectionList = $this->sector->DefaultSelectionList;
+
+		// Field tipoactividad
+		$this->tipoactividad->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->tipoactividad->DropDownValue = $this->tipoactividad->DefaultDropDownValue;
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->tipoactividad, $sWrk, $this->tipoactividad->SearchOperator, TRUE);
+		ewr_LoadSelectionFromFilter($this->tipoactividad, $sWrk, $this->tipoactividad->DefaultSelectionList);
+		if (!$this->SearchCommand) $this->tipoactividad->SelectionList = $this->tipoactividad->DefaultSelectionList;
+
+		// Field organizador
+		$this->organizador->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->organizador->DropDownValue = $this->organizador->DefaultDropDownValue;
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->organizador, $sWrk, $this->organizador->SearchOperator, TRUE);
+		ewr_LoadSelectionFromFilter($this->organizador, $sWrk, $this->organizador->DefaultSelectionList);
+		if (!$this->SearchCommand) $this->organizador->SelectionList = $this->organizador->DefaultSelectionList;
+
+		// Field nombreactividad
+		$this->nombreactividad->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->nombreactividad->DropDownValue = $this->nombreactividad->DefaultDropDownValue;
+
+		// Field nombrelocal
+		$this->nombrelocal->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->nombrelocal->DropDownValue = $this->nombrelocal->DefaultDropDownValue;
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->nombrelocal, $sWrk, $this->nombrelocal->SearchOperator, TRUE);
+		ewr_LoadSelectionFromFilter($this->nombrelocal, $sWrk, $this->nombrelocal->DefaultSelectionList);
+		if (!$this->SearchCommand) $this->nombrelocal->SelectionList = $this->nombrelocal->DefaultSelectionList;
 		/**
 		* Set up default values for extended filters
 		* function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2)
@@ -2417,34 +2486,6 @@ class crviewactividad_rpt extends crviewactividad {
 		* $so2 - Default search operator 2 (if operator 2 is enabled)
 		* $sv2 - Default ext filter value 2 (if operator 2 is enabled)
 		*/
-
-		// Field sector
-		$this->SetDefaultExtFilter($this->sector, "LIKE", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->sector);
-		$sWrk = "";
-		$this->BuildExtendedFilter($this->sector, $sWrk, TRUE);
-		ewr_LoadSelectionFromFilter($this->sector, $sWrk, $this->sector->DefaultSelectionList);
-		if (!$this->SearchCommand) $this->sector->SelectionList = $this->sector->DefaultSelectionList;
-
-		// Field tipoactividad
-		$this->SetDefaultExtFilter($this->tipoactividad, "LIKE", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->tipoactividad);
-		$sWrk = "";
-		$this->BuildExtendedFilter($this->tipoactividad, $sWrk, TRUE);
-		ewr_LoadSelectionFromFilter($this->tipoactividad, $sWrk, $this->tipoactividad->DefaultSelectionList);
-		if (!$this->SearchCommand) $this->tipoactividad->SelectionList = $this->tipoactividad->DefaultSelectionList;
-
-		// Field organizador
-		$this->SetDefaultExtFilter($this->organizador, "=", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->organizador);
-		$sWrk = "";
-		$this->BuildExtendedFilter($this->organizador, $sWrk, TRUE);
-		ewr_LoadSelectionFromFilter($this->organizador, $sWrk, $this->organizador->DefaultSelectionList);
-		if (!$this->SearchCommand) $this->organizador->SelectionList = $this->organizador->DefaultSelectionList;
-
-		// Field nombreactividad
-		$this->SetDefaultExtFilter($this->nombreactividad, "LIKE", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->nombreactividad);
 
 		// Field fecha_inicio
 		$this->SetDefaultExtFilter($this->fecha_inicio, "=", NULL, 'AND', "=", NULL);
@@ -2487,6 +2528,8 @@ class crviewactividad_rpt extends crviewactividad {
 		// $this->tipoactividad->DefaultSelectionList = array("val1", "val2");
 		// Field organizador
 		// $this->organizador->DefaultSelectionList = array("val1", "val2");
+		// Field nombrelocal
+		// $this->nombrelocal->DefaultSelectionList = array("val1", "val2");
 		// Field fecha_inicio
 		// $this->fecha_inicio->DefaultSelectionList = array("val1", "val2");
 		// Field fecha_fin
@@ -2499,32 +2542,40 @@ class crviewactividad_rpt extends crviewactividad {
 	// Check if filter applied
 	function CheckFilter() {
 
-		// Check sector text filter
-		if ($this->TextFilterApplied($this->sector))
+		// Check sector extended filter
+		if ($this->NonTextFilterApplied($this->sector))
 			return TRUE;
 
 		// Check sector popup filter
 		if (!ewr_MatchedArray($this->sector->DefaultSelectionList, $this->sector->SelectionList))
 			return TRUE;
 
-		// Check tipoactividad text filter
-		if ($this->TextFilterApplied($this->tipoactividad))
+		// Check tipoactividad extended filter
+		if ($this->NonTextFilterApplied($this->tipoactividad))
 			return TRUE;
 
 		// Check tipoactividad popup filter
 		if (!ewr_MatchedArray($this->tipoactividad->DefaultSelectionList, $this->tipoactividad->SelectionList))
 			return TRUE;
 
-		// Check organizador text filter
-		if ($this->TextFilterApplied($this->organizador))
+		// Check organizador extended filter
+		if ($this->NonTextFilterApplied($this->organizador))
 			return TRUE;
 
 		// Check organizador popup filter
 		if (!ewr_MatchedArray($this->organizador->DefaultSelectionList, $this->organizador->SelectionList))
 			return TRUE;
 
-		// Check nombreactividad text filter
-		if ($this->TextFilterApplied($this->nombreactividad))
+		// Check nombreactividad extended filter
+		if ($this->NonTextFilterApplied($this->nombreactividad))
+			return TRUE;
+
+		// Check nombrelocal extended filter
+		if ($this->NonTextFilterApplied($this->nombrelocal))
+			return TRUE;
+
+		// Check nombrelocal popup filter
+		if (!ewr_MatchedArray($this->nombrelocal->DefaultSelectionList, $this->nombrelocal->SelectionList))
 			return TRUE;
 
 		// Check fecha_inicio text filter
@@ -2571,7 +2622,7 @@ class crviewactividad_rpt extends crviewactividad {
 		// Field sector
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->sector, $sExtWrk);
+		$this->BuildDropDownFilter($this->sector, $sExtWrk, $this->sector->SearchOperator);
 		if (is_array($this->sector->SelectionList))
 			$sWrk = ewr_JoinArray($this->sector->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
 		$sFilter = "";
@@ -2585,7 +2636,7 @@ class crviewactividad_rpt extends crviewactividad {
 		// Field tipoactividad
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->tipoactividad, $sExtWrk);
+		$this->BuildDropDownFilter($this->tipoactividad, $sExtWrk, $this->tipoactividad->SearchOperator);
 		if (is_array($this->tipoactividad->SelectionList))
 			$sWrk = ewr_JoinArray($this->tipoactividad->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
 		$sFilter = "";
@@ -2599,9 +2650,9 @@ class crviewactividad_rpt extends crviewactividad {
 		// Field organizador
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->organizador, $sExtWrk);
+		$this->BuildDropDownFilter($this->organizador, $sExtWrk, $this->organizador->SearchOperator);
 		if (is_array($this->organizador->SelectionList))
-			$sWrk = ewr_JoinArray($this->organizador->SelectionList, ", ", EWR_DATATYPE_NUMBER, 0, $this->DBID);
+			$sWrk = ewr_JoinArray($this->organizador->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -2613,7 +2664,7 @@ class crviewactividad_rpt extends crviewactividad {
 		// Field nombreactividad
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->nombreactividad, $sExtWrk);
+		$this->BuildDropDownFilter($this->nombreactividad, $sExtWrk, $this->nombreactividad->SearchOperator);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -2621,6 +2672,20 @@ class crviewactividad_rpt extends crviewactividad {
 			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
 		if ($sFilter <> "")
 			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombreactividad->FldCaption() . "</span>" . $sFilter . "</div>";
+
+		// Field nombrelocal
+		$sExtWrk = "";
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->nombrelocal, $sExtWrk, $this->nombrelocal->SearchOperator);
+		if (is_array($this->nombrelocal->SelectionList))
+			$sWrk = ewr_JoinArray($this->nombrelocal->SelectionList, ", ", EWR_DATATYPE_STRING, 0, $this->DBID);
+		$sFilter = "";
+		if ($sExtWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
+		elseif ($sWrk <> "")
+			$sFilter .= "<span class=\"ewFilterValue\">$sWrk</span>";
+		if ($sFilter <> "")
+			$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->nombrelocal->FldCaption() . "</span>" . $sFilter . "</div>";
 
 		// Field fecha_inicio
 		$sExtWrk = "";
@@ -2711,13 +2776,11 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Field sector
 		$sWrk = "";
-		if ($this->sector->SearchValue <> "" || $this->sector->SearchValue2 <> "") {
-			$sWrk = "\"sv_sector\":\"" . ewr_JsEncode2($this->sector->SearchValue) . "\"," .
-				"\"so_sector\":\"" . ewr_JsEncode2($this->sector->SearchOperator) . "\"," .
-				"\"sc_sector\":\"" . ewr_JsEncode2($this->sector->SearchCondition) . "\"," .
-				"\"sv2_sector\":\"" . ewr_JsEncode2($this->sector->SearchValue2) . "\"," .
-				"\"so2_sector\":\"" . ewr_JsEncode2($this->sector->SearchOperator2) . "\"";
-		}
+		$sWrk = ($this->sector->DropDownValue <> EWR_INIT_VALUE) ? $this->sector->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_sector\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		if ($sWrk == "") {
 			$sWrk = ($this->sector->SelectionList <> EWR_INIT_VALUE) ? $this->sector->SelectionList : "";
 			if (is_array($sWrk))
@@ -2732,13 +2795,11 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Field tipoactividad
 		$sWrk = "";
-		if ($this->tipoactividad->SearchValue <> "" || $this->tipoactividad->SearchValue2 <> "") {
-			$sWrk = "\"sv_tipoactividad\":\"" . ewr_JsEncode2($this->tipoactividad->SearchValue) . "\"," .
-				"\"so_tipoactividad\":\"" . ewr_JsEncode2($this->tipoactividad->SearchOperator) . "\"," .
-				"\"sc_tipoactividad\":\"" . ewr_JsEncode2($this->tipoactividad->SearchCondition) . "\"," .
-				"\"sv2_tipoactividad\":\"" . ewr_JsEncode2($this->tipoactividad->SearchValue2) . "\"," .
-				"\"so2_tipoactividad\":\"" . ewr_JsEncode2($this->tipoactividad->SearchOperator2) . "\"";
-		}
+		$sWrk = ($this->tipoactividad->DropDownValue <> EWR_INIT_VALUE) ? $this->tipoactividad->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_tipoactividad\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		if ($sWrk == "") {
 			$sWrk = ($this->tipoactividad->SelectionList <> EWR_INIT_VALUE) ? $this->tipoactividad->SelectionList : "";
 			if (is_array($sWrk))
@@ -2753,13 +2814,11 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Field organizador
 		$sWrk = "";
-		if ($this->organizador->SearchValue <> "" || $this->organizador->SearchValue2 <> "") {
-			$sWrk = "\"sv_organizador\":\"" . ewr_JsEncode2($this->organizador->SearchValue) . "\"," .
-				"\"so_organizador\":\"" . ewr_JsEncode2($this->organizador->SearchOperator) . "\"," .
-				"\"sc_organizador\":\"" . ewr_JsEncode2($this->organizador->SearchCondition) . "\"," .
-				"\"sv2_organizador\":\"" . ewr_JsEncode2($this->organizador->SearchValue2) . "\"," .
-				"\"so2_organizador\":\"" . ewr_JsEncode2($this->organizador->SearchOperator2) . "\"";
-		}
+		$sWrk = ($this->organizador->DropDownValue <> EWR_INIT_VALUE) ? $this->organizador->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_organizador\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		if ($sWrk == "") {
 			$sWrk = ($this->organizador->SelectionList <> EWR_INIT_VALUE) ? $this->organizador->SelectionList : "";
 			if (is_array($sWrk))
@@ -2774,12 +2833,29 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Field nombreactividad
 		$sWrk = "";
-		if ($this->nombreactividad->SearchValue <> "" || $this->nombreactividad->SearchValue2 <> "") {
-			$sWrk = "\"sv_nombreactividad\":\"" . ewr_JsEncode2($this->nombreactividad->SearchValue) . "\"," .
-				"\"so_nombreactividad\":\"" . ewr_JsEncode2($this->nombreactividad->SearchOperator) . "\"," .
-				"\"sc_nombreactividad\":\"" . ewr_JsEncode2($this->nombreactividad->SearchCondition) . "\"," .
-				"\"sv2_nombreactividad\":\"" . ewr_JsEncode2($this->nombreactividad->SearchValue2) . "\"," .
-				"\"so2_nombreactividad\":\"" . ewr_JsEncode2($this->nombreactividad->SearchOperator2) . "\"";
+		$sWrk = ($this->nombreactividad->DropDownValue <> EWR_INIT_VALUE) ? $this->nombreactividad->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_nombreactividad\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($sWrk <> "") {
+			if ($sFilterList <> "") $sFilterList .= ",";
+			$sFilterList .= $sWrk;
+		}
+
+		// Field nombrelocal
+		$sWrk = "";
+		$sWrk = ($this->nombrelocal->DropDownValue <> EWR_INIT_VALUE) ? $this->nombrelocal->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_nombrelocal\":\"" . ewr_JsEncode2($sWrk) . "\"";
+		if ($sWrk == "") {
+			$sWrk = ($this->nombrelocal->SelectionList <> EWR_INIT_VALUE) ? $this->nombrelocal->SelectionList : "";
+			if (is_array($sWrk))
+				$sWrk = implode("||", $sWrk);
+			if ($sWrk <> "")
+				$sWrk = "\"sel_nombrelocal\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		}
 		if ($sWrk <> "") {
 			if ($sFilterList <> "") $sFilterList .= ",";
@@ -2901,10 +2977,11 @@ class crviewactividad_rpt extends crviewactividad {
 
 		// Field sector
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_sector", $filter) || array_key_exists("so_sector", $filter) ||
-			array_key_exists("sc_sector", $filter) ||
-			array_key_exists("sv2_sector", $filter) || array_key_exists("so2_sector", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_sector"], @$filter["so_sector"], @$filter["sc_sector"], @$filter["sv2_sector"], @$filter["so2_sector"], "sector");
+		if (array_key_exists("sv_sector", $filter)) {
+			$sWrk = $filter["sv_sector"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_sector"], "sector");
 			$bRestoreFilter = TRUE;
 		}
 		if (array_key_exists("sel_sector", $filter)) {
@@ -2912,21 +2989,22 @@ class crviewactividad_rpt extends crviewactividad {
 			$sWrk = explode("||", $sWrk);
 			$this->sector->SelectionList = $sWrk;
 			$_SESSION["sel_viewactividad_sector"] = $sWrk;
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "sector"); // Clear extended filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "sector"); // Clear drop down
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "sector");
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "sector");
 			$this->sector->SelectionList = "";
 			$_SESSION["sel_viewactividad_sector"] = "";
 		}
 
 		// Field tipoactividad
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_tipoactividad", $filter) || array_key_exists("so_tipoactividad", $filter) ||
-			array_key_exists("sc_tipoactividad", $filter) ||
-			array_key_exists("sv2_tipoactividad", $filter) || array_key_exists("so2_tipoactividad", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_tipoactividad"], @$filter["so_tipoactividad"], @$filter["sc_tipoactividad"], @$filter["sv2_tipoactividad"], @$filter["so2_tipoactividad"], "tipoactividad");
+		if (array_key_exists("sv_tipoactividad", $filter)) {
+			$sWrk = $filter["sv_tipoactividad"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_tipoactividad"], "tipoactividad");
 			$bRestoreFilter = TRUE;
 		}
 		if (array_key_exists("sel_tipoactividad", $filter)) {
@@ -2934,21 +3012,22 @@ class crviewactividad_rpt extends crviewactividad {
 			$sWrk = explode("||", $sWrk);
 			$this->tipoactividad->SelectionList = $sWrk;
 			$_SESSION["sel_viewactividad_tipoactividad"] = $sWrk;
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "tipoactividad"); // Clear extended filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "tipoactividad"); // Clear drop down
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "tipoactividad");
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "tipoactividad");
 			$this->tipoactividad->SelectionList = "";
 			$_SESSION["sel_viewactividad_tipoactividad"] = "";
 		}
 
 		// Field organizador
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_organizador", $filter) || array_key_exists("so_organizador", $filter) ||
-			array_key_exists("sc_organizador", $filter) ||
-			array_key_exists("sv2_organizador", $filter) || array_key_exists("so2_organizador", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_organizador"], @$filter["so_organizador"], @$filter["sc_organizador"], @$filter["sv2_organizador"], @$filter["so2_organizador"], "organizador");
+		if (array_key_exists("sv_organizador", $filter)) {
+			$sWrk = $filter["sv_organizador"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_organizador"], "organizador");
 			$bRestoreFilter = TRUE;
 		}
 		if (array_key_exists("sel_organizador", $filter)) {
@@ -2956,25 +3035,49 @@ class crviewactividad_rpt extends crviewactividad {
 			$sWrk = explode("||", $sWrk);
 			$this->organizador->SelectionList = $sWrk;
 			$_SESSION["sel_viewactividad_organizador"] = $sWrk;
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "organizador"); // Clear extended filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "organizador"); // Clear drop down
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "organizador");
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "organizador");
 			$this->organizador->SelectionList = "";
 			$_SESSION["sel_viewactividad_organizador"] = "";
 		}
 
 		// Field nombreactividad
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_nombreactividad", $filter) || array_key_exists("so_nombreactividad", $filter) ||
-			array_key_exists("sc_nombreactividad", $filter) ||
-			array_key_exists("sv2_nombreactividad", $filter) || array_key_exists("so2_nombreactividad", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_nombreactividad"], @$filter["so_nombreactividad"], @$filter["sc_nombreactividad"], @$filter["sv2_nombreactividad"], @$filter["so2_nombreactividad"], "nombreactividad");
+		if (array_key_exists("sv_nombreactividad", $filter)) {
+			$sWrk = $filter["sv_nombreactividad"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_nombreactividad"], "nombreactividad");
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "nombreactividad");
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "nombreactividad");
+		}
+
+		// Field nombrelocal
+		$bRestoreFilter = FALSE;
+		if (array_key_exists("sv_nombrelocal", $filter)) {
+			$sWrk = $filter["sv_nombrelocal"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_nombrelocal"], "nombrelocal");
+			$bRestoreFilter = TRUE;
+		}
+		if (array_key_exists("sel_nombrelocal", $filter)) {
+			$sWrk = $filter["sel_nombrelocal"];
+			$sWrk = explode("||", $sWrk);
+			$this->nombrelocal->SelectionList = $sWrk;
+			$_SESSION["sel_viewactividad_nombrelocal"] = $sWrk;
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "nombrelocal"); // Clear drop down
+			$bRestoreFilter = TRUE;
+		}
+		if (!$bRestoreFilter) { // Clear filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "nombrelocal");
+			$this->nombrelocal->SelectionList = "";
+			$_SESSION["sel_viewactividad_nombrelocal"] = "";
 		}
 
 		// Field fecha_inicio
@@ -3074,7 +3177,7 @@ class crviewactividad_rpt extends crviewactividad {
 		$sWrk = "";
 		if ($this->DrillDown)
 			return "";
-		if (!$this->ExtendedFilterExist($this->sector)) {
+		if (!$this->DropDownFilterExist($this->sector, $this->sector->SearchOperator)) {
 			if (is_array($this->sector->SelectionList)) {
 				$sFilter = ewr_FilterSql($this->sector, "`sector`", EWR_DATATYPE_STRING, $this->DBID);
 
@@ -3084,7 +3187,7 @@ class crviewactividad_rpt extends crviewactividad {
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
-		if (!$this->ExtendedFilterExist($this->tipoactividad)) {
+		if (!$this->DropDownFilterExist($this->tipoactividad, $this->tipoactividad->SearchOperator)) {
 			if (is_array($this->tipoactividad->SelectionList)) {
 				$sFilter = ewr_FilterSql($this->tipoactividad, "`tipoactividad`", EWR_DATATYPE_STRING, $this->DBID);
 
@@ -3094,13 +3197,23 @@ class crviewactividad_rpt extends crviewactividad {
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
-		if (!$this->ExtendedFilterExist($this->organizador)) {
+		if (!$this->DropDownFilterExist($this->organizador, $this->organizador->SearchOperator)) {
 			if (is_array($this->organizador->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->organizador, "`organizador`", EWR_DATATYPE_NUMBER, $this->DBID);
+				$sFilter = ewr_FilterSql($this->organizador, "`organizador`", EWR_DATATYPE_STRING, $this->DBID);
 
 				// Call Page Filtering event
 				$this->Page_Filtering($this->organizador, $sFilter, "popup");
 				$this->organizador->CurrentFilter = $sFilter;
+				ewr_AddFilter($sWrk, $sFilter);
+			}
+		}
+		if (!$this->DropDownFilterExist($this->nombrelocal, $this->nombrelocal->SearchOperator)) {
+			if (is_array($this->nombrelocal->SelectionList)) {
+				$sFilter = ewr_FilterSql($this->nombrelocal, "`nombrelocal`", EWR_DATATYPE_STRING, $this->DBID);
+
+				// Call Page Filtering event
+				$this->Page_Filtering($this->nombrelocal, $sFilter, "popup");
+				$this->nombrelocal->CurrentFilter = $sFilter;
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
@@ -3283,9 +3396,6 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->fecha_inicio->setSort("");
 			$this->fecha_fin->setSort("");
 			$this->horasprogramadas->setSort("");
-			$this->perosnanombre->setSort("");
-			$this->personaapellidomaterno->setSort("");
-			$this->personaapellidopaterno->setSort("");
 			$this->contenido->setSort("");
 			$this->observaciones->setSort("");
 			$this->nombreinstitucion->setSort("");
@@ -3303,9 +3413,6 @@ class crviewactividad_rpt extends crviewactividad {
 			$this->UpdateSort($this->fecha_inicio); // fecha_inicio
 			$this->UpdateSort($this->fecha_fin); // fecha_fin
 			$this->UpdateSort($this->horasprogramadas); // horasprogramadas
-			$this->UpdateSort($this->perosnanombre); // perosnanombre
-			$this->UpdateSort($this->personaapellidomaterno); // personaapellidomaterno
-			$this->UpdateSort($this->personaapellidopaterno); // personaapellidopaterno
 			$this->UpdateSort($this->contenido); // contenido
 			$this->UpdateSort($this->observaciones); // observaciones
 			$this->UpdateSort($this->nombreinstitucion); // nombreinstitucion
@@ -3481,11 +3588,6 @@ fviewactividadrpt.Validate = function() {
 	if (!this.ValidateRequired)
 		return true; // Ignore validation
 	var $ = jQuery, fobj = this.GetForm(), $fobj = $(fobj);
-	var elm = fobj.sv_organizador;
-	if (elm && !ewr_CheckInteger(elm.value)) {
-		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->organizador->FldErrMsg()) ?>"))
-			return false;
-	}
 	var elm = fobj.sv_fecha_inicio;
 	if (elm && !ewr_CheckDateDef(elm.value)) {
 		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fecha_inicio->FldErrMsg()) ?>"))
@@ -3517,6 +3619,11 @@ fviewactividadrpt.ValidateRequired = false; // No JavaScript validation
 <?php } ?>
 
 // Use Ajax
+fviewactividadrpt.Lists["sv_sector"] = {"LinkField":"sv_sector","Ajax":true,"DisplayFields":["sv_sector","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
+fviewactividadrpt.Lists["sv_tipoactividad"] = {"LinkField":"sv_tipoactividad","Ajax":true,"DisplayFields":["sv_tipoactividad","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
+fviewactividadrpt.Lists["sv_organizador[]"] = {"LinkField":"sv_organizador","Ajax":true,"DisplayFields":["sv_organizador","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
+fviewactividadrpt.Lists["sv_nombreactividad"] = {"LinkField":"sv_nombreactividad","Ajax":true,"DisplayFields":["sv_nombreactividad","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
+fviewactividadrpt.Lists["sv_nombrelocal"] = {"LinkField":"sv_nombrelocal","Ajax":true,"DisplayFields":["sv_nombrelocal","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
 </script>
 <?php } ?>
 <?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
@@ -3566,36 +3673,190 @@ if (!$Page->DrillDownInPanel) {
 <div id="r_1" class="ewRow">
 <div id="c_sector" class="ewCell form-group">
 	<label for="sv_sector" class="ewSearchCaption ewLabel"><?php echo $Page->sector->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_sector" id="so_sector" value="LIKE"></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->sector->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_sector" id="sv_sector" name="sv_sector" size="30" maxlength="100" placeholder="<?php echo $Page->sector->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->sector->SearchValue) ?>"<?php echo $Page->sector->EditAttributes() ?>>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->sector->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewactividad" data-field="x_sector" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->sector->DisplayValueSeparator) ? json_encode($Page->sector->DisplayValueSeparator) : $Page->sector->DisplayValueSeparator) ?>" id="sv_sector" name="sv_sector"<?php echo $Page->sector->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->sector->AdvancedFilters) ? count($Page->sector->AdvancedFilters) : 0;
+	$cntd = is_array($Page->sector->DropDownList) ? count($Page->sector->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->sector->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->sector->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->sector->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->sector->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_sector" id="s_sv_sector" value="<?php echo $Page->sector->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewactividadrpt.Lists["sv_sector"].Options = <?php echo ewr_ArrayToJson($Page->sector->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 <div id="c_tipoactividad" class="ewCell form-group">
 	<label for="sv_tipoactividad" class="ewSearchCaption ewLabel"><?php echo $Page->tipoactividad->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_tipoactividad" id="so_tipoactividad" value="LIKE"></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->tipoactividad->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_tipoactividad" id="sv_tipoactividad" name="sv_tipoactividad" size="30" maxlength="100" placeholder="<?php echo $Page->tipoactividad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->tipoactividad->SearchValue) ?>"<?php echo $Page->tipoactividad->EditAttributes() ?>>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->tipoactividad->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewactividad" data-field="x_tipoactividad" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->tipoactividad->DisplayValueSeparator) ? json_encode($Page->tipoactividad->DisplayValueSeparator) : $Page->tipoactividad->DisplayValueSeparator) ?>" id="sv_tipoactividad" name="sv_tipoactividad"<?php echo $Page->tipoactividad->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->tipoactividad->AdvancedFilters) ? count($Page->tipoactividad->AdvancedFilters) : 0;
+	$cntd = is_array($Page->tipoactividad->DropDownList) ? count($Page->tipoactividad->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->tipoactividad->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->tipoactividad->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->tipoactividad->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->tipoactividad->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_tipoactividad" id="s_sv_tipoactividad" value="<?php echo $Page->tipoactividad->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewactividadrpt.Lists["sv_tipoactividad"].Options = <?php echo ewr_ArrayToJson($Page->tipoactividad->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 <div id="c_organizador" class="ewCell form-group">
 	<label for="sv_organizador" class="ewSearchCaption ewLabel"><?php echo $Page->organizador->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_organizador" id="so_organizador" value="="></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->organizador->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_organizador" id="sv_organizador" name="sv_organizador" size="30" placeholder="<?php echo $Page->organizador->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->organizador->SearchValue) ?>"<?php echo $Page->organizador->EditAttributes() ?>>
+	<span class="ewSearchField">
+<?php $selwrk = ewr_MatchedFilterValue($Page->organizador->DropDownValue, EWR_ALL_VALUE) ? " selected" : ""; ?>
+<?php ewr_PrependClass($Page->organizador->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewactividad" data-field="x_organizador" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->organizador->DisplayValueSeparator) ? json_encode($Page->organizador->DisplayValueSeparator) : $Page->organizador->DisplayValueSeparator) ?>" id="sv_organizador[]" name="sv_organizador[]" multiple="multiple"<?php echo $Page->organizador->EditAttributes() ?>>
+<option value="<?php echo EWR_ALL_VALUE; ?>"<?php echo $selwrk ?>><?php echo $ReportLanguage->Phrase("SelectAll") ?></option>
+<?php
+	$cntf = is_array($Page->organizador->AdvancedFilters) ? count($Page->organizador->AdvancedFilters) : 0;
+	$cntd = is_array($Page->organizador->DropDownList) ? count($Page->organizador->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->organizador->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->organizador->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->organizador->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->organizador->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_organizador" id="s_sv_organizador" value="<?php echo $Page->organizador->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewactividadrpt.Lists["sv_organizador[]"].Options = <?php echo ewr_ArrayToJson($Page->organizador->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 </div>
 <div id="r_2" class="ewRow">
 <div id="c_nombreactividad" class="ewCell form-group">
 	<label for="sv_nombreactividad" class="ewSearchCaption ewLabel"><?php echo $Page->nombreactividad->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreactividad" id="so_nombreactividad" value="LIKE"></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->nombreactividad->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_nombreactividad" id="sv_nombreactividad" name="sv_nombreactividad" size="30" maxlength="100" placeholder="<?php echo $Page->nombreactividad->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->nombreactividad->SearchValue) ?>"<?php echo $Page->nombreactividad->EditAttributes() ?>>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->nombreactividad->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewactividad" data-field="x_nombreactividad" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->nombreactividad->DisplayValueSeparator) ? json_encode($Page->nombreactividad->DisplayValueSeparator) : $Page->nombreactividad->DisplayValueSeparator) ?>" id="sv_nombreactividad" name="sv_nombreactividad"<?php echo $Page->nombreactividad->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->nombreactividad->AdvancedFilters) ? count($Page->nombreactividad->AdvancedFilters) : 0;
+	$cntd = is_array($Page->nombreactividad->DropDownList) ? count($Page->nombreactividad->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->nombreactividad->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->nombreactividad->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->nombreactividad->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->nombreactividad->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_nombreactividad" id="s_sv_nombreactividad" value="<?php echo $Page->nombreactividad->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewactividadrpt.Lists["sv_nombreactividad"].Options = <?php echo ewr_ArrayToJson($Page->nombreactividad->LookupFilterOptions) ?>;
+</script>
+</span>
+</div>
+<div id="c_nombrelocal" class="ewCell form-group">
+	<label for="sv_nombrelocal" class="ewSearchCaption ewLabel"><?php echo $Page->nombrelocal->FldCaption() ?></label>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->nombrelocal->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewactividad" data-field="x_nombrelocal" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->nombrelocal->DisplayValueSeparator) ? json_encode($Page->nombrelocal->DisplayValueSeparator) : $Page->nombrelocal->DisplayValueSeparator) ?>" id="sv_nombrelocal" name="sv_nombrelocal"<?php echo $Page->nombrelocal->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->nombrelocal->AdvancedFilters) ? count($Page->nombrelocal->AdvancedFilters) : 0;
+	$cntd = is_array($Page->nombrelocal->DropDownList) ? count($Page->nombrelocal->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->nombrelocal->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->nombrelocal->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->nombrelocal->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->nombrelocal->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_nombrelocal" id="s_sv_nombrelocal" value="<?php echo $Page->nombrelocal->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewactividadrpt.Lists["sv_nombrelocal"].Options = <?php echo ewr_ArrayToJson($Page->nombrelocal->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 <div id="c_fecha_inicio" class="ewCell form-group">
@@ -3603,19 +3864,19 @@ if (!$Page->DrillDownInPanel) {
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fecha_inicio" id="so_fecha_inicio" value="="></span>
 	<span class="control-group ewSearchField">
 <?php ewr_PrependClass($Page->fecha_inicio->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_fecha_inicio" id="sv_fecha_inicio" name="sv_fecha_inicio" placeholder="<?php echo $Page->fecha_inicio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_inicio->SearchValue) ?>"<?php echo $Page->fecha_inicio->EditAttributes() ?>>
+<input type="text" data-table="viewactividad" data-field="x_fecha_inicio" id="sv_fecha_inicio" name="sv_fecha_inicio" placeholder="<?php echo $Page->fecha_inicio->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_inicio->SearchValue) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha_inicio->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_3" class="ewRow">
 <div id="c_fecha_fin" class="ewCell form-group">
 	<label for="sv_fecha_fin" class="ewSearchCaption ewLabel"><?php echo $Page->fecha_fin->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fecha_fin" id="so_fecha_fin" value="="></span>
 	<span class="control-group ewSearchField">
 <?php ewr_PrependClass($Page->fecha_fin->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewactividad" data-field="x_fecha_fin" id="sv_fecha_fin" name="sv_fecha_fin" placeholder="<?php echo $Page->fecha_fin->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_fin->SearchValue) ?>"<?php echo $Page->fecha_fin->EditAttributes() ?>>
+<input type="text" data-table="viewactividad" data-field="x_fecha_fin" id="sv_fecha_fin" name="sv_fecha_fin" placeholder="<?php echo $Page->fecha_fin->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha_fin->SearchValue) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha_fin->EditAttributes() ?>>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_contenido" class="ewCell form-group">
 	<label for="sv_contenido" class="ewSearchCaption ewLabel"><?php echo $Page->contenido->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_contenido" id="so_contenido" value="LIKE"></span>
@@ -3632,6 +3893,8 @@ if (!$Page->DrillDownInPanel) {
 <input type="text" data-table="viewactividad" data-field="x_observaciones" id="sv_observaciones" name="sv_observaciones" size="30" maxlength="100" placeholder="<?php echo $Page->observaciones->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->observaciones->SearchValue) ?>"<?php echo $Page->observaciones->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_4" class="ewRow">
 <div id="c_nombreinstitucion" class="ewCell form-group">
 	<label for="sv_nombreinstitucion" class="ewSearchCaption ewLabel"><?php echo $Page->nombreinstitucion->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("LIKE"); ?><input type="hidden" name="so_nombreinstitucion" id="so_nombreinstitucion" value="LIKE"></span>
@@ -3793,11 +4056,17 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->SortUrl($Page->nombrelocal) == "") { ?>
 		<div class="ewTableHeaderBtn viewactividad_nombrelocal">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombrelocal->FldCaption() ?></span>
+	<?php if (!$grDashboardReport) { ?>
+			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewactividad_nombrelocal', range: false, from: '<?php echo $Page->nombrelocal->RangeFrom; ?>', to: '<?php echo $Page->nombrelocal->RangeTo; ?>', url: 'viewactividadrpt.php' });" id="x_nombrelocal<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
+	<?php } ?>
 		</div>
 <?php } else { ?>
 		<div class="ewTableHeaderBtn ewPointer viewactividad_nombrelocal" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombrelocal) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nombrelocal->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nombrelocal->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombrelocal->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+	<?php if (!$grDashboardReport) { ?>
+			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewactividad_nombrelocal', range: false, from: '<?php echo $Page->nombrelocal->RangeFrom; ?>', to: '<?php echo $Page->nombrelocal->RangeTo; ?>', url: 'viewactividadrpt.php' });" id="x_nombrelocal<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
+	<?php } ?>
 		</div>
 <?php } ?>
 	</td>
@@ -3882,60 +4151,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<div class="ewTableHeaderBtn ewPointer viewactividad_horasprogramadas" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->horasprogramadas) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->horasprogramadas->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->horasprogramadas->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->horasprogramadas->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->perosnanombre->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="perosnanombre"><div class="viewactividad_perosnanombre"><span class="ewTableHeaderCaption"><?php echo $Page->perosnanombre->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="perosnanombre">
-<?php if ($Page->SortUrl($Page->perosnanombre) == "") { ?>
-		<div class="ewTableHeaderBtn viewactividad_perosnanombre">
-			<span class="ewTableHeaderCaption"><?php echo $Page->perosnanombre->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewactividad_perosnanombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->perosnanombre) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->perosnanombre->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->perosnanombre->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->perosnanombre->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->personaapellidomaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="personaapellidomaterno"><div class="viewactividad_personaapellidomaterno"><span class="ewTableHeaderCaption"><?php echo $Page->personaapellidomaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="personaapellidomaterno">
-<?php if ($Page->SortUrl($Page->personaapellidomaterno) == "") { ?>
-		<div class="ewTableHeaderBtn viewactividad_personaapellidomaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->personaapellidomaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewactividad_personaapellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->personaapellidomaterno) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->personaapellidomaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->personaapellidomaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->personaapellidomaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->personaapellidopaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="personaapellidopaterno"><div class="viewactividad_personaapellidopaterno"><span class="ewTableHeaderCaption"><?php echo $Page->personaapellidopaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="personaapellidopaterno">
-<?php if ($Page->SortUrl($Page->personaapellidopaterno) == "") { ?>
-		<div class="ewTableHeaderBtn viewactividad_personaapellidopaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->personaapellidopaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewactividad_personaapellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->personaapellidopaterno) ?>',1);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->personaapellidopaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->personaapellidopaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->personaapellidopaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -4054,18 +4269,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->horasprogramadas->Visible) { ?>
 		<td data-field="horasprogramadas"<?php echo $Page->horasprogramadas->CellAttributes() ?>>
 <span<?php echo $Page->horasprogramadas->ViewAttributes() ?>><?php echo $Page->horasprogramadas->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->perosnanombre->Visible) { ?>
-		<td data-field="perosnanombre"<?php echo $Page->perosnanombre->CellAttributes() ?>>
-<span<?php echo $Page->perosnanombre->ViewAttributes() ?>><?php echo $Page->perosnanombre->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->personaapellidomaterno->Visible) { ?>
-		<td data-field="personaapellidomaterno"<?php echo $Page->personaapellidomaterno->CellAttributes() ?>>
-<span<?php echo $Page->personaapellidomaterno->ViewAttributes() ?>><?php echo $Page->personaapellidomaterno->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->personaapellidopaterno->Visible) { ?>
-		<td data-field="personaapellidopaterno"<?php echo $Page->personaapellidopaterno->CellAttributes() ?>>
-<span<?php echo $Page->personaapellidopaterno->ViewAttributes() ?>><?php echo $Page->personaapellidopaterno->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->contenido->Visible) { ?>
 		<td data-field="contenido"<?php echo $Page->contenido->CellAttributes() ?>>

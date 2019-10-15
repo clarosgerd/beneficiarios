@@ -343,7 +343,6 @@ class cestudiante_edit extends cestudiante {
 		$this->tipodiscapacidad->SetVisibility();
 		$this->observaciones->SetVisibility();
 		$this->gestion->SetVisibility();
-		$this->fecha->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -635,10 +634,6 @@ class cestudiante_edit extends cestudiante {
 		if (!$this->gestion->FldIsDetailKey) {
 			$this->gestion->setFormValue($objForm->GetValue("x_gestion"));
 		}
-		if (!$this->fecha->FldIsDetailKey) {
-			$this->fecha->setFormValue($objForm->GetValue("x_fecha"));
-			$this->fecha->CurrentValue = ew_UnFormatDateTime($this->fecha->CurrentValue, 0);
-		}
 		if (!$this->id->FldIsDetailKey)
 			$this->id->setFormValue($objForm->GetValue("x_id"));
 	}
@@ -666,8 +661,6 @@ class cestudiante_edit extends cestudiante {
 		$this->tipodiscapacidad->CurrentValue = $this->tipodiscapacidad->FormValue;
 		$this->observaciones->CurrentValue = $this->observaciones->FormValue;
 		$this->gestion->CurrentValue = $this->gestion->FormValue;
-		$this->fecha->CurrentValue = $this->fecha->FormValue;
-		$this->fecha->CurrentValue = ew_UnFormatDateTime($this->fecha->CurrentValue, 0);
 	}
 
 	// Load row based on key values
@@ -1071,11 +1064,6 @@ class cestudiante_edit extends cestudiante {
 		}
 		$this->gestion->ViewCustomAttributes = "";
 
-		// fecha
-		$this->fecha->ViewValue = $this->fecha->CurrentValue;
-		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
-		$this->fecha->ViewCustomAttributes = "";
-
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
 			$this->codigorude->HrefValue = "";
@@ -1165,11 +1153,6 @@ class cestudiante_edit extends cestudiante {
 			$this->gestion->LinkCustomAttributes = "";
 			$this->gestion->HrefValue = "";
 			$this->gestion->TooltipValue = "";
-
-			// fecha
-			$this->fecha->LinkCustomAttributes = "";
-			$this->fecha->HrefValue = "";
-			$this->fecha->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_EDIT) { // Edit row
 
 			// codigorude
@@ -1390,12 +1373,6 @@ class cestudiante_edit extends cestudiante {
 			if ($rswrk) $rswrk->Close();
 			$this->gestion->EditValue = $arwrk;
 
-			// fecha
-			$this->fecha->EditAttrs["class"] = "form-control";
-			$this->fecha->EditCustomAttributes = "";
-			$this->fecha->EditValue = ew_HtmlEncode(ew_FormatDateTime($this->fecha->CurrentValue, 8));
-			$this->fecha->PlaceHolder = ew_RemoveHtml($this->fecha->FldCaption());
-
 			// Edit refer script
 			// codigorude
 
@@ -1469,10 +1446,6 @@ class cestudiante_edit extends cestudiante {
 			// gestion
 			$this->gestion->LinkCustomAttributes = "";
 			$this->gestion->HrefValue = "";
-
-			// fecha
-			$this->fecha->LinkCustomAttributes = "";
-			$this->fecha->HrefValue = "";
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -1518,12 +1491,6 @@ class cestudiante_edit extends cestudiante {
 		}
 		if (!$this->gestion->FldIsDetailKey && !is_null($this->gestion->FormValue) && $this->gestion->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->gestion->FldCaption(), $this->gestion->ReqErrMsg));
-		}
-		if (!$this->fecha->FldIsDetailKey && !is_null($this->fecha->FormValue) && $this->fecha->FormValue == "") {
-			ew_AddMessage($gsFormError, str_replace("%s", $this->fecha->FldCaption(), $this->fecha->ReqErrMsg));
-		}
-		if (!ew_CheckDateDef($this->fecha->FormValue)) {
-			ew_AddMessage($gsFormError, $this->fecha->FldErrMsg());
 		}
 
 		// Return validate result
@@ -1614,9 +1581,6 @@ class cestudiante_edit extends cestudiante {
 
 			// gestion
 			$this->gestion->SetDbValueDef($rsnew, $this->gestion->CurrentValue, 0, $this->gestion->ReadOnly);
-
-			// fecha
-			$this->fecha->SetDbValueDef($rsnew, ew_UnFormatDateTime($this->fecha->CurrentValue, 0), ew_CurrentDate(), $this->fecha->ReadOnly);
 
 			// Call Row Updating event
 			$bUpdateRow = $this->Row_Updating($rsold, $rsnew);
@@ -1919,12 +1883,6 @@ festudianteedit.Validate = function() {
 			elm = this.GetElements("x" + infix + "_gestion");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $estudiante->gestion->FldCaption(), $estudiante->gestion->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_fecha");
-			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
-				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $estudiante->fecha->FldCaption(), $estudiante->fecha->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_fecha");
-			if (elm && !ew_CheckDateDef(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($estudiante->fecha->FldErrMsg()) ?>");
 
 			// Fire Form_CustomValidate event
 			if (!this.Form_CustomValidate(fobj))
@@ -2202,21 +2160,6 @@ festudianteedit.CreateAutoSuggest({"id":"x_discapacidad","forceSelect":false});
 </select>
 </span>
 <?php echo $estudiante->gestion->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
-<?php if ($estudiante->fecha->Visible) { // fecha ?>
-	<div id="r_fecha" class="form-group">
-		<label id="elh_estudiante_fecha" for="x_fecha" class="<?php echo $estudiante_edit->LeftColumnClass ?>"><?php echo $estudiante->fecha->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
-		<div class="<?php echo $estudiante_edit->RightColumnClass ?>"><div<?php echo $estudiante->fecha->CellAttributes() ?>>
-<span id="el_estudiante_fecha">
-<input type="text" data-table="estudiante" data-field="x_fecha" name="x_fecha" id="x_fecha" placeholder="<?php echo ew_HtmlEncode($estudiante->fecha->getPlaceHolder()) ?>" value="<?php echo $estudiante->fecha->EditValue ?>"<?php echo $estudiante->fecha->EditAttributes() ?>>
-<?php if (!$estudiante->fecha->ReadOnly && !$estudiante->fecha->Disabled && !isset($estudiante->fecha->EditAttrs["readonly"]) && !isset($estudiante->fecha->EditAttrs["disabled"])) { ?>
-<script type="text/javascript">
-ew_CreateDateTimePicker("festudianteedit", "x_fecha", {"ignoreReadonly":true,"useCurrent":false,"format":0});
-</script>
-<?php } ?>
-</span>
-<?php echo $estudiante->fecha->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->

@@ -337,7 +337,6 @@ class cestudiante_delete extends cestudiante {
 		$this->discapacidad->SetVisibility();
 		$this->tipodiscapacidad->SetVisibility();
 		$this->observaciones->SetVisibility();
-		$this->fecha->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -640,6 +639,7 @@ class cestudiante_delete extends cestudiante {
 		$this->esincritoespecial->CellCssStyle = "white-space: nowrap;";
 
 		// fecha
+		$this->fecha->CellCssStyle = "white-space: nowrap;";
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
 		// codigorude
@@ -849,11 +849,6 @@ class cestudiante_delete extends cestudiante {
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
 		$this->observaciones->ViewCustomAttributes = "";
 
-		// fecha
-		$this->fecha->ViewValue = $this->fecha->CurrentValue;
-		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
-		$this->fecha->ViewCustomAttributes = "";
-
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
 			$this->codigorude->HrefValue = "";
@@ -938,11 +933,6 @@ class cestudiante_delete extends cestudiante {
 			$this->observaciones->LinkCustomAttributes = "";
 			$this->observaciones->HrefValue = "";
 			$this->observaciones->TooltipValue = "";
-
-			// fecha
-			$this->fecha->LinkCustomAttributes = "";
-			$this->fecha->HrefValue = "";
-			$this->fecha->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1248,9 +1238,6 @@ $estudiante_delete->ShowMessage();
 <?php if ($estudiante->observaciones->Visible) { // observaciones ?>
 		<th class="<?php echo $estudiante->observaciones->HeaderCellClass() ?>"><span id="elh_estudiante_observaciones" class="estudiante_observaciones"><?php echo $estudiante->observaciones->FldCaption() ?></span></th>
 <?php } ?>
-<?php if ($estudiante->fecha->Visible) { // fecha ?>
-		<th class="<?php echo $estudiante->fecha->HeaderCellClass() ?>"><span id="elh_estudiante_fecha" class="estudiante_fecha"><?php echo $estudiante->fecha->FldCaption() ?></span></th>
-<?php } ?>
 	</tr>
 	</thead>
 	<tbody>
@@ -1405,14 +1392,6 @@ while (!$estudiante_delete->Recordset->EOF) {
 <span id="el<?php echo $estudiante_delete->RowCnt ?>_estudiante_observaciones" class="estudiante_observaciones">
 <span<?php echo $estudiante->observaciones->ViewAttributes() ?>>
 <?php echo $estudiante->observaciones->ListViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($estudiante->fecha->Visible) { // fecha ?>
-		<td<?php echo $estudiante->fecha->CellAttributes() ?>>
-<span id="el<?php echo $estudiante_delete->RowCnt ?>_estudiante_fecha" class="estudiante_fecha">
-<span<?php echo $estudiante->fecha->ViewAttributes() ?>>
-<?php echo $estudiante->fecha->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

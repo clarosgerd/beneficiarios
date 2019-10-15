@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/9" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/15" version="14.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -2300,9 +2300,6 @@
       <field id="observaciones">
         <phrase id="fldcaption" value="observaciones" />
       </field>
-      <field id="id_estudiante">
-        <phrase id="fldcaption" value="id estudiante" />
-      </field>
       <field id="curso">
         <phrase id="fldcaption" value="curso" />
       </field>
@@ -2339,15 +2336,6 @@
       <field id="horasprogramadas">
         <phrase id="fldcaption" value="horasprogramadas" />
       </field>
-      <field id="perosnanombre">
-        <phrase id="fldcaption" value="perosnanombre" />
-      </field>
-      <field id="personaapellidomaterno">
-        <phrase id="fldcaption" value="personaapellidomaterno" />
-      </field>
-      <field id="personaapellidopaterno">
-        <phrase id="fldcaption" value="personaapellidopaterno" />
-      </field>
       <field id="contenido">
         <phrase id="fldcaption" value="contenido" />
       </field>
@@ -2356,6 +2344,9 @@
       </field>
       <field id="nombreinstitucion">
         <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="facilitador">
+        <phrase id="fldcaption" value="facilitador" />
       </field>
     </table>
     <table id="viewdocente">
@@ -2408,9 +2399,6 @@
       <field id="departamento">
         <phrase id="fldcaption" value="departamento" />
       </field>
-      <field id="codigorude">
-        <phrase id="fldcaption" value="codigorude" />
-      </field>
       <field id="codigorude_es">
         <phrase id="fldcaption" value="codigorude es" />
       </field>
@@ -2456,8 +2444,11 @@
       <field id="tipodiscapcidad">
         <phrase id="fldcaption" value="tipodiscapcidad" />
       </field>
-      <field id="nombreinstitucion">
-        <phrase id="fldcaption" value="nombreinstitucion" />
+      <field id="centro">
+        <phrase id="fldcaption" value="centro" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
       </field>
     </table>
     <table id="viewestudiantesetareo">
@@ -2513,17 +2504,38 @@
     </table>
     <table id="viewestudiantesetareocurso">
       <phrase id="tblcaption" value="viewestudiantesetareocurso" />
-      <field id="edad">
-        <phrase id="fldcaption" value="edad" />
-      </field>
-      <field id="etareo">
-        <phrase id="fldcaption" value="etareo" />
-      </field>
-      <field id="nombreinstitucion">
-        <phrase id="fldcaption" value="nombreinstitucion" />
-      </field>
       <field id="curso">
         <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="id">
+        <phrase id="fldcaption" value="id" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapacidad">
+        <phrase id="fldcaption" value="tipodiscapacidad" />
+      </field>
+      <field id="unidadeducativa">
+        <phrase id="fldcaption" value="unidadeducativa" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
       </field>
     </table>
     <table id="viewmarcologico">
@@ -2650,6 +2662,24 @@
       </field>
       <field id="_email">
         <phrase id="fldcaption" value="email" />
+      </field>
+      <field id="director">
+        <phrase id="fldcaption" value="director" />
+      </field>
+      <field id="cantidadalumnos">
+        <phrase id="fldcaption" value="cantidadalumnos" />
+      </field>
+      <field id="cantidadalumnosvaronessi">
+        <phrase id="fldcaption" value="cantidadalumnosvaronessi" />
+      </field>
+      <field id="cantidadalumnosvaronesno">
+        <phrase id="fldcaption" value="cantidadalumnosvaronesno" />
+      </field>
+      <field id="cantidadalumnosmujeressi">
+        <phrase id="fldcaption" value="cantidadalumnosmujeressi" />
+      </field>
+      <field id="cantidadalumnosmujeresno">
+        <phrase id="fldcaption" value="cantidadalumnosmujeresno" />
       </field>
     </table>
     <table id="curso">

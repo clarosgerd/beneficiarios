@@ -18,6 +18,12 @@ class crviewunidadeducativa extends crTableBase {
 	var $direccion;
 	var $telefono;
 	var $_email;
+	var $director;
+	var $cantidadalumnos;
+	var $cantidadalumnosvaronessi;
+	var $cantidadalumnosvaronesno;
+	var $cantidadalumnosmujeressi;
+	var $cantidadalumnosmujeresno;
 
 	//
 	// Table class constructor
@@ -105,6 +111,59 @@ class crviewunidadeducativa extends crTableBase {
 		$this->_email->SqlSelect = "";
 		$this->_email->SqlOrderBy = "";
 		$this->fields['email'] = &$this->_email;
+
+		// director
+		$this->director = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_director', 'director', '`director`', 201, EWR_DATATYPE_MEMO, -1);
+		$this->director->Sortable = TRUE; // Allow sort
+		$this->director->DateFilter = "";
+		$this->director->SqlSelect = "";
+		$this->director->SqlOrderBy = "";
+		$this->fields['director'] = &$this->director;
+
+		// cantidadalumnos
+		$this->cantidadalumnos = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidadalumnos', 'cantidadalumnos', '`cantidadalumnos`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cantidadalumnos->Sortable = TRUE; // Allow sort
+		$this->cantidadalumnos->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cantidadalumnos->DateFilter = "";
+		$this->cantidadalumnos->SqlSelect = "";
+		$this->cantidadalumnos->SqlOrderBy = "";
+		$this->fields['cantidadalumnos'] = &$this->cantidadalumnos;
+
+		// cantidadalumnosvaronessi
+		$this->cantidadalumnosvaronessi = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidadalumnosvaronessi', 'cantidadalumnosvaronessi', '`cantidadalumnosvaronessi`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cantidadalumnosvaronessi->Sortable = TRUE; // Allow sort
+		$this->cantidadalumnosvaronessi->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cantidadalumnosvaronessi->DateFilter = "";
+		$this->cantidadalumnosvaronessi->SqlSelect = "";
+		$this->cantidadalumnosvaronessi->SqlOrderBy = "";
+		$this->fields['cantidadalumnosvaronessi'] = &$this->cantidadalumnosvaronessi;
+
+		// cantidadalumnosvaronesno
+		$this->cantidadalumnosvaronesno = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidadalumnosvaronesno', 'cantidadalumnosvaronesno', '`cantidadalumnosvaronesno`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cantidadalumnosvaronesno->Sortable = TRUE; // Allow sort
+		$this->cantidadalumnosvaronesno->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cantidadalumnosvaronesno->DateFilter = "";
+		$this->cantidadalumnosvaronesno->SqlSelect = "";
+		$this->cantidadalumnosvaronesno->SqlOrderBy = "";
+		$this->fields['cantidadalumnosvaronesno'] = &$this->cantidadalumnosvaronesno;
+
+		// cantidadalumnosmujeressi
+		$this->cantidadalumnosmujeressi = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidadalumnosmujeressi', 'cantidadalumnosmujeressi', '`cantidadalumnosmujeressi`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cantidadalumnosmujeressi->Sortable = TRUE; // Allow sort
+		$this->cantidadalumnosmujeressi->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cantidadalumnosmujeressi->DateFilter = "";
+		$this->cantidadalumnosmujeressi->SqlSelect = "";
+		$this->cantidadalumnosmujeressi->SqlOrderBy = "";
+		$this->fields['cantidadalumnosmujeressi'] = &$this->cantidadalumnosmujeressi;
+
+		// cantidadalumnosmujeresno
+		$this->cantidadalumnosmujeresno = new crField('viewunidadeducativa', 'viewunidadeducativa', 'x_cantidadalumnosmujeresno', 'cantidadalumnosmujeresno', '`cantidadalumnosmujeresno`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->cantidadalumnosmujeresno->Sortable = TRUE; // Allow sort
+		$this->cantidadalumnosmujeresno->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cantidadalumnosmujeresno->DateFilter = "";
+		$this->cantidadalumnosmujeresno->SqlSelect = "";
+		$this->cantidadalumnosmujeresno->SqlOrderBy = "";
+		$this->fields['cantidadalumnosmujeresno'] = &$this->cantidadalumnosmujeresno;
 	}
 
 	// Set Field Visibility

@@ -326,8 +326,6 @@ class cestudiante_update extends cestudiante {
 		$objForm = new cFormObj();
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"]; // Set up current action
 		$this->curso->SetVisibility();
-		$this->discapacidad->SetVisibility();
-		$this->tipodiscapacidad->SetVisibility();
 		$this->observaciones->SetVisibility();
 		$this->fecha->SetVisibility();
 
@@ -491,17 +489,11 @@ class cestudiante_update extends cestudiante {
 			while (!$this->Recordset->EOF) {
 				if ($i == 1) {
 					$this->curso->setDbValue($this->Recordset->fields('curso'));
-					$this->discapacidad->setDbValue($this->Recordset->fields('discapacidad'));
-					$this->tipodiscapacidad->setDbValue($this->Recordset->fields('tipodiscapacidad'));
 					$this->observaciones->setDbValue($this->Recordset->fields('observaciones'));
 					$this->fecha->setDbValue($this->Recordset->fields('fecha'));
 				} else {
 					if (!ew_CompareValue($this->curso->DbValue, $this->Recordset->fields('curso')))
 						$this->curso->CurrentValue = NULL;
-					if (!ew_CompareValue($this->discapacidad->DbValue, $this->Recordset->fields('discapacidad')))
-						$this->discapacidad->CurrentValue = NULL;
-					if (!ew_CompareValue($this->tipodiscapacidad->DbValue, $this->Recordset->fields('tipodiscapacidad')))
-						$this->tipodiscapacidad->CurrentValue = NULL;
 					if (!ew_CompareValue($this->observaciones->DbValue, $this->Recordset->fields('observaciones')))
 						$this->observaciones->CurrentValue = NULL;
 					if (!ew_CompareValue($this->fecha->DbValue, $this->Recordset->fields('fecha')))
@@ -579,14 +571,6 @@ class cestudiante_update extends cestudiante {
 			$this->curso->setFormValue($objForm->GetValue("x_curso"));
 		}
 		$this->curso->MultiUpdate = $objForm->GetValue("u_curso");
-		if (!$this->discapacidad->FldIsDetailKey) {
-			$this->discapacidad->setFormValue($objForm->GetValue("x_discapacidad"));
-		}
-		$this->discapacidad->MultiUpdate = $objForm->GetValue("u_discapacidad");
-		if (!$this->tipodiscapacidad->FldIsDetailKey) {
-			$this->tipodiscapacidad->setFormValue($objForm->GetValue("x_tipodiscapacidad"));
-		}
-		$this->tipodiscapacidad->MultiUpdate = $objForm->GetValue("u_tipodiscapacidad");
 		if (!$this->observaciones->FldIsDetailKey) {
 			$this->observaciones->setFormValue($objForm->GetValue("x_observaciones"));
 		}
@@ -605,8 +589,6 @@ class cestudiante_update extends cestudiante {
 		global $objForm;
 		$this->id->CurrentValue = $this->id->FormValue;
 		$this->curso->CurrentValue = $this->curso->FormValue;
-		$this->discapacidad->CurrentValue = $this->discapacidad->FormValue;
-		$this->tipodiscapacidad->CurrentValue = $this->tipodiscapacidad->FormValue;
 		$this->observaciones->CurrentValue = $this->observaciones->FormValue;
 		$this->fecha->CurrentValue = $this->fecha->FormValue;
 		$this->fecha->CurrentValue = ew_UnFormatDateTime($this->fecha->CurrentValue, 0);
@@ -1004,16 +986,6 @@ class cestudiante_update extends cestudiante {
 			$this->curso->HrefValue = "";
 			$this->curso->TooltipValue = "";
 
-			// discapacidad
-			$this->discapacidad->LinkCustomAttributes = "";
-			$this->discapacidad->HrefValue = "";
-			$this->discapacidad->TooltipValue = "";
-
-			// tipodiscapacidad
-			$this->tipodiscapacidad->LinkCustomAttributes = "";
-			$this->tipodiscapacidad->HrefValue = "";
-			$this->tipodiscapacidad->TooltipValue = "";
-
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
 			$this->observaciones->HrefValue = "";
@@ -1044,51 +1016,6 @@ class cestudiante_update extends cestudiante {
 			if ($rswrk) $rswrk->Close();
 			$this->curso->EditValue = $arwrk;
 
-			// discapacidad
-			$this->discapacidad->EditAttrs["class"] = "form-control";
-			$this->discapacidad->EditCustomAttributes = "";
-			$this->discapacidad->EditValue = ew_HtmlEncode($this->discapacidad->CurrentValue);
-			if (strval($this->discapacidad->CurrentValue) <> "") {
-				$sFilterWrk = "`id`" . ew_SearchString("=", $this->discapacidad->CurrentValue, EW_DATATYPE_NUMBER, "");
-			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `discapacidad`";
-			$sWhereWrk = "";
-			$this->discapacidad->LookupFilters = array();
-			ew_AddFilter($sWhereWrk, $sFilterWrk);
-			$this->Lookup_Selecting($this->discapacidad, $sWhereWrk); // Call Lookup Selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-				$rswrk = Conn()->Execute($sSqlWrk);
-				if ($rswrk && !$rswrk->EOF) { // Lookup values found
-					$arwrk = array();
-					$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
-					$this->discapacidad->EditValue = $this->discapacidad->DisplayValue($arwrk);
-					$rswrk->Close();
-				} else {
-					$this->discapacidad->EditValue = ew_HtmlEncode($this->discapacidad->CurrentValue);
-				}
-			} else {
-				$this->discapacidad->EditValue = NULL;
-			}
-			$this->discapacidad->PlaceHolder = ew_RemoveHtml($this->discapacidad->FldCaption());
-
-			// tipodiscapacidad
-			$this->tipodiscapacidad->EditAttrs["class"] = "form-control";
-			$this->tipodiscapacidad->EditCustomAttributes = "";
-			if (trim(strval($this->tipodiscapacidad->CurrentValue)) == "") {
-				$sFilterWrk = "0=1";
-			} else {
-				$sFilterWrk = "`id`" . ew_SearchString("=", $this->tipodiscapacidad->CurrentValue, EW_DATATYPE_NUMBER, "");
-			}
-			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `tipodiscapacidad`";
-			$sWhereWrk = "";
-			$this->tipodiscapacidad->LookupFilters = array();
-			ew_AddFilter($sWhereWrk, $sFilterWrk);
-			$this->Lookup_Selecting($this->tipodiscapacidad, $sWhereWrk); // Call Lookup Selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
-			if ($rswrk) $rswrk->Close();
-			$this->tipodiscapacidad->EditValue = $arwrk;
-
 			// observaciones
 			$this->observaciones->EditAttrs["class"] = "form-control";
 			$this->observaciones->EditCustomAttributes = "";
@@ -1106,14 +1033,6 @@ class cestudiante_update extends cestudiante {
 
 			$this->curso->LinkCustomAttributes = "";
 			$this->curso->HrefValue = "";
-
-			// discapacidad
-			$this->discapacidad->LinkCustomAttributes = "";
-			$this->discapacidad->HrefValue = "";
-
-			// tipodiscapacidad
-			$this->tipodiscapacidad->LinkCustomAttributes = "";
-			$this->tipodiscapacidad->HrefValue = "";
 
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
@@ -1139,8 +1058,6 @@ class cestudiante_update extends cestudiante {
 		$gsFormError = "";
 		$lUpdateCnt = 0;
 		if ($this->curso->MultiUpdate == "1") $lUpdateCnt++;
-		if ($this->discapacidad->MultiUpdate == "1") $lUpdateCnt++;
-		if ($this->tipodiscapacidad->MultiUpdate == "1") $lUpdateCnt++;
 		if ($this->observaciones->MultiUpdate == "1") $lUpdateCnt++;
 		if ($this->fecha->MultiUpdate == "1") $lUpdateCnt++;
 		if ($lUpdateCnt == 0) {
@@ -1200,12 +1117,6 @@ class cestudiante_update extends cestudiante {
 
 			// curso
 			$this->curso->SetDbValueDef($rsnew, $this->curso->CurrentValue, 0, $this->curso->ReadOnly || $this->curso->MultiUpdate <> "1");
-
-			// discapacidad
-			$this->discapacidad->SetDbValueDef($rsnew, $this->discapacidad->CurrentValue, NULL, $this->discapacidad->ReadOnly || $this->discapacidad->MultiUpdate <> "1");
-
-			// tipodiscapacidad
-			$this->tipodiscapacidad->SetDbValueDef($rsnew, $this->tipodiscapacidad->CurrentValue, NULL, $this->tipodiscapacidad->ReadOnly || $this->tipodiscapacidad->MultiUpdate <> "1");
 
 			// observaciones
 			$this->observaciones->SetDbValueDef($rsnew, $this->observaciones->CurrentValue, NULL, $this->observaciones->ReadOnly || $this->observaciones->MultiUpdate <> "1");
@@ -1272,30 +1183,6 @@ class cestudiante_update extends cestudiante {
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
 			break;
-		case "x_discapacidad":
-			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `discapacidad`";
-			$sWhereWrk = "{filter}";
-			$fld->LookupFilters = array();
-			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
-			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->discapacidad, $sWhereWrk); // Call Lookup Selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			if ($sSqlWrk <> "")
-				$fld->LookupFilters["s"] .= $sSqlWrk;
-			break;
-		case "x_tipodiscapacidad":
-			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `tipodiscapacidad`";
-			$sWhereWrk = "";
-			$fld->LookupFilters = array();
-			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
-			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->tipodiscapacidad, $sWhereWrk); // Call Lookup Selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			if ($sSqlWrk <> "")
-				$fld->LookupFilters["s"] .= $sSqlWrk;
-			break;
 		}
 	}
 
@@ -1304,18 +1191,6 @@ class cestudiante_update extends cestudiante {
 		global $gsLanguage;
 		$pageId = $pageId ?: $this->PageID;
 		switch ($fld->FldVar) {
-		case "x_discapacidad":
-			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld` FROM `discapacidad`";
-			$sWhereWrk = "`nombre` LIKE '{query_value}%'";
-			$fld->LookupFilters = array();
-			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "");
-			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->discapacidad, $sWhereWrk); // Call Lookup Selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			if ($sSqlWrk <> "")
-				$fld->LookupFilters["s"] .= $sSqlWrk;
-			break;
 		}
 	}
 
@@ -1469,11 +1344,6 @@ festudianteupdate.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) 
 // Dynamic selection lists
 festudianteupdate.Lists["x_curso"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_curso","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"curso"};
 festudianteupdate.Lists["x_curso"].Data = "<?php echo $estudiante_update->curso->LookupFilterQuery(FALSE, "update") ?>";
-festudianteupdate.Lists["x_discapacidad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"discapacidad"};
-festudianteupdate.Lists["x_discapacidad"].Data = "<?php echo $estudiante_update->discapacidad->LookupFilterQuery(FALSE, "update") ?>";
-festudianteupdate.AutoSuggests["x_discapacidad"] = <?php echo json_encode(array("data" => "ajax=autosuggest&" . $estudiante_update->discapacidad->LookupFilterQuery(TRUE, "update"))) ?>;
-festudianteupdate.Lists["x_tipodiscapacidad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"tipodiscapacidad"};
-festudianteupdate.Lists["x_tipodiscapacidad"].Data = "<?php echo $estudiante_update->tipodiscapacidad->LookupFilterQuery(FALSE, "update") ?>";
 
 // Form object for search
 </script>
@@ -1512,43 +1382,6 @@ $estudiante_update->ShowMessage();
 </select>
 </span>
 <?php echo $estudiante->curso->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
-<?php if ($estudiante->discapacidad->Visible) { // discapacidad ?>
-	<div id="r_discapacidad" class="form-group">
-		<label class="<?php echo $estudiante_update->LeftColumnClass ?>"><div class="checkbox"><label>
-<input type="checkbox" name="u_discapacidad" id="u_discapacidad" class="ewMultiSelect" value="1"<?php echo ($estudiante->discapacidad->MultiUpdate == "1") ? " checked" : "" ?>>
- <?php echo $estudiante->discapacidad->FldCaption() ?></label></div></label>
-		<div class="<?php echo $estudiante_update->RightColumnClass ?>"><div<?php echo $estudiante->discapacidad->CellAttributes() ?>>
-<span id="el_estudiante_discapacidad">
-<?php
-$wrkonchange = trim(" " . @$estudiante->discapacidad->EditAttrs["onchange"]);
-if ($wrkonchange <> "") $wrkonchange = " onchange=\"" . ew_JsEncode2($wrkonchange) . "\"";
-$estudiante->discapacidad->EditAttrs["onchange"] = "";
-?>
-<span id="as_x_discapacidad" style="white-space: nowrap; z-index: 8840">
-	<input type="text" name="sv_x_discapacidad" id="sv_x_discapacidad" value="<?php echo $estudiante->discapacidad->EditValue ?>" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($estudiante->discapacidad->getPlaceHolder()) ?>" data-placeholder="<?php echo ew_HtmlEncode($estudiante->discapacidad->getPlaceHolder()) ?>"<?php echo $estudiante->discapacidad->EditAttributes() ?>>
-</span>
-<input type="hidden" data-table="estudiante" data-field="x_discapacidad" data-value-separator="<?php echo $estudiante->discapacidad->DisplayValueSeparatorAttribute() ?>" name="x_discapacidad" id="x_discapacidad" value="<?php echo ew_HtmlEncode($estudiante->discapacidad->CurrentValue) ?>"<?php echo $wrkonchange ?>>
-<script type="text/javascript">
-festudianteupdate.CreateAutoSuggest({"id":"x_discapacidad","forceSelect":false});
-</script>
-</span>
-<?php echo $estudiante->discapacidad->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
-<?php if ($estudiante->tipodiscapacidad->Visible) { // tipodiscapacidad ?>
-	<div id="r_tipodiscapacidad" class="form-group">
-		<label for="x_tipodiscapacidad" class="<?php echo $estudiante_update->LeftColumnClass ?>"><div class="checkbox"><label>
-<input type="checkbox" name="u_tipodiscapacidad" id="u_tipodiscapacidad" class="ewMultiSelect" value="1"<?php echo ($estudiante->tipodiscapacidad->MultiUpdate == "1") ? " checked" : "" ?>>
- <?php echo $estudiante->tipodiscapacidad->FldCaption() ?></label></div></label>
-		<div class="<?php echo $estudiante_update->RightColumnClass ?>"><div<?php echo $estudiante->tipodiscapacidad->CellAttributes() ?>>
-<span id="el_estudiante_tipodiscapacidad">
-<select data-table="estudiante" data-field="x_tipodiscapacidad" data-value-separator="<?php echo $estudiante->tipodiscapacidad->DisplayValueSeparatorAttribute() ?>" id="x_tipodiscapacidad" name="x_tipodiscapacidad"<?php echo $estudiante->tipodiscapacidad->EditAttributes() ?>>
-<?php echo $estudiante->tipodiscapacidad->SelectOptionListHtml("x_tipodiscapacidad") ?>
-</select>
-</span>
-<?php echo $estudiante->tipodiscapacidad->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($estudiante->observaciones->Visible) { // observaciones ?>

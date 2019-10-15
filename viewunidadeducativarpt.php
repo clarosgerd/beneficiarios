@@ -810,12 +810,17 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 		$this->_email->SetVisibility();
+		$this->cantidadalumnos->SetVisibility();
+		$this->cantidadalumnosvaronessi->SetVisibility();
+		$this->cantidadalumnosvaronesno->SetVisibility();
+		$this->cantidadalumnosmujeressi->SetVisibility();
+		$this->cantidadalumnosmujeresno->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 10;
+		$nDtls = 15;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -828,7 +833,7 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -1047,6 +1052,11 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 				$this->FirstRowData['direccion'] = ewr_Conv($rs->fields('direccion'), 200);
 				$this->FirstRowData['telefono'] = ewr_Conv($rs->fields('telefono'), 200);
 				$this->FirstRowData['_email'] = ewr_Conv($rs->fields('email'), 200);
+				$this->FirstRowData['cantidadalumnos'] = ewr_Conv($rs->fields('cantidadalumnos'), 20);
+				$this->FirstRowData['cantidadalumnosvaronessi'] = ewr_Conv($rs->fields('cantidadalumnosvaronessi'), 20);
+				$this->FirstRowData['cantidadalumnosvaronesno'] = ewr_Conv($rs->fields('cantidadalumnosvaronesno'), 20);
+				$this->FirstRowData['cantidadalumnosmujeressi'] = ewr_Conv($rs->fields('cantidadalumnosmujeressi'), 20);
+				$this->FirstRowData['cantidadalumnosmujeresno'] = ewr_Conv($rs->fields('cantidadalumnosmujeresno'), 20);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -1060,6 +1070,12 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setDbValue($rs->fields('direccion'));
 			$this->telefono->setDbValue($rs->fields('telefono'));
 			$this->_email->setDbValue($rs->fields('email'));
+			$this->director->setDbValue($rs->fields('director'));
+			$this->cantidadalumnos->setDbValue($rs->fields('cantidadalumnos'));
+			$this->cantidadalumnosvaronessi->setDbValue($rs->fields('cantidadalumnosvaronessi'));
+			$this->cantidadalumnosvaronesno->setDbValue($rs->fields('cantidadalumnosvaronesno'));
+			$this->cantidadalumnosmujeressi->setDbValue($rs->fields('cantidadalumnosmujeressi'));
+			$this->cantidadalumnosmujeresno->setDbValue($rs->fields('cantidadalumnosmujeresno'));
 			$this->Val[1] = $this->centro->CurrentValue;
 			$this->Val[2] = $this->unidadeducativa->CurrentValue;
 			$this->Val[3] = $this->codigo_sie->CurrentValue;
@@ -1069,6 +1085,11 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->Val[7] = $this->direccion->CurrentValue;
 			$this->Val[8] = $this->telefono->CurrentValue;
 			$this->Val[9] = $this->_email->CurrentValue;
+			$this->Val[10] = $this->cantidadalumnos->CurrentValue;
+			$this->Val[11] = $this->cantidadalumnosvaronessi->CurrentValue;
+			$this->Val[12] = $this->cantidadalumnosvaronesno->CurrentValue;
+			$this->Val[13] = $this->cantidadalumnosmujeressi->CurrentValue;
+			$this->Val[14] = $this->cantidadalumnosmujeresno->CurrentValue;
 		} else {
 			$this->centro->setDbValue("");
 			$this->unidadeducativa->setDbValue("");
@@ -1079,6 +1100,12 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setDbValue("");
 			$this->telefono->setDbValue("");
 			$this->_email->setDbValue("");
+			$this->director->setDbValue("");
+			$this->cantidadalumnos->setDbValue("");
+			$this->cantidadalumnosvaronessi->setDbValue("");
+			$this->cantidadalumnosvaronesno->setDbValue("");
+			$this->cantidadalumnosmujeressi->setDbValue("");
+			$this->cantidadalumnosmujeresno->setDbValue("");
 		}
 	}
 
@@ -1299,6 +1326,21 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 
 			// email
 			$this->_email->HrefValue = "";
+
+			// cantidadalumnos
+			$this->cantidadalumnos->HrefValue = "";
+
+			// cantidadalumnosvaronessi
+			$this->cantidadalumnosvaronessi->HrefValue = "";
+
+			// cantidadalumnosvaronesno
+			$this->cantidadalumnosvaronesno->HrefValue = "";
+
+			// cantidadalumnosmujeressi
+			$this->cantidadalumnosmujeressi->HrefValue = "";
+
+			// cantidadalumnosmujeresno
+			$this->cantidadalumnosmujeresno->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1340,6 +1382,26 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->_email->ViewValue = $this->_email->CurrentValue;
 			$this->_email->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// cantidadalumnos
+			$this->cantidadalumnos->ViewValue = $this->cantidadalumnos->CurrentValue;
+			$this->cantidadalumnos->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cantidadalumnosvaronessi
+			$this->cantidadalumnosvaronessi->ViewValue = $this->cantidadalumnosvaronessi->CurrentValue;
+			$this->cantidadalumnosvaronessi->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cantidadalumnosvaronesno
+			$this->cantidadalumnosvaronesno->ViewValue = $this->cantidadalumnosvaronesno->CurrentValue;
+			$this->cantidadalumnosvaronesno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cantidadalumnosmujeressi
+			$this->cantidadalumnosmujeressi->ViewValue = $this->cantidadalumnosmujeressi->CurrentValue;
+			$this->cantidadalumnosmujeressi->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
+			// cantidadalumnosmujeresno
+			$this->cantidadalumnosmujeresno->ViewValue = $this->cantidadalumnosmujeresno->CurrentValue;
+			$this->cantidadalumnosmujeresno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// centro
 			$this->centro->HrefValue = "";
 
@@ -1366,6 +1428,21 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 
 			// email
 			$this->_email->HrefValue = "";
+
+			// cantidadalumnos
+			$this->cantidadalumnos->HrefValue = "";
+
+			// cantidadalumnosvaronessi
+			$this->cantidadalumnosvaronessi->HrefValue = "";
+
+			// cantidadalumnosvaronesno
+			$this->cantidadalumnosvaronesno->HrefValue = "";
+
+			// cantidadalumnosmujeressi
+			$this->cantidadalumnosmujeressi->HrefValue = "";
+
+			// cantidadalumnosmujeresno
+			$this->cantidadalumnosmujeresno->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1452,6 +1529,51 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$HrefValue = &$this->_email->HrefValue;
 			$LinkAttrs = &$this->_email->LinkAttrs;
 			$this->Cell_Rendered($this->_email, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cantidadalumnos
+			$CurrentValue = $this->cantidadalumnos->CurrentValue;
+			$ViewValue = &$this->cantidadalumnos->ViewValue;
+			$ViewAttrs = &$this->cantidadalumnos->ViewAttrs;
+			$CellAttrs = &$this->cantidadalumnos->CellAttrs;
+			$HrefValue = &$this->cantidadalumnos->HrefValue;
+			$LinkAttrs = &$this->cantidadalumnos->LinkAttrs;
+			$this->Cell_Rendered($this->cantidadalumnos, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cantidadalumnosvaronessi
+			$CurrentValue = $this->cantidadalumnosvaronessi->CurrentValue;
+			$ViewValue = &$this->cantidadalumnosvaronessi->ViewValue;
+			$ViewAttrs = &$this->cantidadalumnosvaronessi->ViewAttrs;
+			$CellAttrs = &$this->cantidadalumnosvaronessi->CellAttrs;
+			$HrefValue = &$this->cantidadalumnosvaronessi->HrefValue;
+			$LinkAttrs = &$this->cantidadalumnosvaronessi->LinkAttrs;
+			$this->Cell_Rendered($this->cantidadalumnosvaronessi, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cantidadalumnosvaronesno
+			$CurrentValue = $this->cantidadalumnosvaronesno->CurrentValue;
+			$ViewValue = &$this->cantidadalumnosvaronesno->ViewValue;
+			$ViewAttrs = &$this->cantidadalumnosvaronesno->ViewAttrs;
+			$CellAttrs = &$this->cantidadalumnosvaronesno->CellAttrs;
+			$HrefValue = &$this->cantidadalumnosvaronesno->HrefValue;
+			$LinkAttrs = &$this->cantidadalumnosvaronesno->LinkAttrs;
+			$this->Cell_Rendered($this->cantidadalumnosvaronesno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cantidadalumnosmujeressi
+			$CurrentValue = $this->cantidadalumnosmujeressi->CurrentValue;
+			$ViewValue = &$this->cantidadalumnosmujeressi->ViewValue;
+			$ViewAttrs = &$this->cantidadalumnosmujeressi->ViewAttrs;
+			$CellAttrs = &$this->cantidadalumnosmujeressi->CellAttrs;
+			$HrefValue = &$this->cantidadalumnosmujeressi->HrefValue;
+			$LinkAttrs = &$this->cantidadalumnosmujeressi->LinkAttrs;
+			$this->Cell_Rendered($this->cantidadalumnosmujeressi, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// cantidadalumnosmujeresno
+			$CurrentValue = $this->cantidadalumnosmujeresno->CurrentValue;
+			$ViewValue = &$this->cantidadalumnosmujeresno->ViewValue;
+			$ViewAttrs = &$this->cantidadalumnosmujeresno->ViewAttrs;
+			$CellAttrs = &$this->cantidadalumnosmujeresno->CellAttrs;
+			$HrefValue = &$this->cantidadalumnosmujeresno->HrefValue;
+			$LinkAttrs = &$this->cantidadalumnosmujeresno->LinkAttrs;
+			$this->Cell_Rendered($this->cantidadalumnosmujeresno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1473,6 +1595,11 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 		if ($this->direccion->Visible) $this->DtlColumnCount += 1;
 		if ($this->telefono->Visible) $this->DtlColumnCount += 1;
 		if ($this->_email->Visible) $this->DtlColumnCount += 1;
+		if ($this->cantidadalumnos->Visible) $this->DtlColumnCount += 1;
+		if ($this->cantidadalumnosvaronessi->Visible) $this->DtlColumnCount += 1;
+		if ($this->cantidadalumnosvaronesno->Visible) $this->DtlColumnCount += 1;
+		if ($this->cantidadalumnosmujeressi->Visible) $this->DtlColumnCount += 1;
+		if ($this->cantidadalumnosmujeresno->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -2216,6 +2343,11 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->direccion->setSort("");
 			$this->telefono->setSort("");
 			$this->_email->setSort("");
+			$this->cantidadalumnos->setSort("");
+			$this->cantidadalumnosvaronessi->setSort("");
+			$this->cantidadalumnosvaronesno->setSort("");
+			$this->cantidadalumnosmujeressi->setSort("");
+			$this->cantidadalumnosmujeresno->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -2230,6 +2362,11 @@ class crviewunidadeducativa_rpt extends crviewunidadeducativa {
 			$this->UpdateSort($this->direccion); // direccion
 			$this->UpdateSort($this->telefono); // telefono
 			$this->UpdateSort($this->_email); // email
+			$this->UpdateSort($this->cantidadalumnos); // cantidadalumnos
+			$this->UpdateSort($this->cantidadalumnosvaronessi); // cantidadalumnosvaronessi
+			$this->UpdateSort($this->cantidadalumnosvaronesno); // cantidadalumnosvaronesno
+			$this->UpdateSort($this->cantidadalumnosmujeressi); // cantidadalumnosmujeressi
+			$this->UpdateSort($this->cantidadalumnosmujeresno); // cantidadalumnosmujeresno
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
@@ -2798,6 +2935,96 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
+<?php if ($Page->cantidadalumnos->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cantidadalumnos"><div class="viewunidadeducativa_cantidadalumnos"><span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnos->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cantidadalumnos">
+<?php if ($Page->SortUrl($Page->cantidadalumnos) == "") { ?>
+		<div class="ewTableHeaderBtn viewunidadeducativa_cantidadalumnos">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnos->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidadalumnos" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidadalumnos) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnos->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cantidadalumnos->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidadalumnos->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cantidadalumnosvaronessi->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cantidadalumnosvaronessi"><div class="viewunidadeducativa_cantidadalumnosvaronessi"><span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronessi->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cantidadalumnosvaronessi">
+<?php if ($Page->SortUrl($Page->cantidadalumnosvaronessi) == "") { ?>
+		<div class="ewTableHeaderBtn viewunidadeducativa_cantidadalumnosvaronessi">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronessi->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidadalumnosvaronessi" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidadalumnosvaronessi) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronessi->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cantidadalumnosvaronessi->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidadalumnosvaronessi->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cantidadalumnosvaronesno->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cantidadalumnosvaronesno"><div class="viewunidadeducativa_cantidadalumnosvaronesno"><span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronesno->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cantidadalumnosvaronesno">
+<?php if ($Page->SortUrl($Page->cantidadalumnosvaronesno) == "") { ?>
+		<div class="ewTableHeaderBtn viewunidadeducativa_cantidadalumnosvaronesno">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronesno->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidadalumnosvaronesno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidadalumnosvaronesno) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosvaronesno->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cantidadalumnosvaronesno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidadalumnosvaronesno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cantidadalumnosmujeressi->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cantidadalumnosmujeressi"><div class="viewunidadeducativa_cantidadalumnosmujeressi"><span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeressi->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cantidadalumnosmujeressi">
+<?php if ($Page->SortUrl($Page->cantidadalumnosmujeressi) == "") { ?>
+		<div class="ewTableHeaderBtn viewunidadeducativa_cantidadalumnosmujeressi">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeressi->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidadalumnosmujeressi" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidadalumnosmujeressi) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeressi->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cantidadalumnosmujeressi->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidadalumnosmujeressi->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->cantidadalumnosmujeresno->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="cantidadalumnosmujeresno"><div class="viewunidadeducativa_cantidadalumnosmujeresno"><span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeresno->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="cantidadalumnosmujeresno">
+<?php if ($Page->SortUrl($Page->cantidadalumnosmujeresno) == "") { ?>
+		<div class="ewTableHeaderBtn viewunidadeducativa_cantidadalumnosmujeresno">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeresno->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewunidadeducativa_cantidadalumnosmujeresno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->cantidadalumnosmujeresno) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->cantidadalumnosmujeresno->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->cantidadalumnosmujeresno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->cantidadalumnosmujeresno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -2851,6 +3078,26 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->_email->Visible) { ?>
 		<td data-field="_email"<?php echo $Page->_email->CellAttributes() ?>>
 <span<?php echo $Page->_email->ViewAttributes() ?>><?php echo $Page->_email->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cantidadalumnos->Visible) { ?>
+		<td data-field="cantidadalumnos"<?php echo $Page->cantidadalumnos->CellAttributes() ?>>
+<span<?php echo $Page->cantidadalumnos->ViewAttributes() ?>><?php echo $Page->cantidadalumnos->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cantidadalumnosvaronessi->Visible) { ?>
+		<td data-field="cantidadalumnosvaronessi"<?php echo $Page->cantidadalumnosvaronessi->CellAttributes() ?>>
+<span<?php echo $Page->cantidadalumnosvaronessi->ViewAttributes() ?>><?php echo $Page->cantidadalumnosvaronessi->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cantidadalumnosvaronesno->Visible) { ?>
+		<td data-field="cantidadalumnosvaronesno"<?php echo $Page->cantidadalumnosvaronesno->CellAttributes() ?>>
+<span<?php echo $Page->cantidadalumnosvaronesno->ViewAttributes() ?>><?php echo $Page->cantidadalumnosvaronesno->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cantidadalumnosmujeressi->Visible) { ?>
+		<td data-field="cantidadalumnosmujeressi"<?php echo $Page->cantidadalumnosmujeressi->CellAttributes() ?>>
+<span<?php echo $Page->cantidadalumnosmujeressi->ViewAttributes() ?>><?php echo $Page->cantidadalumnosmujeressi->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->cantidadalumnosmujeresno->Visible) { ?>
+		<td data-field="cantidadalumnosmujeresno"<?php echo $Page->cantidadalumnosmujeresno->CellAttributes() ?>>
+<span<?php echo $Page->cantidadalumnosmujeresno->ViewAttributes() ?>><?php echo $Page->cantidadalumnosmujeresno->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

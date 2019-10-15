@@ -425,7 +425,6 @@ class cestudiante_list extends cestudiante {
 		$this->discapacidad->SetVisibility();
 		$this->tipodiscapacidad->SetVisibility();
 		$this->observaciones->SetVisibility();
-		$this->fecha->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -772,7 +771,6 @@ class cestudiante_list extends cestudiante {
 		$sFilterList = ew_Concat($sFilterList, $this->observaciones->AdvancedSearch->ToJson(), ","); // Field observaciones
 		$sFilterList = ew_Concat($sFilterList, $this->id_centro->AdvancedSearch->ToJson(), ","); // Field id_centro
 		$sFilterList = ew_Concat($sFilterList, $this->gestion->AdvancedSearch->ToJson(), ","); // Field gestion
-		$sFilterList = ew_Concat($sFilterList, $this->fecha->AdvancedSearch->ToJson(), ","); // Field fecha
 		$sFilterList = preg_replace('/,$/', "", $sFilterList);
 
 		// Return filter list in json
@@ -964,14 +962,6 @@ class cestudiante_list extends cestudiante {
 		$this->gestion->AdvancedSearch->SearchValue2 = @$filter["y_gestion"];
 		$this->gestion->AdvancedSearch->SearchOperator2 = @$filter["w_gestion"];
 		$this->gestion->AdvancedSearch->Save();
-
-		// Field fecha
-		$this->fecha->AdvancedSearch->SearchValue = @$filter["x_fecha"];
-		$this->fecha->AdvancedSearch->SearchOperator = @$filter["z_fecha"];
-		$this->fecha->AdvancedSearch->SearchCondition = @$filter["v_fecha"];
-		$this->fecha->AdvancedSearch->SearchValue2 = @$filter["y_fecha"];
-		$this->fecha->AdvancedSearch->SearchOperator2 = @$filter["w_fecha"];
-		$this->fecha->AdvancedSearch->Save();
 	}
 
 	// Advanced search WHERE clause based on QueryString
@@ -998,7 +988,6 @@ class cestudiante_list extends cestudiante {
 		$this->BuildSearchSql($sWhere, $this->observaciones, $Default, FALSE); // observaciones
 		$this->BuildSearchSql($sWhere, $this->id_centro, $Default, FALSE); // id_centro
 		$this->BuildSearchSql($sWhere, $this->gestion, $Default, FALSE); // gestion
-		$this->BuildSearchSql($sWhere, $this->fecha, $Default, FALSE); // fecha
 
 		// Set up search parm
 		if (!$Default && $sWhere <> "" && in_array($this->Command, array("", "reset", "resetall"))) {
@@ -1024,7 +1013,6 @@ class cestudiante_list extends cestudiante {
 			$this->observaciones->AdvancedSearch->Save(); // observaciones
 			$this->id_centro->AdvancedSearch->Save(); // id_centro
 			$this->gestion->AdvancedSearch->Save(); // gestion
-			$this->fecha->AdvancedSearch->Save(); // fecha
 		}
 		return $sWhere;
 	}
@@ -1113,8 +1101,6 @@ class cestudiante_list extends cestudiante {
 			return TRUE;
 		if ($this->gestion->AdvancedSearch->IssetSession())
 			return TRUE;
-		if ($this->fecha->AdvancedSearch->IssetSession())
-			return TRUE;
 		return FALSE;
 	}
 
@@ -1155,7 +1141,6 @@ class cestudiante_list extends cestudiante {
 		$this->observaciones->AdvancedSearch->UnsetSession();
 		$this->id_centro->AdvancedSearch->UnsetSession();
 		$this->gestion->AdvancedSearch->UnsetSession();
-		$this->fecha->AdvancedSearch->UnsetSession();
 	}
 
 	// Restore all search parameters
@@ -1182,7 +1167,6 @@ class cestudiante_list extends cestudiante {
 		$this->observaciones->AdvancedSearch->Load();
 		$this->id_centro->AdvancedSearch->Load();
 		$this->gestion->AdvancedSearch->Load();
-		$this->fecha->AdvancedSearch->Load();
 	}
 
 	// Set up sort parameters
@@ -1212,7 +1196,6 @@ class cestudiante_list extends cestudiante {
 			$this->UpdateSort($this->discapacidad, $bCtrl); // discapacidad
 			$this->UpdateSort($this->tipodiscapacidad, $bCtrl); // tipodiscapacidad
 			$this->UpdateSort($this->observaciones, $bCtrl); // observaciones
-			$this->UpdateSort($this->fecha, $bCtrl); // fecha
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -1262,7 +1245,6 @@ class cestudiante_list extends cestudiante {
 				$this->discapacidad->setSort("");
 				$this->tipodiscapacidad->setSort("");
 				$this->observaciones->setSort("");
-				$this->fecha->setSort("");
 			}
 
 			// Reset start position
@@ -1721,11 +1703,6 @@ class cestudiante_list extends cestudiante {
 		$this->gestion->AdvancedSearch->SearchValue = @$_GET["x_gestion"];
 		if ($this->gestion->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
 		$this->gestion->AdvancedSearch->SearchOperator = @$_GET["z_gestion"];
-
-		// fecha
-		$this->fecha->AdvancedSearch->SearchValue = @$_GET["x_fecha"];
-		if ($this->fecha->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
-		$this->fecha->AdvancedSearch->SearchOperator = @$_GET["z_fecha"];
 	}
 
 	// Load recordset
@@ -1938,6 +1915,7 @@ class cestudiante_list extends cestudiante {
 		$this->esincritoespecial->CellCssStyle = "white-space: nowrap;";
 
 		// fecha
+		$this->fecha->CellCssStyle = "white-space: nowrap;";
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
 		// codigorude
@@ -2147,11 +2125,6 @@ class cestudiante_list extends cestudiante {
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
 		$this->observaciones->ViewCustomAttributes = "";
 
-		// fecha
-		$this->fecha->ViewValue = $this->fecha->CurrentValue;
-		$this->fecha->ViewValue = ew_FormatDateTime($this->fecha->ViewValue, 0);
-		$this->fecha->ViewCustomAttributes = "";
-
 			// codigorude
 			$this->codigorude->LinkCustomAttributes = "";
 			$this->codigorude->HrefValue = "";
@@ -2236,11 +2209,6 @@ class cestudiante_list extends cestudiante {
 			$this->observaciones->LinkCustomAttributes = "";
 			$this->observaciones->HrefValue = "";
 			$this->observaciones->TooltipValue = "";
-
-			// fecha
-			$this->fecha->LinkCustomAttributes = "";
-			$this->fecha->HrefValue = "";
-			$this->fecha->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_SEARCH) { // Search row
 
 			// codigorude
@@ -2391,12 +2359,6 @@ class cestudiante_list extends cestudiante {
 			$this->observaciones->EditCustomAttributes = "";
 			$this->observaciones->EditValue = ew_HtmlEncode($this->observaciones->AdvancedSearch->SearchValue);
 			$this->observaciones->PlaceHolder = ew_RemoveHtml($this->observaciones->FldCaption());
-
-			// fecha
-			$this->fecha->EditAttrs["class"] = "form-control";
-			$this->fecha->EditCustomAttributes = "";
-			$this->fecha->EditValue = ew_HtmlEncode(ew_FormatDateTime(ew_UnFormatDateTime($this->fecha->AdvancedSearch->SearchValue, 0), 8));
-			$this->fecha->PlaceHolder = ew_RemoveHtml($this->fecha->FldCaption());
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -2449,7 +2411,6 @@ class cestudiante_list extends cestudiante {
 		$this->tipodiscapacidad->AdvancedSearch->Load();
 		$this->observaciones->AdvancedSearch->Load();
 		$this->gestion->AdvancedSearch->Load();
-		$this->fecha->AdvancedSearch->Load();
 	}
 
 	// Set up Breadcrumb
@@ -3184,15 +3145,6 @@ $estudiante_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($estudiante->fecha->Visible) { // fecha ?>
-	<?php if ($estudiante->SortUrl($estudiante->fecha) == "") { ?>
-		<th data-name="fecha" class="<?php echo $estudiante->fecha->HeaderCellClass() ?>"><div id="elh_estudiante_fecha" class="estudiante_fecha"><div class="ewTableHeaderCaption"><?php echo $estudiante->fecha->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="fecha" class="<?php echo $estudiante->fecha->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $estudiante->SortUrl($estudiante->fecha) ?>',2);"><div id="elh_estudiante_fecha" class="estudiante_fecha">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $estudiante->fecha->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($estudiante->fecha->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($estudiante->fecha->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
-		</div></div></th>
-	<?php } ?>
-<?php } ?>
 <?php
 
 // Render list options (header, right)
@@ -3391,14 +3343,6 @@ $estudiante_list->ListOptions->Render("body", "left", $estudiante_list->RowCnt);
 <span id="el<?php echo $estudiante_list->RowCnt ?>_estudiante_observaciones" class="estudiante_observaciones">
 <span<?php echo $estudiante->observaciones->ViewAttributes() ?>>
 <?php echo $estudiante->observaciones->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($estudiante->fecha->Visible) { // fecha ?>
-		<td data-name="fecha"<?php echo $estudiante->fecha->CellAttributes() ?>>
-<span id="el<?php echo $estudiante_list->RowCnt ?>_estudiante_fecha" class="estudiante_fecha">
-<span<?php echo $estudiante->fecha->ViewAttributes() ?>>
-<?php echo $estudiante->fecha->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

@@ -18,9 +18,7 @@ class crviewactividad extends crTableBase {
 	var $fecha_inicio;
 	var $fecha_fin;
 	var $horasprogramadas;
-	var $perosnanombre;
-	var $personaapellidomaterno;
-	var $personaapellidopaterno;
+	var $facilitador;
 	var $contenido;
 	var $observaciones;
 	var $nombreinstitucion;
@@ -57,7 +55,7 @@ class crviewactividad extends crTableBase {
 		$this->fields['tipoactividad'] = &$this->tipoactividad;
 
 		// organizador
-		$this->organizador = new crField('viewactividad', 'viewactividad', 'x_organizador', 'organizador', '`organizador`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->organizador = new crField('viewactividad', 'viewactividad', 'x_organizador', 'organizador', '`organizador`', 200, EWR_DATATYPE_STRING, -1);
 		$this->organizador->Sortable = TRUE; // Allow sort
 		$this->organizador->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->organizador->DateFilter = "";
@@ -77,8 +75,8 @@ class crviewactividad extends crTableBase {
 		$this->nombrelocal = new crField('viewactividad', 'viewactividad', 'x_nombrelocal', 'nombrelocal', '`nombrelocal`', 200, EWR_DATATYPE_STRING, -1);
 		$this->nombrelocal->Sortable = TRUE; // Allow sort
 		$this->nombrelocal->DateFilter = "";
-		$this->nombrelocal->SqlSelect = "";
-		$this->nombrelocal->SqlOrderBy = "";
+		$this->nombrelocal->SqlSelect = "SELECT DISTINCT `nombrelocal`, `nombrelocal` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->nombrelocal->SqlOrderBy = "`nombrelocal`";
 		$this->fields['nombrelocal'] = &$this->nombrelocal;
 
 		// direccionlocal
@@ -115,29 +113,13 @@ class crviewactividad extends crTableBase {
 		$this->horasprogramadas->SqlOrderBy = "";
 		$this->fields['horasprogramadas'] = &$this->horasprogramadas;
 
-		// perosnanombre
-		$this->perosnanombre = new crField('viewactividad', 'viewactividad', 'x_perosnanombre', 'perosnanombre', '`perosnanombre`', 200, EWR_DATATYPE_STRING, -1);
-		$this->perosnanombre->Sortable = TRUE; // Allow sort
-		$this->perosnanombre->DateFilter = "";
-		$this->perosnanombre->SqlSelect = "";
-		$this->perosnanombre->SqlOrderBy = "";
-		$this->fields['perosnanombre'] = &$this->perosnanombre;
-
-		// personaapellidomaterno
-		$this->personaapellidomaterno = new crField('viewactividad', 'viewactividad', 'x_personaapellidomaterno', 'personaapellidomaterno', '`personaapellidomaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->personaapellidomaterno->Sortable = TRUE; // Allow sort
-		$this->personaapellidomaterno->DateFilter = "";
-		$this->personaapellidomaterno->SqlSelect = "";
-		$this->personaapellidomaterno->SqlOrderBy = "";
-		$this->fields['personaapellidomaterno'] = &$this->personaapellidomaterno;
-
-		// personaapellidopaterno
-		$this->personaapellidopaterno = new crField('viewactividad', 'viewactividad', 'x_personaapellidopaterno', 'personaapellidopaterno', '`personaapellidopaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->personaapellidopaterno->Sortable = TRUE; // Allow sort
-		$this->personaapellidopaterno->DateFilter = "";
-		$this->personaapellidopaterno->SqlSelect = "";
-		$this->personaapellidopaterno->SqlOrderBy = "";
-		$this->fields['personaapellidopaterno'] = &$this->personaapellidopaterno;
+		// facilitador
+		$this->facilitador = new crField('viewactividad', 'viewactividad', 'x_facilitador', 'facilitador', '`facilitador`', 201, EWR_DATATYPE_MEMO, -1);
+		$this->facilitador->Sortable = TRUE; // Allow sort
+		$this->facilitador->DateFilter = "";
+		$this->facilitador->SqlSelect = "";
+		$this->facilitador->SqlOrderBy = "";
+		$this->fields['facilitador'] = &$this->facilitador;
 
 		// contenido
 		$this->contenido = new crField('viewactividad', 'viewactividad', 'x_contenido', 'contenido', '`contenido`', 200, EWR_DATATYPE_STRING, -1);
@@ -421,6 +403,72 @@ class crviewactividad extends crTableBase {
 	function SetupLookupFilters($fld) {
 		global $grLanguage;
 		switch ($fld->FldVar) {
+		case "x_sector":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`sector` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `sector`, `sector` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`sector` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_tipoactividad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`tipoactividad` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `tipoactividad`, `tipoactividad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`tipoactividad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_organizador":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`organizador` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `organizador`, `organizador` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`organizador` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_nombreactividad":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`nombreactividad` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `nombreactividad`, `nombreactividad` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`nombreactividad` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_nombrelocal":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`nombrelocal` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `nombrelocal`, `nombrelocal` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`nombrelocal` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_facilitador":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`facilitador` = {filter_value}', "t0" => "201", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `facilitador`, `facilitador` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewactividad`",
+			"where" => $sWhereWrk,
+			"orderby" => "`facilitador` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		}
 	}
 
