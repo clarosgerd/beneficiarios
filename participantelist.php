@@ -1328,7 +1328,10 @@ class cparticipante_list extends cparticipante {
 		$oListOpt = &$this->ListOptions->Items["edit"];
 		$editcaption = ew_HtmlTitle($Language->Phrase("EditLink"));
 		if ($Security->CanEdit()) {
-			$oListOpt->Body = "<a class=\"ewRowLink ewEdit\" title=\"" . ew_HtmlTitle($Language->Phrase("EditLink")) . "\" data-caption=\"" . ew_HtmlTitle($Language->Phrase("EditLink")) . "\" href=\"" . ew_HtmlEncode($this->EditUrl) . "\">" . $Language->Phrase("EditLink") . "</a>";
+			if (ew_IsMobile())
+				$oListOpt->Body = "<a class=\"ewRowLink ewEdit\" title=\"" . $editcaption . "\" data-caption=\"" . $editcaption . "\" href=\"" . ew_HtmlEncode($this->EditUrl) . "\">" . $Language->Phrase("EditLink") . "</a>";
+			else
+				$oListOpt->Body = "<a class=\"ewRowLink ewEdit\" title=\"" . $editcaption . "\" data-table=\"participante\" data-caption=\"" . $editcaption . "\" href=\"javascript:void(0);\" onclick=\"ew_ModalDialogShow({lnk:this,btn:'SaveBtn',url:'" . ew_HtmlEncode($this->EditUrl) . "'});\">" . $Language->Phrase("EditLink") . "</a>";
 		} else {
 			$oListOpt->Body = "";
 		}
@@ -1387,7 +1390,10 @@ class cparticipante_list extends cparticipante {
 		// Add
 		$item = &$option->Add("add");
 		$addcaption = ew_HtmlTitle($Language->Phrase("AddLink"));
-		$item->Body = "<a class=\"ewAddEdit ewAdd\" title=\"" . $addcaption . "\" data-caption=\"" . $addcaption . "\" href=\"" . ew_HtmlEncode($this->AddUrl) . "\">" . $Language->Phrase("AddLink") . "</a>";
+		if (ew_IsMobile())
+			$item->Body = "<a class=\"ewAddEdit ewAdd\" title=\"" . $addcaption . "\" data-caption=\"" . $addcaption . "\" href=\"" . ew_HtmlEncode($this->AddUrl) . "\">" . $Language->Phrase("AddLink") . "</a>";
+		else
+			$item->Body = "<a class=\"ewAddEdit ewAdd\" title=\"" . $addcaption . "\" data-table=\"participante\" data-caption=\"" . $addcaption . "\" href=\"javascript:void(0);\" onclick=\"ew_ModalDialogShow({lnk:this,btn:'AddBtn',url:'" . ew_HtmlEncode($this->AddUrl) . "'});\">" . $Language->Phrase("AddLink") . "</a>";
 		$item->Visible = ($this->AddUrl <> "" && $Security->CanAdd());
 		$option = $options["action"];
 
@@ -1920,7 +1926,7 @@ class cparticipante_list extends cparticipante {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -1971,7 +1977,7 @@ class cparticipante_list extends cparticipante {
 			}
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `categoria`";
 		$sWhereWrk = "";
-		$this->id_categoria->LookupFilters = array();
+		$this->id_categoria->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -2054,6 +2060,26 @@ class cparticipante_list extends cparticipante {
 		$this->nivelestudio->ViewCustomAttributes = "";
 
 		// id_institucion
+		if (strval($this->id_institucion->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_institucion->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+		$sWhereWrk = "";
+		$this->id_institucion->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_institucion->ViewValue = $this->id_institucion->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_institucion->ViewValue = $this->id_institucion->CurrentValue;
+			}
+		} else {
+			$this->id_institucion->ViewValue = NULL;
+		}
 		$this->id_institucion->ViewCustomAttributes = "";
 
 		// observaciones
@@ -2523,6 +2549,8 @@ fparticipantelist.Lists["x_id_categoria[]"] = {"LinkField":"x_id","Ajax":true,"A
 fparticipantelist.Lists["x_id_categoria[]"].Data = "<?php echo $participante_list->id_categoria->LookupFilterQuery(FALSE, "list") ?>";
 fparticipantelist.Lists["x_sexo"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 fparticipantelist.Lists["x_sexo"].Options = <?php echo json_encode($participante_list->sexo->Options()) ?>;
+fparticipantelist.Lists["x_id_institucion"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
+fparticipantelist.Lists["x_id_institucion"].Data = "<?php echo $participante_list->id_institucion->LookupFilterQuery(FALSE, "list") ?>";
 
 // Form object for search
 var CurrentSearchForm = fparticipantelistsrch = new ew_Form("fparticipantelistsrch");
@@ -2628,8 +2656,6 @@ $participante_list->RenderRow();
 </span>
 	</div>
 <?php } ?>
-</div>
-<div id="xsr_2" class="ewRow">
 <?php if ($participante->apellidomaterno->Visible) { // apellidomaterno ?>
 	<div id="xsc_apellidomaterno" class="ewCell form-group">
 		<label for="x_apellidomaterno" class="ewSearchCaption ewLabel"><?php echo $participante->apellidomaterno->FldCaption() ?></label>
@@ -2640,7 +2666,7 @@ $participante_list->RenderRow();
 	</div>
 <?php } ?>
 </div>
-<div id="xsr_3" class="ewRow">
+<div id="xsr_2" class="ewRow">
 <?php if ($participante->nombre->Visible) { // nombre ?>
 	<div id="xsc_nombre" class="ewCell form-group">
 		<label for="x_nombre" class="ewSearchCaption ewLabel"><?php echo $participante->nombre->FldCaption() ?></label>
@@ -2650,8 +2676,6 @@ $participante_list->RenderRow();
 </span>
 	</div>
 <?php } ?>
-</div>
-<div id="xsr_4" class="ewRow">
 <?php if ($participante->sexo->Visible) { // sexo ?>
 	<div id="xsc_sexo" class="ewCell form-group">
 		<label for="x_sexo" class="ewSearchCaption ewLabel"><?php echo $participante->sexo->FldCaption() ?></label>
@@ -2664,7 +2688,7 @@ $participante_list->RenderRow();
 	</div>
 <?php } ?>
 </div>
-<div id="xsr_5" class="ewRow">
+<div id="xsr_3" class="ewRow">
 <?php if ($participante->ci->Visible) { // ci ?>
 	<div id="xsc_ci" class="ewCell form-group">
 		<label for="x_ci" class="ewSearchCaption ewLabel"><?php echo $participante->ci->FldCaption() ?></label>
@@ -2674,8 +2698,6 @@ $participante_list->RenderRow();
 </span>
 	</div>
 <?php } ?>
-</div>
-<div id="xsr_6" class="ewRow">
 <?php if ($participante->nrodiscapacidad->Visible) { // nrodiscapacidad ?>
 	<div id="xsc_nrodiscapacidad" class="ewCell form-group">
 		<label for="x_nrodiscapacidad" class="ewSearchCaption ewLabel"><?php echo $participante->nrodiscapacidad->FldCaption() ?></label>
@@ -2686,7 +2708,7 @@ $participante_list->RenderRow();
 	</div>
 <?php } ?>
 </div>
-<div id="xsr_7" class="ewRow">
+<div id="xsr_4" class="ewRow">
 	<button class="btn btn-primary ewButton" name="btnsubmit" id="btnsubmit" type="submit"><?php echo $Language->Phrase("SearchBtn") ?></button>
 </div>
 	</div>

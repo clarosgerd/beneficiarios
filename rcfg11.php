@@ -21,7 +21,7 @@ if (!EWR_IS_PHP5) die("This script requires PHP 5.5. You are running " . phpvers
 define("EWR_PATH_DELIMITER", ((EWR_IS_WINDOWS) ? "\\" : "/"), TRUE); // Path delimiter
 define("EWR_FONT_NAME", "Verdana", TRUE);
 define("EWR_FONT_SIZE", 14, TRUE);
-$EWR_BODY_CLASS = "hold-transition skin-red";
+$EWR_BODY_CLASS = "hold-transition skin-purple";
 $EWR_RESET_HEIGHT = FALSE; // Reset layout height
 
 // Set up font path
@@ -109,7 +109,7 @@ define("EWR_SESSION_TIMEOUT_COUNTDOWN", 60, TRUE); // Session timeout count down
 // General
 $EWR_ROOT_RELATIVE_PATH = "."; // Relative path of app root
 define("EWR_UNFORMAT_YEAR", 50, TRUE); // Unformat year
-define("EWR_RANDOM_KEY", '3aMBXFEf0fP13b8h', TRUE); // Random key for encryption
+define("EWR_RANDOM_KEY", '6QGvjtnKF74mOZyr', TRUE); // Random key for encryption
 define("EWR_PROJECT_STYLESHEET_FILENAME", "phprptcss/beneficiarios.css", TRUE); // Project stylesheet file name
 define("EWR_CHART_WIDTH", 600, TRUE);
 define("EWR_CHART_HEIGHT", 500, TRUE);

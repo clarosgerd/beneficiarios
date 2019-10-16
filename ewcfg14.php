@@ -25,7 +25,7 @@ define("EW_CONFIG_FILE_FOLDER", EW_PROJECT_NAME, TRUE); // Config file name
 define("EW_PROJECT_ID", "{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}", TRUE); // Project ID (GUID)
 $EW_RELATED_PROJECT_ID = "";
 $EW_RELATED_LANGUAGE_FOLDER = "";
-define("EW_RANDOM_KEY", 'Bgd4gjxKq1w7qJ27', TRUE); // Random key for encryption
+define("EW_RANDOM_KEY", 'Q39qBJwzXlqmC9Ie', TRUE); // Random key for encryption
 define("EW_PROJECT_STYLESHEET_FILENAME", "phpcss/beneficiarios.css", TRUE); // Project stylesheet file name
 define("EW_CHARSET", "utf-8", TRUE); // Project charset
 define("EW_EMAIL_CHARSET", EW_CHARSET, TRUE); // Email charset
@@ -170,8 +170,8 @@ define("EW_SESSION_TEMP_IMAGES", EW_PROJECT_NAME . "_TempImages", TRUE); // Temp
 // Language settings
 define("EW_LANGUAGE_FOLDER", $EW_RELATIVE_PATH . "phplang/", TRUE);
 $EW_LANGUAGE_FILE = array();
-$EW_LANGUAGE_FILE[] = array("en", "", "english.xml");
-define("EW_LANGUAGE_DEFAULT_ID", "en", TRUE);
+$EW_LANGUAGE_FILE[] = array("es", "", "spanish.xml");
+define("EW_LANGUAGE_DEFAULT_ID", "es", TRUE);
 define("EW_SESSION_LANGUAGE_ID", EW_PROJECT_NAME . "_LanguageId", TRUE); // Language ID
 define("EW_LOCALE_FOLDER", $EW_RELATIVE_PATH . "phplocale/", TRUE);
 

@@ -11,7 +11,6 @@ $RootMenu->AddMenuItem(12, "mi_actividad", $Language->MenuPhrase("12", "MenuText
 $RootMenu->AddMenuItem(13, "mi_participante", $Language->MenuPhrase("13", "MenuText"), "participantelist.php", 14, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}participante'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(9, "mi_docente", $Language->MenuPhrase("9", "MenuText"), "docentelist.php", 14, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}docente'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(10, "mi_especialista", $Language->MenuPhrase("10", "MenuText"), "especialistalist.php", 14, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}especialista'), FALSE, FALSE, "fa fa-circle-o");
-$RootMenu->AddMenuItem(10067, "mi_inscripcionestudiante", $Language->MenuPhrase("10067", "MenuText"), "inscripcionestudiantelist.php", 14, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}inscripcionestudiante'), FALSE, FALSE, "");
 $RootMenu->AddMenuItem(28, "mci_Tamizaje", $Language->MenuPhrase("28", "MenuText"), "", -1, "", IsLoggedIn(), FALSE, TRUE, "");
 $RootMenu->AddMenuItem(3, "mi_escolar", $Language->MenuPhrase("3", "MenuText"), "escolarlist.php", 28, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}escolar'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(33, "mi_otros", $Language->MenuPhrase("33", "MenuText"), "otroslist.php", 28, "", AllowListMenu('{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}otros'), FALSE, FALSE, "fa fa-circle-o");
@@ -53,8 +52,9 @@ $RootMenu->AddMenuItem(10051, "mri_viewparticipante", $Language->MenuPhrase("100
 $RootMenu->AddMenuItem(10050, "mri_viewactividad", $Language->MenuPhrase("10050", "MenuText"), "viewactividadrpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewactividad'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(10052, "mri_viewdocente", $Language->MenuPhrase("10052", "MenuText"), "viewdocenterpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewdocente'), FALSE, FALSE, "fa fa-circle-o");
 $RootMenu->AddMenuItem(10053, "mri_viewestudiantecurso", $Language->MenuPhrase("10053", "MenuText"), "viewestudiantecursorpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantecurso'), FALSE, FALSE, "fa fa-circle-o");
-$RootMenu->AddMenuItem(10055, "mri_viewestudiantesetareo", $Language->MenuPhrase("10055", "MenuText"), "viewestudiantesetareorpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareo'), FALSE, FALSE, "fa fa-circle-o");
-$RootMenu->AddMenuItem(10057, "mri_viewmarcologico", $Language->MenuPhrase("10057", "MenuText"), "viewmarcologicorpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewmarcologico'), FALSE, FALSE, "fa fa-circle-o");
+$RootMenu->AddMenuItem(10055, "mri_viewestudiantesetareo", $Language->MenuPhrase("10055", "MenuText"), "viewestudiantesetareorpt.php?cmd=resetdrilldown", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewestudiantesetareo'), FALSE, FALSE, "fa fa-circle-o");
+$RootMenu->AddMenuItem(10076, "mri_viewmarcologicosummary", $Language->MenuPhrase("10076", "MenuText"), "viewmarcologicosummaryrpt.php", 10047, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", AllowListMenu('{707530BA-BEB7-415A-B683-2C9753B31FA3}viewmarcologicosummary'), FALSE, FALSE, "fa fa-circle-o");
+$RootMenu->AddMenuItem(10075, "mci_Reportes", $Language->MenuPhrase("10075", "MenuText"), "", -1, "{707530BA-BEB7-415A-B683-2C9753B31FA3}", IsLoggedIn(), FALSE, TRUE, "");
 echo $RootMenu->ToScript();
 ?>
 <div class="ewVertical" id="ewMenu"></div>

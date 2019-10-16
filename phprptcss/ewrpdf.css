@@ -13,7 +13,7 @@ body {
 	width: 100%;
 	border-top: 0.5px solid;
 	border-left: 0.5px solid;
-	border-color: #D5D5D5; /* border color */
+	border-color: #ACA899; /* border color */
 	margin-left: 0;
 	margin-right: 0;
 }
@@ -23,38 +23,38 @@ body {
 	border-left: 0px;
 	border-right: 0.5px solid; /* border width, vertical grid line */
 	border-bottom: 0.5px solid; /* border width, horizontal grid line */
-	border-color: #D5D5D5; /* border color */
+	border-color: #ACA899; /* border color */
 }
 .ewTable .ewTableHeader td, .ewTable .ewTableHeader th {
 	background-image: none; /* remove header bg image */
-	background-color: #B1174D; /* header bgcolor */
+	background-color: #000084; /* header bgcolor */
 	color: #FFFFFF; /* header font color */
 	vertical-align: top;
 }
 
 /* row color */
 .ewTable .ewTableRow, .ewTable .ewTableRow td {
-	background-color: #FFFFFF; /* alt row color 1 */
+	background-color: #EEEEEE; /* alt row color 1 */
 }
 
 /* alternate row color */
 .ewTable .ewTableAltRow, .ewTable .ewTableAltRow td {
-	background-color: #F8EDEF; /* alt row color 2 */
+	background-color: #DCDCDC; /* alt row color 2 */
 }
 
 /* main table footer */
 .ewTable .ewTableFooter td {
-	background-color: #F5F5F5; /* footer color */
+	background-color: #EAEAEA; /* footer color */
 
 /* crosstab column row */
 .ewTable .ewTableColumnRow {
-	background-color: #F8EDEF; /* alt row color 2 */
+	background-color: #DCDCDC; /* alt row color 2 */
 }
 
 /* group 1 */
 .ewTable .ewRptGrpHeader1 {
 	color: black;
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -64,17 +64,17 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField1 {
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 }
 .ewRptGrpSummary1 {
 	color: black;
-	background-color: #FFE4E1;
+	background-color: #B0C4DE;
 }
 
 /* group 2 */
 .ewTable .ewRptGrpHeader2 {
 	color: black;
-	background-color: white;
+	background-color: #F8F8F8;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -85,17 +85,17 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField2 {
-	background-color: white;
+	background-color: #F8F8F8;
 }
 .ewRptGrpSummary2 {
 	color: black;
-	background-color: white;
+	background-color: #E7E7E7;
 }
 
 /* group 3 */
 .ewTable .ewRptGrpHeader3 {
 	color: black;
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -106,17 +106,17 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField3 {
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 }
 .ewRptGrpSummary3 {
 	color: black;
-	background-color: #FFE4E1;
+	background-color: #B0C4DE;
 }
 
 /* group 4 */
 .ewTable .ewRptGrpHeader4 {
 	color: black;
-	background-color: white;
+	background-color: #F8F8F8;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -127,17 +127,17 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField4 {
-	background-color: white;
+	background-color: #F8F8F8;
 }
 .ewRptGrpSummary4 {
 	color: black;
-	background-color: white;
+	background-color: #E7E7E7;
 }
 
 /* group 5 */
 .ewTable .ewRptGrpHeader5 {
 	color: black;
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -148,17 +148,17 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField5 {
-	background-color: #FFF5EE;
+	background-color: #C1D5EF;
 }
 .ewRptGrpSummary5 {
 	color: black;
-	background-color: #FFE4E1;
+	background-color: #B0C4DE;
 }
 
 /* group 6 */
 .ewTable .ewRptGrpHeader6 {
 	color: black;
-	background-color: white;
+	background-color: #F8F8F8;
 	border-bottom: 1px solid; /* header border width */
 	border-right: 1px solid; /* header border width */
 	font-weight: bold;
@@ -169,18 +169,18 @@ body {
 	text-decoration: none;
 }
 .ewRptGrpField6 {
-	background-color: white;
+	background-color: #F8F8F8;
 }
 .ewRptGrpSummary6 {
 	color: black;
-	background-color: white;
+	background-color: #E7E7E7;
 }
 .ewRptGrpAggregate {
 	font-weight: bold;
 }
 .ewRptPageSummary {
 	color: black; /* page summary text color */
-	background-color: #FFF0F5; /* page total background color */
+	background-color: #DCDCDC; /* page total background color */
 }
 .ewRptGrandSummary {
 	color: black; /* grand summary text color */
@@ -192,11 +192,11 @@ body {
 	border-bottom: 1px solid; /* header border width */
 }
 .ewRptColSummary {
-	background-color: #B1174D; /* column summary */
+	background-color: #000084; /* column summary */
 	color: #FFFFFF;
 }
 .ewRptColHeader {
-	background-color: #B1174D; /* column heading background color */
+	background-color: #000084; /* column heading background color */
 	color: #FFFFFF; /* column heading text color */
 }
 

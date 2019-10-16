@@ -3,21 +3,31 @@
   <component name="ChangeListManager">
     <list default="true" id="4d902bab-7dc9-4c40-9ddf-8d2e4d5e28e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadadd.php" afterPath="$PROJECT_DIR$/actividadadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividaddelete.php" afterPath="$PROJECT_DIR$/actividaddelete.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadedit.php" afterPath="$PROJECT_DIR$/actividadedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadinfo.php" afterPath="$PROJECT_DIR$/actividadinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadlist.php" afterPath="$PROJECT_DIR$/actividadlist.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudianteadd.php" afterPath="$PROJECT_DIR$/estudianteadd.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudiantedelete.php" afterPath="$PROJECT_DIR$/estudiantedelete.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudianteedit.php" afterPath="$PROJECT_DIR$/estudianteedit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudianteinfo.php" afterPath="$PROJECT_DIR$/estudianteinfo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudiantelist.php" afterPath="$PROJECT_DIR$/estudiantelist.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/estudianteupdate.php" afterPath="$PROJECT_DIR$/estudianteupdate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewcfg14.php" afterPath="$PROJECT_DIR$/ewcfg14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmenu.php" afterPath="$PROJECT_DIR$/ewmenu.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participanteadd.php" afterPath="$PROJECT_DIR$/participanteadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participantedelete.php" afterPath="$PROJECT_DIR$/participantedelete.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participanteedit.php" afterPath="$PROJECT_DIR$/participanteedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participanteinfo.php" afterPath="$PROJECT_DIR$/participanteinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participantelist.php" afterPath="$PROJECT_DIR$/participantelist.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phplang/english.xml" afterPath="$PROJECT_DIR$/phplang/english.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptcss/beneficiarios.css" afterPath="$PROJECT_DIR$/phprptcss/beneficiarios.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptcss/ewrpdf.css" afterPath="$PROJECT_DIR$/phprptcss/ewrpdf.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptlang/english.xml" afterPath="$PROJECT_DIR$/phprptlang/english.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.prp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.prp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rcfg11.php" afterPath="$PROJECT_DIR$/rcfg11.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudianterpt.php" afterPath="$PROJECT_DIR$/viewestudianterpt.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudianterptinfo.php" afterPath="$PROJECT_DIR$/viewestudianterptinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewdocenterpt.php" afterPath="$PROJECT_DIR$/viewdocenterpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewdocenterptinfo.php" afterPath="$PROJECT_DIR$/viewdocenterptinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudiantesetareorpt.php" afterPath="$PROJECT_DIR$/viewestudiantesetareorpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudiantesetareorptinfo.php" afterPath="$PROJECT_DIR$/viewestudiantesetareorptinfo.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,44 +37,32 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="estudianteinfo.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/estudianteinfo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
+            <state relative-caret-position="17">
               <caret line="1551" column="138" lean-forward="false" selection-start-line="1551" selection-start-column="138" selection-end-line="1551" selection-end-column="138" />
               <folding>
-                <marker date="1571179085393" expanded="true" signature="134:59894" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="13785:13799" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-                <marker date="1571179085393" expanded="true" signature="17385:17435" ph="SELECT COUNT... ${$sql}" />
-                <marker date="1571179085393" expanded="true" signature="17954:17968" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-                <marker date="1571179085393" expanded="true" signature="18808:18822" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-                <marker date="1571179085393" expanded="true" signature="19771:19835" ph="INSERT INTO ${$this-&gt;UpdateTable}... " />
-                <marker date="1571179085393" expanded="true" signature="21091:21135" ph="DELETE FROM " />
-                <marker date="1571179085393" expanded="true" signature="29773:29881" ph="SELECT `id`,... departamento" />
-                <marker date="1571179085393" expanded="true" signature="30782:30887" ph="SELECT `id`,... municipio" />
-                <marker date="1571179085393" expanded="true" signature="31767:31872" ph="SELECT `id`,... provincia" />
-                <marker date="1571179085393" expanded="true" signature="32775:32886" ph="SELECT `id`,... unidadeducativa" />
-                <marker date="1571179085393" expanded="true" signature="34950:35050" ph="SELECT `id`,... curso" />
-                <marker date="1571179085393" expanded="true" signature="35974:36082" ph="SELECT `id`,... discapacidad" />
-                <marker date="1571179085393" expanded="true" signature="37004:37116" ph="SELECT `id`,... tipodiscapacidad" />
-                <marker date="1571179085393" expanded="true" signature="38192:38306" ph="SELECT `id`,... centros" />
-                <marker date="1571179085393" expanded="true" signature="39177:39276" ph="SELECT `id`,... gestion" />
-                <marker date="1571179085393" expanded="true" signature="58282:58305" ph="INSERT INTO `inscripcionestudiante`... " />
-                <marker date="1571179085393" expanded="true" signature="58282:58347" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="58304:58305" ph="INSERT INTO `inscripcionestudiante`... " />
-                <marker date="1571179085393" expanded="true" signature="58430:58526" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="58582:58681" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="58741:58770" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="58830:58929" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="58995:59023" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59079:59166" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59220:59247" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59316:59381" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59455:59576" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59630:59659" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59711:59794" ph="..." />
-                <marker date="1571179085393" expanded="true" signature="59863:59892" ph="..." />
+                <marker date="1571238980269" expanded="true" signature="13785:13799" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+                <marker date="1571238980269" expanded="true" signature="17385:17435" ph="SELECT COUNT... ${$sql}" />
+                <marker date="1571238980269" expanded="true" signature="17954:17968" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+                <marker date="1571238980269" expanded="true" signature="18808:18822" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+                <marker date="1571238980269" expanded="true" signature="19771:19835" ph="INSERT INTO ${$this-&gt;UpdateTable}... " />
+                <marker date="1571238980269" expanded="true" signature="21091:21135" ph="DELETE FROM " />
+                <marker date="1571238980269" expanded="true" signature="29773:29881" ph="SELECT `id`,... departamento" />
+                <marker date="1571238980269" expanded="true" signature="30782:30887" ph="SELECT `id`,... municipio" />
+                <marker date="1571238980269" expanded="true" signature="31767:31872" ph="SELECT `id`,... provincia" />
+                <marker date="1571238980269" expanded="true" signature="32775:32886" ph="SELECT `id`,... unidadeducativa" />
+                <marker date="1571238980269" expanded="true" signature="34950:35050" ph="SELECT `id`,... curso" />
+                <marker date="1571238980269" expanded="true" signature="35974:36082" ph="SELECT `id`,... discapacidad" />
+                <marker date="1571238980269" expanded="true" signature="37004:37116" ph="SELECT `id`,... tipodiscapacidad" />
+                <marker date="1571238980269" expanded="true" signature="38192:38306" ph="SELECT `id`,... centros" />
+                <marker date="1571238980269" expanded="true" signature="39177:39276" ph="SELECT `id`,... gestion" />
+                <marker date="1571238980269" expanded="true" signature="57782:57941" ph="SELECT COUNT... inscripcionestudiante" />
+                <marker date="1571238980269" expanded="true" signature="58117:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+                <marker date="1571238980269" expanded="true" signature="58282:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+                <marker date="1571238980269" expanded="true" signature="58304:58305" ph="INSERT INTO `inscripcionestudiante`... " />
               </folding>
             </state>
           </provider>
@@ -73,7 +71,7 @@
       <file leaf-file-name="ewcfg14.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ewcfg14.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
+            <state relative-caret-position="119">
               <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
               <folding />
             </state>
@@ -121,7 +119,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1378" />
@@ -144,6 +142,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,7 +159,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -197,7 +195,8 @@
       <workItem from="1568062424226" duration="629000" />
       <workItem from="1570100260719" duration="815000" />
       <workItem from="1571144703741" duration="702000" />
-      <workItem from="1571168730323" duration="2113000" />
+      <workItem from="1571168730323" duration="2280000" />
+      <workItem from="1571239162029" duration="60000" />
     </task>
     <task id="LOCAL-00001" summary="first report">
       <created>1569842383931</created>
@@ -210,19 +209,20 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15651000" />
+    <option name="totallyTimeSpent" value="15878000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23373677" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -276,6 +276,42 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/estudianteinfo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1571238980269" expanded="true" signature="13785:13799" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="17385:17435" ph="SELECT COUNT... ${$sql}" />
+            <marker date="1571238980269" expanded="true" signature="17954:17968" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="18808:18822" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="19771:19835" ph="INSERT INTO ${$this-&gt;UpdateTable}... " />
+            <marker date="1571238980269" expanded="true" signature="21091:21135" ph="DELETE FROM " />
+            <marker date="1571238980269" expanded="true" signature="29773:29881" ph="SELECT `id`,... departamento" />
+            <marker date="1571238980269" expanded="true" signature="30782:30887" ph="SELECT `id`,... municipio" />
+            <marker date="1571238980269" expanded="true" signature="31767:31872" ph="SELECT `id`,... provincia" />
+            <marker date="1571238980269" expanded="true" signature="32775:32886" ph="SELECT `id`,... unidadeducativa" />
+            <marker date="1571238980269" expanded="true" signature="34950:35050" ph="SELECT `id`,... curso" />
+            <marker date="1571238980269" expanded="true" signature="35974:36082" ph="SELECT `id`,... discapacidad" />
+            <marker date="1571238980269" expanded="true" signature="37004:37116" ph="SELECT `id`,... tipodiscapacidad" />
+            <marker date="1571238980269" expanded="true" signature="38192:38306" ph="SELECT `id`,... centros" />
+            <marker date="1571238980269" expanded="true" signature="39177:39276" ph="SELECT `id`,... gestion" />
+            <marker date="1571238980269" expanded="true" signature="57782:57941" ph="SELECT COUNT... inscripcionestudiante" />
+            <marker date="1571238980269" expanded="true" signature="58117:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+            <marker date="1571238980269" expanded="true" signature="58282:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+            <marker date="1571238980269" expanded="true" signature="58304:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ewcfg14.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ewcfg14.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1309">
@@ -288,7 +324,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1343">
           <caret line="79" column="28" lean-forward="true" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -343,13 +378,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="79" column="28" lean-forward="false" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ewcfg14.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
+        <state relative-caret-position="119">
           <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
           <folding />
         </state>
@@ -357,40 +391,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/estudianteinfo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
+        <state relative-caret-position="17">
           <caret line="1551" column="138" lean-forward="false" selection-start-line="1551" selection-start-column="138" selection-end-line="1551" selection-end-column="138" />
           <folding>
-            <marker date="1571179085393" expanded="true" signature="134:59894" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="13785:13799" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-            <marker date="1571179085393" expanded="true" signature="17385:17435" ph="SELECT COUNT... ${$sql}" />
-            <marker date="1571179085393" expanded="true" signature="17954:17968" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-            <marker date="1571179085393" expanded="true" signature="18808:18822" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
-            <marker date="1571179085393" expanded="true" signature="19771:19835" ph="INSERT INTO ${$this-&gt;UpdateTable}... " />
-            <marker date="1571179085393" expanded="true" signature="21091:21135" ph="DELETE FROM " />
-            <marker date="1571179085393" expanded="true" signature="29773:29881" ph="SELECT `id`,... departamento" />
-            <marker date="1571179085393" expanded="true" signature="30782:30887" ph="SELECT `id`,... municipio" />
-            <marker date="1571179085393" expanded="true" signature="31767:31872" ph="SELECT `id`,... provincia" />
-            <marker date="1571179085393" expanded="true" signature="32775:32886" ph="SELECT `id`,... unidadeducativa" />
-            <marker date="1571179085393" expanded="true" signature="34950:35050" ph="SELECT `id`,... curso" />
-            <marker date="1571179085393" expanded="true" signature="35974:36082" ph="SELECT `id`,... discapacidad" />
-            <marker date="1571179085393" expanded="true" signature="37004:37116" ph="SELECT `id`,... tipodiscapacidad" />
-            <marker date="1571179085393" expanded="true" signature="38192:38306" ph="SELECT `id`,... centros" />
-            <marker date="1571179085393" expanded="true" signature="39177:39276" ph="SELECT `id`,... gestion" />
-            <marker date="1571179085393" expanded="true" signature="58282:58305" ph="INSERT INTO `inscripcionestudiante`... " />
-            <marker date="1571179085393" expanded="true" signature="58282:58347" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="58304:58305" ph="INSERT INTO `inscripcionestudiante`... " />
-            <marker date="1571179085393" expanded="true" signature="58430:58526" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="58582:58681" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="58741:58770" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="58830:58929" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="58995:59023" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59079:59166" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59220:59247" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59316:59381" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59455:59576" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59630:59659" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59711:59794" ph="..." />
-            <marker date="1571179085393" expanded="true" signature="59863:59892" ph="..." />
+            <marker date="1571238980269" expanded="true" signature="13785:13799" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="17385:17435" ph="SELECT COUNT... ${$sql}" />
+            <marker date="1571238980269" expanded="true" signature="17954:17968" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="18808:18822" ph="SELECT * FRO... ${$this-&gt;getSqlFrom()}" />
+            <marker date="1571238980269" expanded="true" signature="19771:19835" ph="INSERT INTO ${$this-&gt;UpdateTable}... " />
+            <marker date="1571238980269" expanded="true" signature="21091:21135" ph="DELETE FROM " />
+            <marker date="1571238980269" expanded="true" signature="29773:29881" ph="SELECT `id`,... departamento" />
+            <marker date="1571238980269" expanded="true" signature="30782:30887" ph="SELECT `id`,... municipio" />
+            <marker date="1571238980269" expanded="true" signature="31767:31872" ph="SELECT `id`,... provincia" />
+            <marker date="1571238980269" expanded="true" signature="32775:32886" ph="SELECT `id`,... unidadeducativa" />
+            <marker date="1571238980269" expanded="true" signature="34950:35050" ph="SELECT `id`,... curso" />
+            <marker date="1571238980269" expanded="true" signature="35974:36082" ph="SELECT `id`,... discapacidad" />
+            <marker date="1571238980269" expanded="true" signature="37004:37116" ph="SELECT `id`,... tipodiscapacidad" />
+            <marker date="1571238980269" expanded="true" signature="38192:38306" ph="SELECT `id`,... centros" />
+            <marker date="1571238980269" expanded="true" signature="39177:39276" ph="SELECT `id`,... gestion" />
+            <marker date="1571238980269" expanded="true" signature="57782:57941" ph="SELECT COUNT... inscripcionestudiante" />
+            <marker date="1571238980269" expanded="true" signature="58117:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+            <marker date="1571238980269" expanded="true" signature="58282:58305" ph="INSERT INTO `inscripcionestudiante`... " />
+            <marker date="1571238980269" expanded="true" signature="58304:58305" ph="INSERT INTO `inscripcionestudiante`... " />
           </folding>
         </state>
       </provider>

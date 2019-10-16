@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/15" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/16" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -523,7 +523,7 @@
       <phrase id="menutext" value="Reportes" />
     </menu>
     <menu id="54">
-      <phrase id="menutext" value="UNIDADEDUCATIVA" />
+      <phrase id="menutext" value="UNIDAD EDUCATIVA" />
     </menu>
     <menu id="45">
       <phrase id="menutext" value="ESTUDIANTES" />
@@ -544,12 +544,15 @@
       <phrase id="menutext" value="ESTUDIANTES POR CURSO" />
     </menu>
     <menu id="55">
-      <phrase id="menutext" value="GRUPODISCAPACIDAD" />
+      <phrase id="menutext" value="GRUPO DISCAPACIDAD" />
     </menu>
     <menu id="56">
-      <phrase id="menutext" value="GRUPOTOTALES" />
+      <phrase id="menutext" value="GRUPO TOTALES" />
     </menu>
     <menu id="57">
+      <phrase id="menutext" value="MARCO LOGICO" />
+    </menu>
+    <menu id="63">
       <phrase id="menutext" value="MARCO LOGICO" />
     </menu>
     <table id="actividad">
@@ -1851,10 +1854,10 @@
     <table id="viewdocente">
       <phrase id="tblcaption" value="DOCENTE" />
       <field id="deoartamento">
-        <phrase id="fldcaption" value="nombre" />
+        <phrase id="fldcaption" value="Departamento" />
       </field>
       <field id="unidadeducativa">
-        <phrase id="fldcaption" value="nombre" />
+        <phrase id="fldcaption" value="Unidad Educativa" />
       </field>
       <field id="nombres">
         <phrase id="fldcaption" value="nombres" />
@@ -1951,7 +1954,7 @@
       </field>
     </table>
     <table id="viewunidadeducativa">
-      <phrase id="tblcaption" value="UNIDADEDUCATIVA" />
+      <phrase id="tblcaption" value="UNIDAD EDUCATIVA" />
       <field id="centro">
         <phrase id="fldcaption" value="nombreinstitucion" />
       </field>
@@ -1999,58 +2002,58 @@
       </field>
     </table>
     <table id="viewestudiantesetareo">
-      <phrase id="tblcaption" value="GRUPODISCAPACIDAD" />
+      <phrase id="tblcaption" value="GRUPO DISCAPACIDAD" />
       <field id="unidadeducativa">
-        <phrase id="fldcaption" value="unidadeducativa" />
+        <phrase id="fldcaption" value="&lt;/br&gt;Unidad Educativa" />
       </field>
       <field id="_0_3f">
-        <phrase id="fldcaption" value="0 3F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;0-3" />
       </field>
       <field id="_4_6f">
-        <phrase id="fldcaption" value="4 6F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;4-6" />
       </field>
       <field id="_7_9f">
-        <phrase id="fldcaption" value="7 9F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;7-9" />
       </field>
       <field id="_10_12f">
-        <phrase id="fldcaption" value="10 12F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;10-12" />
       </field>
       <field id="_13_15f">
-        <phrase id="fldcaption" value="13 15F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;13-15" />
       </field>
       <field id="_16_18f">
-        <phrase id="fldcaption" value="16 18F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;16-18" />
       </field>
       <field id="_19f">
-        <phrase id="fldcaption" value="19F" />
+        <phrase id="fldcaption" value="F&lt;/br&gt;19" />
       </field>
       <field id="_0_3m">
-        <phrase id="fldcaption" value="0 3M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;0-3" />
       </field>
       <field id="_4_6m">
-        <phrase id="fldcaption" value="4 6M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;4-6" />
       </field>
       <field id="_7_9m">
-        <phrase id="fldcaption" value="7 9M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;7-9" />
       </field>
       <field id="_10_12m">
-        <phrase id="fldcaption" value="10 12M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;10-12" />
       </field>
       <field id="_13_15m">
-        <phrase id="fldcaption" value="13 15M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;13-15" />
       </field>
       <field id="_16_18m">
-        <phrase id="fldcaption" value="16 18M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;16-18" />
       </field>
       <field id="_19m">
-        <phrase id="fldcaption" value="19M" />
+        <phrase id="fldcaption" value="M&lt;/br&gt;19" />
       </field>
       <field id="fecha">
         <phrase id="fldcaption" value="fecha" />
       </field>
     </table>
     <table id="viewestudiantesetareocurso">
-      <phrase id="tblcaption" value="GRUPOTOTALES" />
+      <phrase id="tblcaption" value="GRUPO TOTALES" />
       <field id="curso">
         <phrase id="fldcaption" value="curso" />
       </field>
@@ -2168,6 +2171,45 @@
     </table>
     <table id="dashboard2">
       <phrase id="tblcaption" value="Dashboard 2" />
+    </table>
+    <table id="viewmarcologicosummary">
+      <phrase id="tblcaption" value="MARCO LOGICO" />
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="cuadro1">
+        <phrase id="fldcaption" value="Niños y niñas de 0 a 4 años &lt;/br&gt;atendidos en estimulación temprana" />
+      </field>
+      <field id="cuadro2">
+        <phrase id="fldcaption" value="Estudiantes inscritos en el &lt;/br&gt;centro educativo especial" />
+      </field>
+      <field id="cuadro3">
+        <phrase id="fldcaption" value="Padres y madres de familia del &lt;/br&gt;centro educativo especial, &lt;/br&gt;capacitados en LSB (60% madres y 40% padres)" />
+      </field>
+      <field id="cuadro4">
+        <phrase id="fldcaption" value="Estudiantes de secundaria inscritos&lt;/br&gt; en talleres de formación&lt;/br&gt; técnica vocacional básica" />
+      </field>
+      <field id="cuadro5">
+        <phrase id="fldcaption" value="Actividades lideradas por la&lt;/br&gt; asociación o junta de padres y madres&lt;/br&gt; de familia en beneficio de sus hijos e hijas" />
+      </field>
+      <field id="cuadro6">
+        <phrase id="fldcaption" value="Actividades lideradas &lt;/br&gt;por los centros de estudiantes " />
+      </field>
+      <field id="cuadro7">
+        <phrase id="fldcaption" value="Estudiantes incluidos&lt;/br&gt; en escuelas regulares" />
+      </field>
+      <field id="cuadro8">
+        <phrase id="fldcaption" value="Maestros de unidades educativas&lt;/br&gt; regulares que participan en eventos de capacitación" />
+      </field>
+      <field id="cuadro9">
+        <phrase id="fldcaption" value="Autoridades de Gobierno, &lt;/br&gt;que participan en eventos de capacitación&lt;/br&gt; sobre los derechos y la inclusión de&lt;/br&gt; personas con discapacidad" />
+      </field>
+      <field id="cuadro10">
+        <phrase id="fldcaption" value="Personas del programa&lt;/br&gt; que participan en eventos de &lt;/br&gt;capacitación en temas transversales" />
+      </field>
     </table>
   </project>
 </ew-language>

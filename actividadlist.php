@@ -422,7 +422,6 @@ class cactividad_list extends cactividad {
 		$this->horasprogramadas->SetVisibility();
 		$this->id_persona->SetVisibility();
 		$this->contenido->SetVisibility();
-		$this->observaciones->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -1099,7 +1098,6 @@ class cactividad_list extends cactividad {
 			$this->UpdateSort($this->horasprogramadas, $bCtrl); // horasprogramadas
 			$this->UpdateSort($this->id_persona, $bCtrl); // id_persona
 			$this->UpdateSort($this->contenido, $bCtrl); // contenido
-			$this->UpdateSort($this->observaciones, $bCtrl); // observaciones
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -1145,7 +1143,6 @@ class cactividad_list extends cactividad {
 				$this->horasprogramadas->setSort("");
 				$this->id_persona->setSort("");
 				$this->contenido->setSort("");
-				$this->observaciones->setSort("");
 			}
 
 			// Reset start position
@@ -1762,7 +1759,7 @@ class cactividad_list extends cactividad {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -1806,9 +1803,9 @@ class cactividad_list extends cactividad {
 		// organizador
 		if (strval($this->organizador->CurrentValue) <> "") {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->organizador->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
 		$sWhereWrk = "";
-		$this->organizador->LookupFilters = array();
+		$this->organizador->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -1949,11 +1946,6 @@ class cactividad_list extends cactividad {
 			$this->contenido->LinkCustomAttributes = "";
 			$this->contenido->HrefValue = "";
 			$this->contenido->TooltipValue = "";
-
-			// observaciones
-			$this->observaciones->LinkCustomAttributes = "";
-			$this->observaciones->HrefValue = "";
-			$this->observaciones->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_SEARCH) { // Search row
 
 			// id
@@ -1971,20 +1963,26 @@ class cactividad_list extends cactividad {
 			$this->id_tipoactividad->EditCustomAttributes = "";
 
 			// organizador
-			$this->organizador->EditAttrs["class"] = "form-control";
 			$this->organizador->EditCustomAttributes = "";
 			if (trim(strval($this->organizador->AdvancedSearch->SearchValue)) == "") {
 				$sFilterWrk = "0=1";
 			} else {
 				$sFilterWrk = "`id`" . ew_SearchString("=", $this->organizador->AdvancedSearch->SearchValue, EW_DATATYPE_NUMBER, "");
 			}
-			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `unidadeducativa`";
 			$sWhereWrk = "";
-			$this->organizador->LookupFilters = array();
+			$this->organizador->LookupFilters = array("dx1" => '`nombre`');
 			ew_AddFilter($sWhereWrk, $sFilterWrk);
 			$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->organizador->AdvancedSearch->ViewValue = $this->organizador->DisplayValue($arwrk);
+			} else {
+				$this->organizador->AdvancedSearch->ViewValue = $Language->Phrase("PleaseSelect");
+			}
 			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
 			if ($rswrk) $rswrk->Close();
 			$this->organizador->EditValue = $arwrk;
@@ -2036,12 +2034,6 @@ class cactividad_list extends cactividad {
 			$this->contenido->EditCustomAttributes = "";
 			$this->contenido->EditValue = ew_HtmlEncode($this->contenido->AdvancedSearch->SearchValue);
 			$this->contenido->PlaceHolder = ew_RemoveHtml($this->contenido->FldCaption());
-
-			// observaciones
-			$this->observaciones->EditAttrs["class"] = "form-control";
-			$this->observaciones->EditCustomAttributes = "";
-			$this->observaciones->EditValue = ew_HtmlEncode($this->observaciones->AdvancedSearch->SearchValue);
-			$this->observaciones->PlaceHolder = ew_RemoveHtml($this->observaciones->FldCaption());
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -2111,9 +2103,9 @@ class cactividad_list extends cactividad {
 			switch ($fld->FldVar) {
 		case "x_organizador":
 			$sSqlWrk = "";
-				$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
-				$sWhereWrk = "";
-				$fld->LookupFilters = array();
+				$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+				$sWhereWrk = "{filter}";
+				$fld->LookupFilters = array("dx1" => '`nombre`');
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 				$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
@@ -2333,7 +2325,7 @@ factividadlist.Lists["x_id_sector"] = {"LinkField":"x_id","Ajax":true,"AutoFill"
 factividadlist.Lists["x_id_sector"].Data = "<?php echo $actividad_list->id_sector->LookupFilterQuery(FALSE, "list") ?>";
 factividadlist.Lists["x_id_tipoactividad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"tipoactividad"};
 factividadlist.Lists["x_id_tipoactividad"].Data = "<?php echo $actividad_list->id_tipoactividad->LookupFilterQuery(FALSE, "list") ?>";
-factividadlist.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+factividadlist.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
 factividadlist.Lists["x_organizador"].Data = "<?php echo $actividad_list->organizador->LookupFilterQuery(FALSE, "list") ?>";
 factividadlist.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 factividadlist.Lists["x_id_persona"].Data = "<?php echo $actividad_list->id_persona->LookupFilterQuery(FALSE, "list") ?>";
@@ -2367,7 +2359,7 @@ factividadlistsrch.Form_CustomValidate =
 factividadlistsrch.ValidateRequired = <?php echo json_encode(EW_CLIENT_VALIDATE) ?>;
 
 // Dynamic selection lists
-factividadlistsrch.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+factividadlistsrch.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
 factividadlistsrch.Lists["x_organizador"].Data = "<?php echo $actividad_list->organizador->LookupFilterQuery(FALSE, "extbs") ?>";
 factividadlistsrch.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 factividadlistsrch.Lists["x_id_persona"].Data = "<?php echo $actividad_list->id_persona->LookupFilterQuery(FALSE, "extbs") ?>";
@@ -2442,9 +2434,11 @@ $actividad_list->RenderRow();
 		<label for="x_organizador" class="ewSearchCaption ewLabel"><?php echo $actividad->organizador->FldCaption() ?></label>
 		<span class="ewSearchOperator"><?php echo $Language->Phrase("LIKE") ?><input type="hidden" name="z_organizador" id="z_organizador" value="LIKE"></span>
 		<span class="ewSearchField">
-<select data-table="actividad" data-field="x_organizador" data-value-separator="<?php echo $actividad->organizador->DisplayValueSeparatorAttribute() ?>" id="x_organizador" name="x_organizador"<?php echo $actividad->organizador->EditAttributes() ?>>
-<?php echo $actividad->organizador->SelectOptionListHtml("x_organizador") ?>
-</select>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_organizador"><?php echo (strval($actividad->organizador->AdvancedSearch->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->organizador->AdvancedSearch->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->organizador->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_organizador',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->organizador->ReadOnly || $actividad->organizador->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="actividad" data-field="x_organizador" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->organizador->DisplayValueSeparatorAttribute() ?>" name="x_organizador" id="x_organizador" value="<?php echo $actividad->organizador->AdvancedSearch->SearchValue ?>"<?php echo $actividad->organizador->EditAttributes() ?>>
 </span>
 	</div>
 <?php } ?>
@@ -2717,15 +2711,6 @@ $actividad_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($actividad->observaciones->Visible) { // observaciones ?>
-	<?php if ($actividad->SortUrl($actividad->observaciones) == "") { ?>
-		<th data-name="observaciones" class="<?php echo $actividad->observaciones->HeaderCellClass() ?>"><div id="elh_actividad_observaciones" class="actividad_observaciones"><div class="ewTableHeaderCaption"><?php echo $actividad->observaciones->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="observaciones" class="<?php echo $actividad->observaciones->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $actividad->SortUrl($actividad->observaciones) ?>',2);"><div id="elh_actividad_observaciones" class="actividad_observaciones">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $actividad->observaciones->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($actividad->observaciones->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($actividad->observaciones->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
-		</div></div></th>
-	<?php } ?>
-<?php } ?>
 <?php
 
 // Render list options (header, right)
@@ -2884,14 +2869,6 @@ $actividad_list->ListOptions->Render("body", "left", $actividad_list->RowCnt);
 <span id="el<?php echo $actividad_list->RowCnt ?>_actividad_contenido" class="actividad_contenido">
 <span<?php echo $actividad->contenido->ViewAttributes() ?>>
 <?php echo $actividad->contenido->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($actividad->observaciones->Visible) { // observaciones ?>
-		<td data-name="observaciones"<?php echo $actividad->observaciones->CellAttributes() ?>>
-<span id="el<?php echo $actividad_list->RowCnt ?>_actividad_observaciones" class="actividad_observaciones">
-<span<?php echo $actividad->observaciones->ViewAttributes() ?>>
-<?php echo $actividad->observaciones->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

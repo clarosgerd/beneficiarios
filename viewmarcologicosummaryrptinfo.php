@@ -1,38 +1,34 @@
 <?php
 
 // Global variable for table object
-$viewestudiantesetareo = NULL;
+$viewmarcologicosummary = NULL;
 
 //
-// Table class for viewestudiantesetareo
+// Table class for viewmarcologicosummary
 //
-class crviewestudiantesetareo extends crTableBase {
-	var $ShowGroupHeaderAsRow = FALSE;
-	var $ShowCompactSummaryFooter = FALSE;
-	var $unidadeducativa;
-	var $_0_3F;
-	var $_4_6F;
-	var $_7_9F;
-	var $_10_12F;
-	var $_13_15F;
-	var $_16_18F;
-	var $_19F;
-	var $_0_3M;
-	var $_4_6M;
-	var $_7_9M;
-	var $_10_12M;
-	var $_13_15M;
-	var $_16_18M;
-	var $_19M;
+class crviewmarcologicosummary extends crTableBase {
+	var $ShowGroupHeaderAsRow = TRUE;
+	var $ShowCompactSummaryFooter = TRUE;
+	var $nombreinstitucion;
 	var $fecha;
+	var $cuadro1;
+	var $cuadro2;
+	var $cuadro3;
+	var $cuadro4;
+	var $cuadro5;
+	var $cuadro6;
+	var $cuadro7;
+	var $cuadro8;
+	var $cuadro9;
+	var $cuadro10;
 
 	//
 	// Table class constructor
 	//
 	function __construct() {
 		global $ReportLanguage, $grLanguage;
-		$this->TableVar = 'viewestudiantesetareo';
-		$this->TableName = 'viewestudiantesetareo';
+		$this->TableVar = 'viewmarcologicosummary';
+		$this->TableName = 'viewmarcologicosummary';
 		$this->TableType = 'VIEW';
 		$this->TableReportType = 'rpt';
 		$this->SourcTableIsCustomView = FALSE;
@@ -41,148 +37,112 @@ class crviewestudiantesetareo extends crTableBase {
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
 
-		// unidadeducativa
-		$this->unidadeducativa = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x_unidadeducativa', 'unidadeducativa', '`unidadeducativa`', 200, EWR_DATATYPE_STRING, -1);
-		$this->unidadeducativa->Sortable = TRUE; // Allow sort
-		$this->unidadeducativa->DateFilter = "";
-		$this->unidadeducativa->SqlSelect = "";
-		$this->unidadeducativa->SqlOrderBy = "";
-		$this->fields['unidadeducativa'] = &$this->unidadeducativa;
-
-		// 0-3F
-		$this->_0_3F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__0_3F', '0-3F', '`0-3F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_0_3F->Sortable = TRUE; // Allow sort
-		$this->_0_3F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_0_3F->DateFilter = "";
-		$this->_0_3F->SqlSelect = "";
-		$this->_0_3F->SqlOrderBy = "";
-		$this->fields['0-3F'] = &$this->_0_3F;
-
-		// 4-6F
-		$this->_4_6F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__4_6F', '4-6F', '`4-6F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_4_6F->Sortable = TRUE; // Allow sort
-		$this->_4_6F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_4_6F->DateFilter = "";
-		$this->_4_6F->SqlSelect = "";
-		$this->_4_6F->SqlOrderBy = "";
-		$this->fields['4-6F'] = &$this->_4_6F;
-
-		// 7-9F
-		$this->_7_9F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__7_9F', '7-9F', '`7-9F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_7_9F->Sortable = TRUE; // Allow sort
-		$this->_7_9F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_7_9F->DateFilter = "";
-		$this->_7_9F->SqlSelect = "";
-		$this->_7_9F->SqlOrderBy = "";
-		$this->fields['7-9F'] = &$this->_7_9F;
-
-		// 10-12F
-		$this->_10_12F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__10_12F', '10-12F', '`10-12F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_10_12F->Sortable = TRUE; // Allow sort
-		$this->_10_12F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_10_12F->DateFilter = "";
-		$this->_10_12F->SqlSelect = "";
-		$this->_10_12F->SqlOrderBy = "";
-		$this->fields['10-12F'] = &$this->_10_12F;
-
-		// 13-15F
-		$this->_13_15F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__13_15F', '13-15F', '`13-15F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_13_15F->Sortable = TRUE; // Allow sort
-		$this->_13_15F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_13_15F->DateFilter = "";
-		$this->_13_15F->SqlSelect = "";
-		$this->_13_15F->SqlOrderBy = "";
-		$this->fields['13-15F'] = &$this->_13_15F;
-
-		// 16-18F
-		$this->_16_18F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__16_18F', '16-18F', '`16-18F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_16_18F->Sortable = TRUE; // Allow sort
-		$this->_16_18F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_16_18F->DateFilter = "";
-		$this->_16_18F->SqlSelect = "";
-		$this->_16_18F->SqlOrderBy = "";
-		$this->fields['16-18F'] = &$this->_16_18F;
-
-		// 19F
-		$this->_19F = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__19F', '19F', '`19F`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_19F->Sortable = TRUE; // Allow sort
-		$this->_19F->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_19F->DateFilter = "";
-		$this->_19F->SqlSelect = "";
-		$this->_19F->SqlOrderBy = "";
-		$this->fields['19F'] = &$this->_19F;
-
-		// 0-3M
-		$this->_0_3M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__0_3M', '0-3M', '`0-3M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_0_3M->Sortable = TRUE; // Allow sort
-		$this->_0_3M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_0_3M->DateFilter = "";
-		$this->_0_3M->SqlSelect = "";
-		$this->_0_3M->SqlOrderBy = "";
-		$this->fields['0-3M'] = &$this->_0_3M;
-
-		// 4-6M
-		$this->_4_6M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__4_6M', '4-6M', '`4-6M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_4_6M->Sortable = TRUE; // Allow sort
-		$this->_4_6M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_4_6M->DateFilter = "";
-		$this->_4_6M->SqlSelect = "";
-		$this->_4_6M->SqlOrderBy = "";
-		$this->fields['4-6M'] = &$this->_4_6M;
-
-		// 7-9M
-		$this->_7_9M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__7_9M', '7-9M', '`7-9M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_7_9M->Sortable = TRUE; // Allow sort
-		$this->_7_9M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_7_9M->DateFilter = "";
-		$this->_7_9M->SqlSelect = "";
-		$this->_7_9M->SqlOrderBy = "";
-		$this->fields['7-9M'] = &$this->_7_9M;
-
-		// 10-12M
-		$this->_10_12M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__10_12M', '10-12M', '`10-12M`', 20, EWR_DATATYPE_NUMBER, -1);
-		$this->_10_12M->Sortable = TRUE; // Allow sort
-		$this->_10_12M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
-		$this->_10_12M->DateFilter = "";
-		$this->_10_12M->SqlSelect = "";
-		$this->_10_12M->SqlOrderBy = "";
-		$this->fields['10-12M'] = &$this->_10_12M;
-
-		// 13-15M
-		$this->_13_15M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__13_15M', '13-15M', '`13-15M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_13_15M->Sortable = TRUE; // Allow sort
-		$this->_13_15M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_13_15M->DateFilter = "";
-		$this->_13_15M->SqlSelect = "";
-		$this->_13_15M->SqlOrderBy = "";
-		$this->fields['13-15M'] = &$this->_13_15M;
-
-		// 16-18M
-		$this->_16_18M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__16_18M', '16-18M', '`16-18M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_16_18M->Sortable = TRUE; // Allow sort
-		$this->_16_18M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_16_18M->DateFilter = "";
-		$this->_16_18M->SqlSelect = "";
-		$this->_16_18M->SqlOrderBy = "";
-		$this->fields['16-18M'] = &$this->_16_18M;
-
-		// 19M
-		$this->_19M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__19M', '19M', '`19M`', 131, EWR_DATATYPE_NUMBER, -1);
-		$this->_19M->Sortable = TRUE; // Allow sort
-		$this->_19M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectFloat");
-		$this->_19M->DateFilter = "";
-		$this->_19M->SqlSelect = "";
-		$this->_19M->SqlOrderBy = "";
-		$this->fields['19M'] = &$this->_19M;
+		// nombreinstitucion
+		$this->nombreinstitucion = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_nombreinstitucion', 'nombreinstitucion', '`nombreinstitucion`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nombreinstitucion->Sortable = TRUE; // Allow sort
+		$this->nombreinstitucion->DateFilter = "";
+		$this->nombreinstitucion->SqlSelect = "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld` FROM " . $this->getSqlFrom();
+		$this->nombreinstitucion->SqlOrderBy = "`nombreinstitucion`";
+		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
 
 		// fecha
-		$this->fecha = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
-		$this->fecha->Sortable = FALSE; // Allow sort
+		$this->fecha = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha->Sortable = TRUE; // Allow sort
 		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
 		$this->fecha->DateFilter = "";
 		$this->fecha->SqlSelect = "SELECT DISTINCT `fecha`, `fecha` AS `DispFld` FROM " . $this->getSqlFrom();
 		$this->fecha->SqlOrderBy = "`fecha`";
 		$this->fields['fecha'] = &$this->fecha;
+
+		// cuadro1
+		$this->cuadro1 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro1', 'cuadro1', '`cuadro1`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro1->Sortable = TRUE; // Allow sort
+		$this->cuadro1->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro1->DateFilter = "";
+		$this->cuadro1->SqlSelect = "";
+		$this->cuadro1->SqlOrderBy = "";
+		$this->fields['cuadro1'] = &$this->cuadro1;
+
+		// cuadro2
+		$this->cuadro2 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro2', 'cuadro2', '`cuadro2`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro2->Sortable = TRUE; // Allow sort
+		$this->cuadro2->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro2->DateFilter = "";
+		$this->cuadro2->SqlSelect = "";
+		$this->cuadro2->SqlOrderBy = "";
+		$this->fields['cuadro2'] = &$this->cuadro2;
+
+		// cuadro3
+		$this->cuadro3 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro3', 'cuadro3', '`cuadro3`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro3->Sortable = TRUE; // Allow sort
+		$this->cuadro3->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro3->DateFilter = "";
+		$this->cuadro3->SqlSelect = "";
+		$this->cuadro3->SqlOrderBy = "";
+		$this->fields['cuadro3'] = &$this->cuadro3;
+
+		// cuadro4
+		$this->cuadro4 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro4', 'cuadro4', '`cuadro4`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro4->Sortable = TRUE; // Allow sort
+		$this->cuadro4->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro4->DateFilter = "";
+		$this->cuadro4->SqlSelect = "";
+		$this->cuadro4->SqlOrderBy = "";
+		$this->fields['cuadro4'] = &$this->cuadro4;
+
+		// cuadro5
+		$this->cuadro5 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro5', 'cuadro5', '`cuadro5`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro5->Sortable = TRUE; // Allow sort
+		$this->cuadro5->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro5->DateFilter = "";
+		$this->cuadro5->SqlSelect = "";
+		$this->cuadro5->SqlOrderBy = "";
+		$this->fields['cuadro5'] = &$this->cuadro5;
+
+		// cuadro6
+		$this->cuadro6 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro6', 'cuadro6', '`cuadro6`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro6->Sortable = TRUE; // Allow sort
+		$this->cuadro6->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro6->DateFilter = "";
+		$this->cuadro6->SqlSelect = "";
+		$this->cuadro6->SqlOrderBy = "";
+		$this->fields['cuadro6'] = &$this->cuadro6;
+
+		// cuadro7
+		$this->cuadro7 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro7', 'cuadro7', '`cuadro7`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro7->Sortable = TRUE; // Allow sort
+		$this->cuadro7->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro7->DateFilter = "";
+		$this->cuadro7->SqlSelect = "";
+		$this->cuadro7->SqlOrderBy = "";
+		$this->fields['cuadro7'] = &$this->cuadro7;
+
+		// cuadro8
+		$this->cuadro8 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro8', 'cuadro8', '`cuadro8`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro8->Sortable = TRUE; // Allow sort
+		$this->cuadro8->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro8->DateFilter = "";
+		$this->cuadro8->SqlSelect = "";
+		$this->cuadro8->SqlOrderBy = "";
+		$this->fields['cuadro8'] = &$this->cuadro8;
+
+		// cuadro9
+		$this->cuadro9 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro9', 'cuadro9', '`cuadro9`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro9->Sortable = TRUE; // Allow sort
+		$this->cuadro9->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro9->DateFilter = "";
+		$this->cuadro9->SqlSelect = "";
+		$this->cuadro9->SqlOrderBy = "";
+		$this->fields['cuadro9'] = &$this->cuadro9;
+
+		// cuadro10
+		$this->cuadro10 = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_cuadro10', 'cuadro10', '`cuadro10`', 131, EWR_DATATYPE_NUMBER, -1);
+		$this->cuadro10->Sortable = TRUE; // Allow sort
+		$this->cuadro10->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->cuadro10->DateFilter = "";
+		$this->cuadro10->SqlSelect = "";
+		$this->cuadro10->SqlOrderBy = "";
+		$this->fields['cuadro10'] = &$this->cuadro10;
 	}
 
 	// Set Field Visibility
@@ -242,7 +202,7 @@ class crviewestudiantesetareo extends crTableBase {
 	var $_SqlFrom = "";
 
 	function getSqlFrom() {
-		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`viewestudiantesetareo`";
+		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`viewmarcologicosummary`";
 	}
 
 	function SqlFrom() { // For backward compatibility
@@ -442,6 +402,17 @@ class crviewestudiantesetareo extends crTableBase {
 	function SetupLookupFilters($fld) {
 		global $grLanguage;
 		switch ($fld->FldVar) {
+		case "x_nombreinstitucion":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`nombreinstitucion` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewmarcologicosummary`",
+			"where" => $sWhereWrk,
+			"orderby" => "`nombreinstitucion` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		}
 	}
 

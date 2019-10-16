@@ -169,8 +169,10 @@ class cparticipante extends cTable {
 		$this->fields['observaciones'] = &$this->observaciones;
 
 		// id_centro
-		$this->id_centro = new cField('participante', 'participante', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->id_centro = new cField('participante', 'participante', 'x_id_centro', 'id_centro', '`id_centro`', '`id_centro`', 3, -1, FALSE, '`id_centro`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
 		$this->id_centro->Sortable = FALSE; // Allow sort
+		$this->id_centro->UsePleaseSelect = TRUE; // Use PleaseSelect by default
+		$this->id_centro->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
 		$this->id_centro->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_centro'] = &$this->id_centro;
 	}
@@ -773,7 +775,7 @@ class cparticipante extends cTable {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -824,7 +826,7 @@ class cparticipante extends cTable {
 			}
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `categoria`";
 		$sWhereWrk = "";
-		$this->id_categoria->LookupFilters = array();
+		$this->id_categoria->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -907,6 +909,26 @@ class cparticipante extends cTable {
 		$this->nivelestudio->ViewCustomAttributes = "";
 
 		// id_institucion
+		if (strval($this->id_institucion->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_institucion->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+		$sWhereWrk = "";
+		$this->id_institucion->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_institucion->ViewValue = $this->id_institucion->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_institucion->ViewValue = $this->id_institucion->CurrentValue;
+			}
+		} else {
+			$this->id_institucion->ViewValue = NULL;
+		}
 		$this->id_institucion->ViewCustomAttributes = "";
 
 		// observaciones
@@ -914,7 +936,26 @@ class cparticipante extends cTable {
 		$this->observaciones->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 		// id
@@ -1137,8 +1178,6 @@ class cparticipante extends cTable {
 		// id_centro
 		$this->id_centro->EditAttrs["class"] = "form-control";
 		$this->id_centro->EditCustomAttributes = "";
-		$this->id_centro->EditValue = $this->id_centro->CurrentValue;
-		$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
 
 		// Call Row Rendered event
 		$this->Row_Rendered();

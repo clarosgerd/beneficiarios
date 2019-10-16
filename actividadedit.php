@@ -791,7 +791,7 @@ class cactividad_edit extends cactividad {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -835,9 +835,9 @@ class cactividad_edit extends cactividad {
 		// organizador
 		if (strval($this->organizador->CurrentValue) <> "") {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->organizador->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
 		$sWhereWrk = "";
-		$this->organizador->LookupFilters = array();
+		$this->organizador->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -992,7 +992,6 @@ class cactividad_edit extends cactividad {
 			$this->id->ViewCustomAttributes = "";
 
 			// id_sector
-			$this->id_sector->EditAttrs["class"] = "form-control";
 			$this->id_sector->EditCustomAttributes = "";
 			if (trim(strval($this->id_sector->CurrentValue)) == "") {
 				$sFilterWrk = "0=1";
@@ -1001,11 +1000,18 @@ class cactividad_edit extends cactividad {
 			}
 			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `sector`";
 			$sWhereWrk = "";
-			$this->id_sector->LookupFilters = array();
+			$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 			ew_AddFilter($sWhereWrk, $sFilterWrk);
 			$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->id_sector->ViewValue = $this->id_sector->DisplayValue($arwrk);
+			} else {
+				$this->id_sector->ViewValue = $Language->Phrase("PleaseSelect");
+			}
 			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
 			if ($rswrk) $rswrk->Close();
 			$this->id_sector->EditValue = $arwrk;
@@ -1036,20 +1042,26 @@ class cactividad_edit extends cactividad {
 			$this->id_tipoactividad->EditValue = $arwrk;
 
 			// organizador
-			$this->organizador->EditAttrs["class"] = "form-control";
 			$this->organizador->EditCustomAttributes = "";
 			if (trim(strval($this->organizador->CurrentValue)) == "") {
 				$sFilterWrk = "0=1";
 			} else {
 				$sFilterWrk = "`id`" . ew_SearchString("=", $this->organizador->CurrentValue, EW_DATATYPE_NUMBER, "");
 			}
-			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `unidadeducativa`";
 			$sWhereWrk = "";
-			$this->organizador->LookupFilters = array();
+			$this->organizador->LookupFilters = array("dx1" => '`nombre`');
 			ew_AddFilter($sWhereWrk, $sFilterWrk);
 			$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->organizador->ViewValue = $this->organizador->DisplayValue($arwrk);
+			} else {
+				$this->organizador->ViewValue = $Language->Phrase("PleaseSelect");
+			}
 			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
 			if ($rswrk) $rswrk->Close();
 			$this->organizador->EditValue = $arwrk;
@@ -1341,8 +1353,8 @@ class cactividad_edit extends cactividad {
 		case "x_id_sector":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
-			$sWhereWrk = "";
-			$fld->LookupFilters = array();
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`nombre`');
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
@@ -1364,9 +1376,9 @@ class cactividad_edit extends cactividad {
 			break;
 		case "x_organizador":
 			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
-			$sWhereWrk = "";
-			$fld->LookupFilters = array();
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`nombre`');
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
@@ -1589,7 +1601,7 @@ factividadedit.Lists["x_id_sector"] = {"LinkField":"x_id","Ajax":true,"AutoFill"
 factividadedit.Lists["x_id_sector"].Data = "<?php echo $actividad_edit->id_sector->LookupFilterQuery(FALSE, "edit") ?>";
 factividadedit.Lists["x_id_tipoactividad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"tipoactividad"};
 factividadedit.Lists["x_id_tipoactividad"].Data = "<?php echo $actividad_edit->id_tipoactividad->LookupFilterQuery(FALSE, "edit") ?>";
-factividadedit.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+factividadedit.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
 factividadedit.Lists["x_organizador"].Data = "<?php echo $actividad_edit->organizador->LookupFilterQuery(FALSE, "edit") ?>";
 factividadedit.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 factividadedit.Lists["x_id_persona"].Data = "<?php echo $actividad_edit->id_persona->LookupFilterQuery(FALSE, "edit") ?>";
@@ -1630,9 +1642,11 @@ $actividad_edit->ShowMessage();
 		<label id="elh_actividad_id_sector" for="x_id_sector" class="<?php echo $actividad_edit->LeftColumnClass ?>"><?php echo $actividad->id_sector->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $actividad_edit->RightColumnClass ?>"><div<?php echo $actividad->id_sector->CellAttributes() ?>>
 <span id="el_actividad_id_sector">
-<select data-table="actividad" data-field="x_id_sector" data-value-separator="<?php echo $actividad->id_sector->DisplayValueSeparatorAttribute() ?>" id="x_id_sector" name="x_id_sector"<?php echo $actividad->id_sector->EditAttributes() ?>>
-<?php echo $actividad->id_sector->SelectOptionListHtml("x_id_sector") ?>
-</select>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_sector"><?php echo (strval($actividad->id_sector->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->id_sector->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->id_sector->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_sector',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->id_sector->ReadOnly || $actividad->id_sector->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="actividad" data-field="x_id_sector" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->id_sector->DisplayValueSeparatorAttribute() ?>" name="x_id_sector" id="x_id_sector" value="<?php echo $actividad->id_sector->CurrentValue ?>"<?php echo $actividad->id_sector->EditAttributes() ?>>
 <?php if (AllowAdd(CurrentProjectID() . "sector") && !$actividad->id_sector->ReadOnly) { ?>
 <button type="button" title="<?php echo ew_HtmlTitle($Language->Phrase("AddLink")) . "&nbsp;" . $actividad->id_sector->FldCaption() ?>" onclick="ew_AddOptDialogShow({lnk:this,el:'x_id_sector',url:'sectoraddopt.php'});" class="ewAddOptBtn btn btn-default btn-sm" id="aol_x_id_sector"><span class="glyphicon glyphicon-plus ewIcon"></span><span class="hide"><?php echo $Language->Phrase("AddLink") ?>&nbsp;<?php echo $actividad->id_sector->FldCaption() ?></span></button>
 <?php } ?>
@@ -1659,9 +1673,11 @@ $actividad_edit->ShowMessage();
 		<label id="elh_actividad_organizador" for="x_organizador" class="<?php echo $actividad_edit->LeftColumnClass ?>"><?php echo $actividad->organizador->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $actividad_edit->RightColumnClass ?>"><div<?php echo $actividad->organizador->CellAttributes() ?>>
 <span id="el_actividad_organizador">
-<select data-table="actividad" data-field="x_organizador" data-value-separator="<?php echo $actividad->organizador->DisplayValueSeparatorAttribute() ?>" id="x_organizador" name="x_organizador"<?php echo $actividad->organizador->EditAttributes() ?>>
-<?php echo $actividad->organizador->SelectOptionListHtml("x_organizador") ?>
-</select>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_organizador"><?php echo (strval($actividad->organizador->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->organizador->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->organizador->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_organizador',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->organizador->ReadOnly || $actividad->organizador->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="actividad" data-field="x_organizador" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->organizador->DisplayValueSeparatorAttribute() ?>" name="x_organizador" id="x_organizador" value="<?php echo $actividad->organizador->CurrentValue ?>"<?php echo $actividad->organizador->EditAttributes() ?>>
 </span>
 <?php echo $actividad->organizador->CustomMsg ?></div></div>
 	</div>

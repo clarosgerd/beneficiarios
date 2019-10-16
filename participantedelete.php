@@ -638,7 +638,7 @@ class cparticipante_delete extends cparticipante {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -689,7 +689,7 @@ class cparticipante_delete extends cparticipante {
 			}
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `categoria`";
 		$sWhereWrk = "";
-		$this->id_categoria->LookupFilters = array();
+		$this->id_categoria->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -772,6 +772,26 @@ class cparticipante_delete extends cparticipante {
 		$this->nivelestudio->ViewCustomAttributes = "";
 
 		// id_institucion
+		if (strval($this->id_institucion->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_institucion->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+		$sWhereWrk = "";
+		$this->id_institucion->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_institucion->ViewValue = $this->id_institucion->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_institucion->ViewValue = $this->id_institucion->CurrentValue;
+			}
+		} else {
+			$this->id_institucion->ViewValue = NULL;
+		}
 		$this->id_institucion->ViewCustomAttributes = "";
 
 		// observaciones
@@ -1091,6 +1111,8 @@ fparticipantedelete.Lists["x_id_categoria[]"] = {"LinkField":"x_id","Ajax":true,
 fparticipantedelete.Lists["x_id_categoria[]"].Data = "<?php echo $participante_delete->id_categoria->LookupFilterQuery(FALSE, "delete") ?>";
 fparticipantedelete.Lists["x_sexo"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 fparticipantedelete.Lists["x_sexo"].Options = <?php echo json_encode($participante_delete->sexo->Options()) ?>;
+fparticipantedelete.Lists["x_id_institucion"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
+fparticipantedelete.Lists["x_id_institucion"].Data = "<?php echo $participante_delete->id_institucion->LookupFilterQuery(FALSE, "delete") ?>";
 
 // Form object for search
 </script>

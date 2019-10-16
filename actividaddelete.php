@@ -334,7 +334,6 @@ class cactividad_delete extends cactividad {
 		$this->horasprogramadas->SetVisibility();
 		$this->id_persona->SetVisibility();
 		$this->contenido->SetVisibility();
-		$this->observaciones->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -613,7 +612,7 @@ class cactividad_delete extends cactividad {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -657,9 +656,9 @@ class cactividad_delete extends cactividad {
 		// organizador
 		if (strval($this->organizador->CurrentValue) <> "") {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->organizador->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
 		$sWhereWrk = "";
-		$this->organizador->LookupFilters = array();
+		$this->organizador->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->organizador, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -800,11 +799,6 @@ class cactividad_delete extends cactividad {
 			$this->contenido->LinkCustomAttributes = "";
 			$this->contenido->HrefValue = "";
 			$this->contenido->TooltipValue = "";
-
-			// observaciones
-			$this->observaciones->LinkCustomAttributes = "";
-			$this->observaciones->HrefValue = "";
-			$this->observaciones->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1020,7 +1014,7 @@ factividaddelete.Lists["x_id_sector"] = {"LinkField":"x_id","Ajax":true,"AutoFil
 factividaddelete.Lists["x_id_sector"].Data = "<?php echo $actividad_delete->id_sector->LookupFilterQuery(FALSE, "delete") ?>";
 factividaddelete.Lists["x_id_tipoactividad"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"tipoactividad"};
 factividaddelete.Lists["x_id_tipoactividad"].Data = "<?php echo $actividad_delete->id_tipoactividad->LookupFilterQuery(FALSE, "delete") ?>";
-factividaddelete.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+factividaddelete.Lists["x_organizador"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
 factividaddelete.Lists["x_organizador"].Data = "<?php echo $actividad_delete->organizador->LookupFilterQuery(FALSE, "delete") ?>";
 factividaddelete.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 factividaddelete.Lists["x_id_persona"].Data = "<?php echo $actividad_delete->id_persona->LookupFilterQuery(FALSE, "delete") ?>";
@@ -1086,9 +1080,6 @@ $actividad_delete->ShowMessage();
 <?php } ?>
 <?php if ($actividad->contenido->Visible) { // contenido ?>
 		<th class="<?php echo $actividad->contenido->HeaderCellClass() ?>"><span id="elh_actividad_contenido" class="actividad_contenido"><?php echo $actividad->contenido->FldCaption() ?></span></th>
-<?php } ?>
-<?php if ($actividad->observaciones->Visible) { // observaciones ?>
-		<th class="<?php echo $actividad->observaciones->HeaderCellClass() ?>"><span id="elh_actividad_observaciones" class="actividad_observaciones"><?php echo $actividad->observaciones->FldCaption() ?></span></th>
 <?php } ?>
 	</tr>
 	</thead>
@@ -1204,14 +1195,6 @@ while (!$actividad_delete->Recordset->EOF) {
 <span id="el<?php echo $actividad_delete->RowCnt ?>_actividad_contenido" class="actividad_contenido">
 <span<?php echo $actividad->contenido->ViewAttributes() ?>>
 <?php echo $actividad->contenido->ListViewValue() ?></span>
-</span>
-</td>
-<?php } ?>
-<?php if ($actividad->observaciones->Visible) { // observaciones ?>
-		<td<?php echo $actividad->observaciones->CellAttributes() ?>>
-<span id="el<?php echo $actividad_delete->RowCnt ?>_actividad_observaciones" class="actividad_observaciones">
-<span<?php echo $actividad->observaciones->ViewAttributes() ?>>
-<?php echo $actividad->observaciones->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

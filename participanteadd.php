@@ -849,7 +849,7 @@ class cparticipante_add extends cparticipante {
 			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_sector->CurrentValue, EW_DATATYPE_NUMBER, "");
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
 		$sWhereWrk = "";
-		$this->id_sector->LookupFilters = array();
+		$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -900,7 +900,7 @@ class cparticipante_add extends cparticipante {
 			}
 		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `categoria`";
 		$sWhereWrk = "";
-		$this->id_categoria->LookupFilters = array();
+		$this->id_categoria->LookupFilters = array("dx1" => '`nombre`');
 		ew_AddFilter($sWhereWrk, $sFilterWrk);
 		$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
 		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
@@ -983,6 +983,26 @@ class cparticipante_add extends cparticipante {
 		$this->nivelestudio->ViewCustomAttributes = "";
 
 		// id_institucion
+		if (strval($this->id_institucion->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_institucion->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
+		$sWhereWrk = "";
+		$this->id_institucion->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_institucion->ViewValue = $this->id_institucion->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_institucion->ViewValue = $this->id_institucion->CurrentValue;
+			}
+		} else {
+			$this->id_institucion->ViewValue = NULL;
+		}
 		$this->id_institucion->ViewCustomAttributes = "";
 
 		// observaciones
@@ -990,7 +1010,26 @@ class cparticipante_add extends cparticipante {
 		$this->observaciones->ViewCustomAttributes = "";
 
 		// id_centro
-		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+		if (strval($this->id_centro->CurrentValue) <> "") {
+			$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+		$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+		$sWhereWrk = "";
+		$this->id_centro->LookupFilters = array();
+		ew_AddFilter($sWhereWrk, $sFilterWrk);
+		$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = $rswrk->fields('DispFld');
+				$this->id_centro->ViewValue = $this->id_centro->DisplayValue($arwrk);
+				$rswrk->Close();
+			} else {
+				$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
+			}
+		} else {
+			$this->id_centro->ViewValue = NULL;
+		}
 		$this->id_centro->ViewCustomAttributes = "";
 
 			// id_sector
@@ -1098,11 +1137,18 @@ class cparticipante_add extends cparticipante {
 			}
 			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `sector`";
 			$sWhereWrk = "";
-			$this->id_sector->LookupFilters = array();
+			$this->id_sector->LookupFilters = array("dx1" => '`nombre`');
 			ew_AddFilter($sWhereWrk, $sFilterWrk);
 			$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$arwrk = array();
+				$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+				$this->id_sector->ViewValue = $this->id_sector->DisplayValue($arwrk);
+			} else {
+				$this->id_sector->ViewValue = $Language->Phrase("PleaseSelect");
+			}
 			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
 			if ($rswrk) $rswrk->Close();
 			$this->id_sector->EditValue = $arwrk;
@@ -1146,11 +1192,26 @@ class cparticipante_add extends cparticipante {
 			}
 			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `categoria`";
 			$sWhereWrk = "";
-			$this->id_categoria->LookupFilters = array();
+			$this->id_categoria->LookupFilters = array("dx1" => '`nombre`');
 			ew_AddFilter($sWhereWrk, $sFilterWrk);
 			$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			$rswrk = Conn()->Execute($sSqlWrk);
+			if ($rswrk && !$rswrk->EOF) { // Lookup values found
+				$this->id_categoria->ViewValue = "";
+				$ari = 0;
+				while (!$rswrk->EOF) {
+					$arwrk = array();
+					$arwrk[1] = ew_HtmlEncode($rswrk->fields('DispFld'));
+					$this->id_categoria->ViewValue .= $this->id_categoria->DisplayValue($arwrk);
+					$rswrk->MoveNext();
+					if (!$rswrk->EOF) $this->id_categoria->ViewValue .= ew_ViewOptionSeparator($ari); // Separate Options
+					$ari++;
+				}
+				$rswrk->MoveFirst();
+			} else {
+				$this->id_categoria->ViewValue = $Language->Phrase("PleaseSelect");
+			}
 			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
 			if ($rswrk) $rswrk->Close();
 			$this->id_categoria->EditValue = $arwrk;
@@ -1235,6 +1296,21 @@ class cparticipante_add extends cparticipante {
 			// id_institucion
 			$this->id_institucion->EditAttrs["class"] = "form-control";
 			$this->id_institucion->EditCustomAttributes = "";
+			if (trim(strval($this->id_institucion->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_institucion->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `unidadeducativa`";
+			$sWhereWrk = "";
+			$this->id_institucion->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_institucion->EditValue = $arwrk;
 
 			// observaciones
 			$this->observaciones->EditAttrs["class"] = "form-control";
@@ -1245,8 +1321,21 @@ class cparticipante_add extends cparticipante {
 			// id_centro
 			$this->id_centro->EditAttrs["class"] = "form-control";
 			$this->id_centro->EditCustomAttributes = "";
-			$this->id_centro->EditValue = ew_HtmlEncode($this->id_centro->CurrentValue);
-			$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
+			if (trim(strval($this->id_centro->CurrentValue)) == "") {
+				$sFilterWrk = "0=1";
+			} else {
+				$sFilterWrk = "`id`" . ew_SearchString("=", $this->id_centro->CurrentValue, EW_DATATYPE_NUMBER, "");
+			}
+			$sSqlWrk = "SELECT `id`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `centros`";
+			$sWhereWrk = "";
+			$this->id_centro->LookupFilters = array();
+			ew_AddFilter($sWhereWrk, $sFilterWrk);
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			$rswrk = Conn()->Execute($sSqlWrk);
+			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
+			if ($rswrk) $rswrk->Close();
+			$this->id_centro->EditValue = $arwrk;
 
 			// Add refer script
 			// id_sector
@@ -1377,9 +1466,6 @@ class cparticipante_add extends cparticipante {
 		if (!$this->id_centro->FldIsDetailKey && !is_null($this->id_centro->FormValue) && $this->id_centro->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_centro->FldCaption(), $this->id_centro->ReqErrMsg));
 		}
-		if (!ew_CheckInteger($this->id_centro->FormValue)) {
-			ew_AddMessage($gsFormError, $this->id_centro->FldErrMsg());
-		}
 
 		// Return validate result
 		$ValidateForm = ($gsFormError == "");
@@ -1509,8 +1595,8 @@ class cparticipante_add extends cparticipante {
 		case "x_id_sector":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `sector`";
-			$sWhereWrk = "";
-			$fld->LookupFilters = array();
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`nombre`');
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
 			$this->Lookup_Selecting($this->id_sector, $sWhereWrk); // Call Lookup Selecting
@@ -1533,11 +1619,35 @@ class cparticipante_add extends cparticipante {
 		case "x_id_categoria":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `categoria`";
+			$sWhereWrk = "{filter}";
+			$fld->LookupFilters = array("dx1" => '`nombre`');
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_id_institucion":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombre` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `unidadeducativa`";
 			$sWhereWrk = "";
 			$fld->LookupFilters = array();
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
 			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->id_categoria, $sWhereWrk); // Call Lookup Selecting
+			$this->Lookup_Selecting($this->id_institucion, $sWhereWrk); // Call Lookup Selecting
+			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
+			if ($sSqlWrk <> "")
+				$fld->LookupFilters["s"] .= $sSqlWrk;
+			break;
+		case "x_id_centro":
+			$sSqlWrk = "";
+			$sSqlWrk = "SELECT `id` AS `LinkFld`, `nombreinstitucion` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `centros`";
+			$sWhereWrk = "";
+			$fld->LookupFilters = array();
+			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id` IN ({filter_value})', "t0" => "3", "fn0" => "");
+			$sSqlWrk = "";
+			$this->Lookup_Selecting($this->id_centro, $sWhereWrk); // Call Lookup Selecting
 			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
 			if ($sSqlWrk <> "")
 				$fld->LookupFilters["s"] .= $sSqlWrk;
@@ -1694,9 +1804,6 @@ fparticipanteadd.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_centro");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $participante->id_centro->FldCaption(), $participante->id_centro->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_id_centro");
-			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($participante->id_centro->FldErrMsg()) ?>");
 
 			// Fire Form_CustomValidate event
 			if (!this.Form_CustomValidate(fobj))
@@ -1734,6 +1841,10 @@ fparticipanteadd.Lists["x_id_categoria[]"] = {"LinkField":"x_id","Ajax":true,"Au
 fparticipanteadd.Lists["x_id_categoria[]"].Data = "<?php echo $participante_add->id_categoria->LookupFilterQuery(FALSE, "add") ?>";
 fparticipanteadd.Lists["x_sexo"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
 fparticipanteadd.Lists["x_sexo"].Options = <?php echo json_encode($participante_add->sexo->Options()) ?>;
+fparticipanteadd.Lists["x_id_institucion"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"unidadeducativa"};
+fparticipanteadd.Lists["x_id_institucion"].Data = "<?php echo $participante_add->id_institucion->LookupFilterQuery(FALSE, "add") ?>";
+fparticipanteadd.Lists["x_id_centro"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombreinstitucion","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"centros"};
+fparticipanteadd.Lists["x_id_centro"].Data = "<?php echo $participante_add->id_centro->LookupFilterQuery(FALSE, "add") ?>";
 
 // Form object for search
 </script>
@@ -1758,10 +1869,11 @@ $participante_add->ShowMessage();
 		<label id="elh_participante_id_sector" class="<?php echo $participante_add->LeftColumnClass ?>"><?php echo $participante->id_sector->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $participante_add->RightColumnClass ?>"><div<?php echo $participante->id_sector->CellAttributes() ?>>
 <span id="el_participante_id_sector">
-<div id="tp_x_id_sector" class="ewTemplate"><input type="radio" data-table="participante" data-field="x_id_sector" data-value-separator="<?php echo $participante->id_sector->DisplayValueSeparatorAttribute() ?>" name="x_id_sector" id="x_id_sector" value="{value}"<?php echo $participante->id_sector->EditAttributes() ?>></div>
-<div id="dsl_x_id_sector" data-repeatcolumn="5" class="ewItemList" style="display: none;"><div>
-<?php echo $participante->id_sector->RadioButtonListHtml(FALSE, "x_id_sector") ?>
-</div></div>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_sector"><?php echo (strval($participante->id_sector->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $participante->id_sector->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($participante->id_sector->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_sector',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($participante->id_sector->ReadOnly || $participante->id_sector->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="participante" data-field="x_id_sector" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $participante->id_sector->DisplayValueSeparatorAttribute() ?>" name="x_id_sector" id="x_id_sector" value="<?php echo $participante->id_sector->CurrentValue ?>"<?php echo $participante->id_sector->EditAttributes() ?>>
 </span>
 <?php echo $participante->id_sector->CustomMsg ?></div></div>
 	</div>
@@ -1785,10 +1897,11 @@ $participante_add->ShowMessage();
 		<label id="elh_participante_id_categoria" class="<?php echo $participante_add->LeftColumnClass ?>"><?php echo $participante->id_categoria->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $participante_add->RightColumnClass ?>"><div<?php echo $participante->id_categoria->CellAttributes() ?>>
 <span id="el_participante_id_categoria">
-<div id="tp_x_id_categoria" class="ewTemplate"><input type="checkbox" data-table="participante" data-field="x_id_categoria" data-value-separator="<?php echo $participante->id_categoria->DisplayValueSeparatorAttribute() ?>" name="x_id_categoria[]" id="x_id_categoria[]" value="{value}"<?php echo $participante->id_categoria->EditAttributes() ?>></div>
-<div id="dsl_x_id_categoria" data-repeatcolumn="5" class="ewItemList" style="display: none;"><div>
-<?php echo $participante->id_categoria->CheckBoxListHtml(FALSE, "x_id_categoria[]") ?>
-</div></div>
+<span class="ewLookupList">
+	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_categoria"><?php echo (strval($participante->id_categoria->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $participante->id_categoria->ViewValue); ?></span>
+</span>
+<button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($participante->id_categoria->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_categoria[]',m:1,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($participante->id_categoria->ReadOnly || $participante->id_categoria->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
+<input type="hidden" data-table="participante" data-field="x_id_categoria" data-multiple="1" data-lookup="1" data-value-separator="<?php echo $participante->id_categoria->DisplayValueSeparatorAttribute() ?>" name="x_id_categoria[]" id="x_id_categoria[]" value="<?php echo $participante->id_categoria->CurrentValue ?>"<?php echo $participante->id_categoria->EditAttributes() ?>>
 </span>
 <?php echo $participante->id_categoria->CustomMsg ?></div></div>
 	</div>
@@ -1957,7 +2070,9 @@ ew_CreateDateTimePicker("fparticipanteadd", "x_fecha_nacimiento", {"ignoreReadon
 		<label id="elh_participante_id_centro" for="x_id_centro" class="<?php echo $participante_add->LeftColumnClass ?>"><?php echo $participante->id_centro->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="<?php echo $participante_add->RightColumnClass ?>"><div<?php echo $participante->id_centro->CellAttributes() ?>>
 <span id="el_participante_id_centro">
-<input type="text" data-table="participante" data-field="x_id_centro" name="x_id_centro" id="x_id_centro" size="30" placeholder="<?php echo ew_HtmlEncode($participante->id_centro->getPlaceHolder()) ?>" value="<?php echo $participante->id_centro->EditValue ?>"<?php echo $participante->id_centro->EditAttributes() ?>>
+<select data-table="participante" data-field="x_id_centro" data-value-separator="<?php echo $participante->id_centro->DisplayValueSeparatorAttribute() ?>" id="x_id_centro" name="x_id_centro"<?php echo $participante->id_centro->EditAttributes() ?>>
+<?php echo $participante->id_centro->SelectOptionListHtml("x_id_centro") ?>
+</select>
 </span>
 <?php echo $participante->id_centro->CustomMsg ?></div></div>
 	</div>
