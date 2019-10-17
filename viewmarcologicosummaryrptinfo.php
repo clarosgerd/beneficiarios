@@ -8,7 +8,7 @@ $viewmarcologicosummary = NULL;
 //
 class crviewmarcologicosummary extends crTableBase {
 	var $ShowGroupHeaderAsRow = TRUE;
-	var $ShowCompactSummaryFooter = TRUE;
+	var $ShowCompactSummaryFooter = FALSE;
 	var $nombreinstitucion;
 	var $fecha;
 	var $cuadro1;

@@ -3185,34 +3185,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->TotalGrps > 0) { ?>
 </tbody>
 <tfoot>
-<?php if (($Page->StopGrp - $Page->StartGrp + 1) <> $Page->TotalGrps) { ?>
-<?php
-	$Page->ResetAttrs();
-	$Page->RowType = EWR_ROWTYPE_TOTAL;
-	$Page->RowTotalType = EWR_ROWTOTAL_PAGE;
-	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
-	$Page->RowAttrs["class"] = "ewRptPageSummary";
-	$Page->RenderRow();
-?>
-<?php if ($Page->ShowCompactSummaryFooter) { ?>
-	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2) ?></span>)</td></tr>
-<?php } else { ?>
-	<tr<?php echo $Page->RowAttributes(); ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptPageSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->Cnt[0][0],0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
-<?php } ?>
-<?php } ?>
-<?php
-	$Page->ResetAttrs();
-	$Page->RowType = EWR_ROWTYPE_TOTAL;
-	$Page->RowTotalType = EWR_ROWTOTAL_GRAND;
-	$Page->RowTotalSubType = EWR_ROWTOTAL_FOOTER;
-	$Page->RowAttrs["class"] = "ewRptGrandSummary";
-	$Page->RenderRow();
-?>
-<?php if ($Page->ShowCompactSummaryFooter) { ?>
-	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> (<span class="ewAggregateCaption"><?php echo $ReportLanguage->Phrase("RptCnt") ?></span><?php echo $ReportLanguage->Phrase("AggregateEqual") ?><span class="ewAggregateValue"><?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2) ?></span>)</td></tr>
-<?php } else { ?>
-	<tr<?php echo $Page->RowAttributes() ?>><td colspan="<?php echo ($Page->GrpColumnCount + $Page->DtlColumnCount) ?>"><?php echo $ReportLanguage->Phrase("RptGrandSummary") ?> <span class="ewDirLtr">(<?php echo ewr_FormatNumber($Page->TotCount,0,-2,-2,-2); ?><?php echo $ReportLanguage->Phrase("RptDtlRec") ?>)</span></td></tr>
-<?php } ?>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && TRUE) { // No header displayed ?>
 <?php if ($Page->Export <> "pdf") { ?>

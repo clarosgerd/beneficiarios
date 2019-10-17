@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/16" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/10/17" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -545,6 +545,12 @@
     </menu>
     <menu id="55">
       <phrase id="menutext" value="GRUPO DISCAPACIDAD" />
+    </menu>
+    <menu id="64">
+      <phrase id="menutext" value="Chart1" />
+    </menu>
+    <menu id="65">
+      <phrase id="menutext" value="chardemo" />
     </menu>
     <menu id="56">
       <phrase id="menutext" value="GRUPO TOTALES" />
@@ -2003,8 +2009,17 @@
     </table>
     <table id="viewestudiantesetareo">
       <phrase id="tblcaption" value="GRUPO DISCAPACIDAD" />
+      <chart id="chardemo">
+        <phrase id="chartcaption" value="chardemo" />
+        <phrase id="chartxaxisname" value="Unidad Educativa" />
+        <phrase id="chartyaxisname" value="Unidad Educativa" />
+      </chart>
+      <chart id="chart1">
+        <phrase id="chartcaption" value="Chart1" />
+        <phrase id="chartxaxisname" value="Unidad Educativa" />
+      </chart>
       <field id="unidadeducativa">
-        <phrase id="fldcaption" value="&lt;/br&gt;Unidad Educativa" />
+        <phrase id="fldcaption" value="Unidad Educativa" />
       </field>
       <field id="_0_3f">
         <phrase id="fldcaption" value="F&lt;/br&gt;0-3" />
@@ -2049,7 +2064,7 @@
         <phrase id="fldcaption" value="M&lt;/br&gt;19" />
       </field>
       <field id="fecha">
-        <phrase id="fldcaption" value="fecha" />
+        <phrase id="fldcaption" value="Fecha" />
       </field>
     </table>
     <table id="viewestudiantesetareocurso">

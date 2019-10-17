@@ -1546,7 +1546,7 @@ class cestudiante extends cTable {
 	}
 
 	// Row Updated event
-	function C($rsold, &$rsnew) {
+	function Row_Updated($rsold, &$rsnew) {
 
 		//echo "Row Updated";
 		$sql="SELECT COUNT(*) FROM inscripcionestudiante WHERE id_estudiante='".$rsold["id"]."' and id_gestion=YEAR('".$rsnew["fecha"]."') and id_curso='".$rsnew["curso"]."'";

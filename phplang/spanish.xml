@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/16" version="14.0.0" id="es" name="Spanish" desc="Spanish" author="Diego Mendoza diego.mdza@gmail.com">
+<ew-language date="2019/10/17" version="14.0.0" id="es" name="Spanish" desc="Spanish" author="Diego Mendoza diego.mdza@gmail.com">
   <!-- 
 *** Important Notes:
 1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -616,6 +616,9 @@
   <project>
     <phrase id="bodytitle" value="Inderbo" />
     <phrase id="footertext" value="&amp;copy;2018 Inderbo. All rights reserved." />
+    <menu id="10077">
+      <phrase id="menutext" value="viewmarcologicosummary" />
+    </menu>
     <menu id="10069">
       <phrase id="menutext" value="turno" />
     </menu>
@@ -2726,6 +2729,45 @@
       </field>
       <field id="turno">
         <phrase id="fldcaption" value="turno" />
+      </field>
+    </table>
+    <table id="viewmarcologicosummary">
+      <phrase id="tblcaption" value="viewmarcologicosummary" />
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="cuadro1">
+        <phrase id="fldcaption" value="cuadro 1" />
+      </field>
+      <field id="cuadro2">
+        <phrase id="fldcaption" value="cuadro 2" />
+      </field>
+      <field id="cuadro3">
+        <phrase id="fldcaption" value="cuadro 3" />
+      </field>
+      <field id="cuadro4">
+        <phrase id="fldcaption" value="cuadro 4" />
+      </field>
+      <field id="cuadro5">
+        <phrase id="fldcaption" value="cuadro 5" />
+      </field>
+      <field id="cuadro6">
+        <phrase id="fldcaption" value="cuadro 6" />
+      </field>
+      <field id="cuadro7">
+        <phrase id="fldcaption" value="cuadro 7" />
+      </field>
+      <field id="cuadro8">
+        <phrase id="fldcaption" value="cuadro 8" />
+      </field>
+      <field id="cuadro9">
+        <phrase id="fldcaption" value="cuadro 9" />
+      </field>
+      <field id="cuadro10">
+        <phrase id="fldcaption" value="cuadro 10" />
       </field>
     </table>
   </project>

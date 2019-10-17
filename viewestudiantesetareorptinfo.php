@@ -140,7 +140,7 @@ class crviewestudiantesetareo extends crTableBase {
 		$this->fields['7-9M'] = &$this->_7_9M;
 
 		// 10-12M
-		$this->_10_12M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__10_12M', '10-12M', '`10-12M`', 20, EWR_DATATYPE_NUMBER, -1);
+		$this->_10_12M = new crField('viewestudiantesetareo', 'viewestudiantesetareo', 'x__10_12M', '10-12M', '`10-12M`', 131, EWR_DATATYPE_NUMBER, -1);
 		$this->_10_12M->Sortable = TRUE; // Allow sort
 		$this->_10_12M->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
 		$this->_10_12M->DateFilter = "";
@@ -442,6 +442,17 @@ class crviewestudiantesetareo extends crTableBase {
 	function SetupLookupFilters($fld) {
 		global $grLanguage;
 		switch ($fld->FldVar) {
+		case "x_unidadeducativa":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`unidadeducativa` = {filter_value}', "t0" => "200", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `unidadeducativa`, `unidadeducativa` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewestudiantesetareo`",
+			"where" => $sWhereWrk,
+			"orderby" => "`unidadeducativa` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
 		}
 	}
 

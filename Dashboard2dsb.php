@@ -119,7 +119,7 @@ class crDashboard2 extends crTableBase {
 	}
 }
 ?>
-<?php include_once "viewmarcologicorptinfo.php" ?>
+<?php include_once "viewestudiantesetareorptinfo.php" ?>
 <?php
 
 //
@@ -354,8 +354,8 @@ class crDashboard2_dashboard extends crDashboard2 {
 		$this->ExportWordUrl = $this->PageUrl() . "export=word";
 		$this->ExportPdfUrl = $this->PageUrl() . "export=pdf";
 
-		// Table object (viewmarcologico)
-		if (!isset($GLOBALS["viewmarcologico"])) $GLOBALS["viewmarcologico"] = new crviewmarcologico();
+		// Table object (viewestudiantesetareo)
+		if (!isset($GLOBALS["viewestudiantesetareo"])) $GLOBALS["viewestudiantesetareo"] = new crviewestudiantesetareo();
 
 		// Page ID
 		if (!defined("EWR_PAGE_ID"))
@@ -641,11 +641,31 @@ var EWR_PAGE_ID = Dashboard2_dashboard.PageID;
 <div class="<?php echo $Page->ItemClassNames[0] ?>" style='min-width: 60px; min-height: 50px;'>
 <div id="Item1" class="box">
 <div class="box-header with-border">
-	<h3 class="box-title"><?php echo $ReportLanguage->TablePhrase("viewmarcologico", "TblCaption") ?></h3>
+	<h3 class="box-title"><?php echo $ReportLanguage->ChartPhrase("viewestudiantesetareo", "Chart1", "ChartCaption") ?></h3>
 	<div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
 </div>
 <div class="box-body">
-<?php include_once "viewmarcologicorpt.php" ?>
+<?php
+$Page->Filter = "";
+$viewestudiantesetareo->Chart1->ChartWidth = 10;
+$viewestudiantesetareo->Chart1->ChartHeight = 30;
+$viewestudiantesetareo->Chart1->SetChartParm("clickurl", "viewestudiantesetareorpt.php", TRUE); // Add click URL
+
+// Set up page break
+if (($Page->Export == "print" || $Page->Export == "pdf" || $Page->Export == "email" || $Page->Export == "excel" && defined("EWR_USE_PHPEXCEL") || $Page->Export == "word" && defined("EWR_USE_PHPWORD")) && $Page->ExportChartPageBreak) {
+
+	// Page_Breaking server event
+	$Page->Page_Breaking($Page->ExportChartPageBreak, $Page->PageBreakContent);
+	$viewestudiantesetareo->Chart1->PageBreakType = ""; // Page break type
+	$viewestudiantesetareo->Chart1->PageBreak = $Table->ExportChartPageBreak;
+	$viewestudiantesetareo->Chart1->PageBreakContent = $Table->PageBreakContent;
+}
+
+// Set up chart drilldown
+$viewestudiantesetareo->Chart1->DrillDownInPanel = $Page->DrillDownInPanel;
+$viewestudiantesetareo->Chart1->ChartDrillDownUrl = ""; // No drill down for dashboard
+?>
+<?php include_once "viewestudiantesetareo_Chart1chart.php" ?>
 </div>
 </div>
 </div>
