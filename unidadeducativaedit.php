@@ -337,6 +337,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		$this->telefono->SetVisibility();
 		$this->_email->SetVisibility();
 		$this->id_persona->SetVisibility();
+		$this->esespecial->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -602,6 +603,9 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		if (!$this->id_persona->FldIsDetailKey) {
 			$this->id_persona->setFormValue($objForm->GetValue("x_id_persona"));
 		}
+		if (!$this->esespecial->FldIsDetailKey) {
+			$this->esespecial->setFormValue($objForm->GetValue("x_esespecial"));
+		}
 	}
 
 	// Restore form values
@@ -617,6 +621,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		$this->telefono->CurrentValue = $this->telefono->FormValue;
 		$this->_email->CurrentValue = $this->_email->FormValue;
 		$this->id_persona->CurrentValue = $this->id_persona->FormValue;
+		$this->esespecial->CurrentValue = $this->esespecial->FormValue;
 	}
 
 	// Load row based on key values
@@ -668,6 +673,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 			$this->id_persona->VirtualValue = ""; // Clear value
 		}
 		$this->id_centro->setDbValue($row['id_centro']);
+		$this->esespecial->setDbValue($row['esespecial']);
 	}
 
 	// Return a row with default values
@@ -684,6 +690,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		$row['email'] = NULL;
 		$row['id_persona'] = NULL;
 		$row['id_centro'] = NULL;
+		$row['esespecial'] = NULL;
 		return $row;
 	}
 
@@ -703,6 +710,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		$this->_email->DbValue = $row['email'];
 		$this->id_persona->DbValue = $row['id_persona'];
 		$this->id_centro->DbValue = $row['id_centro'];
+		$this->esespecial->DbValue = $row['esespecial'];
 	}
 
 	// Load old record
@@ -748,6 +756,7 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		// email
 		// id_persona
 		// id_centro
+		// esespecial
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
@@ -874,6 +883,14 @@ class cunidadeducativa_edit extends cunidadeducativa {
 		}
 		$this->id_persona->ViewCustomAttributes = "";
 
+		// esespecial
+		if (strval($this->esespecial->CurrentValue) <> "") {
+			$this->esespecial->ViewValue = $this->esespecial->OptionCaption($this->esespecial->CurrentValue);
+		} else {
+			$this->esespecial->ViewValue = NULL;
+		}
+		$this->esespecial->ViewCustomAttributes = "";
+
 			// id
 			$this->id->LinkCustomAttributes = "";
 			$this->id->HrefValue = "";
@@ -923,6 +940,11 @@ class cunidadeducativa_edit extends cunidadeducativa {
 			$this->id_persona->LinkCustomAttributes = "";
 			$this->id_persona->HrefValue = "";
 			$this->id_persona->TooltipValue = "";
+
+			// esespecial
+			$this->esespecial->LinkCustomAttributes = "";
+			$this->esespecial->HrefValue = "";
+			$this->esespecial->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_EDIT) { // Edit row
 
 			// id
@@ -1045,6 +1067,10 @@ class cunidadeducativa_edit extends cunidadeducativa {
 			if ($rswrk) $rswrk->Close();
 			$this->id_persona->EditValue = $arwrk;
 
+			// esespecial
+			$this->esespecial->EditCustomAttributes = "";
+			$this->esespecial->EditValue = $this->esespecial->Options(FALSE);
+
 			// Edit refer script
 			// id
 
@@ -1086,6 +1112,10 @@ class cunidadeducativa_edit extends cunidadeducativa {
 			// id_persona
 			$this->id_persona->LinkCustomAttributes = "";
 			$this->id_persona->HrefValue = "";
+
+			// esespecial
+			$this->esespecial->LinkCustomAttributes = "";
+			$this->esespecial->HrefValue = "";
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -1194,6 +1224,9 @@ class cunidadeducativa_edit extends cunidadeducativa {
 
 			// id_persona
 			$this->id_persona->SetDbValueDef($rsnew, $this->id_persona->CurrentValue, NULL, $this->id_persona->ReadOnly);
+
+			// esespecial
+			$this->esespecial->SetDbValueDef($rsnew, $this->esespecial->CurrentValue, NULL, $this->esespecial->ReadOnly);
 
 			// Call Row Updating event
 			$bUpdateRow = $this->Row_Updating($rsold, $rsnew);
@@ -1473,6 +1506,8 @@ funidadeducativaedit.Lists["x_provincia"] = {"LinkField":"x_id","Ajax":true,"Aut
 funidadeducativaedit.Lists["x_provincia"].Data = "<?php echo $unidadeducativa_edit->provincia->LookupFilterQuery(FALSE, "edit") ?>";
 funidadeducativaedit.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 funidadeducativaedit.Lists["x_id_persona"].Data = "<?php echo $unidadeducativa_edit->id_persona->LookupFilterQuery(FALSE, "edit") ?>";
+funidadeducativaedit.Lists["x_esespecial"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+funidadeducativaedit.Lists["x_esespecial"].Options = <?php echo json_encode($unidadeducativa_edit->esespecial->Options()) ?>;
 
 // Form object for search
 </script>
@@ -1605,6 +1640,19 @@ $unidadeducativa_edit->ShowMessage();
 <?php } ?>
 </span>
 <?php echo $unidadeducativa->id_persona->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($unidadeducativa->esespecial->Visible) { // esespecial ?>
+	<div id="r_esespecial" class="form-group">
+		<label id="elh_unidadeducativa_esespecial" class="<?php echo $unidadeducativa_edit->LeftColumnClass ?>"><?php echo $unidadeducativa->esespecial->FldCaption() ?></label>
+		<div class="<?php echo $unidadeducativa_edit->RightColumnClass ?>"><div<?php echo $unidadeducativa->esespecial->CellAttributes() ?>>
+<span id="el_unidadeducativa_esespecial">
+<div id="tp_x_esespecial" class="ewTemplate"><input type="radio" data-table="unidadeducativa" data-field="x_esespecial" data-value-separator="<?php echo $unidadeducativa->esespecial->DisplayValueSeparatorAttribute() ?>" name="x_esespecial" id="x_esespecial" value="{value}"<?php echo $unidadeducativa->esespecial->EditAttributes() ?>></div>
+<div id="dsl_x_esespecial" data-repeatcolumn="5" class="ewItemList" style="display: none;"><div>
+<?php echo $unidadeducativa->esespecial->RadioButtonListHtml(FALSE, "x_esespecial") ?>
+</div></div>
+</span>
+<?php echo $unidadeducativa->esespecial->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 </div><!-- /page* -->

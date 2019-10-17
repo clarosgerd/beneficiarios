@@ -585,12 +585,13 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 		$this->_email->SetVisibility();
 		$this->id_persona->SetVisibility();
 		$this->id_centro->SetVisibility();
+		$this->esespecial->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 12;
+		$nDtls = 13;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -603,7 +604,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -817,6 +818,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 				$this->FirstRowData['_email'] = ewr_Conv($rs->fields('email'), 200);
 				$this->FirstRowData['id_persona'] = ewr_Conv($rs->fields('id_persona'), 3);
 				$this->FirstRowData['id_centro'] = ewr_Conv($rs->fields('id_centro'), 3);
+				$this->FirstRowData['esespecial'] = ewr_Conv($rs->fields('esespecial'), 3);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
@@ -832,6 +834,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$this->_email->setDbValue($rs->fields('email'));
 			$this->id_persona->setDbValue($rs->fields('id_persona'));
 			$this->id_centro->setDbValue($rs->fields('id_centro'));
+			$this->esespecial->setDbValue($rs->fields('esespecial'));
 			$this->Val[1] = $this->id->CurrentValue;
 			$this->Val[2] = $this->nombre->CurrentValue;
 			$this->Val[3] = $this->codigo_sie->CurrentValue;
@@ -843,6 +846,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$this->Val[9] = $this->_email->CurrentValue;
 			$this->Val[10] = $this->id_persona->CurrentValue;
 			$this->Val[11] = $this->id_centro->CurrentValue;
+			$this->Val[12] = $this->esespecial->CurrentValue;
 		} else {
 			$this->id->setDbValue("");
 			$this->nombre->setDbValue("");
@@ -855,6 +859,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$this->_email->setDbValue("");
 			$this->id_persona->setDbValue("");
 			$this->id_centro->setDbValue("");
+			$this->esespecial->setDbValue("");
 		}
 	}
 
@@ -1074,6 +1079,9 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 
 			// id_centro
 			$this->id_centro->HrefValue = "";
+
+			// esespecial
+			$this->esespecial->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
@@ -1123,6 +1131,10 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
 			$this->id_centro->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// esespecial
+			$this->esespecial->ViewValue = $this->esespecial->CurrentValue;
+			$this->esespecial->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// id
 			$this->id->HrefValue = "";
 
@@ -1155,6 +1167,9 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 
 			// id_centro
 			$this->id_centro->HrefValue = "";
+
+			// esespecial
+			$this->esespecial->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
@@ -1259,6 +1274,15 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$HrefValue = &$this->id_centro->HrefValue;
 			$LinkAttrs = &$this->id_centro->LinkAttrs;
 			$this->Cell_Rendered($this->id_centro, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+
+			// esespecial
+			$CurrentValue = $this->esespecial->CurrentValue;
+			$ViewValue = &$this->esespecial->ViewValue;
+			$ViewAttrs = &$this->esespecial->ViewAttrs;
+			$CellAttrs = &$this->esespecial->CellAttrs;
+			$HrefValue = &$this->esespecial->HrefValue;
+			$LinkAttrs = &$this->esespecial->LinkAttrs;
+			$this->Cell_Rendered($this->esespecial, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1282,6 +1306,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 		if ($this->_email->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_persona->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_centro->Visible) $this->DtlColumnCount += 1;
+		if ($this->esespecial->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1337,6 +1362,7 @@ class crunidadeducativa_rpt extends crunidadeducativa {
 			$this->_email->setSort("");
 			$this->id_persona->setSort("");
 			$this->id_centro->setSort("");
+			$this->esespecial->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
@@ -1779,6 +1805,24 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
+<?php if ($Page->esespecial->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="esespecial"><div class="unidadeducativa_esespecial"><span class="ewTableHeaderCaption"><?php echo $Page->esespecial->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="esespecial">
+<?php if ($Page->SortUrl($Page->esespecial) == "") { ?>
+		<div class="ewTableHeaderBtn unidadeducativa_esespecial">
+			<span class="ewTableHeaderCaption"><?php echo $Page->esespecial->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer unidadeducativa_esespecial" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->esespecial) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->esespecial->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->esespecial->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->esespecial->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 	</tr>
 </thead>
 <tbody>
@@ -1840,6 +1884,10 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->id_centro->Visible) { ?>
 		<td data-field="id_centro"<?php echo $Page->id_centro->CellAttributes() ?>>
 <span<?php echo $Page->id_centro->ViewAttributes() ?>><?php echo $Page->id_centro->ListViewValue() ?></span></td>
+<?php } ?>
+<?php if ($Page->esespecial->Visible) { ?>
+		<td data-field="esespecial"<?php echo $Page->esespecial->CellAttributes() ?>>
+<span<?php echo $Page->esespecial->ViewAttributes() ?>><?php echo $Page->esespecial->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php

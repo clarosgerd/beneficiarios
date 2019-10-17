@@ -1367,6 +1367,13 @@
       <field id="id_centro">
         <phrase id="fldcaption" value="CENTRO" />
       </field>
+      <field id="esespecial">
+        <phrase id="fldcaption" value="ES ESPECIAL" />
+        <phrase id="fldtagvalue1" value="0" />
+        <phrase id="fldtagcaption1" value="NO" />
+        <phrase id="fldtagvalue2" value="1" />
+        <phrase id="fldtagcaption2" value="SI" />
+      </field>
     </table>
     <table id="docente">
       <phrase id="tblcaption" value="docente" />

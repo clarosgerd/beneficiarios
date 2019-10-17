@@ -20,6 +20,7 @@ class crunidadeducativa extends crTableBase {
 	var $_email;
 	var $id_persona;
 	var $id_centro;
+	var $esespecial;
 
 	//
 	// Table class constructor
@@ -129,6 +130,15 @@ class crunidadeducativa extends crTableBase {
 		$this->id_centro->SqlSelect = "";
 		$this->id_centro->SqlOrderBy = "";
 		$this->fields['id_centro'] = &$this->id_centro;
+
+		// esespecial
+		$this->esespecial = new crField('unidadeducativa', 'unidadeducativa', 'x_esespecial', 'esespecial', '`esespecial`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->esespecial->Sortable = TRUE; // Allow sort
+		$this->esespecial->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->esespecial->DateFilter = "";
+		$this->esespecial->SqlSelect = "";
+		$this->esespecial->SqlOrderBy = "";
+		$this->fields['esespecial'] = &$this->esespecial;
 	}
 
 	// Set Field Visibility

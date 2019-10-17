@@ -18,6 +18,7 @@ class cunidadeducativa extends cTable {
 	var $_email;
 	var $id_persona;
 	var $id_centro;
+	var $esespecial;
 
 	//
 	// Table class constructor
@@ -118,6 +119,13 @@ class cunidadeducativa extends cTable {
 		$this->id_centro->Sortable = FALSE; // Allow sort
 		$this->id_centro->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['id_centro'] = &$this->id_centro;
+
+		// esespecial
+		$this->esespecial = new cField('unidadeducativa', 'unidadeducativa', 'x_esespecial', 'esespecial', '`esespecial`', '`esespecial`', 3, -1, FALSE, '`esespecial`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'RADIO');
+		$this->esespecial->Sortable = TRUE; // Allow sort
+		$this->esespecial->OptionCount = 2;
+		$this->esespecial->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['esespecial'] = &$this->esespecial;
 	}
 
 	// Field Visibility
@@ -731,6 +739,7 @@ class cunidadeducativa extends cTable {
 		$this->_email->setDbValue($rs->fields('email'));
 		$this->id_persona->setDbValue($rs->fields('id_persona'));
 		$this->id_centro->setDbValue($rs->fields('id_centro'));
+		$this->esespecial->setDbValue($rs->fields('esespecial'));
 	}
 
 	// Render list row values
@@ -758,7 +767,9 @@ class cunidadeducativa extends cTable {
 
 		$this->id_centro->CellCssStyle = "white-space: nowrap;";
 
+		// esespecial
 		// id
+
 		$this->id->ViewValue = $this->id->CurrentValue;
 		$this->id->ViewCustomAttributes = "";
 
@@ -885,6 +896,14 @@ class cunidadeducativa extends cTable {
 		$this->id_centro->ViewValue = $this->id_centro->CurrentValue;
 		$this->id_centro->ViewCustomAttributes = "";
 
+		// esespecial
+		if (strval($this->esespecial->CurrentValue) <> "") {
+			$this->esespecial->ViewValue = $this->esespecial->OptionCaption($this->esespecial->CurrentValue);
+		} else {
+			$this->esespecial->ViewValue = NULL;
+		}
+		$this->esespecial->ViewCustomAttributes = "";
+
 		// id
 		$this->id->LinkCustomAttributes = "";
 		$this->id->HrefValue = "";
@@ -939,6 +958,11 @@ class cunidadeducativa extends cTable {
 		$this->id_centro->LinkCustomAttributes = "";
 		$this->id_centro->HrefValue = "";
 		$this->id_centro->TooltipValue = "";
+
+		// esespecial
+		$this->esespecial->LinkCustomAttributes = "";
+		$this->esespecial->HrefValue = "";
+		$this->esespecial->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -1012,6 +1036,10 @@ class cunidadeducativa extends cTable {
 		$this->id_centro->EditValue = $this->id_centro->CurrentValue;
 		$this->id_centro->PlaceHolder = ew_RemoveHtml($this->id_centro->FldCaption());
 
+		// esespecial
+		$this->esespecial->EditCustomAttributes = "";
+		$this->esespecial->EditValue = $this->esespecial->Options(FALSE);
+
 		// Call Row Rendered event
 		$this->Row_Rendered();
 	}
@@ -1049,6 +1077,7 @@ class cunidadeducativa extends cTable {
 					if ($this->telefono->Exportable) $Doc->ExportCaption($this->telefono);
 					if ($this->_email->Exportable) $Doc->ExportCaption($this->_email);
 					if ($this->id_persona->Exportable) $Doc->ExportCaption($this->id_persona);
+					if ($this->esespecial->Exportable) $Doc->ExportCaption($this->esespecial);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
 					if ($this->nombre->Exportable) $Doc->ExportCaption($this->nombre);
@@ -1060,6 +1089,7 @@ class cunidadeducativa extends cTable {
 					if ($this->telefono->Exportable) $Doc->ExportCaption($this->telefono);
 					if ($this->_email->Exportable) $Doc->ExportCaption($this->_email);
 					if ($this->id_persona->Exportable) $Doc->ExportCaption($this->id_persona);
+					if ($this->esespecial->Exportable) $Doc->ExportCaption($this->esespecial);
 				}
 				$Doc->EndExportRow();
 			}
@@ -1101,6 +1131,7 @@ class cunidadeducativa extends cTable {
 						if ($this->telefono->Exportable) $Doc->ExportField($this->telefono);
 						if ($this->_email->Exportable) $Doc->ExportField($this->_email);
 						if ($this->id_persona->Exportable) $Doc->ExportField($this->id_persona);
+						if ($this->esespecial->Exportable) $Doc->ExportField($this->esespecial);
 					} else {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
 						if ($this->nombre->Exportable) $Doc->ExportField($this->nombre);
@@ -1112,6 +1143,7 @@ class cunidadeducativa extends cTable {
 						if ($this->telefono->Exportable) $Doc->ExportField($this->telefono);
 						if ($this->_email->Exportable) $Doc->ExportField($this->_email);
 						if ($this->id_persona->Exportable) $Doc->ExportField($this->id_persona);
+						if ($this->esespecial->Exportable) $Doc->ExportField($this->esespecial);
 					}
 					$Doc->EndExportRow($RowCnt);
 				}

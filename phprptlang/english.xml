@@ -1583,6 +1583,9 @@
       <field id="id_centro">
         <phrase id="fldcaption" value="id centro" />
       </field>
+      <field id="esespecial">
+        <phrase id="fldcaption" value="esespecial" />
+      </field>
     </table>
     <table id="userlevelpermissions">
       <phrase id="tblcaption" value="userlevelpermissions" />

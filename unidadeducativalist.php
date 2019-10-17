@@ -417,6 +417,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->telefono->SetVisibility();
 		$this->_email->SetVisibility();
 		$this->id_persona->SetVisibility();
+		$this->esespecial->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -754,6 +755,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$sFilterList = ew_Concat($sFilterList, $this->telefono->AdvancedSearch->ToJson(), ","); // Field telefono
 		$sFilterList = ew_Concat($sFilterList, $this->_email->AdvancedSearch->ToJson(), ","); // Field email
 		$sFilterList = ew_Concat($sFilterList, $this->id_persona->AdvancedSearch->ToJson(), ","); // Field id_persona
+		$sFilterList = ew_Concat($sFilterList, $this->esespecial->AdvancedSearch->ToJson(), ","); // Field esespecial
 		$sFilterList = preg_replace('/,$/', "", $sFilterList);
 
 		// Return filter list in json
@@ -873,6 +875,14 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->id_persona->AdvancedSearch->SearchValue2 = @$filter["y_id_persona"];
 		$this->id_persona->AdvancedSearch->SearchOperator2 = @$filter["w_id_persona"];
 		$this->id_persona->AdvancedSearch->Save();
+
+		// Field esespecial
+		$this->esespecial->AdvancedSearch->SearchValue = @$filter["x_esespecial"];
+		$this->esespecial->AdvancedSearch->SearchOperator = @$filter["z_esespecial"];
+		$this->esespecial->AdvancedSearch->SearchCondition = @$filter["v_esespecial"];
+		$this->esespecial->AdvancedSearch->SearchValue2 = @$filter["y_esespecial"];
+		$this->esespecial->AdvancedSearch->SearchOperator2 = @$filter["w_esespecial"];
+		$this->esespecial->AdvancedSearch->Save();
 	}
 
 	// Advanced search WHERE clause based on QueryString
@@ -890,6 +900,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->BuildSearchSql($sWhere, $this->telefono, $Default, FALSE); // telefono
 		$this->BuildSearchSql($sWhere, $this->_email, $Default, FALSE); // email
 		$this->BuildSearchSql($sWhere, $this->id_persona, $Default, FALSE); // id_persona
+		$this->BuildSearchSql($sWhere, $this->esespecial, $Default, FALSE); // esespecial
 
 		// Set up search parm
 		if (!$Default && $sWhere <> "" && in_array($this->Command, array("", "reset", "resetall"))) {
@@ -906,6 +917,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 			$this->telefono->AdvancedSearch->Save(); // telefono
 			$this->_email->AdvancedSearch->Save(); // email
 			$this->id_persona->AdvancedSearch->Save(); // id_persona
+			$this->esespecial->AdvancedSearch->Save(); // esespecial
 		}
 		return $sWhere;
 	}
@@ -976,6 +988,8 @@ class cunidadeducativa_list extends cunidadeducativa {
 			return TRUE;
 		if ($this->id_persona->AdvancedSearch->IssetSession())
 			return TRUE;
+		if ($this->esespecial->AdvancedSearch->IssetSession())
+			return TRUE;
 		return FALSE;
 	}
 
@@ -1007,6 +1021,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->telefono->AdvancedSearch->UnsetSession();
 		$this->_email->AdvancedSearch->UnsetSession();
 		$this->id_persona->AdvancedSearch->UnsetSession();
+		$this->esespecial->AdvancedSearch->UnsetSession();
 	}
 
 	// Restore all search parameters
@@ -1024,6 +1039,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->telefono->AdvancedSearch->Load();
 		$this->_email->AdvancedSearch->Load();
 		$this->id_persona->AdvancedSearch->Load();
+		$this->esespecial->AdvancedSearch->Load();
 	}
 
 	// Set up sort parameters
@@ -1045,6 +1061,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 			$this->UpdateSort($this->telefono, $bCtrl); // telefono
 			$this->UpdateSort($this->_email, $bCtrl); // email
 			$this->UpdateSort($this->id_persona, $bCtrl); // id_persona
+			$this->UpdateSort($this->esespecial, $bCtrl); // esespecial
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -1087,6 +1104,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 				$this->telefono->setSort("");
 				$this->_email->setSort("");
 				$this->id_persona->setSort("");
+				$this->esespecial->setSort("");
 			}
 
 			// Reset start position
@@ -1500,6 +1518,11 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->id_persona->AdvancedSearch->SearchValue = @$_GET["x_id_persona"];
 		if ($this->id_persona->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
 		$this->id_persona->AdvancedSearch->SearchOperator = @$_GET["z_id_persona"];
+
+		// esespecial
+		$this->esespecial->AdvancedSearch->SearchValue = @$_GET["x_esespecial"];
+		if ($this->esespecial->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
+		$this->esespecial->AdvancedSearch->SearchOperator = @$_GET["z_esespecial"];
 	}
 
 	// Load recordset
@@ -1577,6 +1600,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 			$this->id_persona->VirtualValue = ""; // Clear value
 		}
 		$this->id_centro->setDbValue($row['id_centro']);
+		$this->esespecial->setDbValue($row['esespecial']);
 	}
 
 	// Return a row with default values
@@ -1593,6 +1617,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$row['email'] = NULL;
 		$row['id_persona'] = NULL;
 		$row['id_centro'] = NULL;
+		$row['esespecial'] = NULL;
 		return $row;
 	}
 
@@ -1612,6 +1637,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->_email->DbValue = $row['email'];
 		$this->id_persona->DbValue = $row['id_persona'];
 		$this->id_centro->DbValue = $row['id_centro'];
+		$this->esespecial->DbValue = $row['esespecial'];
 	}
 
 	// Load old record
@@ -1668,6 +1694,8 @@ class cunidadeducativa_list extends cunidadeducativa {
 		// id_centro
 
 		$this->id_centro->CellCssStyle = "white-space: nowrap;";
+
+		// esespecial
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
 		// id
@@ -1793,6 +1821,14 @@ class cunidadeducativa_list extends cunidadeducativa {
 		}
 		$this->id_persona->ViewCustomAttributes = "";
 
+		// esespecial
+		if (strval($this->esespecial->CurrentValue) <> "") {
+			$this->esespecial->ViewValue = $this->esespecial->OptionCaption($this->esespecial->CurrentValue);
+		} else {
+			$this->esespecial->ViewValue = NULL;
+		}
+		$this->esespecial->ViewCustomAttributes = "";
+
 			// nombre
 			$this->nombre->LinkCustomAttributes = "";
 			$this->nombre->HrefValue = "";
@@ -1837,6 +1873,11 @@ class cunidadeducativa_list extends cunidadeducativa {
 			$this->id_persona->LinkCustomAttributes = "";
 			$this->id_persona->HrefValue = "";
 			$this->id_persona->TooltipValue = "";
+
+			// esespecial
+			$this->esespecial->LinkCustomAttributes = "";
+			$this->esespecial->HrefValue = "";
+			$this->esespecial->TooltipValue = "";
 		} elseif ($this->RowType == EW_ROWTYPE_SEARCH) { // Search row
 
 			// nombre
@@ -1916,6 +1957,10 @@ class cunidadeducativa_list extends cunidadeducativa {
 			$this->id_persona->EditCustomAttributes = "";
 			$this->id_persona->EditValue = ew_HtmlEncode($this->id_persona->AdvancedSearch->SearchValue);
 			$this->id_persona->PlaceHolder = ew_RemoveHtml($this->id_persona->FldCaption());
+
+			// esespecial
+			$this->esespecial->EditCustomAttributes = "";
+			$this->esespecial->EditValue = $this->esespecial->Options(FALSE);
 		}
 		if ($this->RowType == EW_ROWTYPE_ADD || $this->RowType == EW_ROWTYPE_EDIT || $this->RowType == EW_ROWTYPE_SEARCH) // Add/Edit/Search row
 			$this->SetupFieldTitles();
@@ -1960,6 +2005,7 @@ class cunidadeducativa_list extends cunidadeducativa {
 		$this->telefono->AdvancedSearch->Load();
 		$this->_email->AdvancedSearch->Load();
 		$this->id_persona->AdvancedSearch->Load();
+		$this->esespecial->AdvancedSearch->Load();
 	}
 
 	// Set up Breadcrumb
@@ -2196,6 +2242,8 @@ funidadeducativalist.Lists["x_provincia"] = {"LinkField":"x_id","Ajax":true,"Aut
 funidadeducativalist.Lists["x_provincia"].Data = "<?php echo $unidadeducativa_list->provincia->LookupFilterQuery(FALSE, "list") ?>";
 funidadeducativalist.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 funidadeducativalist.Lists["x_id_persona"].Data = "<?php echo $unidadeducativa_list->id_persona->LookupFilterQuery(FALSE, "list") ?>";
+funidadeducativalist.Lists["x_esespecial"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+funidadeducativalist.Lists["x_esespecial"].Options = <?php echo json_encode($unidadeducativa_list->esespecial->Options()) ?>;
 
 // Form object for search
 var CurrentSearchForm = funidadeducativalistsrch = new ew_Form("funidadeducativalistsrch");
@@ -2548,6 +2596,15 @@ $unidadeducativa_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
+<?php if ($unidadeducativa->esespecial->Visible) { // esespecial ?>
+	<?php if ($unidadeducativa->SortUrl($unidadeducativa->esespecial) == "") { ?>
+		<th data-name="esespecial" class="<?php echo $unidadeducativa->esespecial->HeaderCellClass() ?>"><div id="elh_unidadeducativa_esespecial" class="unidadeducativa_esespecial"><div class="ewTableHeaderCaption"><?php echo $unidadeducativa->esespecial->FldCaption() ?></div></div></th>
+	<?php } else { ?>
+		<th data-name="esespecial" class="<?php echo $unidadeducativa->esespecial->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $unidadeducativa->SortUrl($unidadeducativa->esespecial) ?>',2);"><div id="elh_unidadeducativa_esespecial" class="unidadeducativa_esespecial">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $unidadeducativa->esespecial->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($unidadeducativa->esespecial->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($unidadeducativa->esespecial->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		</div></div></th>
+	<?php } ?>
+<?php } ?>
 <?php
 
 // Render list options (header, right)
@@ -2682,6 +2739,14 @@ $unidadeducativa_list->ListOptions->Render("body", "left", $unidadeducativa_list
 <span id="el<?php echo $unidadeducativa_list->RowCnt ?>_unidadeducativa_id_persona" class="unidadeducativa_id_persona">
 <span<?php echo $unidadeducativa->id_persona->ViewAttributes() ?>>
 <?php echo $unidadeducativa->id_persona->ListViewValue() ?></span>
+</span>
+</td>
+	<?php } ?>
+	<?php if ($unidadeducativa->esespecial->Visible) { // esespecial ?>
+		<td data-name="esespecial"<?php echo $unidadeducativa->esespecial->CellAttributes() ?>>
+<span id="el<?php echo $unidadeducativa_list->RowCnt ?>_unidadeducativa_esespecial" class="unidadeducativa_esespecial">
+<span<?php echo $unidadeducativa->esespecial->ViewAttributes() ?>>
+<?php echo $unidadeducativa->esespecial->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

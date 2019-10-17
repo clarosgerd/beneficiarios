@@ -46,12 +46,14 @@ class crviewmarcologicosummary extends crTableBase {
 		$this->fields['nombreinstitucion'] = &$this->nombreinstitucion;
 
 		// fecha
-		$this->fecha = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_fecha', 'fecha', '`fecha`', 133, EWR_DATATYPE_DATE, 0);
+		$this->fecha = new crField('viewmarcologicosummary', 'viewmarcologicosummary', 'x_fecha', 'fecha', '`fecha`', 3, EWR_DATATYPE_NUMBER, 0);
 		$this->fecha->Sortable = TRUE; // Allow sort
-		$this->fecha->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EWR_DATE_FORMAT"], $ReportLanguage->Phrase("IncorrectDate"));
 		$this->fecha->DateFilter = "";
 		$this->fecha->SqlSelect = "SELECT DISTINCT `fecha`, `fecha` AS `DispFld` FROM " . $this->getSqlFrom();
 		$this->fecha->SqlOrderBy = "`fecha`";
+		ewr_RegisterFilter($this->fecha, "@@LastYear", $ReportLanguage->Phrase("LastYear"), "ewr_IsLastYear");
+		ewr_RegisterFilter($this->fecha, "@@ThisYear", $ReportLanguage->Phrase("ThisYear"), "ewr_IsThisYear");
+		ewr_RegisterFilter($this->fecha, "@@NextYear", $ReportLanguage->Phrase("NextYear"), "ewr_IsNextYear");
 		$this->fields['fecha'] = &$this->fecha;
 
 		// cuadro1
@@ -409,6 +411,17 @@ class crviewmarcologicosummary extends crTableBase {
 			"select" => "SELECT DISTINCT `nombreinstitucion`, `nombreinstitucion` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewmarcologicosummary`",
 			"where" => $sWhereWrk,
 			"orderby" => "`nombreinstitucion` ASC"
+		);
+		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
+		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");
+			break;
+		case "x_fecha":
+			$fld->LookupFilters = array("d" => "DB", "f0" => '`fecha` = {filter_value}', "t0" => "3", "fn0" => "", "dlm" => ewr_Encrypt($fld->FldDelimiter), "af" => json_encode($fld->AdvancedFilters));
+		$sWhereWrk = "";
+		$fld->LookupFilters += array(
+			"select" => "SELECT DISTINCT `fecha`, `fecha` AS `DispFld`, '' AS `DispFld2`, '' AS `DispFld3`, '' AS `DispFld4` FROM `viewmarcologicosummary`",
+			"where" => $sWhereWrk,
+			"orderby" => "`fecha` ASC"
 		);
 		$this->Lookup_Selecting($fld, $fld->LookupFilters["where"]); // Call Lookup selecting
 		$fld->LookupFilters["s"] = ewr_BuildReportSql($fld->LookupFilters["select"], $fld->LookupFilters["where"], "", "", $fld->LookupFilters["orderby"], "", "");

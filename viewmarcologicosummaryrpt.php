@@ -331,9 +331,8 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		$gsEmailContentType = @$_POST["contenttype"]; // Get email content type
 
 		// Setup placeholder
-		$this->fecha->PlaceHolder = $this->fecha->FldCaption();
-
 		// Setup export options
+
 		$this->SetupExportOptions();
 
 		// Global Page Loading event (in userfn*.php)
@@ -810,6 +809,12 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		$this->cuadro9->SetVisibility();
 		$this->cuadro10->SetVisibility();
 
+		// Handle drill down
+		$sDrillDownFilter = $this->GetDrillDownFilter();
+		$grDrillDownInPanel = $this->DrillDownInPanel;
+		if ($this->DrillDown)
+			ewr_AddFilter($this->Filter, $sDrillDownFilter);
+
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
@@ -1044,7 +1049,7 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		if ($opt == 1) { // Get first row
 				$this->FirstRowData = array();
 				$this->FirstRowData['nombreinstitucion'] = ewr_Conv($rs->fields('nombreinstitucion'), 200);
-				$this->FirstRowData['fecha'] = ewr_Conv($rs->fields('fecha'), 133);
+				$this->FirstRowData['fecha'] = ewr_Conv($rs->fields('fecha'), 3);
 				$this->FirstRowData['cuadro1'] = ewr_Conv($rs->fields('cuadro1'), 131);
 				$this->FirstRowData['cuadro2'] = ewr_Conv($rs->fields('cuadro2'), 131);
 				$this->FirstRowData['cuadro3'] = ewr_Conv($rs->fields('cuadro3'), 131);
@@ -1190,6 +1195,7 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 
 			// Build distinct values for fecha
 			if ($popupname == 'viewmarcologicosummary_fecha') {
+				ewr_SetupDistinctValuesFromFilter($this->fecha->ValueList, $this->fecha->AdvancedFilters); // Set up popup filter
 				$bNullValue = FALSE;
 				$bEmptyValue = FALSE;
 				$sFilter = $this->Filter;
@@ -1677,16 +1683,23 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'nombreinstitucion');
 			}
 
-			// Clear extended filter for field fecha
-			if ($this->ClearExtFilter == 'viewmarcologicosummary_fecha')
-				$this->SetSessionFilterValues('', '=', 'AND', '', '=', 'fecha');
+			// Set/clear dropdown for field fecha
+			if ($this->PopupName == 'viewmarcologicosummary_fecha' && $this->PopupValue <> "") {
+				if ($this->PopupValue == EWR_INIT_VALUE)
+					$this->fecha->DropDownValue = EWR_ALL_VALUE;
+				else
+					$this->fecha->DropDownValue = $this->PopupValue;
+				$bRestoreSession = FALSE; // Do not restore
+			} elseif ($this->ClearExtFilter == 'viewmarcologicosummary_fecha') {
+				$this->SetSessionDropDownValue(EWR_INIT_VALUE, '', 'fecha');
+			}
 
 		// Reset search command
 		} elseif (@$_GET["cmd"] == "reset") {
 
 			// Load default values
 			$this->SetSessionDropDownValue($this->nombreinstitucion->DropDownValue, $this->nombreinstitucion->SearchOperator, 'nombreinstitucion'); // Field nombreinstitucion
-			$this->SetSessionFilterValues($this->fecha->SearchValue, $this->fecha->SearchOperator, $this->fecha->SearchCondition, $this->fecha->SearchValue2, $this->fecha->SearchOperator2, 'fecha'); // Field fecha
+			$this->SetSessionDropDownValue($this->fecha->DropDownValue, $this->fecha->SearchOperator, 'fecha'); // Field fecha
 
 			//$bSetupFilter = TRUE; // No need to set up, just use default
 		} else {
@@ -1700,7 +1713,9 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 			}
 
 			// Field fecha
-			if ($this->GetFilterValues($this->fecha)) {
+			if ($this->GetDropDownValue($this->fecha)) {
+				$bSetupFilter = TRUE;
+			} elseif ($this->fecha->DropDownValue <> EWR_INIT_VALUE && !isset($_SESSION['sv_viewmarcologicosummary_fecha'])) {
 				$bSetupFilter = TRUE;
 			}
 			if (!$this->ValidateForm()) {
@@ -1712,7 +1727,7 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		// Restore session
 		if ($bRestoreSession) {
 			$this->GetSessionDropDownValue($this->nombreinstitucion); // Field nombreinstitucion
-			$this->GetSessionFilterValues($this->fecha); // Field fecha
+			$this->GetSessionDropDownValue($this->fecha); // Field fecha
 		}
 
 		// Call page filter validated event
@@ -1720,11 +1735,11 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 
 		// Build SQL
 		$this->BuildDropDownFilter($this->nombreinstitucion, $sFilter, $this->nombreinstitucion->SearchOperator, FALSE, TRUE); // Field nombreinstitucion
-		$this->BuildExtendedFilter($this->fecha, $sFilter, FALSE, TRUE); // Field fecha
+		$this->BuildDropDownFilter($this->fecha, $sFilter, $this->fecha->SearchOperator, FALSE, TRUE); // Field fecha
 
 		// Save parms to session
 		$this->SetSessionDropDownValue($this->nombreinstitucion->DropDownValue, $this->nombreinstitucion->SearchOperator, 'nombreinstitucion'); // Field nombreinstitucion
-		$this->SetSessionFilterValues($this->fecha->SearchValue, $this->fecha->SearchOperator, $this->fecha->SearchCondition, $this->fecha->SearchValue2, $this->fecha->SearchOperator2, 'fecha'); // Field fecha
+		$this->SetSessionDropDownValue($this->fecha->DropDownValue, $this->fecha->SearchOperator, 'fecha'); // Field fecha
 
 		// Setup filter
 		if ($bSetupFilter) {
@@ -1737,13 +1752,16 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 
 			// Field fecha
 			$sWrk = "";
-			$this->BuildExtendedFilter($this->fecha, $sWrk);
-			ewr_LoadSelectionFromFilter($this->fecha, $sWrk, $this->fecha->SelectionList);
+			$this->BuildDropDownFilter($this->fecha, $sWrk, $this->fecha->SearchOperator);
+			ewr_LoadSelectionFromFilter($this->fecha, $sWrk, $this->fecha->SelectionList, $this->fecha->DropDownValue);
 			$_SESSION['sel_viewmarcologicosummary_fecha'] = ($this->fecha->SelectionList == "") ? EWR_INIT_VALUE : $this->fecha->SelectionList;
 		}
 
 		// Field nombreinstitucion
 		ewr_LoadDropDownList($this->nombreinstitucion->DropDownList, $this->nombreinstitucion->DropDownValue);
+
+		// Field fecha
+		ewr_LoadDropDownList($this->fecha->DropDownList, $this->fecha->DropDownValue);
 		return $sFilter;
 	}
 
@@ -2011,14 +2029,6 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		// Check if validation required
 		if (!EWR_SERVER_VALIDATE)
 			return ($grFormError == "");
-		if (!ewr_CheckDateDef($this->fecha->SearchValue)) {
-			if ($grFormError <> "") $grFormError .= "<br>";
-			$grFormError .= $this->fecha->FldErrMsg();
-		}
-		if (!ewr_CheckDateDef($this->fecha->SearchValue2)) {
-			if ($grFormError <> "") $grFormError .= "<br>";
-			$grFormError .= $this->fecha->FldErrMsg();
-		}
 
 		// Return validate result
 		$ValidateForm = ($grFormError == "");
@@ -2061,6 +2071,14 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		$this->BuildDropDownFilter($this->nombreinstitucion, $sWrk, $this->nombreinstitucion->SearchOperator, TRUE);
 		ewr_LoadSelectionFromFilter($this->nombreinstitucion, $sWrk, $this->nombreinstitucion->DefaultSelectionList);
 		if (!$this->SearchCommand) $this->nombreinstitucion->SelectionList = $this->nombreinstitucion->DefaultSelectionList;
+
+		// Field fecha
+		$this->fecha->DefaultDropDownValue = EWR_INIT_VALUE;
+		if (!$this->SearchCommand) $this->fecha->DropDownValue = $this->fecha->DefaultDropDownValue;
+		$sWrk = "";
+		$this->BuildDropDownFilter($this->fecha, $sWrk, $this->fecha->SearchOperator, TRUE);
+		ewr_LoadSelectionFromFilter($this->fecha, $sWrk, $this->fecha->DefaultSelectionList);
+		if (!$this->SearchCommand) $this->fecha->SelectionList = $this->fecha->DefaultSelectionList;
 		/**
 		* Set up default values for extended filters
 		* function SetDefaultExtFilter(&$fld, $so1, $sv1, $sc, $so2, $sv2)
@@ -2072,14 +2090,6 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		* $so2 - Default search operator 2 (if operator 2 is enabled)
 		* $sv2 - Default ext filter value 2 (if operator 2 is enabled)
 		*/
-
-		// Field fecha
-		$this->SetDefaultExtFilter($this->fecha, "BETWEEN", NULL, 'AND', "=", NULL);
-		if (!$this->SearchCommand) $this->ApplyDefaultExtFilter($this->fecha);
-		$sWrk = "";
-		$this->BuildExtendedFilter($this->fecha, $sWrk, TRUE);
-		ewr_LoadSelectionFromFilter($this->fecha, $sWrk, $this->fecha->DefaultSelectionList);
-		if (!$this->SearchCommand) $this->fecha->SelectionList = $this->fecha->DefaultSelectionList;
 		/**
 		* Set up default values for popup filters
 		*/
@@ -2102,8 +2112,8 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		if (!ewr_MatchedArray($this->nombreinstitucion->DefaultSelectionList, $this->nombreinstitucion->SelectionList))
 			return TRUE;
 
-		// Check fecha text filter
-		if ($this->TextFilterApplied($this->fecha))
+		// Check fecha extended filter
+		if ($this->NonTextFilterApplied($this->fecha))
 			return TRUE;
 
 		// Check fecha popup filter
@@ -2136,9 +2146,9 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 		// Field fecha
 		$sExtWrk = "";
 		$sWrk = "";
-		$this->BuildExtendedFilter($this->fecha, $sExtWrk);
+		$this->BuildDropDownFilter($this->fecha, $sExtWrk, $this->fecha->SearchOperator);
 		if (is_array($this->fecha->SelectionList))
-			$sWrk = ewr_JoinArray($this->fecha->SelectionList, ", ", EWR_DATATYPE_DATE, 0, $this->DBID);
+			$sWrk = ewr_JoinArray($this->fecha->SelectionList, ", ", EWR_DATATYPE_NUMBER, 0, $this->DBID);
 		$sFilter = "";
 		if ($sExtWrk <> "")
 			$sFilter .= "<span class=\"ewFilterValue\">$sExtWrk</span>";
@@ -2189,13 +2199,11 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 
 		// Field fecha
 		$sWrk = "";
-		if ($this->fecha->SearchValue <> "" || $this->fecha->SearchValue2 <> "") {
-			$sWrk = "\"sv_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchValue) . "\"," .
-				"\"so_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchOperator) . "\"," .
-				"\"sc_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchCondition) . "\"," .
-				"\"sv2_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchValue2) . "\"," .
-				"\"so2_fecha\":\"" . ewr_JsEncode2($this->fecha->SearchOperator2) . "\"";
-		}
+		$sWrk = ($this->fecha->DropDownValue <> EWR_INIT_VALUE) ? $this->fecha->DropDownValue : "";
+		if (is_array($sWrk))
+			$sWrk = implode("||", $sWrk);
+		if ($sWrk <> "")
+			$sWrk = "\"sv_fecha\":\"" . ewr_JsEncode2($sWrk) . "\"";
 		if ($sWrk == "") {
 			$sWrk = ($this->fecha->SelectionList <> EWR_INIT_VALUE) ? $this->fecha->SelectionList : "";
 			if (is_array($sWrk))
@@ -2255,10 +2263,11 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 
 		// Field fecha
 		$bRestoreFilter = FALSE;
-		if (array_key_exists("sv_fecha", $filter) || array_key_exists("so_fecha", $filter) ||
-			array_key_exists("sc_fecha", $filter) ||
-			array_key_exists("sv2_fecha", $filter) || array_key_exists("so2_fecha", $filter)) {
-			$this->SetSessionFilterValues(@$filter["sv_fecha"], @$filter["so_fecha"], @$filter["sc_fecha"], @$filter["sv2_fecha"], @$filter["so2_fecha"], "fecha");
+		if (array_key_exists("sv_fecha", $filter)) {
+			$sWrk = $filter["sv_fecha"];
+			if (strpos($sWrk, "||") !== FALSE)
+				$sWrk = explode("||", $sWrk);
+			$this->SetSessionDropDownValue($sWrk, @$filter["so_fecha"], "fecha");
 			$bRestoreFilter = TRUE;
 		}
 		if (array_key_exists("sel_fecha", $filter)) {
@@ -2266,11 +2275,11 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 			$sWrk = explode("||", $sWrk);
 			$this->fecha->SelectionList = $sWrk;
 			$_SESSION["sel_viewmarcologicosummary_fecha"] = $sWrk;
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "fecha"); // Clear extended filter
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "fecha"); // Clear drop down
 			$bRestoreFilter = TRUE;
 		}
 		if (!$bRestoreFilter) { // Clear filter
-			$this->SetSessionFilterValues("", "=", "AND", "", "=", "fecha");
+			$this->SetSessionDropDownValue(EWR_INIT_VALUE, "", "fecha");
 			$this->fecha->SelectionList = "";
 			$_SESSION["sel_viewmarcologicosummary_fecha"] = "";
 		}
@@ -2292,9 +2301,9 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 				ewr_AddFilter($sWrk, $sFilter);
 			}
 		}
-		if (!$this->ExtendedFilterExist($this->fecha)) {
+		if (!$this->DropDownFilterExist($this->fecha, $this->fecha->SearchOperator)) {
 			if (is_array($this->fecha->SelectionList)) {
-				$sFilter = ewr_FilterSql($this->fecha, "`fecha`", EWR_DATATYPE_DATE, $this->DBID);
+				$sFilter = ewr_FilterSql($this->fecha, "`fecha`", EWR_DATATYPE_NUMBER, $this->DBID);
 
 				// Call Page Filtering event
 				$this->Page_Filtering($this->fecha, $sFilter, "popup");
@@ -2303,6 +2312,71 @@ class crviewmarcologicosummary_rpt extends crviewmarcologicosummary {
 			}
 		}
 		return $sWrk;
+	}
+
+	// Return drill down filter
+	function GetDrillDownFilter() {
+		global $ReportLanguage;
+		$sFilterList = "";
+		$filter = "";
+		$post = $_POST;
+		$opt = @$post["d"];
+		if ($opt == "1" || $opt == "2") {
+			$mastertable = @$post["s"]; // Get source table
+			$sql = @$post["fecha"];
+
+			// Fusioncharts do not support "-" in drill down link. The encrypted data uses "$" instead of "-". Change back to "-" for decrypt.
+			// https://www.fusioncharts.com/dev/advanced-chart-configurations/drill-down/using-javascript-functions-as-links.html
+			// - Special characters like (, ), -, % and , cannot be passed as a parameter while function call.
+
+			$sql = str_replace("$", "-", $sql);
+			$sql = ewr_Decrypt($sql);
+			$sql = str_replace("@fecha", "`fecha`", $sql);
+			if ($sql <> "") {
+				if ($filter <> "") $filter .= " AND ";
+				$filter .= $sql;
+				if ($sql <> "1=1")
+					$sFilterList .= "<div><span class=\"ewFilterCaption\">" . $this->fecha->FldCaption() . "</span><span class=\"ewFilterValue\">$sql</span></div>";
+			}
+
+			// Save to session
+			$_SESSION[EWR_PROJECT_NAME . "_" . $this->TableVar . "_" . EWR_TABLE_MASTER_TABLE] = $mastertable;
+			$_SESSION['do_viewmarcologicosummary'] = $opt;
+			$_SESSION['df_viewmarcologicosummary'] = $filter;
+			$_SESSION['dl_viewmarcologicosummary'] = $sFilterList;
+		} elseif (@$_GET["cmd"] == "resetdrilldown") { // Clear drill down
+			$_SESSION[EWR_PROJECT_NAME . "_" . $this->TableVar . "_" . EWR_TABLE_MASTER_TABLE] = "";
+			$_SESSION['do_viewmarcologicosummary'] = "";
+			$_SESSION['df_viewmarcologicosummary'] = "";
+			$_SESSION['dl_viewmarcologicosummary'] = "";
+		} else { // Restore from Session
+			$opt = @$_SESSION['do_viewmarcologicosummary'];
+			$filter = @$_SESSION['df_viewmarcologicosummary'];
+			$sFilterList = @$_SESSION['dl_viewmarcologicosummary'];
+		}
+		if ($opt == "1" || $opt == "2")
+			$this->DrillDown = TRUE;
+		if ($opt == "1") {
+			$this->DrillDownInPanel = TRUE;
+			$GLOBALS["gbSkipHeaderFooter"] = TRUE;
+		}
+		if ($filter <> "") {
+			if ($sFilterList == "")
+				$sFilterList = "<div><span class=\"ewFilterValue\">" . $ReportLanguage->Phrase("DrillDownAllRecords") . "</span></div>";
+			$this->DrillDownList = "<div id=\"ewrDrillDownFilters\">" . $ReportLanguage->Phrase("DrillDownFilters") . "</div>" . $sFilterList;
+		}
+		return $filter;
+	}
+
+	// Show drill down filters
+	function ShowDrillDownList() {
+		$divstyle = "";
+		$divdataclass = "";
+		if ($this->DrillDownList <> "") {
+			$sMessage = "<div id=\"ewrDrillDownList\"" . $divstyle . "><div class=\"alert alert-info\"" . $divdataclass . ">" . $this->DrillDownList . "</div></div>";
+			$this->Message_Showing($sMessage, "");
+			echo $sMessage;
+		}
 	}
 
 	// Get sort parameters based on sort links clicked
@@ -2689,16 +2763,6 @@ fviewmarcologicosummaryrpt.Validate = function() {
 	if (!this.ValidateRequired)
 		return true; // Ignore validation
 	var $ = jQuery, fobj = this.GetForm(), $fobj = $(fobj);
-	var elm = fobj.sv_fecha;
-	if (elm && !ewr_CheckDateDef(elm.value)) {
-		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fecha->FldErrMsg()) ?>"))
-			return false;
-	}
-	var elm = fobj.sv2_fecha;
-	if (elm && !ewr_CheckDateDef(elm.value)) {
-		if (!this.OnError(elm, "<?php echo ewr_JsEncode2($Page->fecha->FldErrMsg()) ?>"))
-			return false;
-	}
 
 	// Call Form Custom Validate event
 	if (!this.Form_CustomValidate(fobj))
@@ -2722,6 +2786,7 @@ fviewmarcologicosummaryrpt.ValidateRequired = false; // No JavaScript validation
 // Use Ajax
 fviewmarcologicosummaryrpt.Lists["sv_nombreinstitucion"] = {"LinkField":"sv_nombreinstitucion","Ajax":true,"DisplayFields":["sv_nombreinstitucion","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
 fviewmarcologicosummaryrpt.AutoSuggests["sv_nombreinstitucion"] = <?php echo json_encode(array("data" => "ajax=autosuggest&" . $viewmarcologicosummary_rpt->nombreinstitucion->LookupFilterQuery(TRUE))) ?>;
+fviewmarcologicosummaryrpt.Lists["sv_fecha"] = {"LinkField":"sv_fecha","Ajax":true,"DisplayFields":["sv_fecha","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
 </script>
 <?php } ?>
 <?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
@@ -2756,6 +2821,9 @@ if (!$Page->DrillDownInPanel) {
 <?php if ($Page->Export == "" && !$grDashboardReport) { ?>
 <!-- Center Container - Report -->
 <div id="ewCenter" class="col-sm-12 ewCenter">
+<?php } ?>
+<?php if ($Page->ShowDrillDownFilter) { ?>
+<?php $Page->ShowDrillDownList() ?>
 <?php } ?>
 <!-- Summary Report begins -->
 <?php if ($Page->Export <> "pdf") { ?>
@@ -2807,15 +2875,39 @@ fviewmarcologicosummaryrpt.Lists["sv_nombreinstitucion"].Options = <?php echo ew
 </div>
 <div id="c_fecha" class="ewCell form-group">
 	<label for="sv_fecha" class="ewSearchCaption ewLabel"><?php echo $Page->fecha->FldCaption() ?></label>
-	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("BETWEEN"); ?><input type="hidden" name="so_fecha" id="so_fecha" value="BETWEEN"></span>
-	<span class="control-group ewSearchField">
-<?php ewr_PrependClass($Page->fecha->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewmarcologicosummary" data-field="x_fecha" id="sv_fecha" name="sv_fecha" placeholder="<?php echo $Page->fecha->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha->SearchValue) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha->EditAttributes() ?>>
-</span>
-	<span class="ewSearchCond btw1_fecha"><?php echo $ReportLanguage->Phrase("AND") ?></span>
-	<span class="ewSearchField btw1_fecha">
-<?php ewr_PrependClass($Page->fecha->EditAttrs["class"], "form-control"); // PR8 ?>
-<input type="text" data-table="viewmarcologicosummary" data-field="x_fecha" id="sv2_fecha" name="sv2_fecha" placeholder="<?php echo $Page->fecha->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fecha->SearchValue2) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fecha->EditAttributes() ?>>
+	<span class="ewSearchField">
+<?php ewr_PrependClass($Page->fecha->EditAttrs["class"], "form-control"); ?>
+<select data-table="viewmarcologicosummary" data-field="x_fecha" data-value-separator="<?php echo ewr_HtmlEncode(is_array($Page->fecha->DisplayValueSeparator) ? json_encode($Page->fecha->DisplayValueSeparator) : $Page->fecha->DisplayValueSeparator) ?>" id="sv_fecha" name="sv_fecha"<?php echo $Page->fecha->EditAttributes() ?>>
+<option value=""><?php echo $ReportLanguage->Phrase("PleaseSelect") ?></option>
+<?php
+	$cntf = is_array($Page->fecha->AdvancedFilters) ? count($Page->fecha->AdvancedFilters) : 0;
+	$cntd = is_array($Page->fecha->DropDownList) ? count($Page->fecha->DropDownList) : 0;
+	$totcnt = $cntf + $cntd;
+	$wrkcnt = 0;
+	if ($cntf > 0) {
+		foreach ($Page->fecha->AdvancedFilters as $filter) {
+			if ($filter->Enabled) {
+				$selwrk = ewr_MatchedFilterValue($Page->fecha->DropDownValue, $filter->ID) ? " selected" : "";
+?>
+<option value="<?php echo $filter->ID ?>"<?php echo $selwrk ?>><?php echo $filter->Name ?></option>
+<?php
+				$wrkcnt += 1;
+			}
+		}
+	}
+	for ($i = 0; $i < $cntd; $i++) {
+		$selwrk = " selected";
+?>
+<option value="<?php echo $Page->fecha->DropDownList[$i] ?>"<?php echo $selwrk ?>><?php echo ewr_DropDownDisplayValue($Page->fecha->DropDownList[$i], "", 0) ?></option>
+<?php
+		$wrkcnt += 1;
+	}
+?>
+</select>
+<input type="hidden" name="s_sv_fecha" id="s_sv_fecha" value="<?php echo $Page->fecha->LookupFilterQuery() ?>">
+<script type="text/javascript">
+fviewmarcologicosummaryrpt.Lists["sv_fecha"].Options = <?php echo ewr_ArrayToJson($Page->fecha->LookupFilterOptions) ?>;
+</script>
 </span>
 </div>
 </div>

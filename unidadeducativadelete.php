@@ -329,6 +329,7 @@ class cunidadeducativa_delete extends cunidadeducativa {
 		$this->telefono->SetVisibility();
 		$this->_email->SetVisibility();
 		$this->id_persona->SetVisibility();
+		$this->esespecial->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -524,6 +525,7 @@ class cunidadeducativa_delete extends cunidadeducativa {
 			$this->id_persona->VirtualValue = ""; // Clear value
 		}
 		$this->id_centro->setDbValue($row['id_centro']);
+		$this->esespecial->setDbValue($row['esespecial']);
 	}
 
 	// Return a row with default values
@@ -540,6 +542,7 @@ class cunidadeducativa_delete extends cunidadeducativa {
 		$row['email'] = NULL;
 		$row['id_persona'] = NULL;
 		$row['id_centro'] = NULL;
+		$row['esespecial'] = NULL;
 		return $row;
 	}
 
@@ -559,6 +562,7 @@ class cunidadeducativa_delete extends cunidadeducativa {
 		$this->_email->DbValue = $row['email'];
 		$this->id_persona->DbValue = $row['id_persona'];
 		$this->id_centro->DbValue = $row['id_centro'];
+		$this->esespecial->DbValue = $row['esespecial'];
 	}
 
 	// Render row values based on field settings
@@ -587,6 +591,8 @@ class cunidadeducativa_delete extends cunidadeducativa {
 		// id_centro
 
 		$this->id_centro->CellCssStyle = "white-space: nowrap;";
+
+		// esespecial
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
 		// id
@@ -712,6 +718,14 @@ class cunidadeducativa_delete extends cunidadeducativa {
 		}
 		$this->id_persona->ViewCustomAttributes = "";
 
+		// esespecial
+		if (strval($this->esespecial->CurrentValue) <> "") {
+			$this->esespecial->ViewValue = $this->esespecial->OptionCaption($this->esespecial->CurrentValue);
+		} else {
+			$this->esespecial->ViewValue = NULL;
+		}
+		$this->esespecial->ViewCustomAttributes = "";
+
 			// nombre
 			$this->nombre->LinkCustomAttributes = "";
 			$this->nombre->HrefValue = "";
@@ -756,6 +770,11 @@ class cunidadeducativa_delete extends cunidadeducativa {
 			$this->id_persona->LinkCustomAttributes = "";
 			$this->id_persona->HrefValue = "";
 			$this->id_persona->TooltipValue = "";
+
+			// esespecial
+			$this->esespecial->LinkCustomAttributes = "";
+			$this->esespecial->HrefValue = "";
+			$this->esespecial->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -975,6 +994,8 @@ funidadeducativadelete.Lists["x_provincia"] = {"LinkField":"x_id","Ajax":true,"A
 funidadeducativadelete.Lists["x_provincia"].Data = "<?php echo $unidadeducativa_delete->provincia->LookupFilterQuery(FALSE, "delete") ?>";
 funidadeducativadelete.Lists["x_id_persona"] = {"LinkField":"x_id","Ajax":true,"AutoFill":false,"DisplayFields":["x_nombre","x_apellidopaterno","x_apellidomaterno",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"persona"};
 funidadeducativadelete.Lists["x_id_persona"].Data = "<?php echo $unidadeducativa_delete->id_persona->LookupFilterQuery(FALSE, "delete") ?>";
+funidadeducativadelete.Lists["x_esespecial"] = {"LinkField":"","Ajax":null,"AutoFill":false,"DisplayFields":["","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":""};
+funidadeducativadelete.Lists["x_esespecial"].Options = <?php echo json_encode($unidadeducativa_delete->esespecial->Options()) ?>;
 
 // Form object for search
 </script>
@@ -1027,6 +1048,9 @@ $unidadeducativa_delete->ShowMessage();
 <?php } ?>
 <?php if ($unidadeducativa->id_persona->Visible) { // id_persona ?>
 		<th class="<?php echo $unidadeducativa->id_persona->HeaderCellClass() ?>"><span id="elh_unidadeducativa_id_persona" class="unidadeducativa_id_persona"><?php echo $unidadeducativa->id_persona->FldCaption() ?></span></th>
+<?php } ?>
+<?php if ($unidadeducativa->esespecial->Visible) { // esespecial ?>
+		<th class="<?php echo $unidadeducativa->esespecial->HeaderCellClass() ?>"><span id="elh_unidadeducativa_esespecial" class="unidadeducativa_esespecial"><?php echo $unidadeducativa->esespecial->FldCaption() ?></span></th>
 <?php } ?>
 	</tr>
 	</thead>
@@ -1118,6 +1142,14 @@ while (!$unidadeducativa_delete->Recordset->EOF) {
 <span id="el<?php echo $unidadeducativa_delete->RowCnt ?>_unidadeducativa_id_persona" class="unidadeducativa_id_persona">
 <span<?php echo $unidadeducativa->id_persona->ViewAttributes() ?>>
 <?php echo $unidadeducativa->id_persona->ListViewValue() ?></span>
+</span>
+</td>
+<?php } ?>
+<?php if ($unidadeducativa->esespecial->Visible) { // esespecial ?>
+		<td<?php echo $unidadeducativa->esespecial->CellAttributes() ?>>
+<span id="el<?php echo $unidadeducativa_delete->RowCnt ?>_unidadeducativa_esespecial" class="unidadeducativa_esespecial">
+<span<?php echo $unidadeducativa->esespecial->ViewAttributes() ?>>
+<?php echo $unidadeducativa->esespecial->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

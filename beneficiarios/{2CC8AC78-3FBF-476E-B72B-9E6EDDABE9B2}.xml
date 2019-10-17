@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configuration date="2019/10/17" author="e.World Technology Ltd.">
-  <project id="{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.pmp" name="beneficiarios" product="PHPMaker" version="14.0" datetime="2019/10/17 10:18:31" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" relatedid="{707530BA-BEB7-415A-B683-2C9753B31FA3}">
+  <project id="{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.pmp" name="beneficiarios" product="PHPMaker" version="14.0" datetime="2019/10/17 15:49:40" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" relatedid="{707530BA-BEB7-415A-B683-2C9753B31FA3}">
     <table id="apoderado" name="apoderado" caption="Apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="centros" name="centros" caption="Centros" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="escolar" name="escolar" caption="Escolar" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
