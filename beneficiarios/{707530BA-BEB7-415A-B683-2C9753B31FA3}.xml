@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2019/10/17" author="e.World Technology Ltd.">
-  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/10/17 15:57:20" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2019/11/11" author="e.World Technology Ltd.">
+  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/11/11 16:14:24" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="actividad" name="actividad" caption="actividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="apoderado" name="apoderado" caption="apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="atencion" name="atencion" caption="atencion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -62,5 +62,6 @@
     <table id="turno" name="turno" caption="turno" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="Dashboard2" name="Dashboard2" caption="Dashboard 2" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewmarcologicosummary" name="viewmarcologicosummary" caption="MARCO LOGICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludescolar" name="viewsaludescolar" caption="viewsaludescolar" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

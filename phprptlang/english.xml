@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/10/17" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/11/11" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -369,6 +369,9 @@
   </global>
   <project>
     <phrase id="footertext" value="&amp;copy;2018 e.World Technology Ltd. All rights reserved." />
+    <menu id="66">
+      <phrase id="menutext" value="viewsaludescolar" />
+    </menu>
     <menu id="61">
       <phrase id="menutext" value="gestion" />
     </menu>
@@ -2227,6 +2230,75 @@
       </field>
       <field id="cuadro10">
         <phrase id="fldcaption" value="Personas del programa&lt;/br&gt; que participan en eventos de &lt;/br&gt;capacitación en temas transversales" />
+      </field>
+    </table>
+    <table id="viewsaludescolar">
+      <phrase id="tblcaption" value="viewsaludescolar" />
+      <field id="codigorude">
+        <phrase id="fldcaption" value="codigorude" />
+      </field>
+      <field id="codigorude_es">
+        <phrase id="fldcaption" value="codigorude es" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="unidad_eductiva">
+        <phrase id="fldcaption" value="unidad educativa" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="curso">
+        <phrase id="fldcaption" value="curso" />
+      </field>
+      <field id="discapcidad">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="tipo">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="tapodonde">
+        <phrase id="fldcaption" value="tapo donde" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetir prueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="parentesco">
+        <phrase id="fldcaption" value="parentesco" />
+      </field>
+      <field id="nombrescompleto">
+        <phrase id="fldcaption" value="nombres completo" />
       </field>
     </table>
   </project>
