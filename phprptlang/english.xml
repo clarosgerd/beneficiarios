@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2019/11/11" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
+<ew-language date="2019/11/13" version="11.0.0" id="en" name="English" desc="English" author="e.World Technology Ltd.">
   <!-- 
 	*** Important Notes:
 	1. Language ID should follow: https://developers.google.com/recaptcha/docs/language,
@@ -369,9 +369,6 @@
   </global>
   <project>
     <phrase id="footertext" value="&amp;copy;2018 e.World Technology Ltd. All rights reserved." />
-    <menu id="66">
-      <phrase id="menutext" value="viewsaludescolar" />
-    </menu>
     <menu id="61">
       <phrase id="menutext" value="gestion" />
     </menu>
@@ -523,7 +520,7 @@
       <phrase id="menutext" value="usuario" />
     </menu>
     <menu id="47">
-      <phrase id="menutext" value="Reportes" />
+      <phrase id="menutext" value="Reportes Educacion" />
     </menu>
     <menu id="54">
       <phrase id="menutext" value="UNIDAD EDUCATIVA" />
@@ -562,6 +559,45 @@
       <phrase id="menutext" value="MARCO LOGICO" />
     </menu>
     <menu id="63">
+      <phrase id="menutext" value="MARCO LOGICO" />
+    </menu>
+    <menu id="131">
+      <phrase id="menutext" value="Reportes Salud" />
+    </menu>
+    <menu id="66">
+      <phrase id="menutext" value="TA Escolar" />
+    </menu>
+    <menu id="132">
+      <phrase id="menutext" value="TA-OTROS" />
+    </menu>
+    <menu id="133">
+      <phrase id="menutext" value="TA-NEONATAL" />
+    </menu>
+    <menu id="143">
+      <phrase id="menutext" value="APODERADO" />
+    </menu>
+    <menu id="144">
+      <phrase id="menutext" value="REFERENCIA" />
+    </menu>
+    <menu id="136">
+      <phrase id="menutext" value="SERVICIOS" />
+    </menu>
+    <menu id="137">
+      <phrase id="menutext" value="PRUEBAS" />
+    </menu>
+    <menu id="138">
+      <phrase id="menutext" value="TRATAMIENTO" />
+    </menu>
+    <menu id="139">
+      <phrase id="menutext" value="DIAGNISTICO" />
+    </menu>
+    <menu id="140">
+      <phrase id="menutext" value="DERIVACION" />
+    </menu>
+    <menu id="141">
+      <phrase id="menutext" value="MARCO LOGICO" />
+    </menu>
+    <menu id="142">
       <phrase id="menutext" value="MARCO LOGICO" />
     </menu>
     <table id="actividad">
@@ -635,13 +671,13 @@
       <field id="sexo">
         <phrase id="fldcaption" value="sexo" />
       </field>
-      <field id="direccif3n">
+      <field id="direccion">
         <phrase id="fldcaption" value="dirección" />
       </field>
       <field id="celular">
         <phrase id="fldcaption" value="celular" />
       </field>
-      <field id="ocupacif3n">
+      <field id="ocupacion">
         <phrase id="fldcaption" value="ocupación" />
       </field>
       <field id="observaciones">
@@ -1436,7 +1472,7 @@
       <field id="nombrescentromedico">
         <phrase id="fldcaption" value="nombrescentromedico" />
       </field>
-      <field id="direccif3n">
+      <field id="direccion">
         <phrase id="fldcaption" value="dirección" />
       </field>
       <field id="telefono">
@@ -2233,7 +2269,10 @@
       </field>
     </table>
     <table id="viewsaludescolar">
-      <phrase id="tblcaption" value="viewsaludescolar" />
+      <phrase id="tblcaption" value="TA-ESCOLAR" />
+      <field id="nombrescompleto">
+        <phrase id="fldcaption" value="nombres completo" />
+      </field>
       <field id="codigorude">
         <phrase id="fldcaption" value="codigorude" />
       </field>
@@ -2245,15 +2284,6 @@
       </field>
       <field id="unidad_eductiva">
         <phrase id="fldcaption" value="unidad educativa" />
-      </field>
-      <field id="apellidopaterno">
-        <phrase id="fldcaption" value="apellidopaterno" />
-      </field>
-      <field id="apellidomaterno">
-        <phrase id="fldcaption" value="apellidomaterno" />
-      </field>
-      <field id="nombres">
-        <phrase id="fldcaption" value="nombres" />
       </field>
       <field id="ci">
         <phrase id="fldcaption" value="ci" />
@@ -2282,9 +2312,6 @@
       <field id="resultadotamizaje">
         <phrase id="fldcaption" value="resultadotamizaje" />
       </field>
-      <field id="nombre">
-        <phrase id="fldcaption" value="tapon" />
-      </field>
       <field id="tapodonde">
         <phrase id="fldcaption" value="tapo donde" />
       </field>
@@ -2297,8 +2324,383 @@
       <field id="parentesco">
         <phrase id="fldcaption" value="parentesco" />
       </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="Nombreescolar" />
+      </field>
+      <field id="nombretapon">
+        <phrase id="fldcaption" value="nombretapon" />
+      </field>
+    </table>
+    <table id="viewsaludotros">
+      <phrase id="tblcaption" value="TA-OTROS" />
+      <field id="nombreactividad">
+        <phrase id="fldcaption" value="nombreactividad" />
+      </field>
+      <field id="nrodiscapacidad">
+        <phrase id="fldcaption" value="nrodiscapacidad" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="nivelestudio">
+        <phrase id="fldcaption" value="nivelestudio" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="tapon">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetir prueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="parentesco">
+        <phrase id="fldcaption" value="parentesco" />
+      </field>
       <field id="nombrescompleto">
         <phrase id="fldcaption" value="nombres completo" />
+      </field>
+      <field id="discacidad">
+        <phrase id="fldcaption" value="discacidad" />
+      </field>
+      <field id="tipo_discapacidad">
+        <phrase id="fldcaption" value="tipo discapacidad" />
+      </field>
+      <field id="tipo_tapo">
+        <phrase id="fldcaption" value="tipo tapon" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombreotros" />
+      </field>
+    </table>
+    <table id="viewsaludneonatal">
+      <phrase id="tblcaption" value="TA-NEONATAL" />
+      <field id="fecha_tamizaje">
+        <phrase id="fldcaption" value="fecha tamizaje" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="fecha_nacimiento">
+        <phrase id="fldcaption" value="fecha nacimiento" />
+      </field>
+      <field id="dias">
+        <phrase id="fldcaption" value="dias" />
+      </field>
+      <field id="semanas">
+        <phrase id="fldcaption" value="semanas" />
+      </field>
+      <field id="meses">
+        <phrase id="fldcaption" value="meses" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="resultadotamizaje">
+        <phrase id="fldcaption" value="resultadotamizaje" />
+      </field>
+      <field id="tapon">
+        <phrase id="fldcaption" value="tapon" />
+      </field>
+      <field id="repetirprueba">
+        <phrase id="fldcaption" value="repetirprueba" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="parentesco">
+        <phrase id="fldcaption" value="parentesco" />
+      </field>
+      <field id="nombrescompleto">
+        <phrase id="fldcaption" value="nombrescompleto" />
+      </field>
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombreneonatal" />
+      </field>
+      <field id="discapacidad">
+        <phrase id="fldcaption" value="discapacidad" />
+      </field>
+      <field id="tipodiscapacidad">
+        <phrase id="fldcaption" value="tipodiscapacidad" />
+      </field>
+      <field id="tipotapo">
+        <phrase id="fldcaption" value="tipotapo" />
+      </field>
+    </table>
+    <table id="viewsaludservicios">
+      <phrase id="tblcaption" value="SERVICIOS" />
+      <field id="ticketdeatencion">
+        <phrase id="fldcaption" value="ticketdeatencion" />
+      </field>
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombre neonatal" />
+      </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="nombres escolar" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombre otros" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+      <field id="nombreespecialista">
+        <phrase id="fldcaption" value="nombreespecialista" />
+      </field>
+    </table>
+    <table id="viewsaludoruebas">
+      <phrase id="tblcaption" value="PRUEBAS" />
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="tipopruebaaudiologia">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="recomendacion">
+        <phrase id="fldcaption" value="recomendacion" />
+      </field>
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombre otros" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombre neonatal" />
+      </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="nombreescolar" />
+      </field>
+    </table>
+    <table id="viewsaludtratamiento">
+      <phrase id="tblcaption" value="TRATAMIENTO" />
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombre otros" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombre neonatal" />
+      </field>
+      <field id="tratamiento">
+        <phrase id="fldcaption" value="tratamiento" />
+      </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="nombreescolar" />
+      </field>
+    </table>
+    <table id="viewsaluddiagnostico">
+      <phrase id="tblcaption" value="DIAGNISTICO" />
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombre otros" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombre neonatal" />
+      </field>
+      <field id="resultado">
+        <phrase id="fldcaption" value="resultado" />
+      </field>
+      <field id="diagnostico">
+        <phrase id="fldcaption" value="nombre" />
+      </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="nombreescolar" />
+      </field>
+    </table>
+    <table id="viewsaludderivacion">
+      <phrase id="tblcaption" value="DERIVACION" />
+      <field id="especialidad">
+        <phrase id="fldcaption" value="especialidad" />
+      </field>
+      <field id="nombreotros">
+        <phrase id="fldcaption" value="nombre otros" />
+      </field>
+      <field id="nombreneonatal">
+        <phrase id="fldcaption" value="nombre neonatal" />
+      </field>
+      <field id="derivacion">
+        <phrase id="fldcaption" value="tipo derivacion" />
+      </field>
+      <field id="nombreescolar">
+        <phrase id="fldcaption" value="nombreescolar" />
+      </field>
+    </table>
+    <table id="viewsaludmarcologico">
+      <phrase id="tblcaption" value="MARCO LOGICO" />
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="cuadro1">
+        <phrase id="fldcaption" value="cuadro 1" />
+      </field>
+      <field id="cuadro2">
+        <phrase id="fldcaption" value="cuadro 2" />
+      </field>
+      <field id="cuadro3">
+        <phrase id="fldcaption" value="cuadro 3" />
+      </field>
+      <field id="cuadro4">
+        <phrase id="fldcaption" value="cuadro 4" />
+      </field>
+      <field id="cuadro5">
+        <phrase id="fldcaption" value="cuadro 5" />
+      </field>
+      <field id="cuadro6">
+        <phrase id="fldcaption" value="cuadro 6" />
+      </field>
+      <field id="cuadro7">
+        <phrase id="fldcaption" value="cuadro 7" />
+      </field>
+      <field id="cuadro8">
+        <phrase id="fldcaption" value="cuadro 8" />
+      </field>
+      <field id="cuadro9">
+        <phrase id="fldcaption" value="cuadro 9" />
+      </field>
+      <field id="cuadro10">
+        <phrase id="fldcaption" value="cuadro 10" />
+      </field>
+      <field id="cuadro11">
+        <phrase id="fldcaption" value="cuadro 11" />
+      </field>
+      <field id="cuadro12">
+        <phrase id="fldcaption" value="cuadro 12" />
+      </field>
+      <field id="cuadro13">
+        <phrase id="fldcaption" value="cuadro 13" />
+      </field>
+    </table>
+    <table id="viewsaludmarcologicosummary">
+      <phrase id="tblcaption" value="MARCO LOGICO" />
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="fecha">
+        <phrase id="fldcaption" value="fecha" />
+      </field>
+      <field id="cuadro1">
+        <phrase id="fldcaption" value="Incremento en las personas&lt;/br&gt; atendidas en centro base" />
+      </field>
+      <field id="cuadro2">
+        <phrase id="fldcaption" value="Incremento de los centros&lt;/br&gt; donde se realizan tamizajes" />
+      </field>
+      <field id="cuadro3">
+        <phrase id="fldcaption" value="Personas tamizadas" />
+      </field>
+      <field id="cuadro4">
+        <phrase id="fldcaption" value="Personas evaluadas" />
+      </field>
+      <field id="cuadro5">
+        <phrase id="fldcaption" value="Personas que son&lt;/br&gt; intervenidas" />
+      </field>
+      <field id="cuadro6">
+        <phrase id="fldcaption" value="Referencias por otros usuarios&lt;/br&gt; atendidos en centros base" />
+      </field>
+      <field id="cuadro7">
+        <phrase id="fldcaption" value="Personas referidas a consulta en centro&lt;/br&gt; base por trabajadores de salud y educación " />
+      </field>
+      <field id="cuadro8">
+        <phrase id="fldcaption" value="Personas que asisten a eventos de &lt;/br&gt;sensibilización y concientización" />
+      </field>
+      <field id="cuadro9">
+        <phrase id="fldcaption" value="Trabajadores en salud y educación &lt;/br&gt;capacitados en CPOA" />
+      </field>
+      <field id="cuadro10">
+        <phrase id="fldcaption" value="Centros de educación donde&lt;/br&gt; se realizan tamizajes escolares" />
+      </field>
+      <field id="cuadro11">
+        <phrase id="fldcaption" value="Centros de salud donde&lt;/br&gt; se realizan tamizajes neonatales" />
+      </field>
+      <field id="cuadro12">
+        <phrase id="fldcaption" value="Personas del programa que&lt;/br&gt; participan en eventos de &lt;/br&gt;capacitación en temas transversales" />
+      </field>
+      <field id="cuadro13">
+        <phrase id="fldcaption" value="Mejora en los&lt;/br&gt; tiempos de entrega de reportes&lt;/br&gt; financieros y programáticos" />
+      </field>
+    </table>
+    <table id="viewsalsudapoderado">
+      <phrase id="tblcaption" value="viewsalsudapoderado" />
+      <field id="nombreinstitucion">
+        <phrase id="fldcaption" value="nombreinstitucion" />
+      </field>
+      <field id="parentesco">
+        <phrase id="fldcaption" value="parentesco" />
+      </field>
+      <field id="apellidopaterno">
+        <phrase id="fldcaption" value="apellidopaterno" />
+      </field>
+      <field id="apellidomaterno">
+        <phrase id="fldcaption" value="apellidomaterno" />
+      </field>
+      <field id="nombres">
+        <phrase id="fldcaption" value="nombres" />
+      </field>
+      <field id="ci">
+        <phrase id="fldcaption" value="ci" />
+      </field>
+      <field id="sexo">
+        <phrase id="fldcaption" value="sexo" />
+      </field>
+      <field id="fechanacimiento">
+        <phrase id="fldcaption" value="fechanacimiento" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="dirección" />
+      </field>
+      <field id="celular">
+        <phrase id="fldcaption" value="celular" />
+      </field>
+      <field id="ocupacion">
+        <phrase id="fldcaption" value="ocupación" />
+      </field>
+      <field id="observaciones">
+        <phrase id="fldcaption" value="observaciones" />
+      </field>
+    </table>
+    <table id="viewsaludreferencia">
+      <phrase id="tblcaption" value="viewsaludreferencia" />
+      <field id="nombrescompleto">
+        <phrase id="fldcaption" value="nombrescompleto" />
+      </field>
+      <field id="nombrescentromedico">
+        <phrase id="fldcaption" value="nombrescentromedico" />
+      </field>
+      <field id="direccion">
+        <phrase id="fldcaption" value="dirección" />
+      </field>
+      <field id="telefono">
+        <phrase id="fldcaption" value="telefono" />
+      </field>
+      <field id="nombre">
+        <phrase id="fldcaption" value="nombre" />
       </field>
     </table>
   </project>

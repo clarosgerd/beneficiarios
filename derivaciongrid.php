@@ -486,7 +486,7 @@ $derivacion_grid->ListOptions->Render("body", "left", $derivacion_grid->RowIndex
 <?php
 
 // Render list options (body, right)
-$derivacion_grid->ListOptions->Render("body", "right", $derivacion_grid->RowIndex);
+$derivacion_grid->ListOptions->Render("body", "right", $derivacion_grid->RowCnt);
 ?>
 <script type="text/javascript">
 fderivaciongrid.UpdateOpts(<?php echo $derivacion_grid->RowIndex ?>);

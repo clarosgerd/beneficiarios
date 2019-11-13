@@ -382,7 +382,7 @@ $tratamiento_grid->ListOptions->Render("body", "left", $tratamiento_grid->RowInd
 <?php
 
 // Render list options (body, right)
-$tratamiento_grid->ListOptions->Render("body", "right", $tratamiento_grid->RowIndex);
+$tratamiento_grid->ListOptions->Render("body", "right", $tratamiento_grid->RowCnt);
 ?>
 <script type="text/javascript">
 ftratamientogrid.UpdateOpts(<?php echo $tratamiento_grid->RowIndex ?>);

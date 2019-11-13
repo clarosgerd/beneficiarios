@@ -1409,7 +1409,7 @@ class cactividad_edit extends cactividad {
 		case "x_id_persona":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, `apellidopaterno` AS `Disp2Fld`, `apellidomaterno` AS `Disp3Fld` FROM `persona`";
-			$sWhereWrk = "`nombre` LIKE '{query_value}%' OR CONCAT(COALESCE(`nombre`, ''),'" . ew_ValueSeparator(1, $this->id_persona) . "',COALESCE(`apellidopaterno`,''),'" . ew_ValueSeparator(2, $this->id_persona) . "',COALESCE(`apellidomaterno`,'')) LIKE '{query_value}%'";
+			$sWhereWrk = "`nombre` LIKE '{query_value}%' OR CONCAT(`nombre`,'" . ew_ValueSeparator(1, $this->id_persona) . "',`apellidopaterno`,'" . ew_ValueSeparator(2, $this->id_persona) . "',`apellidomaterno`) LIKE '{query_value}%'";
 			$fld->LookupFilters = array("dx1" => '`nombre`', "dx2" => '`apellidopaterno`', "dx3" => '`apellidomaterno`');
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "");
 			$sSqlWrk = "";
@@ -1643,7 +1643,7 @@ $actividad_edit->ShowMessage();
 		<div class="<?php echo $actividad_edit->RightColumnClass ?>"><div<?php echo $actividad->id_sector->CellAttributes() ?>>
 <span id="el_actividad_id_sector">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_sector"><?php echo (strval($actividad->id_sector->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->id_sector->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_sector"><?php echo (strval($actividad->id_sector->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->id_sector->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->id_sector->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_sector',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->id_sector->ReadOnly || $actividad->id_sector->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="actividad" data-field="x_id_sector" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->id_sector->DisplayValueSeparatorAttribute() ?>" name="x_id_sector" id="x_id_sector" value="<?php echo $actividad->id_sector->CurrentValue ?>"<?php echo $actividad->id_sector->EditAttributes() ?>>
@@ -1660,7 +1660,7 @@ $actividad_edit->ShowMessage();
 		<div class="<?php echo $actividad_edit->RightColumnClass ?>"><div<?php echo $actividad->id_tipoactividad->CellAttributes() ?>>
 <span id="el_actividad_id_tipoactividad">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_tipoactividad"><?php echo (strval($actividad->id_tipoactividad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->id_tipoactividad->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_tipoactividad"><?php echo (strval($actividad->id_tipoactividad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->id_tipoactividad->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->id_tipoactividad->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_tipoactividad',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->id_tipoactividad->ReadOnly || $actividad->id_tipoactividad->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="actividad" data-field="x_id_tipoactividad" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->id_tipoactividad->DisplayValueSeparatorAttribute() ?>" name="x_id_tipoactividad" id="x_id_tipoactividad" value="<?php echo $actividad->id_tipoactividad->CurrentValue ?>"<?php echo $actividad->id_tipoactividad->EditAttributes() ?>>
@@ -1674,7 +1674,7 @@ $actividad_edit->ShowMessage();
 		<div class="<?php echo $actividad_edit->RightColumnClass ?>"><div<?php echo $actividad->organizador->CellAttributes() ?>>
 <span id="el_actividad_organizador">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_organizador"><?php echo (strval($actividad->organizador->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->organizador->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_organizador"><?php echo (strval($actividad->organizador->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $actividad->organizador->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($actividad->organizador->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_organizador',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($actividad->organizador->ReadOnly || $actividad->organizador->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="actividad" data-field="x_organizador" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $actividad->organizador->DisplayValueSeparatorAttribute() ?>" name="x_organizador" id="x_organizador" value="<?php echo $actividad->organizador->CurrentValue ?>"<?php echo $actividad->organizador->EditAttributes() ?>>

@@ -1672,7 +1672,7 @@ $docente_add->ShowMessage();
 		<div class="<?php echo $docente_add->RightColumnClass ?>"><div<?php echo $docente->unidadeducativa->CellAttributes() ?>>
 <span id="el_docente_unidadeducativa">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_unidadeducativa"><?php echo (strval($docente->unidadeducativa->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->unidadeducativa->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_unidadeducativa"><?php echo (strval($docente->unidadeducativa->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->unidadeducativa->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($docente->unidadeducativa->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_unidadeducativa',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($docente->unidadeducativa->ReadOnly || $docente->unidadeducativa->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="docente" data-field="x_unidadeducativa" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $docente->unidadeducativa->DisplayValueSeparatorAttribute() ?>" name="x_unidadeducativa" id="x_unidadeducativa" value="<?php echo $docente->unidadeducativa->CurrentValue ?>"<?php echo $docente->unidadeducativa->EditAttributes() ?>>
@@ -1783,7 +1783,7 @@ ew_CreateDateTimePicker("fdocenteadd", "x_fechanacimiento", {"ignoreReadonly":tr
 		<div class="<?php echo $docente_add->RightColumnClass ?>"><div<?php echo $docente->discapacidad->CellAttributes() ?>>
 <span id="el_docente_discapacidad">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_discapacidad"><?php echo (strval($docente->discapacidad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->discapacidad->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_discapacidad"><?php echo (strval($docente->discapacidad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->discapacidad->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($docente->discapacidad->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_discapacidad',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($docente->discapacidad->ReadOnly || $docente->discapacidad->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="docente" data-field="x_discapacidad" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $docente->discapacidad->DisplayValueSeparatorAttribute() ?>" name="x_discapacidad" id="x_discapacidad" value="<?php echo $docente->discapacidad->CurrentValue ?>"<?php echo $docente->discapacidad->EditAttributes() ?>>
@@ -1800,7 +1800,7 @@ ew_CreateDateTimePicker("fdocenteadd", "x_fechanacimiento", {"ignoreReadonly":tr
 		<div class="<?php echo $docente_add->RightColumnClass ?>"><div<?php echo $docente->tipodiscapacidad->CellAttributes() ?>>
 <span id="el_docente_tipodiscapacidad">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_tipodiscapacidad"><?php echo (strval($docente->tipodiscapacidad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->tipodiscapacidad->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_tipodiscapacidad"><?php echo (strval($docente->tipodiscapacidad->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->tipodiscapacidad->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($docente->tipodiscapacidad->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_tipodiscapacidad',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($docente->tipodiscapacidad->ReadOnly || $docente->tipodiscapacidad->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="docente" data-field="x_tipodiscapacidad" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $docente->tipodiscapacidad->DisplayValueSeparatorAttribute() ?>" name="x_tipodiscapacidad" id="x_tipodiscapacidad" value="<?php echo $docente->tipodiscapacidad->CurrentValue ?>"<?php echo $docente->tipodiscapacidad->EditAttributes() ?>>

@@ -1,7 +1,7 @@
 <?php
 /**
  * PHPMaker Common classes and functions
- * (C) 2002-2018 e.World Technology Limited. All rights reserved.
+ * (C) 2002-2017 e.World Technology Limited. All rights reserved.
 */
 
 // Autoload class
@@ -1082,13 +1082,13 @@ class cEmail {
 
 	// Method to load email from template
 	function Load($fn, $langid = "") {
-		global $gsLanguage, $EW_EMAIL_TEMPLATE_PATH;
+		global $gsLanguage;
 		$langid = ($langid == "") ? $gsLanguage : $langid;
 		$pos = strrpos($fn, '.');
 		if ($pos !== FALSE) {
 			$wrkname = substr($fn, 0, $pos); // Get file name
 			$wrkext = substr($fn, $pos+1); // Get file extension
-			$wrkpath = ew_PathCombine(ew_ScriptFolder(), $EW_EMAIL_TEMPLATE_PATH, TRUE); // Get file path
+			$wrkpath = ew_IncludeTrailingDelimiter(ew_IncludeTrailingDelimiter(ew_ScriptFolder(), TRUE) . EW_EMAIL_TEMPLATE_PATH, TRUE); // Get file path
 			$ar = ($langid <> "") ? array("_" . $langid, "-" . $langid, "") : array("");
 			$exist = FALSE;
 			foreach ($ar as $suffix) {
@@ -3122,7 +3122,7 @@ class cListOptions {
 
 	// Show item
 	function ShowItem($item, $ScriptId, $Pos) {
-		$show = $item->Visible && $this->ShowPos($item->OnLeft, $Pos);
+		$show = $item->Visible && ($ScriptId <> "" || $this->ShowPos($item->OnLeft, $Pos));
 		if ($show)
 			if ($this->UseDropDownButton)
 				$show = ($item->Name == $this->GroupOptionName || !$item->ShowInDropDown);
@@ -6934,15 +6934,13 @@ function ew_ExtractScript(&$html, $class = "") {
 }
 
 // Include PHPMailer class
-include_once $EW_RELATIVE_PATH . "phpmailer603/src/PHPMailer.php";
-include_once $EW_RELATIVE_PATH . "phpmailer603/src/SMTP.php";
-include_once $EW_RELATIVE_PATH . "phpmailer603/src/Exception.php";
+include_once $EW_RELATIVE_PATH . "phpmailer5226/PHPMailerAutoload.php";
 
 // Function to send email
 function ew_SendEmail($sFrEmail, $sToEmail, $sCcEmail, $sBccEmail, $sSubject, $sMail, $sFormat, $sCharset, $sSmtpSecure = "", $arAttachments = array(), $arImages = array(), $arProperties = NULL) {
 	global $Language;
 	$res = FALSE;
-	$mail = new PHPMailer\PHPMailer\PHPMailer();
+	$mail = new PHPMailer();
 	$mail->IsSMTP();
 	$mail->Host = EW_SMTP_SERVER;
 	$mail->SMTPAuth = (EW_SMTP_SERVER_USERNAME <> "" && EW_SMTP_SERVER_PASSWORD <> "");
@@ -7665,6 +7663,9 @@ function ew_StdCurrentDateTime() {
 function ew_StdDateTime($ts) {
 	return date('Y/m/d H:i:s', $ts);
 }
+
+// Include password.php
+include_once $EW_RELATIVE_PATH . "password.php";
 
 // Encrypt password
 function ew_EncryptPassword($input, $salt = '') {

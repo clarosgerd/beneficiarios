@@ -335,9 +335,9 @@ class capoderado_edit extends capoderado {
 		$this->ci->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
 		$this->sexo->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->celular->SetVisibility();
-		$this->ocupaciF3n->SetVisibility();
+		$this->ocupacion->SetVisibility();
 		$this->observaciones->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -599,14 +599,14 @@ class capoderado_edit extends capoderado {
 		if (!$this->sexo->FldIsDetailKey) {
 			$this->sexo->setFormValue($objForm->GetValue("x_sexo"));
 		}
-		if (!$this->direcciF3n->FldIsDetailKey) {
-			$this->direcciF3n->setFormValue($objForm->GetValue("x_direcciF3n"));
+		if (!$this->direccion->FldIsDetailKey) {
+			$this->direccion->setFormValue($objForm->GetValue("x_direccion"));
 		}
 		if (!$this->celular->FldIsDetailKey) {
 			$this->celular->setFormValue($objForm->GetValue("x_celular"));
 		}
-		if (!$this->ocupaciF3n->FldIsDetailKey) {
-			$this->ocupaciF3n->setFormValue($objForm->GetValue("x_ocupaciF3n"));
+		if (!$this->ocupacion->FldIsDetailKey) {
+			$this->ocupacion->setFormValue($objForm->GetValue("x_ocupacion"));
 		}
 		if (!$this->observaciones->FldIsDetailKey) {
 			$this->observaciones->setFormValue($objForm->GetValue("x_observaciones"));
@@ -625,9 +625,9 @@ class capoderado_edit extends capoderado {
 		$this->fechanacimiento->CurrentValue = $this->fechanacimiento->FormValue;
 		$this->fechanacimiento->CurrentValue = ew_UnFormatDateTime($this->fechanacimiento->CurrentValue, 0);
 		$this->sexo->CurrentValue = $this->sexo->FormValue;
-		$this->direcciF3n->CurrentValue = $this->direcciF3n->FormValue;
+		$this->direccion->CurrentValue = $this->direccion->FormValue;
 		$this->celular->CurrentValue = $this->celular->FormValue;
-		$this->ocupaciF3n->CurrentValue = $this->ocupaciF3n->FormValue;
+		$this->ocupacion->CurrentValue = $this->ocupacion->FormValue;
 		$this->observaciones->CurrentValue = $this->observaciones->FormValue;
 	}
 
@@ -672,9 +672,9 @@ class capoderado_edit extends capoderado {
 		$this->ci->setDbValue($row['ci']);
 		$this->fechanacimiento->setDbValue($row['fechanacimiento']);
 		$this->sexo->setDbValue($row['sexo']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->celular->setDbValue($row['celular']);
-		$this->ocupaciF3n->setDbValue($row['ocupación']);
+		$this->ocupacion->setDbValue($row['ocupacion']);
 		$this->observaciones->setDbValue($row['observaciones']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -690,9 +690,9 @@ class capoderado_edit extends capoderado {
 		$row['ci'] = NULL;
 		$row['fechanacimiento'] = NULL;
 		$row['sexo'] = NULL;
-		$row['dirección'] = NULL;
+		$row['direccion'] = NULL;
 		$row['celular'] = NULL;
-		$row['ocupación'] = NULL;
+		$row['ocupacion'] = NULL;
 		$row['observaciones'] = NULL;
 		$row['id_centro'] = NULL;
 		return $row;
@@ -711,9 +711,9 @@ class capoderado_edit extends capoderado {
 		$this->ci->DbValue = $row['ci'];
 		$this->fechanacimiento->DbValue = $row['fechanacimiento'];
 		$this->sexo->DbValue = $row['sexo'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->celular->DbValue = $row['celular'];
-		$this->ocupaciF3n->DbValue = $row['ocupación'];
+		$this->ocupacion->DbValue = $row['ocupacion'];
 		$this->observaciones->DbValue = $row['observaciones'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -758,9 +758,9 @@ class capoderado_edit extends capoderado {
 		// ci
 		// fechanacimiento
 		// sexo
-		// dirección
+		// direccion
 		// celular
-		// ocupación
+		// ocupacion
 		// observaciones
 		// id_centro
 
@@ -803,17 +803,17 @@ class capoderado_edit extends capoderado {
 		}
 		$this->sexo->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// celular
 		$this->celular->ViewValue = $this->celular->CurrentValue;
 		$this->celular->ViewCustomAttributes = "";
 
-		// ocupación
-		$this->ocupaciF3n->ViewValue = $this->ocupaciF3n->CurrentValue;
-		$this->ocupaciF3n->ViewCustomAttributes = "";
+		// ocupacion
+		$this->ocupacion->ViewValue = $this->ocupacion->CurrentValue;
+		$this->ocupacion->ViewCustomAttributes = "";
 
 		// observaciones
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
@@ -859,20 +859,20 @@ class capoderado_edit extends capoderado {
 			$this->sexo->HrefValue = "";
 			$this->sexo->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// celular
 			$this->celular->LinkCustomAttributes = "";
 			$this->celular->HrefValue = "";
 			$this->celular->TooltipValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->LinkCustomAttributes = "";
-			$this->ocupaciF3n->HrefValue = "";
-			$this->ocupaciF3n->TooltipValue = "";
+			// ocupacion
+			$this->ocupacion->LinkCustomAttributes = "";
+			$this->ocupacion->HrefValue = "";
+			$this->ocupacion->TooltipValue = "";
 
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
@@ -927,11 +927,11 @@ class capoderado_edit extends capoderado {
 			$this->sexo->EditCustomAttributes = "";
 			$this->sexo->EditValue = $this->sexo->Options(TRUE);
 
-			// dirección
-			$this->direcciF3n->EditAttrs["class"] = "form-control";
-			$this->direcciF3n->EditCustomAttributes = "";
-			$this->direcciF3n->EditValue = ew_HtmlEncode($this->direcciF3n->CurrentValue);
-			$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+			// direccion
+			$this->direccion->EditAttrs["class"] = "form-control";
+			$this->direccion->EditCustomAttributes = "";
+			$this->direccion->EditValue = ew_HtmlEncode($this->direccion->CurrentValue);
+			$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 			// celular
 			$this->celular->EditAttrs["class"] = "form-control";
@@ -939,11 +939,11 @@ class capoderado_edit extends capoderado {
 			$this->celular->EditValue = ew_HtmlEncode($this->celular->CurrentValue);
 			$this->celular->PlaceHolder = ew_RemoveHtml($this->celular->FldCaption());
 
-			// ocupación
-			$this->ocupaciF3n->EditAttrs["class"] = "form-control";
-			$this->ocupaciF3n->EditCustomAttributes = "";
-			$this->ocupaciF3n->EditValue = ew_HtmlEncode($this->ocupaciF3n->CurrentValue);
-			$this->ocupaciF3n->PlaceHolder = ew_RemoveHtml($this->ocupaciF3n->FldCaption());
+			// ocupacion
+			$this->ocupacion->EditAttrs["class"] = "form-control";
+			$this->ocupacion->EditCustomAttributes = "";
+			$this->ocupacion->EditValue = ew_HtmlEncode($this->ocupacion->CurrentValue);
+			$this->ocupacion->PlaceHolder = ew_RemoveHtml($this->ocupacion->FldCaption());
 
 			// observaciones
 			$this->observaciones->EditAttrs["class"] = "form-control";
@@ -985,17 +985,17 @@ class capoderado_edit extends capoderado {
 			$this->sexo->LinkCustomAttributes = "";
 			$this->sexo->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
 
 			// celular
 			$this->celular->LinkCustomAttributes = "";
 			$this->celular->HrefValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->LinkCustomAttributes = "";
-			$this->ocupaciF3n->HrefValue = "";
+			// ocupacion
+			$this->ocupacion->LinkCustomAttributes = "";
+			$this->ocupacion->HrefValue = "";
 
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
@@ -1043,8 +1043,8 @@ class capoderado_edit extends capoderado {
 		if (!$this->sexo->FldIsDetailKey && !is_null($this->sexo->FormValue) && $this->sexo->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->sexo->FldCaption(), $this->sexo->ReqErrMsg));
 		}
-		if (!ew_CheckInteger($this->direcciF3n->FormValue)) {
-			ew_AddMessage($gsFormError, $this->direcciF3n->FldErrMsg());
+		if (!ew_CheckInteger($this->direccion->FormValue)) {
+			ew_AddMessage($gsFormError, $this->direccion->FldErrMsg());
 		}
 		if (!ew_CheckInteger($this->celular->FormValue)) {
 			ew_AddMessage($gsFormError, $this->celular->FldErrMsg());
@@ -1106,14 +1106,14 @@ class capoderado_edit extends capoderado {
 			// sexo
 			$this->sexo->SetDbValueDef($rsnew, $this->sexo->CurrentValue, 0, $this->sexo->ReadOnly);
 
-			// dirección
-			$this->direcciF3n->SetDbValueDef($rsnew, $this->direcciF3n->CurrentValue, NULL, $this->direcciF3n->ReadOnly);
+			// direccion
+			$this->direccion->SetDbValueDef($rsnew, $this->direccion->CurrentValue, NULL, $this->direccion->ReadOnly);
 
 			// celular
 			$this->celular->SetDbValueDef($rsnew, $this->celular->CurrentValue, NULL, $this->celular->ReadOnly);
 
-			// ocupación
-			$this->ocupaciF3n->SetDbValueDef($rsnew, $this->ocupaciF3n->CurrentValue, NULL, $this->ocupaciF3n->ReadOnly);
+			// ocupacion
+			$this->ocupacion->SetDbValueDef($rsnew, $this->ocupacion->CurrentValue, NULL, $this->ocupacion->ReadOnly);
 
 			// observaciones
 			$this->observaciones->SetDbValueDef($rsnew, $this->observaciones->CurrentValue, NULL, $this->observaciones->ReadOnly);
@@ -1308,9 +1308,9 @@ fapoderadoedit.Validate = function() {
 			elm = this.GetElements("x" + infix + "_sexo");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $apoderado->sexo->FldCaption(), $apoderado->sexo->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_direcciF3n");
+			elm = this.GetElements("x" + infix + "_direccion");
 			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($apoderado->direcciF3n->FldErrMsg()) ?>");
+				return this.OnError(elm, "<?php echo ew_JsEncode2($apoderado->direccion->FldErrMsg()) ?>");
 			elm = this.GetElements("x" + infix + "_celular");
 			if (elm && !ew_CheckInteger(elm.value))
 				return this.OnError(elm, "<?php echo ew_JsEncode2($apoderado->celular->FldErrMsg()) ?>");
@@ -1453,14 +1453,14 @@ ew_CreateDateTimePicker("fapoderadoedit", "x_fechanacimiento", {"ignoreReadonly"
 <?php echo $apoderado->sexo->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
-<?php if ($apoderado->direcciF3n->Visible) { // dirección ?>
-	<div id="r_direcciF3n" class="form-group">
-		<label id="elh_apoderado_direcciF3n" for="x_direcciF3n" class="<?php echo $apoderado_edit->LeftColumnClass ?>"><?php echo $apoderado->direcciF3n->FldCaption() ?></label>
-		<div class="<?php echo $apoderado_edit->RightColumnClass ?>"><div<?php echo $apoderado->direcciF3n->CellAttributes() ?>>
-<span id="el_apoderado_direcciF3n">
-<input type="text" data-table="apoderado" data-field="x_direcciF3n" name="x_direcciF3n" id="x_direcciF3n" size="30" placeholder="<?php echo ew_HtmlEncode($apoderado->direcciF3n->getPlaceHolder()) ?>" value="<?php echo $apoderado->direcciF3n->EditValue ?>"<?php echo $apoderado->direcciF3n->EditAttributes() ?>>
+<?php if ($apoderado->direccion->Visible) { // direccion ?>
+	<div id="r_direccion" class="form-group">
+		<label id="elh_apoderado_direccion" for="x_direccion" class="<?php echo $apoderado_edit->LeftColumnClass ?>"><?php echo $apoderado->direccion->FldCaption() ?></label>
+		<div class="<?php echo $apoderado_edit->RightColumnClass ?>"><div<?php echo $apoderado->direccion->CellAttributes() ?>>
+<span id="el_apoderado_direccion">
+<input type="text" data-table="apoderado" data-field="x_direccion" name="x_direccion" id="x_direccion" size="30" placeholder="<?php echo ew_HtmlEncode($apoderado->direccion->getPlaceHolder()) ?>" value="<?php echo $apoderado->direccion->EditValue ?>"<?php echo $apoderado->direccion->EditAttributes() ?>>
 </span>
-<?php echo $apoderado->direcciF3n->CustomMsg ?></div></div>
+<?php echo $apoderado->direccion->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($apoderado->celular->Visible) { // celular ?>
@@ -1473,14 +1473,14 @@ ew_CreateDateTimePicker("fapoderadoedit", "x_fechanacimiento", {"ignoreReadonly"
 <?php echo $apoderado->celular->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
-<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-	<div id="r_ocupaciF3n" class="form-group">
-		<label id="elh_apoderado_ocupaciF3n" for="x_ocupaciF3n" class="<?php echo $apoderado_edit->LeftColumnClass ?>"><?php echo $apoderado->ocupaciF3n->FldCaption() ?></label>
-		<div class="<?php echo $apoderado_edit->RightColumnClass ?>"><div<?php echo $apoderado->ocupaciF3n->CellAttributes() ?>>
-<span id="el_apoderado_ocupaciF3n">
-<input type="text" data-table="apoderado" data-field="x_ocupaciF3n" name="x_ocupaciF3n" id="x_ocupaciF3n" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($apoderado->ocupaciF3n->getPlaceHolder()) ?>" value="<?php echo $apoderado->ocupaciF3n->EditValue ?>"<?php echo $apoderado->ocupaciF3n->EditAttributes() ?>>
+<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+	<div id="r_ocupacion" class="form-group">
+		<label id="elh_apoderado_ocupacion" for="x_ocupacion" class="<?php echo $apoderado_edit->LeftColumnClass ?>"><?php echo $apoderado->ocupacion->FldCaption() ?></label>
+		<div class="<?php echo $apoderado_edit->RightColumnClass ?>"><div<?php echo $apoderado->ocupacion->CellAttributes() ?>>
+<span id="el_apoderado_ocupacion">
+<input type="text" data-table="apoderado" data-field="x_ocupacion" name="x_ocupacion" id="x_ocupacion" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($apoderado->ocupacion->getPlaceHolder()) ?>" value="<?php echo $apoderado->ocupacion->EditValue ?>"<?php echo $apoderado->ocupacion->EditAttributes() ?>>
 </span>
-<?php echo $apoderado->ocupaciF3n->CustomMsg ?></div></div>
+<?php echo $apoderado->ocupacion->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($apoderado->observaciones->Visible) { // observaciones ?>

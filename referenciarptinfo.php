@@ -13,7 +13,7 @@ class crreferencia extends crTableBase {
 	var $id_medio;
 	var $nombrescompleto;
 	var $nombrescentromedico;
-	var $direcciF3n;
+	var $direccion;
 	var $telefono;
 	var $id_centro;
 
@@ -66,14 +66,14 @@ class crreferencia extends crTableBase {
 		$this->nombrescentromedico->SqlOrderBy = "";
 		$this->fields['nombrescentromedico'] = &$this->nombrescentromedico;
 
-		// dirección
-		$this->direcciF3n = new crField('referencia', 'referencia', 'x_direcciF3n', 'dirección', '`dirección`', 3, EWR_DATATYPE_NUMBER, -1);
-		$this->direcciF3n->Sortable = TRUE; // Allow sort
-		$this->direcciF3n->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
-		$this->direcciF3n->DateFilter = "";
-		$this->direcciF3n->SqlSelect = "";
-		$this->direcciF3n->SqlOrderBy = "";
-		$this->fields['dirección'] = &$this->direcciF3n;
+		// direccion
+		$this->direccion = new crField('referencia', 'referencia', 'x_direccion', 'direccion', '`direccion`', 3, EWR_DATATYPE_NUMBER, -1);
+		$this->direccion->Sortable = TRUE; // Allow sort
+		$this->direccion->FldDefaultErrMsg = $ReportLanguage->Phrase("IncorrectInteger");
+		$this->direccion->DateFilter = "";
+		$this->direccion->SqlSelect = "";
+		$this->direccion->SqlOrderBy = "";
+		$this->fields['direccion'] = &$this->direccion;
 
 		// telefono
 		$this->telefono = new crField('referencia', 'referencia', 'x_telefono', 'telefono', '`telefono`', 3, EWR_DATATYPE_NUMBER, -1);

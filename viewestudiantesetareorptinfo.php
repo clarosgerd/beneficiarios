@@ -9,6 +9,7 @@ $viewestudiantesetareo = NULL;
 class crviewestudiantesetareo extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
 	var $ShowCompactSummaryFooter = FALSE;
+	var $chardemo;
 	var $unidadeducativa;
 	var $_0_3F;
 	var $_4_6F;
@@ -183,6 +184,40 @@ class crviewestudiantesetareo extends crTableBase {
 		$this->fecha->SqlSelect = "SELECT DISTINCT `fecha`, `fecha` AS `DispFld` FROM " . $this->getSqlFrom();
 		$this->fecha->SqlOrderBy = "`fecha`";
 		$this->fields['fecha'] = &$this->fecha;
+
+		// chardemo
+		$this->chardemo = new crChart($this, 'chardemo', 'chardemo', 'unidadeducativa', '0-3F', 4111, '0-3F|4-6F|7-9F|10-12F|13-15F|16-18F|19F|0-3M|4-6M|7-9M|10-12M|13-15M|16-18M|19M', 1, 'SUM', 600, 500);
+		$this->chardemo->ChartSeriesRenderAs = ',,,,,,,,,,,,,';
+		$this->chardemo->ChartSortType = 0;
+		$this->chardemo->ChartSortSeq = "";
+		$this->chardemo->SqlSelect = "SELECT `unidadeducativa`, '', SUM(`0-3F`), SUM(`4-6F`), SUM(`7-9F`), SUM(`10-12F`), SUM(`13-15F`), SUM(`16-18F`), SUM(`19F`), SUM(`0-3M`), SUM(`4-6M`), SUM(`7-9M`), SUM(`10-12M`), SUM(`13-15M`), SUM(`16-18M`), SUM(`19M`) FROM ";
+		$this->chardemo->SqlGroupBy = "`unidadeducativa`";
+		$this->chardemo->SqlOrderBy = "";
+		$this->chardemo->SeriesDateType = "";
+		$this->chardemo->ID = "viewestudiantesetareo_chardemo"; // Chart ID
+		$this->chardemo->SetChartParms(array(array("type", "4111", FALSE),
+			array("seriestype", "1", FALSE)));  // Chart type / Chart series type
+		$this->chardemo->SetChartParm("bgcolor", "FCFCFC", TRUE); // Background color
+		$this->chardemo->SetChartParms(array(array("caption", $this->chardemo->ChartCaption()),
+			array("xaxisname", $this->chardemo->ChartXAxisName()))); // Chart caption / X axis name
+		$this->chardemo->SetChartParm("yaxisname", $this->chardemo->ChartYAxisName(), TRUE); // Y axis name
+		$this->chardemo->SetChartParms(array(array("shownames", "1"),
+			array("showvalues", "1"),
+			array("showhovercap", "1"))); // Show names / Show values / Show hover
+		$this->chardemo->SetChartParm("alpha", "50", FALSE); // Chart alpha
+		$this->chardemo->SetChartParm("colorpalette", "#FF0000|#FF0080|#FF00FF|#8000FF|#FF8000|#FF3D3D|#7AFFFF|#0000FF|#FFFF00|#FF7A7A|#3DFFFF|#0080FF|#80FF00|#00FF00|#00FF80|#00FFFF", FALSE); // Chart color palette
+		$this->chardemo->SetChartParms(array(array("showLimits", "1"),
+	array("showDivLineValues", "1"),
+	array("yAxisMinValue", "0"),
+	array("yAxisMaxValue", "0"),
+	array("exportMode", "auto"),
+	array("showAlternateVGridColor", "0"),
+	));
+		$this->chardemo->ChartGridConfig = '{}';
+		$this->chardemo->Trends[] = array(0, 0, "FF0000", "", 1, "0", "1", 100, "", "0", "0", 0, 0, "S");
+		$this->chardemo->Trends[] = array(0, 0, "FF0000", "", 1, "0", "1", 100, "", "0", "0", 0, 0, "S");
+		$this->chardemo->Trends[] = array(0, 0, "FF0000", "", 1, "0", "1", 100, "", "0", "0", 0, 0, "S");
+		$this->chardemo->Trends[] = array(0, 0, "FF0000", "", 1, "0", "1", 100, "", "0", "0", 0, 0, "S");
 	}
 
 	// Set Field Visibility

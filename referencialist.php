@@ -414,7 +414,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->SetVisibility();
 		$this->nombrescompleto->SetVisibility();
 		$this->nombrescentromedico->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -747,7 +747,7 @@ class creferencia_list extends creferencia {
 		$sFilterList = ew_Concat($sFilterList, $this->id_medio->AdvancedSearch->ToJson(), ","); // Field id_medio
 		$sFilterList = ew_Concat($sFilterList, $this->nombrescompleto->AdvancedSearch->ToJson(), ","); // Field nombrescompleto
 		$sFilterList = ew_Concat($sFilterList, $this->nombrescentromedico->AdvancedSearch->ToJson(), ","); // Field nombrescentromedico
-		$sFilterList = ew_Concat($sFilterList, $this->direcciF3n->AdvancedSearch->ToJson(), ","); // Field dirección
+		$sFilterList = ew_Concat($sFilterList, $this->direccion->AdvancedSearch->ToJson(), ","); // Field direccion
 		$sFilterList = ew_Concat($sFilterList, $this->telefono->AdvancedSearch->ToJson(), ","); // Field telefono
 		$sFilterList = preg_replace('/,$/', "", $sFilterList);
 
@@ -821,13 +821,13 @@ class creferencia_list extends creferencia {
 		$this->nombrescentromedico->AdvancedSearch->SearchOperator2 = @$filter["w_nombrescentromedico"];
 		$this->nombrescentromedico->AdvancedSearch->Save();
 
-		// Field dirección
-		$this->direcciF3n->AdvancedSearch->SearchValue = @$filter["x_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchOperator = @$filter["z_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchCondition = @$filter["v_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchValue2 = @$filter["y_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchOperator2 = @$filter["w_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->Save();
+		// Field direccion
+		$this->direccion->AdvancedSearch->SearchValue = @$filter["x_direccion"];
+		$this->direccion->AdvancedSearch->SearchOperator = @$filter["z_direccion"];
+		$this->direccion->AdvancedSearch->SearchCondition = @$filter["v_direccion"];
+		$this->direccion->AdvancedSearch->SearchValue2 = @$filter["y_direccion"];
+		$this->direccion->AdvancedSearch->SearchOperator2 = @$filter["w_direccion"];
+		$this->direccion->AdvancedSearch->Save();
 
 		// Field telefono
 		$this->telefono->AdvancedSearch->SearchValue = @$filter["x_telefono"];
@@ -847,7 +847,7 @@ class creferencia_list extends creferencia {
 		$this->BuildSearchSql($sWhere, $this->id_medio, $Default, FALSE); // id_medio
 		$this->BuildSearchSql($sWhere, $this->nombrescompleto, $Default, FALSE); // nombrescompleto
 		$this->BuildSearchSql($sWhere, $this->nombrescentromedico, $Default, FALSE); // nombrescentromedico
-		$this->BuildSearchSql($sWhere, $this->direcciF3n, $Default, FALSE); // dirección
+		$this->BuildSearchSql($sWhere, $this->direccion, $Default, FALSE); // direccion
 		$this->BuildSearchSql($sWhere, $this->telefono, $Default, FALSE); // telefono
 
 		// Set up search parm
@@ -859,7 +859,7 @@ class creferencia_list extends creferencia {
 			$this->id_medio->AdvancedSearch->Save(); // id_medio
 			$this->nombrescompleto->AdvancedSearch->Save(); // nombrescompleto
 			$this->nombrescentromedico->AdvancedSearch->Save(); // nombrescentromedico
-			$this->direcciF3n->AdvancedSearch->Save(); // dirección
+			$this->direccion->AdvancedSearch->Save(); // direccion
 			$this->telefono->AdvancedSearch->Save(); // telefono
 		}
 		return $sWhere;
@@ -919,7 +919,7 @@ class creferencia_list extends creferencia {
 			return TRUE;
 		if ($this->nombrescentromedico->AdvancedSearch->IssetSession())
 			return TRUE;
-		if ($this->direcciF3n->AdvancedSearch->IssetSession())
+		if ($this->direccion->AdvancedSearch->IssetSession())
 			return TRUE;
 		if ($this->telefono->AdvancedSearch->IssetSession())
 			return TRUE;
@@ -948,7 +948,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->AdvancedSearch->UnsetSession();
 		$this->nombrescompleto->AdvancedSearch->UnsetSession();
 		$this->nombrescentromedico->AdvancedSearch->UnsetSession();
-		$this->direcciF3n->AdvancedSearch->UnsetSession();
+		$this->direccion->AdvancedSearch->UnsetSession();
 		$this->telefono->AdvancedSearch->UnsetSession();
 	}
 
@@ -961,7 +961,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->AdvancedSearch->Load();
 		$this->nombrescompleto->AdvancedSearch->Load();
 		$this->nombrescentromedico->AdvancedSearch->Load();
-		$this->direcciF3n->AdvancedSearch->Load();
+		$this->direccion->AdvancedSearch->Load();
 		$this->telefono->AdvancedSearch->Load();
 	}
 
@@ -979,7 +979,7 @@ class creferencia_list extends creferencia {
 			$this->UpdateSort($this->id_medio, $bCtrl); // id_medio
 			$this->UpdateSort($this->nombrescompleto, $bCtrl); // nombrescompleto
 			$this->UpdateSort($this->nombrescentromedico, $bCtrl); // nombrescentromedico
-			$this->UpdateSort($this->direcciF3n, $bCtrl); // dirección
+			$this->UpdateSort($this->direccion, $bCtrl); // direccion
 			$this->UpdateSort($this->telefono, $bCtrl); // telefono
 			$this->setStartRecordNumber(1); // Reset start position
 		}
@@ -1017,7 +1017,7 @@ class creferencia_list extends creferencia {
 				$this->id_medio->setSort("");
 				$this->nombrescompleto->setSort("");
 				$this->nombrescentromedico->setSort("");
-				$this->direcciF3n->setSort("");
+				$this->direccion->setSort("");
 				$this->telefono->setSort("");
 			}
 
@@ -1403,10 +1403,10 @@ class creferencia_list extends creferencia {
 		if ($this->nombrescentromedico->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
 		$this->nombrescentromedico->AdvancedSearch->SearchOperator = @$_GET["z_nombrescentromedico"];
 
-		// dirección
-		$this->direcciF3n->AdvancedSearch->SearchValue = @$_GET["x_direcciF3n"];
-		if ($this->direcciF3n->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
-		$this->direcciF3n->AdvancedSearch->SearchOperator = @$_GET["z_direcciF3n"];
+		// direccion
+		$this->direccion->AdvancedSearch->SearchValue = @$_GET["x_direccion"];
+		if ($this->direccion->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
+		$this->direccion->AdvancedSearch->SearchOperator = @$_GET["z_direccion"];
 
 		// telefono
 		$this->telefono->AdvancedSearch->SearchValue = @$_GET["x_telefono"];
@@ -1477,7 +1477,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->setDbValue($row['id_medio']);
 		$this->nombrescompleto->setDbValue($row['nombrescompleto']);
 		$this->nombrescentromedico->setDbValue($row['nombrescentromedico']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->telefono->setDbValue($row['telefono']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -1489,7 +1489,7 @@ class creferencia_list extends creferencia {
 		$row['id_medio'] = NULL;
 		$row['nombrescompleto'] = NULL;
 		$row['nombrescentromedico'] = NULL;
-		$row['dirección'] = NULL;
+		$row['direccion'] = NULL;
 		$row['telefono'] = NULL;
 		$row['id_centro'] = NULL;
 		return $row;
@@ -1504,7 +1504,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->DbValue = $row['id_medio'];
 		$this->nombrescompleto->DbValue = $row['nombrescompleto'];
 		$this->nombrescentromedico->DbValue = $row['nombrescentromedico'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->telefono->DbValue = $row['telefono'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -1551,7 +1551,7 @@ class creferencia_list extends creferencia {
 		// id_medio
 		// nombrescompleto
 		// nombrescentromedico
-		// dirección
+		// direccion
 		// telefono
 		// id_centro
 
@@ -1593,9 +1593,9 @@ class creferencia_list extends creferencia {
 		$this->nombrescentromedico->ViewValue = $this->nombrescentromedico->CurrentValue;
 		$this->nombrescentromedico->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// telefono
 		$this->telefono->ViewValue = $this->telefono->CurrentValue;
@@ -1621,10 +1621,10 @@ class creferencia_list extends creferencia {
 			$this->nombrescentromedico->HrefValue = "";
 			$this->nombrescentromedico->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// telefono
 			$this->telefono->LinkCustomAttributes = "";
@@ -1675,11 +1675,11 @@ class creferencia_list extends creferencia {
 			$this->nombrescentromedico->EditValue = ew_HtmlEncode($this->nombrescentromedico->AdvancedSearch->SearchValue);
 			$this->nombrescentromedico->PlaceHolder = ew_RemoveHtml($this->nombrescentromedico->FldCaption());
 
-			// dirección
-			$this->direcciF3n->EditAttrs["class"] = "form-control";
-			$this->direcciF3n->EditCustomAttributes = "";
-			$this->direcciF3n->EditValue = ew_HtmlEncode($this->direcciF3n->AdvancedSearch->SearchValue);
-			$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+			// direccion
+			$this->direccion->EditAttrs["class"] = "form-control";
+			$this->direccion->EditCustomAttributes = "";
+			$this->direccion->EditValue = ew_HtmlEncode($this->direccion->AdvancedSearch->SearchValue);
+			$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 			// telefono
 			$this->telefono->EditAttrs["class"] = "form-control";
@@ -1724,7 +1724,7 @@ class creferencia_list extends creferencia {
 		$this->id_medio->AdvancedSearch->Load();
 		$this->nombrescompleto->AdvancedSearch->Load();
 		$this->nombrescentromedico->AdvancedSearch->Load();
-		$this->direcciF3n->AdvancedSearch->Load();
+		$this->direccion->AdvancedSearch->Load();
 		$this->telefono->AdvancedSearch->Load();
 	}
 
@@ -2046,7 +2046,7 @@ $referencia_list->RenderRow();
 		<span class="ewSearchOperator"><?php echo $Language->Phrase("LIKE") ?><input type="hidden" name="z_id_medio" id="z_id_medio" value="LIKE"></span>
 		<span class="ewSearchField">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_medio"><?php echo (strval($referencia->id_medio->AdvancedSearch->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $referencia->id_medio->AdvancedSearch->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_medio"><?php echo (strval($referencia->id_medio->AdvancedSearch->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $referencia->id_medio->AdvancedSearch->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($referencia->id_medio->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_medio',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($referencia->id_medio->ReadOnly || $referencia->id_medio->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="referencia" data-field="x_id_medio" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $referencia->id_medio->DisplayValueSeparatorAttribute() ?>" name="x_id_medio" id="x_id_medio" value="<?php echo $referencia->id_medio->AdvancedSearch->SearchValue ?>"<?php echo $referencia->id_medio->EditAttributes() ?>>
@@ -2205,12 +2205,12 @@ $referencia_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($referencia->direcciF3n->Visible) { // dirección ?>
-	<?php if ($referencia->SortUrl($referencia->direcciF3n) == "") { ?>
-		<th data-name="direcciF3n" class="<?php echo $referencia->direcciF3n->HeaderCellClass() ?>"><div id="elh_referencia_direcciF3n" class="referencia_direcciF3n"><div class="ewTableHeaderCaption"><?php echo $referencia->direcciF3n->FldCaption() ?></div></div></th>
+<?php if ($referencia->direccion->Visible) { // direccion ?>
+	<?php if ($referencia->SortUrl($referencia->direccion) == "") { ?>
+		<th data-name="direccion" class="<?php echo $referencia->direccion->HeaderCellClass() ?>"><div id="elh_referencia_direccion" class="referencia_direccion"><div class="ewTableHeaderCaption"><?php echo $referencia->direccion->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="direcciF3n" class="<?php echo $referencia->direcciF3n->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $referencia->SortUrl($referencia->direcciF3n) ?>',2);"><div id="elh_referencia_direcciF3n" class="referencia_direcciF3n">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $referencia->direcciF3n->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($referencia->direcciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($referencia->direcciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		<th data-name="direccion" class="<?php echo $referencia->direccion->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $referencia->SortUrl($referencia->direccion) ?>',2);"><div id="elh_referencia_direccion" class="referencia_direccion">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $referencia->direccion->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($referencia->direccion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($referencia->direccion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2320,11 +2320,11 @@ $referencia_list->ListOptions->Render("body", "left", $referencia_list->RowCnt);
 </span>
 </td>
 	<?php } ?>
-	<?php if ($referencia->direcciF3n->Visible) { // dirección ?>
-		<td data-name="direcciF3n"<?php echo $referencia->direcciF3n->CellAttributes() ?>>
-<span id="el<?php echo $referencia_list->RowCnt ?>_referencia_direcciF3n" class="referencia_direcciF3n">
-<span<?php echo $referencia->direcciF3n->ViewAttributes() ?>>
-<?php echo $referencia->direcciF3n->ListViewValue() ?></span>
+	<?php if ($referencia->direccion->Visible) { // direccion ?>
+		<td data-name="direccion"<?php echo $referencia->direccion->CellAttributes() ?>>
+<span id="el<?php echo $referencia_list->RowCnt ?>_referencia_direccion" class="referencia_direccion">
+<span<?php echo $referencia->direccion->ViewAttributes() ?>>
+<?php echo $referencia->direccion->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

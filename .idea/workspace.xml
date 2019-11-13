@@ -3,11 +3,744 @@
   <component name="ChangeListManager">
     <list default="true" id="4d902bab-7dc9-4c40-9ddf-8d2e4d5e28e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadadd.php" afterPath="$PROJECT_DIR$/actividadadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadedit.php" afterPath="$PROJECT_DIR$/actividadedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadinfo.php" afterPath="$PROJECT_DIR$/actividadinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actividadlist.php" afterPath="$PROJECT_DIR$/actividadlist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/AdminLTE.css" afterPath="$PROJECT_DIR$/adminlte/css/AdminLTE.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/AdminLTE.min.css" afterPath="$PROJECT_DIR$/adminlte/css/AdminLTE.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-bootstrap-social.css" afterPath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-bootstrap-social.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-without-plugins.css" afterPath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-without-plugins.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-without-plugins.min.css" afterPath="$PROJECT_DIR$/adminlte/css/alt/AdminLTE-without-plugins.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/_all-skins.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/_all-skins.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-black-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-black-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-black.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-black.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-blue-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-blue-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-blue.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-blue.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-green-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-green-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-green.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-green.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-purple-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-purple-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-purple.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-purple.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-red-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-red-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-red.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-red.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-yellow-light.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-yellow-light.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/css/skins/skin-yellow.css" afterPath="$PROJECT_DIR$/adminlte/css/skins/skin-yellow.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/adminlte/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/js/adminlte.js" afterPath="$PROJECT_DIR$/adminlte/js/adminlte.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/adminlte/js/adminlte.min.js" afterPath="$PROJECT_DIR$/adminlte/js/adminlte.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadoadd.php" afterPath="$PROJECT_DIR$/apoderadoadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadoaddopt.php" afterPath="$PROJECT_DIR$/apoderadoaddopt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadodelete.php" afterPath="$PROJECT_DIR$/apoderadodelete.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadoedit.php" afterPath="$PROJECT_DIR$/apoderadoedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadoinfo.php" afterPath="$PROJECT_DIR$/apoderadoinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadolist.php" afterPath="$PROJECT_DIR$/apoderadolist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadorpt.php" afterPath="$PROJECT_DIR$/apoderadorpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apoderadorptinfo.php" afterPath="$PROJECT_DIR$/apoderadorptinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionadd.php" afterPath="$PROJECT_DIR$/atencionadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionedit.php" afterPath="$PROJECT_DIR$/atencionedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionescolaraudiologiaadd.php" afterPath="$PROJECT_DIR$/atencionescolaraudiologiaadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionescolaraudiologiaedit.php" afterPath="$PROJECT_DIR$/atencionescolaraudiologiaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionescolaraudiologiainfo.php" afterPath="$PROJECT_DIR$/atencionescolaraudiologiainfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencioninfo.php" afterPath="$PROJECT_DIR$/atencioninfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionneonatoaudiologiaadd.php" afterPath="$PROJECT_DIR$/atencionneonatoaudiologiaadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionneonatoaudiologiaedit.php" afterPath="$PROJECT_DIR$/atencionneonatoaudiologiaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionneonatoaudiologiainfo.php" afterPath="$PROJECT_DIR$/atencionneonatoaudiologiainfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionotrosaudiologiaadd.php" afterPath="$PROJECT_DIR$/atencionotrosaudiologiaadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionotrosaudiologiaedit.php" afterPath="$PROJECT_DIR$/atencionotrosaudiologiaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atencionotrosaudiologiainfo.php" afterPath="$PROJECT_DIR$/atencionotrosaudiologiainfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/audiologiaedit.php" afterPath="$PROJECT_DIR$/audiologiaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/audiologialist.php" afterPath="$PROJECT_DIR$/audiologialist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{2CC8AC78-3FBF-476E-B72B-9E6EDDABE9B2}.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" afterPath="$PROJECT_DIR$/beneficiarios/{707530BA-BEB7-415A-B683-2C9753B31FA3}.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap3/css/bootstrap-theme.css" afterPath="$PROJECT_DIR$/bootstrap3/css/bootstrap-theme.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap3/css/bootstrap.css" afterPath="$PROJECT_DIR$/bootstrap3/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/centrosadd.php" afterPath="$PROJECT_DIR$/centrosadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/centrosedit.php" afterPath="$PROJECT_DIR$/centrosedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/centrosinfo.php" afterPath="$PROJECT_DIR$/centrosinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/README.md" afterPath="$PROJECT_DIR$/ckeditor/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/adapters/jquery.js" afterPath="$PROJECT_DIR$/ckeditor/adapters/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/build-config.js" afterPath="$PROJECT_DIR$/ckeditor/build-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/ckeditor.js" afterPath="$PROJECT_DIR$/ckeditor/ckeditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/config.js" afterPath="$PROJECT_DIR$/ckeditor/config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/af.js" afterPath="$PROJECT_DIR$/ckeditor/lang/af.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ar.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/az.js" afterPath="$PROJECT_DIR$/ckeditor/lang/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/bg.js" afterPath="$PROJECT_DIR$/ckeditor/lang/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/bn.js" afterPath="$PROJECT_DIR$/ckeditor/lang/bn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/bs.js" afterPath="$PROJECT_DIR$/ckeditor/lang/bs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ca.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/cs.js" afterPath="$PROJECT_DIR$/ckeditor/lang/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/cy.js" afterPath="$PROJECT_DIR$/ckeditor/lang/cy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/da.js" afterPath="$PROJECT_DIR$/ckeditor/lang/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/de-ch.js" afterPath="$PROJECT_DIR$/ckeditor/lang/de-ch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/de.js" afterPath="$PROJECT_DIR$/ckeditor/lang/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/el.js" afterPath="$PROJECT_DIR$/ckeditor/lang/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/en-au.js" afterPath="$PROJECT_DIR$/ckeditor/lang/en-au.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/en-ca.js" afterPath="$PROJECT_DIR$/ckeditor/lang/en-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/en-gb.js" afterPath="$PROJECT_DIR$/ckeditor/lang/en-gb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/en.js" afterPath="$PROJECT_DIR$/ckeditor/lang/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/eo.js" afterPath="$PROJECT_DIR$/ckeditor/lang/eo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/es.js" afterPath="$PROJECT_DIR$/ckeditor/lang/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/et.js" afterPath="$PROJECT_DIR$/ckeditor/lang/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/eu.js" afterPath="$PROJECT_DIR$/ckeditor/lang/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/fa.js" afterPath="$PROJECT_DIR$/ckeditor/lang/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/fi.js" afterPath="$PROJECT_DIR$/ckeditor/lang/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/fo.js" afterPath="$PROJECT_DIR$/ckeditor/lang/fo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/fr-ca.js" afterPath="$PROJECT_DIR$/ckeditor/lang/fr-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/fr.js" afterPath="$PROJECT_DIR$/ckeditor/lang/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/gl.js" afterPath="$PROJECT_DIR$/ckeditor/lang/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/gu.js" afterPath="$PROJECT_DIR$/ckeditor/lang/gu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/he.js" afterPath="$PROJECT_DIR$/ckeditor/lang/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/hi.js" afterPath="$PROJECT_DIR$/ckeditor/lang/hi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/hr.js" afterPath="$PROJECT_DIR$/ckeditor/lang/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/hu.js" afterPath="$PROJECT_DIR$/ckeditor/lang/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/id.js" afterPath="$PROJECT_DIR$/ckeditor/lang/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/is.js" afterPath="$PROJECT_DIR$/ckeditor/lang/is.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/it.js" afterPath="$PROJECT_DIR$/ckeditor/lang/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ja.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ka.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ka.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/km.js" afterPath="$PROJECT_DIR$/ckeditor/lang/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ko.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ku.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ku.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/lt.js" afterPath="$PROJECT_DIR$/ckeditor/lang/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/lv.js" afterPath="$PROJECT_DIR$/ckeditor/lang/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/mk.js" afterPath="$PROJECT_DIR$/ckeditor/lang/mk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/mn.js" afterPath="$PROJECT_DIR$/ckeditor/lang/mn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ms.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/nb.js" afterPath="$PROJECT_DIR$/ckeditor/lang/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/nl.js" afterPath="$PROJECT_DIR$/ckeditor/lang/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/no.js" afterPath="$PROJECT_DIR$/ckeditor/lang/no.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/oc.js" afterPath="$PROJECT_DIR$/ckeditor/lang/oc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/pl.js" afterPath="$PROJECT_DIR$/ckeditor/lang/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/pt-br.js" afterPath="$PROJECT_DIR$/ckeditor/lang/pt-br.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/pt.js" afterPath="$PROJECT_DIR$/ckeditor/lang/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ro.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ru.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/si.js" afterPath="$PROJECT_DIR$/ckeditor/lang/si.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sk.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sl.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sq.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sq.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sr-latn.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sr-latn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sr.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/sv.js" afterPath="$PROJECT_DIR$/ckeditor/lang/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/th.js" afterPath="$PROJECT_DIR$/ckeditor/lang/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/tr.js" afterPath="$PROJECT_DIR$/ckeditor/lang/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/tt.js" afterPath="$PROJECT_DIR$/ckeditor/lang/tt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/ug.js" afterPath="$PROJECT_DIR$/ckeditor/lang/ug.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/uk.js" afterPath="$PROJECT_DIR$/ckeditor/lang/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/vi.js" afterPath="$PROJECT_DIR$/ckeditor/lang/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/zh-cn.js" afterPath="$PROJECT_DIR$/ckeditor/lang/zh-cn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/lang/zh.js" afterPath="$PROJECT_DIR$/ckeditor/lang/zh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/af.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/af.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ar.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/az.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/bg.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ca.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/cs.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/cy.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/cy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/da.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/de-ch.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/de-ch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/de.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/el.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/en-gb.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/en-gb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/en.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/eo.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/eo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/es.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/et.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/eu.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fa.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fi.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fo.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fr-ca.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fr-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/gl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/gu.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/gu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/he.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hi.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hu.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/id.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/it.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ja.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/km.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ko.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ku.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ku.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/lt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/lv.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/mk.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/mk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/mn.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/mn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/nb.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/nl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/no.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/no.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/oc.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/oc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pt-br.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pt-br.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ro.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ru.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/si.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/si.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sk.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sq.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sq.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sr-latn.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sr-latn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sv.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/th.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/tr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/tt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/tt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ug.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/ug.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/uk.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/vi.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/zh-cn.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/zh-cn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/zh.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/a11yhelp/dialogs/lang/zh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/about/dialogs/about.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/about/dialogs/about.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/colordialog/dialogs/colordialog.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/colordialog/dialogs/colordialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/copyformatting/cursors/cursor-disabled.svg" afterPath="$PROJECT_DIR$/ckeditor/plugins/copyformatting/cursors/cursor-disabled.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/copyformatting/cursors/cursor.svg" afterPath="$PROJECT_DIR$/ckeditor/plugins/copyformatting/cursors/cursor.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/dialog/dialogDefinition.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/dialog/dialogDefinition.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/div/dialogs/div.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/div/dialogs/div.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/find/dialogs/find.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/find/dialogs/find.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/flash/dialogs/flash.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/flash/dialogs/flash.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/button.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/button.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/checkbox.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/checkbox.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/form.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/hiddenfield.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/hiddenfield.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/radio.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/radio.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/select.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/select.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/textarea.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/textarea.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/textfield.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/forms/dialogs/textfield.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/iframe/dialogs/iframe.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/iframe/dialogs/iframe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/image/dialogs/image.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/image/dialogs/image.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/link/dialogs/anchor.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/link/dialogs/anchor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/link/dialogs/link.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/link/dialogs/link.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/liststyle/dialogs/liststyle.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/liststyle/dialogs/liststyle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/pastefromword/filter/default.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/pastefromword/filter/default.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/scayt/dialogs/options.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/scayt/dialogs/options.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/smiley/dialogs/smiley.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/smiley/dialogs/smiley.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/af.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/af.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ar.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/az.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/bg.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ca.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/cs.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/cy.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/cy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/da.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/de-ch.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/de-ch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/de.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/el.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-au.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-au.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-ca.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-gb.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en-gb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/eo.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/eo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/es.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/et.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/eu.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fa.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fi.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fr-ca.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fr-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/gl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/he.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/hr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/hu.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/id.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/it.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ja.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/km.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ko.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ku.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ku.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/lt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/lv.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/nb.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/nl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/no.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/no.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/oc.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/oc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pt-br.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pt-br.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ru.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/si.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/si.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sk.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sl.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sq.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sq.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sv.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/th.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/tr.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/tt.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/tt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ug.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/ug.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/uk.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/vi.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/zh-cn.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/zh-cn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/zh.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/lang/zh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/specialchar.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/specialchar/dialogs/specialchar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/table/dialogs/table.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/table/dialogs/table.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/tabletools/dialogs/tableCell.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/tabletools/dialogs/tableCell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/templates/dialogs/templates.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/templates/dialogs/templates.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/templates/templates/default.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/templates/templates/default.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/wsc/dialogs/wsc.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/wsc/dialogs/wsc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/wsc/dialogs/wsc_ie.js" afterPath="$PROJECT_DIR$/ckeditor/plugins/wsc/dialogs/wsc_ie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/colorbox/colorbox.css" afterPath="$PROJECT_DIR$/colorbox/colorbox.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/derivaciongrid.php" afterPath="$PROJECT_DIR$/derivaciongrid.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/diagnosticoaudiologiagrid.php" afterPath="$PROJECT_DIR$/diagnosticoaudiologiagrid.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docenteadd.php" afterPath="$PROJECT_DIR$/docenteadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docenteedit.php" afterPath="$PROJECT_DIR$/docenteedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docentelist.php" afterPath="$PROJECT_DIR$/docentelist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/.travis.yml" afterPath="$PROJECT_DIR$/dompdf082/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/dompdf082/CONTRIBUTING.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/LICENSE.LGPL" afterPath="$PROJECT_DIR$/dompdf082/LICENSE.LGPL" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/README.md" afterPath="$PROJECT_DIR$/dompdf082/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/autoload.inc.php" afterPath="$PROJECT_DIR$/dompdf082/autoload.inc.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/composer.json" afterPath="$PROJECT_DIR$/dompdf082/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/Cpdf.php" afterPath="$PROJECT_DIR$/dompdf082/lib/Cpdf.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-Bold.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-Bold.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-BoldOblique.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-BoldOblique.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-Oblique.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans-Oblique.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSans.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-Bold.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-Bold.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-BoldOblique.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-BoldOblique.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-Oblique.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono-Oblique.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSansMono.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-Bold.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-Bold.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-BoldItalic.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-BoldItalic.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-Italic.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif-Italic.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif.ufm" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/DejaVuSerif.ufm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/dompdf_font_family_cache.dist.php" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/dompdf_font_family_cache.dist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/fonts/mustRead.html" afterPath="$PROJECT_DIR$/dompdf082/lib/fonts/mustRead.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/html5lib/Data.php" afterPath="$PROJECT_DIR$/dompdf082/lib/html5lib/Data.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/html5lib/InputStream.php" afterPath="$PROJECT_DIR$/dompdf082/lib/html5lib/InputStream.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/html5lib/Parser.php" afterPath="$PROJECT_DIR$/dompdf082/lib/html5lib/Parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/html5lib/Tokenizer.php" afterPath="$PROJECT_DIR$/dompdf082/lib/html5lib/Tokenizer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/html5lib/TreeBuilder.php" afterPath="$PROJECT_DIR$/dompdf082/lib/html5lib/TreeBuilder.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/.travis.yml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/CHANGELOG.md" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/Doxyfile" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/Doxyfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/README.md" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/composer.json" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/composer.lock" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/AtRuleBlockList.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/AtRuleBlockList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSBlockList.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSBlockList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSList.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/Document.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/Document.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/KeyFrame.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/CSSList/KeyFrame.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Comment/Comment.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Comment/Comment.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Comment/Commentable.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Comment/Commentable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/OutputFormat.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/OutputFormat.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parser.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/OutputException.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/OutputException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/SourceException.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/SourceException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/UnexpectedTokenException.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Parsing/UnexpectedTokenException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/AtRule.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/AtRule.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/CSSNamespace.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/CSSNamespace.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Charset.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Charset.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Import.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Import.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Selector.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Property/Selector.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Renderable.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Renderable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Rule/Rule.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Rule/Rule.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/AtRuleSet.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/AtRuleSet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/DeclarationBlock.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/DeclarationBlock.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/RuleSet.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/RuleSet/RuleSet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Settings.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Settings.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/CSSFunction.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/CSSFunction.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/CSSString.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/CSSString.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Color.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Color.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/PrimitiveValue.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/PrimitiveValue.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/RuleValueList.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/RuleValueList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Size.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Size.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/URL.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/URL.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Value.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/Value.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/ValueList.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/lib/Sabberworm/CSS/Value/ValueList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/phpunit.xml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/phpunit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/CSSList/AtRuleBlockListTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/CSSList/AtRuleBlockListTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/CSSList/DocumentTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/CSSList/DocumentTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/OutputFormatTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/OutputFormatTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/ParserTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/ParserTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/RuleSet/DeclarationBlockTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/RuleSet/DeclarationBlockTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/RuleSet/LenientParsingTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/Sabberworm/CSS/RuleSet/LenientParsingTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/bootstrap.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/bootstrap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-charset-after-rule.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-charset-after-rule.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-charset-in-block.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-charset-in-block.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-end-token.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-end-token.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-fault-tolerance.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-fault-tolerance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-tobedone.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/-tobedone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/1readme.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/1readme.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/2readme.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/2readme.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/atrules.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/atrules.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/case-insensitivity.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/case-insensitivity.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/colortest.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/colortest.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/comments.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/comments.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/create-shorthands.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/create-shorthands.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/expand-shorthands.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/expand-shorthands.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/functions.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/functions.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/ie-hacks.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/ie-hacks.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/ie.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/ie.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/important.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/important.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/inner-color.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/inner-color.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/line-numbers.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/line-numbers.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/namespaces.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/namespaces.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/nested.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/nested.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/slashed.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/slashed.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/specificity.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/specificity.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/unicode.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/unicode.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/url.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/url.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/values.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/values.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/webkit.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/webkit.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/whitespace.css" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/files/whitespace.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/phpunit.xml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/phpunit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/quickdump.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-css-parser/tests/quickdump.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/.travis.yml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/LICENSE" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/README.md" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/bower.json" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/composer.json" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/maps/adobe-standard-encoding.map" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/maps/adobe-standard-encoding.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/phpunit.xml.dist" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/phpunit.xml.dist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/AdobeFontMetrics.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/AdobeFontMetrics.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Autoloader.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Autoloader.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/BinaryStream.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/BinaryStream.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EOT/File.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EOT/File.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EOT/Header.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EOT/Header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EncodingMap.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/EncodingMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Exception/FontNotFoundException.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Exception/FontNotFoundException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Font.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Font.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/Outline.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/Outline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineComponent.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineComposite.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineComposite.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineSimple.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Glyph/OutlineSimple.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Header.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/OpenType/File.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/OpenType/File.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/OpenType/TableDirectoryEntry.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/OpenType/TableDirectoryEntry.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/DirectoryEntry.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/DirectoryEntry.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Table.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/cmap.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/cmap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/glyf.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/glyf.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/head.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/head.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/hhea.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/hhea.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/hmtx.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/hmtx.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/kern.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/kern.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/loca.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/loca.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/maxp.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/maxp.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/name.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/name.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/nameRecord.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/nameRecord.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/os2.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/os2.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/post.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/Table/Type/post.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/Collection.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/Collection.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/File.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/File.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/Header.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/Header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/TableDirectoryEntry.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/TrueType/TableDirectoryEntry.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/File.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/File.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/Header.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/Header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/TableDirectoryEntry.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/src/FontLib/WOFF/TableDirectoryEntry.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/tests/FontLib/FontTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-font-lib/tests/FontLib/FontTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/.travis.yml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/README.md" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/composer.json" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/phpunit.xml" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/phpunit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/DefaultStyle.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/DefaultStyle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Document.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Document.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Gradient/Stop.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Gradient/Stop.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Style.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Style.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/CPdf.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/CPdf.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceCpdf.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceCpdf.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceGmagick.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceGmagick.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceInterface.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfaceInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfacePDFLib.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Surface/SurfacePDFLib.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/AbstractTag.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/AbstractTag.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Anchor.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Anchor.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Circle.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Circle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/ClipPath.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/ClipPath.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Ellipse.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Ellipse.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Group.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Group.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Image.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Image.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Line.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Line.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/LinearGradient.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/LinearGradient.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Path.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Path.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Polygon.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Polygon.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Polyline.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Polyline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/RadialGradient.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/RadialGradient.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Rect.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Rect.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Shape.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Shape.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Stop.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Stop.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/StyleTag.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/StyleTag.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Text.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/Text.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/UseTag.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/Svg/Tag/UseTag.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/autoload.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/src/autoload.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/tests/Svg/StyleTest.php" afterPath="$PROJECT_DIR$/dompdf082/lib/php-svg-lib/tests/Svg/StyleTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/lib/res/html.css" afterPath="$PROJECT_DIR$/dompdf082/lib/res/html.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/phpcs.xml" afterPath="$PROJECT_DIR$/dompdf082/phpcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/phpunit.xml.dist" afterPath="$PROJECT_DIR$/dompdf082/phpunit.xml.dist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Adapter/CPDF.php" afterPath="$PROJECT_DIR$/dompdf082/src/Adapter/CPDF.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Adapter/GD.php" afterPath="$PROJECT_DIR$/dompdf082/src/Adapter/GD.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Adapter/PDFLib.php" afterPath="$PROJECT_DIR$/dompdf082/src/Adapter/PDFLib.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Autoloader.php" afterPath="$PROJECT_DIR$/dompdf082/src/Autoloader.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Canvas.php" afterPath="$PROJECT_DIR$/dompdf082/src/Canvas.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/CanvasFactory.php" afterPath="$PROJECT_DIR$/dompdf082/src/CanvasFactory.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Cellmap.php" afterPath="$PROJECT_DIR$/dompdf082/src/Cellmap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Css/AttributeTranslator.php" afterPath="$PROJECT_DIR$/dompdf082/src/Css/AttributeTranslator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Css/Color.php" afterPath="$PROJECT_DIR$/dompdf082/src/Css/Color.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Css/Style.php" afterPath="$PROJECT_DIR$/dompdf082/src/Css/Style.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Css/Stylesheet.php" afterPath="$PROJECT_DIR$/dompdf082/src/Css/Stylesheet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Dompdf.php" afterPath="$PROJECT_DIR$/dompdf082/src/Dompdf.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Exception.php" afterPath="$PROJECT_DIR$/dompdf082/src/Exception.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Exception/ImageException.php" afterPath="$PROJECT_DIR$/dompdf082/src/Exception/ImageException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FontMetrics.php" afterPath="$PROJECT_DIR$/dompdf082/src/FontMetrics.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/Factory.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/Factory.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/FrameList.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/FrameList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/FrameListIterator.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/FrameListIterator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTree.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTree.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTreeIterator.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTreeIterator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTreeList.php" afterPath="$PROJECT_DIR$/dompdf082/src/Frame/FrameTreeList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/AbstractFrameDecorator.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/AbstractFrameDecorator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Block.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Block.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Image.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Image.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Inline.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Inline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/ListBullet.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/ListBullet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/ListBulletImage.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/ListBulletImage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/NullFrameDecorator.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/NullFrameDecorator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Page.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Page.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Table.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/Table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableCell.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableCell.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableRow.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableRow.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableRowGroup.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameDecorator/TableRowGroup.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/AbstractFrameReflower.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/AbstractFrameReflower.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Block.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Block.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Image.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Image.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Inline.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Inline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/ListBullet.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/ListBullet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/NullFrameReflower.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/NullFrameReflower.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Page.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Page.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Table.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableCell.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableCell.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableRow.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableRow.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableRowGroup.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/TableRowGroup.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Text.php" afterPath="$PROJECT_DIR$/dompdf082/src/FrameReflower/Text.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Helpers.php" afterPath="$PROJECT_DIR$/dompdf082/src/Helpers.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Image/Cache.php" afterPath="$PROJECT_DIR$/dompdf082/src/Image/Cache.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/JavascriptEmbedder.php" afterPath="$PROJECT_DIR$/dompdf082/src/JavascriptEmbedder.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/LineBox.php" afterPath="$PROJECT_DIR$/dompdf082/src/LineBox.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Options.php" afterPath="$PROJECT_DIR$/dompdf082/src/Options.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/PhpEvaluator.php" afterPath="$PROJECT_DIR$/dompdf082/src/PhpEvaluator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/Absolute.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/Absolute.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/AbstractPositioner.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/AbstractPositioner.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/Block.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/Block.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/Fixed.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/Fixed.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/Inline.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/Inline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/ListBullet.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/ListBullet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/NullPositioner.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/NullPositioner.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/TableCell.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/TableCell.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Positioner/TableRow.php" afterPath="$PROJECT_DIR$/dompdf082/src/Positioner/TableRow.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/AbstractRenderer.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/AbstractRenderer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/Block.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/Block.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/Image.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/Image.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/Inline.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/Inline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/ListBullet.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/ListBullet.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/TableCell.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/TableCell.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/TableRowGroup.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/TableRowGroup.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dompdf082/src/Renderer/Text.php" afterPath="$PROJECT_DIR$/dompdf082/src/Renderer/Text.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/escolaradd.php" afterPath="$PROJECT_DIR$/escolaradd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/escolaraddopt.php" afterPath="$PROJECT_DIR$/escolaraddopt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/escolaredit.php" afterPath="$PROJECT_DIR$/escolaredit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/escolarinfo.php" afterPath="$PROJECT_DIR$/escolarinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewcfg14.php" afterPath="$PROJECT_DIR$/ewcfg14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewdbhelper14.php" afterPath="$PROJECT_DIR$/ewdbhelper14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewlookup14.php" afterPath="$PROJECT_DIR$/ewlookup14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmenu.php" afterPath="$PROJECT_DIR$/ewmenu.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmodallookup14.php" afterPath="$PROJECT_DIR$/ewmodallookup14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ewmysql14.php" afterPath="$PROJECT_DIR$/ewmysql14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/header.php" afterPath="$PROJECT_DIR$/header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html2text/html2text.php" afterPath="$PROJECT_DIR$/html2text/html2text.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html2text/src/Html2Text.php" afterPath="$PROJECT_DIR$/html2text/src/Html2Text.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/html2text/src/Html2TextException.php" afterPath="$PROJECT_DIR$/html2text/src/Html2TextException.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/institucionesdesaludadd.php" afterPath="$PROJECT_DIR$/institucionesdesaludadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/institucionesdesaludedit.php" afterPath="$PROJECT_DIR$/institucionesdesaludedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/institucionesdesaludinfo.php" afterPath="$PROJECT_DIR$/institucionesdesaludinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery-3.2.1.min.js" afterPath="$PROJECT_DIR$/jquery/jquery-3.2.1.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery-migrate-3.0.0.js" afterPath="$PROJECT_DIR$/jquery/jquery-migrate-3.0.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery.fileDownload.js" afterPath="$PROJECT_DIR$/jquery/jquery.fileDownload.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jquery.fileDownload.min.js" afterPath="$PROJECT_DIR$/jquery/jquery.fileDownload.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jqueryfileupload.js" afterPath="$PROJECT_DIR$/jquery/jqueryfileupload.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/jqueryfileupload.min.js" afterPath="$PROJECT_DIR$/jquery/jqueryfileupload.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jquery/load-image.all.min.js" afterPath="$PROJECT_DIR$/jquery/load-image.all.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/login.php" afterPath="$PROJECT_DIR$/login.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_detect.php" afterPath="$PROJECT_DIR$/mobile_detect.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/af.js" afterPath="$PROJECT_DIR$/moment/locale/af.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-dz.js" afterPath="$PROJECT_DIR$/moment/locale/ar-dz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-kw.js" afterPath="$PROJECT_DIR$/moment/locale/ar-kw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-ly.js" afterPath="$PROJECT_DIR$/moment/locale/ar-ly.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-ma.js" afterPath="$PROJECT_DIR$/moment/locale/ar-ma.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-sa.js" afterPath="$PROJECT_DIR$/moment/locale/ar-sa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar-tn.js" afterPath="$PROJECT_DIR$/moment/locale/ar-tn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ar.js" afterPath="$PROJECT_DIR$/moment/locale/ar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/az.js" afterPath="$PROJECT_DIR$/moment/locale/az.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/be.js" afterPath="$PROJECT_DIR$/moment/locale/be.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/bg.js" afterPath="$PROJECT_DIR$/moment/locale/bg.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/bn.js" afterPath="$PROJECT_DIR$/moment/locale/bn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/bo.js" afterPath="$PROJECT_DIR$/moment/locale/bo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/br.js" afterPath="$PROJECT_DIR$/moment/locale/br.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/bs.js" afterPath="$PROJECT_DIR$/moment/locale/bs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ca.js" afterPath="$PROJECT_DIR$/moment/locale/ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/cs.js" afterPath="$PROJECT_DIR$/moment/locale/cs.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/cv.js" afterPath="$PROJECT_DIR$/moment/locale/cv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/cy.js" afterPath="$PROJECT_DIR$/moment/locale/cy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/da.js" afterPath="$PROJECT_DIR$/moment/locale/da.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/de-at.js" afterPath="$PROJECT_DIR$/moment/locale/de-at.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/de-ch.js" afterPath="$PROJECT_DIR$/moment/locale/de-ch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/de.js" afterPath="$PROJECT_DIR$/moment/locale/de.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/dv.js" afterPath="$PROJECT_DIR$/moment/locale/dv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/el.js" afterPath="$PROJECT_DIR$/moment/locale/el.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/en-au.js" afterPath="$PROJECT_DIR$/moment/locale/en-au.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/en-ca.js" afterPath="$PROJECT_DIR$/moment/locale/en-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/en-gb.js" afterPath="$PROJECT_DIR$/moment/locale/en-gb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/en-ie.js" afterPath="$PROJECT_DIR$/moment/locale/en-ie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/en-nz.js" afterPath="$PROJECT_DIR$/moment/locale/en-nz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/eo.js" afterPath="$PROJECT_DIR$/moment/locale/eo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/es-do.js" afterPath="$PROJECT_DIR$/moment/locale/es-do.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/es.js" afterPath="$PROJECT_DIR$/moment/locale/es.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/et.js" afterPath="$PROJECT_DIR$/moment/locale/et.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/eu.js" afterPath="$PROJECT_DIR$/moment/locale/eu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fa.js" afterPath="$PROJECT_DIR$/moment/locale/fa.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fi.js" afterPath="$PROJECT_DIR$/moment/locale/fi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fo.js" afterPath="$PROJECT_DIR$/moment/locale/fo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fr-ca.js" afterPath="$PROJECT_DIR$/moment/locale/fr-ca.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fr-ch.js" afterPath="$PROJECT_DIR$/moment/locale/fr-ch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fr.js" afterPath="$PROJECT_DIR$/moment/locale/fr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/fy.js" afterPath="$PROJECT_DIR$/moment/locale/fy.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/gd.js" afterPath="$PROJECT_DIR$/moment/locale/gd.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/gl.js" afterPath="$PROJECT_DIR$/moment/locale/gl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/gom-latn.js" afterPath="$PROJECT_DIR$/moment/locale/gom-latn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/he.js" afterPath="$PROJECT_DIR$/moment/locale/he.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/hi.js" afterPath="$PROJECT_DIR$/moment/locale/hi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/hr.js" afterPath="$PROJECT_DIR$/moment/locale/hr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/hu.js" afterPath="$PROJECT_DIR$/moment/locale/hu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/hy-am.js" afterPath="$PROJECT_DIR$/moment/locale/hy-am.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/id.js" afterPath="$PROJECT_DIR$/moment/locale/id.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/is.js" afterPath="$PROJECT_DIR$/moment/locale/is.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/it.js" afterPath="$PROJECT_DIR$/moment/locale/it.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ja.js" afterPath="$PROJECT_DIR$/moment/locale/ja.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/jv.js" afterPath="$PROJECT_DIR$/moment/locale/jv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ka.js" afterPath="$PROJECT_DIR$/moment/locale/ka.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/kk.js" afterPath="$PROJECT_DIR$/moment/locale/kk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/km.js" afterPath="$PROJECT_DIR$/moment/locale/km.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/kn.js" afterPath="$PROJECT_DIR$/moment/locale/kn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ko.js" afterPath="$PROJECT_DIR$/moment/locale/ko.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ky.js" afterPath="$PROJECT_DIR$/moment/locale/ky.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/lb.js" afterPath="$PROJECT_DIR$/moment/locale/lb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/lo.js" afterPath="$PROJECT_DIR$/moment/locale/lo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/lt.js" afterPath="$PROJECT_DIR$/moment/locale/lt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/lv.js" afterPath="$PROJECT_DIR$/moment/locale/lv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/me.js" afterPath="$PROJECT_DIR$/moment/locale/me.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/mi.js" afterPath="$PROJECT_DIR$/moment/locale/mi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/mk.js" afterPath="$PROJECT_DIR$/moment/locale/mk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ml.js" afterPath="$PROJECT_DIR$/moment/locale/ml.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/mr.js" afterPath="$PROJECT_DIR$/moment/locale/mr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ms-my.js" afterPath="$PROJECT_DIR$/moment/locale/ms-my.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ms.js" afterPath="$PROJECT_DIR$/moment/locale/ms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/my.js" afterPath="$PROJECT_DIR$/moment/locale/my.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/nb.js" afterPath="$PROJECT_DIR$/moment/locale/nb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ne.js" afterPath="$PROJECT_DIR$/moment/locale/ne.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/nl-be.js" afterPath="$PROJECT_DIR$/moment/locale/nl-be.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/nl.js" afterPath="$PROJECT_DIR$/moment/locale/nl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/nn.js" afterPath="$PROJECT_DIR$/moment/locale/nn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/pa-in.js" afterPath="$PROJECT_DIR$/moment/locale/pa-in.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/pl.js" afterPath="$PROJECT_DIR$/moment/locale/pl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/pt-br.js" afterPath="$PROJECT_DIR$/moment/locale/pt-br.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/pt.js" afterPath="$PROJECT_DIR$/moment/locale/pt.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ro.js" afterPath="$PROJECT_DIR$/moment/locale/ro.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ru.js" afterPath="$PROJECT_DIR$/moment/locale/ru.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sd.js" afterPath="$PROJECT_DIR$/moment/locale/sd.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/se.js" afterPath="$PROJECT_DIR$/moment/locale/se.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/si.js" afterPath="$PROJECT_DIR$/moment/locale/si.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sk.js" afterPath="$PROJECT_DIR$/moment/locale/sk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sl.js" afterPath="$PROJECT_DIR$/moment/locale/sl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sq.js" afterPath="$PROJECT_DIR$/moment/locale/sq.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sr-cyrl.js" afterPath="$PROJECT_DIR$/moment/locale/sr-cyrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sr.js" afterPath="$PROJECT_DIR$/moment/locale/sr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ss.js" afterPath="$PROJECT_DIR$/moment/locale/ss.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sv.js" afterPath="$PROJECT_DIR$/moment/locale/sv.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/sw.js" afterPath="$PROJECT_DIR$/moment/locale/sw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ta.js" afterPath="$PROJECT_DIR$/moment/locale/ta.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/te.js" afterPath="$PROJECT_DIR$/moment/locale/te.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tet.js" afterPath="$PROJECT_DIR$/moment/locale/tet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/th.js" afterPath="$PROJECT_DIR$/moment/locale/th.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tl-ph.js" afterPath="$PROJECT_DIR$/moment/locale/tl-ph.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tlh.js" afterPath="$PROJECT_DIR$/moment/locale/tlh.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tr.js" afterPath="$PROJECT_DIR$/moment/locale/tr.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tzl.js" afterPath="$PROJECT_DIR$/moment/locale/tzl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tzm-latn.js" afterPath="$PROJECT_DIR$/moment/locale/tzm-latn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/tzm.js" afterPath="$PROJECT_DIR$/moment/locale/tzm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/uk.js" afterPath="$PROJECT_DIR$/moment/locale/uk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/ur.js" afterPath="$PROJECT_DIR$/moment/locale/ur.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/uz-latn.js" afterPath="$PROJECT_DIR$/moment/locale/uz-latn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/uz.js" afterPath="$PROJECT_DIR$/moment/locale/uz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/vi.js" afterPath="$PROJECT_DIR$/moment/locale/vi.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/x-pseudo.js" afterPath="$PROJECT_DIR$/moment/locale/x-pseudo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/yo.js" afterPath="$PROJECT_DIR$/moment/locale/yo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/zh-cn.js" afterPath="$PROJECT_DIR$/moment/locale/zh-cn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/zh-hk.js" afterPath="$PROJECT_DIR$/moment/locale/zh-hk.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/locale/zh-tw.js" afterPath="$PROJECT_DIR$/moment/locale/zh-tw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/moment.js" afterPath="$PROJECT_DIR$/moment/moment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/moment/moment.min.js" afterPath="$PROJECT_DIR$/moment/moment.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neonataladd.php" afterPath="$PROJECT_DIR$/neonataladd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neonataladdopt.php" afterPath="$PROJECT_DIR$/neonataladdopt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neonataledit.php" afterPath="$PROJECT_DIR$/neonataledit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neonatalinfo.php" afterPath="$PROJECT_DIR$/neonatalinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrasorganizacionesadd.php" afterPath="$PROJECT_DIR$/otrasorganizacionesadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrasorganizacionesedit.php" afterPath="$PROJECT_DIR$/otrasorganizacionesedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrasorganizacionesinfo.php" afterPath="$PROJECT_DIR$/otrasorganizacionesinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrosadd.php" afterPath="$PROJECT_DIR$/otrosadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrosaddopt.php" afterPath="$PROJECT_DIR$/otrosaddopt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/otrosedit.php" afterPath="$PROJECT_DIR$/otrosedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participanteadd.php" afterPath="$PROJECT_DIR$/participanteadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participanteedit.php" afterPath="$PROJECT_DIR$/participanteedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/password.php" afterPath="$PROJECT_DIR$/password.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/passwordhash.php" afterPath="$PROJECT_DIR$/passwordhash.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/_bootstrap-datetimepicker.scss" afterPath="$PROJECT_DIR$/phpcss/_bootstrap-datetimepicker.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/beneficiarios.css" afterPath="$PROJECT_DIR$/phpcss/beneficiarios.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/bootstrap-datetimepicker.css" afterPath="$PROJECT_DIR$/phpcss/bootstrap-datetimepicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/bootstrap-datetimepicker.scss" afterPath="$PROJECT_DIR$/phpcss/bootstrap-datetimepicker.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/jquery.fileupload-ui.css" afterPath="$PROJECT_DIR$/phpcss/jquery.fileupload-ui.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcss/jquery.fileupload.css" afterPath="$PROJECT_DIR$/phpcss/jquery.fileupload.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpfn14.php" afterPath="$PROJECT_DIR$/phpfn14.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/bootstrap-datetimepicker.js" afterPath="$PROJECT_DIR$/phpjs/bootstrap-datetimepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/ewdatetimepicker.js" afterPath="$PROJECT_DIR$/phpjs/ewdatetimepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/eweditor.js" afterPath="$PROJECT_DIR$/phpjs/eweditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/ewp14.js" afterPath="$PROJECT_DIR$/phpjs/ewp14.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/jsrender.min.js" afterPath="$PROJECT_DIR$/phpjs/jsrender.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/mobile-detect.min.js" afterPath="$PROJECT_DIR$/phpjs/mobile-detect.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpjs/typeahead.jquery.js" afterPath="$PROJECT_DIR$/phpjs/typeahead.jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phplang/english.xml" afterPath="$PROJECT_DIR$/phplang/english.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptcss/beneficiarios.css" afterPath="$PROJECT_DIR$/phprptcss/beneficiarios.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptcss/bootstrap-datetimepicker.css" afterPath="$PROJECT_DIR$/phprptcss/bootstrap-datetimepicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptcss/fonts/ew.svg" afterPath="$PROJECT_DIR$/phprptcss/fonts/ew.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptjs/bootstrap-datetimepicker.js" afterPath="$PROJECT_DIR$/phprptjs/bootstrap-datetimepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptjs/ewr11.js" afterPath="$PROJECT_DIR$/phprptjs/ewr11.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptjs/typeahead.jquery.js" afterPath="$PROJECT_DIR$/phprptjs/typeahead.jquery.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phprptlang/english.xml" afterPath="$PROJECT_DIR$/phprptlang/english.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.pmp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/beneficiarios.prp" afterPath="$PROJECT_DIR$/proyecto/beneficiarios.prp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pruebasaudiologiagrid.php" afterPath="$PROJECT_DIR$/pruebasaudiologiagrid.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rcfg11.php" afterPath="$PROJECT_DIR$/rcfg11.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rdbhelper11.php" afterPath="$PROJECT_DIR$/rdbhelper11.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciaadd.php" afterPath="$PROJECT_DIR$/referenciaadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciaaddopt.php" afterPath="$PROJECT_DIR$/referenciaaddopt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciadelete.php" afterPath="$PROJECT_DIR$/referenciadelete.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciaedit.php" afterPath="$PROJECT_DIR$/referenciaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciainfo.php" afterPath="$PROJECT_DIR$/referenciainfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referencialist.php" afterPath="$PROJECT_DIR$/referencialist.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciarpt.php" afterPath="$PROJECT_DIR$/referenciarpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/referenciarptinfo.php" afterPath="$PROJECT_DIR$/referenciarptinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tratamientogrid.php" afterPath="$PROJECT_DIR$/tratamientogrid.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unidadeducativaadd.php" afterPath="$PROJECT_DIR$/unidadeducativaadd.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unidadeducativaedit.php" afterPath="$PROJECT_DIR$/unidadeducativaedit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/unidadeducativainfo.php" afterPath="$PROJECT_DIR$/unidadeducativainfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uploadhandler.php" afterPath="$PROJECT_DIR$/uploadhandler.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudiantesetareorpt.php" afterPath="$PROJECT_DIR$/viewestudiantesetareorpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewestudiantesetareorptinfo.php" afterPath="$PROJECT_DIR$/viewestudiantesetareorptinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewsaludescolarrpt.php" afterPath="$PROJECT_DIR$/viewsaludescolarrpt.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/viewsaludescolarrptinfo.php" afterPath="$PROJECT_DIR$/viewsaludescolarrptinfo.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,9 +782,6 @@
       </path>
     </expand>
     <select />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -124,11 +854,6 @@
               <item name="beneficiarios" type="b2602c69:ProjectViewProjectNode" />
               <item name="beneficiarios" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="beneficiarios" type="b2602c69:ProjectViewProjectNode" />
-              <item name="beneficiarios" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="proyecto" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -189,30 +914,40 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23329000" />
+    <option name="totallyTimeSpent" value="24677000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24886535" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2489019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27987897" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12995246" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24886535" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27987897" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,7 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44676">
           <caret line="2628" column="0" lean-forward="true" selection-start-line="2628" selection-start-column="0" selection-end-line="2628" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -268,7 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44676">
           <caret line="2628" column="0" lean-forward="false" selection-start-line="2628" selection-start-column="0" selection-end-line="2628" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -283,17 +1016,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44659">
           <caret line="2627" column="0" lean-forward="false" selection-start-line="2627" selection-start-column="0" selection-end-line="2627" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6c663d73-5583-4bc4-9b0f-1d855e86132d/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6c663d73-5583-4bc4-9b0f-1d855e86132d/console.sql" />
     <entry file="file://$PROJECT_DIR$/ewcfg14.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -305,7 +1031,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44659">
           <caret line="2627" column="0" lean-forward="false" selection-start-line="2627" selection-start-column="0" selection-end-line="2627" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -405,20 +1130,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbSrc:///65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/schema/benificiaries/view/viewmarcologico.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="196" column="0" lean-forward="true" selection-start-line="0" selection-start-column="28" selection-end-line="196" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://view:/65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/benificiaries.viewmarcologico">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="dbSrc:///65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/schema/benificiaries/view/viewmarcologico.sql" />
+    <entry file="das://view:/65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/benificiaries.viewmarcologico" />
     <entry file="file://$PROJECT_DIR$/estudianteinfo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -426,25 +1139,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://src:table:/65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/benificiaries.unidadeducativa">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" lean-forward="false" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6c663d73-5583-4bc4-9b0f-1d855e86132d/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="169" column="64" lean-forward="true" selection-start-line="169" selection-start-column="64" selection-end-line="169" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://src:table:/65260131/6c663d73-5583-4bc4-9b0f-1d855e86132d/benificiaries.unidadeducativa" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6c663d73-5583-4bc4-9b0f-1d855e86132d/console.sql" />
     <entry file="file://$PROJECT_DIR$/proyecto/benificiaries (14).sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
           <caret line="2628" column="0" lean-forward="false" selection-start-line="2628" selection-start-column="0" selection-end-line="2628" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -452,7 +1152,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="2628" column="0" lean-forward="false" selection-start-line="2628" selection-start-column="0" selection-end-line="2628" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

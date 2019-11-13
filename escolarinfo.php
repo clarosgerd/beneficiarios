@@ -315,7 +315,7 @@ class cescolar extends cTable {
 	function getSqlSelectList() { // Select for List page
 		$select = "";
 		$select = "SELECT * FROM (" .
-			"SELECT *, (SELECT CONCAT(COALESCE(`nombres`, ''),'" . ew_ValueSeparator(1, $this->id_apoderado) . "',COALESCE(`apellidopaterno`,''),'" . ew_ValueSeparator(2, $this->id_apoderado) . "',COALESCE(`apellidomaterno`,'')) FROM `apoderado` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `escolar`.`id_apoderado` LIMIT 1) AS `EV__id_apoderado`, (SELECT CONCAT(COALESCE(`nombrescompleto`, ''),'" . ew_ValueSeparator(1, $this->id_referencia) . "',COALESCE(`nombrescentromedico`,'')) FROM `referencia` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `escolar`.`id_referencia` LIMIT 1) AS `EV__id_referencia` FROM `escolar`" .
+			"SELECT *, (SELECT CONCAT(`nombres`,'" . ew_ValueSeparator(1, $this->id_apoderado) . "',`apellidopaterno`,'" . ew_ValueSeparator(2, $this->id_apoderado) . "',`apellidomaterno`) FROM `apoderado` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `escolar`.`id_apoderado` LIMIT 1) AS `EV__id_apoderado`, (SELECT CONCAT(`nombrescompleto`,'" . ew_ValueSeparator(1, $this->id_referencia) . "',`nombrescentromedico`) FROM `referencia` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `escolar`.`id_referencia` LIMIT 1) AS `EV__id_referencia` FROM `escolar`" .
 			") `EW_TMP_TABLE`";
 		return ($this->_SqlSelectList <> "") ? $this->_SqlSelectList : $select;
 	}

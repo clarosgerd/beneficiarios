@@ -418,9 +418,9 @@ class capoderado_list extends capoderado {
 		$this->ci->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
 		$this->sexo->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->celular->SetVisibility();
-		$this->ocupaciF3n->SetVisibility();
+		$this->ocupacion->SetVisibility();
 		$this->observaciones->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -757,9 +757,9 @@ class capoderado_list extends capoderado {
 		$sFilterList = ew_Concat($sFilterList, $this->ci->AdvancedSearch->ToJson(), ","); // Field ci
 		$sFilterList = ew_Concat($sFilterList, $this->fechanacimiento->AdvancedSearch->ToJson(), ","); // Field fechanacimiento
 		$sFilterList = ew_Concat($sFilterList, $this->sexo->AdvancedSearch->ToJson(), ","); // Field sexo
-		$sFilterList = ew_Concat($sFilterList, $this->direcciF3n->AdvancedSearch->ToJson(), ","); // Field dirección
+		$sFilterList = ew_Concat($sFilterList, $this->direccion->AdvancedSearch->ToJson(), ","); // Field direccion
 		$sFilterList = ew_Concat($sFilterList, $this->celular->AdvancedSearch->ToJson(), ","); // Field celular
-		$sFilterList = ew_Concat($sFilterList, $this->ocupaciF3n->AdvancedSearch->ToJson(), ","); // Field ocupación
+		$sFilterList = ew_Concat($sFilterList, $this->ocupacion->AdvancedSearch->ToJson(), ","); // Field ocupacion
 		$sFilterList = ew_Concat($sFilterList, $this->observaciones->AdvancedSearch->ToJson(), ","); // Field observaciones
 		$sFilterList = preg_replace('/,$/', "", $sFilterList);
 
@@ -865,13 +865,13 @@ class capoderado_list extends capoderado {
 		$this->sexo->AdvancedSearch->SearchOperator2 = @$filter["w_sexo"];
 		$this->sexo->AdvancedSearch->Save();
 
-		// Field dirección
-		$this->direcciF3n->AdvancedSearch->SearchValue = @$filter["x_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchOperator = @$filter["z_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchCondition = @$filter["v_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchValue2 = @$filter["y_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->SearchOperator2 = @$filter["w_direcciF3n"];
-		$this->direcciF3n->AdvancedSearch->Save();
+		// Field direccion
+		$this->direccion->AdvancedSearch->SearchValue = @$filter["x_direccion"];
+		$this->direccion->AdvancedSearch->SearchOperator = @$filter["z_direccion"];
+		$this->direccion->AdvancedSearch->SearchCondition = @$filter["v_direccion"];
+		$this->direccion->AdvancedSearch->SearchValue2 = @$filter["y_direccion"];
+		$this->direccion->AdvancedSearch->SearchOperator2 = @$filter["w_direccion"];
+		$this->direccion->AdvancedSearch->Save();
 
 		// Field celular
 		$this->celular->AdvancedSearch->SearchValue = @$filter["x_celular"];
@@ -881,13 +881,13 @@ class capoderado_list extends capoderado {
 		$this->celular->AdvancedSearch->SearchOperator2 = @$filter["w_celular"];
 		$this->celular->AdvancedSearch->Save();
 
-		// Field ocupación
-		$this->ocupaciF3n->AdvancedSearch->SearchValue = @$filter["x_ocupaciF3n"];
-		$this->ocupaciF3n->AdvancedSearch->SearchOperator = @$filter["z_ocupaciF3n"];
-		$this->ocupaciF3n->AdvancedSearch->SearchCondition = @$filter["v_ocupaciF3n"];
-		$this->ocupaciF3n->AdvancedSearch->SearchValue2 = @$filter["y_ocupaciF3n"];
-		$this->ocupaciF3n->AdvancedSearch->SearchOperator2 = @$filter["w_ocupaciF3n"];
-		$this->ocupaciF3n->AdvancedSearch->Save();
+		// Field ocupacion
+		$this->ocupacion->AdvancedSearch->SearchValue = @$filter["x_ocupacion"];
+		$this->ocupacion->AdvancedSearch->SearchOperator = @$filter["z_ocupacion"];
+		$this->ocupacion->AdvancedSearch->SearchCondition = @$filter["v_ocupacion"];
+		$this->ocupacion->AdvancedSearch->SearchValue2 = @$filter["y_ocupacion"];
+		$this->ocupacion->AdvancedSearch->SearchOperator2 = @$filter["w_ocupacion"];
+		$this->ocupacion->AdvancedSearch->Save();
 
 		// Field observaciones
 		$this->observaciones->AdvancedSearch->SearchValue = @$filter["x_observaciones"];
@@ -911,9 +911,9 @@ class capoderado_list extends capoderado {
 		$this->BuildSearchSql($sWhere, $this->ci, $Default, FALSE); // ci
 		$this->BuildSearchSql($sWhere, $this->fechanacimiento, $Default, FALSE); // fechanacimiento
 		$this->BuildSearchSql($sWhere, $this->sexo, $Default, FALSE); // sexo
-		$this->BuildSearchSql($sWhere, $this->direcciF3n, $Default, FALSE); // dirección
+		$this->BuildSearchSql($sWhere, $this->direccion, $Default, FALSE); // direccion
 		$this->BuildSearchSql($sWhere, $this->celular, $Default, FALSE); // celular
-		$this->BuildSearchSql($sWhere, $this->ocupaciF3n, $Default, FALSE); // ocupación
+		$this->BuildSearchSql($sWhere, $this->ocupacion, $Default, FALSE); // ocupacion
 		$this->BuildSearchSql($sWhere, $this->observaciones, $Default, FALSE); // observaciones
 
 		// Set up search parm
@@ -929,9 +929,9 @@ class capoderado_list extends capoderado {
 			$this->ci->AdvancedSearch->Save(); // ci
 			$this->fechanacimiento->AdvancedSearch->Save(); // fechanacimiento
 			$this->sexo->AdvancedSearch->Save(); // sexo
-			$this->direcciF3n->AdvancedSearch->Save(); // dirección
+			$this->direccion->AdvancedSearch->Save(); // direccion
 			$this->celular->AdvancedSearch->Save(); // celular
-			$this->ocupaciF3n->AdvancedSearch->Save(); // ocupación
+			$this->ocupacion->AdvancedSearch->Save(); // ocupacion
 			$this->observaciones->AdvancedSearch->Save(); // observaciones
 		}
 		return $sWhere;
@@ -999,11 +999,11 @@ class capoderado_list extends capoderado {
 			return TRUE;
 		if ($this->sexo->AdvancedSearch->IssetSession())
 			return TRUE;
-		if ($this->direcciF3n->AdvancedSearch->IssetSession())
+		if ($this->direccion->AdvancedSearch->IssetSession())
 			return TRUE;
 		if ($this->celular->AdvancedSearch->IssetSession())
 			return TRUE;
-		if ($this->ocupaciF3n->AdvancedSearch->IssetSession())
+		if ($this->ocupacion->AdvancedSearch->IssetSession())
 			return TRUE;
 		if ($this->observaciones->AdvancedSearch->IssetSession())
 			return TRUE;
@@ -1036,9 +1036,9 @@ class capoderado_list extends capoderado {
 		$this->ci->AdvancedSearch->UnsetSession();
 		$this->fechanacimiento->AdvancedSearch->UnsetSession();
 		$this->sexo->AdvancedSearch->UnsetSession();
-		$this->direcciF3n->AdvancedSearch->UnsetSession();
+		$this->direccion->AdvancedSearch->UnsetSession();
 		$this->celular->AdvancedSearch->UnsetSession();
-		$this->ocupaciF3n->AdvancedSearch->UnsetSession();
+		$this->ocupacion->AdvancedSearch->UnsetSession();
 		$this->observaciones->AdvancedSearch->UnsetSession();
 	}
 
@@ -1055,9 +1055,9 @@ class capoderado_list extends capoderado {
 		$this->ci->AdvancedSearch->Load();
 		$this->fechanacimiento->AdvancedSearch->Load();
 		$this->sexo->AdvancedSearch->Load();
-		$this->direcciF3n->AdvancedSearch->Load();
+		$this->direccion->AdvancedSearch->Load();
 		$this->celular->AdvancedSearch->Load();
-		$this->ocupaciF3n->AdvancedSearch->Load();
+		$this->ocupacion->AdvancedSearch->Load();
 		$this->observaciones->AdvancedSearch->Load();
 	}
 
@@ -1079,9 +1079,9 @@ class capoderado_list extends capoderado {
 			$this->UpdateSort($this->ci, $bCtrl); // ci
 			$this->UpdateSort($this->fechanacimiento, $bCtrl); // fechanacimiento
 			$this->UpdateSort($this->sexo, $bCtrl); // sexo
-			$this->UpdateSort($this->direcciF3n, $bCtrl); // dirección
+			$this->UpdateSort($this->direccion, $bCtrl); // direccion
 			$this->UpdateSort($this->celular, $bCtrl); // celular
-			$this->UpdateSort($this->ocupaciF3n, $bCtrl); // ocupación
+			$this->UpdateSort($this->ocupacion, $bCtrl); // ocupacion
 			$this->UpdateSort($this->observaciones, $bCtrl); // observaciones
 			$this->setStartRecordNumber(1); // Reset start position
 		}
@@ -1123,9 +1123,9 @@ class capoderado_list extends capoderado {
 				$this->ci->setSort("");
 				$this->fechanacimiento->setSort("");
 				$this->sexo->setSort("");
-				$this->direcciF3n->setSort("");
+				$this->direccion->setSort("");
 				$this->celular->setSort("");
-				$this->ocupaciF3n->setSort("");
+				$this->ocupacion->setSort("");
 				$this->observaciones->setSort("");
 			}
 
@@ -1531,20 +1531,20 @@ class capoderado_list extends capoderado {
 		if ($this->sexo->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
 		$this->sexo->AdvancedSearch->SearchOperator = @$_GET["z_sexo"];
 
-		// dirección
-		$this->direcciF3n->AdvancedSearch->SearchValue = @$_GET["x_direcciF3n"];
-		if ($this->direcciF3n->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
-		$this->direcciF3n->AdvancedSearch->SearchOperator = @$_GET["z_direcciF3n"];
+		// direccion
+		$this->direccion->AdvancedSearch->SearchValue = @$_GET["x_direccion"];
+		if ($this->direccion->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
+		$this->direccion->AdvancedSearch->SearchOperator = @$_GET["z_direccion"];
 
 		// celular
 		$this->celular->AdvancedSearch->SearchValue = @$_GET["x_celular"];
 		if ($this->celular->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
 		$this->celular->AdvancedSearch->SearchOperator = @$_GET["z_celular"];
 
-		// ocupación
-		$this->ocupaciF3n->AdvancedSearch->SearchValue = @$_GET["x_ocupaciF3n"];
-		if ($this->ocupaciF3n->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
-		$this->ocupaciF3n->AdvancedSearch->SearchOperator = @$_GET["z_ocupaciF3n"];
+		// ocupacion
+		$this->ocupacion->AdvancedSearch->SearchValue = @$_GET["x_ocupacion"];
+		if ($this->ocupacion->AdvancedSearch->SearchValue <> "" && $this->Command == "") $this->Command = "search";
+		$this->ocupacion->AdvancedSearch->SearchOperator = @$_GET["z_ocupacion"];
 
 		// observaciones
 		$this->observaciones->AdvancedSearch->SearchValue = @$_GET["x_observaciones"];
@@ -1619,9 +1619,9 @@ class capoderado_list extends capoderado {
 		$this->ci->setDbValue($row['ci']);
 		$this->fechanacimiento->setDbValue($row['fechanacimiento']);
 		$this->sexo->setDbValue($row['sexo']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->celular->setDbValue($row['celular']);
-		$this->ocupaciF3n->setDbValue($row['ocupación']);
+		$this->ocupacion->setDbValue($row['ocupacion']);
 		$this->observaciones->setDbValue($row['observaciones']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -1637,9 +1637,9 @@ class capoderado_list extends capoderado {
 		$row['ci'] = NULL;
 		$row['fechanacimiento'] = NULL;
 		$row['sexo'] = NULL;
-		$row['dirección'] = NULL;
+		$row['direccion'] = NULL;
 		$row['celular'] = NULL;
-		$row['ocupación'] = NULL;
+		$row['ocupacion'] = NULL;
 		$row['observaciones'] = NULL;
 		$row['id_centro'] = NULL;
 		return $row;
@@ -1658,9 +1658,9 @@ class capoderado_list extends capoderado {
 		$this->ci->DbValue = $row['ci'];
 		$this->fechanacimiento->DbValue = $row['fechanacimiento'];
 		$this->sexo->DbValue = $row['sexo'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->celular->DbValue = $row['celular'];
-		$this->ocupaciF3n->DbValue = $row['ocupación'];
+		$this->ocupacion->DbValue = $row['ocupacion'];
 		$this->observaciones->DbValue = $row['observaciones'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -1711,9 +1711,9 @@ class capoderado_list extends capoderado {
 		// ci
 		// fechanacimiento
 		// sexo
-		// dirección
+		// direccion
 		// celular
-		// ocupación
+		// ocupacion
 		// observaciones
 		// id_centro
 
@@ -1757,17 +1757,17 @@ class capoderado_list extends capoderado {
 		}
 		$this->sexo->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// celular
 		$this->celular->ViewValue = $this->celular->CurrentValue;
 		$this->celular->ViewCustomAttributes = "";
 
-		// ocupación
-		$this->ocupaciF3n->ViewValue = $this->ocupaciF3n->CurrentValue;
-		$this->ocupaciF3n->ViewCustomAttributes = "";
+		// ocupacion
+		$this->ocupacion->ViewValue = $this->ocupacion->CurrentValue;
+		$this->ocupacion->ViewCustomAttributes = "";
 
 		// observaciones
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
@@ -1813,20 +1813,20 @@ class capoderado_list extends capoderado {
 			$this->sexo->HrefValue = "";
 			$this->sexo->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// celular
 			$this->celular->LinkCustomAttributes = "";
 			$this->celular->HrefValue = "";
 			$this->celular->TooltipValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->LinkCustomAttributes = "";
-			$this->ocupaciF3n->HrefValue = "";
-			$this->ocupaciF3n->TooltipValue = "";
+			// ocupacion
+			$this->ocupacion->LinkCustomAttributes = "";
+			$this->ocupacion->HrefValue = "";
+			$this->ocupacion->TooltipValue = "";
 
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
@@ -1881,11 +1881,11 @@ class capoderado_list extends capoderado {
 			$this->sexo->EditCustomAttributes = "";
 			$this->sexo->EditValue = $this->sexo->Options(TRUE);
 
-			// dirección
-			$this->direcciF3n->EditAttrs["class"] = "form-control";
-			$this->direcciF3n->EditCustomAttributes = "";
-			$this->direcciF3n->EditValue = ew_HtmlEncode($this->direcciF3n->AdvancedSearch->SearchValue);
-			$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+			// direccion
+			$this->direccion->EditAttrs["class"] = "form-control";
+			$this->direccion->EditCustomAttributes = "";
+			$this->direccion->EditValue = ew_HtmlEncode($this->direccion->AdvancedSearch->SearchValue);
+			$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 			// celular
 			$this->celular->EditAttrs["class"] = "form-control";
@@ -1893,11 +1893,11 @@ class capoderado_list extends capoderado {
 			$this->celular->EditValue = ew_HtmlEncode($this->celular->AdvancedSearch->SearchValue);
 			$this->celular->PlaceHolder = ew_RemoveHtml($this->celular->FldCaption());
 
-			// ocupación
-			$this->ocupaciF3n->EditAttrs["class"] = "form-control";
-			$this->ocupaciF3n->EditCustomAttributes = "";
-			$this->ocupaciF3n->EditValue = ew_HtmlEncode($this->ocupaciF3n->AdvancedSearch->SearchValue);
-			$this->ocupaciF3n->PlaceHolder = ew_RemoveHtml($this->ocupaciF3n->FldCaption());
+			// ocupacion
+			$this->ocupacion->EditAttrs["class"] = "form-control";
+			$this->ocupacion->EditCustomAttributes = "";
+			$this->ocupacion->EditValue = ew_HtmlEncode($this->ocupacion->AdvancedSearch->SearchValue);
+			$this->ocupacion->PlaceHolder = ew_RemoveHtml($this->ocupacion->FldCaption());
 
 			// observaciones
 			$this->observaciones->EditAttrs["class"] = "form-control";
@@ -1946,9 +1946,9 @@ class capoderado_list extends capoderado {
 		$this->ci->AdvancedSearch->Load();
 		$this->fechanacimiento->AdvancedSearch->Load();
 		$this->sexo->AdvancedSearch->Load();
-		$this->direcciF3n->AdvancedSearch->Load();
+		$this->direccion->AdvancedSearch->Load();
 		$this->celular->AdvancedSearch->Load();
-		$this->ocupaciF3n->AdvancedSearch->Load();
+		$this->ocupacion->AdvancedSearch->Load();
 		$this->observaciones->AdvancedSearch->Load();
 	}
 
@@ -2305,12 +2305,12 @@ $apoderado_list->RenderRow();
 <?php } ?>
 </div>
 <div id="xsr_6" class="ewRow">
-<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-	<div id="xsc_ocupaciF3n" class="ewCell form-group">
-		<label for="x_ocupaciF3n" class="ewSearchCaption ewLabel"><?php echo $apoderado->ocupaciF3n->FldCaption() ?></label>
-		<span class="ewSearchOperator"><?php echo $Language->Phrase("LIKE") ?><input type="hidden" name="z_ocupaciF3n" id="z_ocupaciF3n" value="LIKE"></span>
+<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+	<div id="xsc_ocupacion" class="ewCell form-group">
+		<label for="x_ocupacion" class="ewSearchCaption ewLabel"><?php echo $apoderado->ocupacion->FldCaption() ?></label>
+		<span class="ewSearchOperator"><?php echo $Language->Phrase("LIKE") ?><input type="hidden" name="z_ocupacion" id="z_ocupacion" value="LIKE"></span>
 		<span class="ewSearchField">
-<input type="text" data-table="apoderado" data-field="x_ocupaciF3n" name="x_ocupaciF3n" id="x_ocupaciF3n" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($apoderado->ocupaciF3n->getPlaceHolder()) ?>" value="<?php echo $apoderado->ocupaciF3n->EditValue ?>"<?php echo $apoderado->ocupaciF3n->EditAttributes() ?>>
+<input type="text" data-table="apoderado" data-field="x_ocupacion" name="x_ocupacion" id="x_ocupacion" size="30" maxlength="100" placeholder="<?php echo ew_HtmlEncode($apoderado->ocupacion->getPlaceHolder()) ?>" value="<?php echo $apoderado->ocupacion->EditValue ?>"<?php echo $apoderado->ocupacion->EditAttributes() ?>>
 </span>
 	</div>
 <?php } ?>
@@ -2480,12 +2480,12 @@ $apoderado_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($apoderado->direcciF3n->Visible) { // dirección ?>
-	<?php if ($apoderado->SortUrl($apoderado->direcciF3n) == "") { ?>
-		<th data-name="direcciF3n" class="<?php echo $apoderado->direcciF3n->HeaderCellClass() ?>"><div id="elh_apoderado_direcciF3n" class="apoderado_direcciF3n"><div class="ewTableHeaderCaption"><?php echo $apoderado->direcciF3n->FldCaption() ?></div></div></th>
+<?php if ($apoderado->direccion->Visible) { // direccion ?>
+	<?php if ($apoderado->SortUrl($apoderado->direccion) == "") { ?>
+		<th data-name="direccion" class="<?php echo $apoderado->direccion->HeaderCellClass() ?>"><div id="elh_apoderado_direccion" class="apoderado_direccion"><div class="ewTableHeaderCaption"><?php echo $apoderado->direccion->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="direcciF3n" class="<?php echo $apoderado->direcciF3n->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $apoderado->SortUrl($apoderado->direcciF3n) ?>',2);"><div id="elh_apoderado_direcciF3n" class="apoderado_direcciF3n">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $apoderado->direcciF3n->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($apoderado->direcciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($apoderado->direcciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		<th data-name="direccion" class="<?php echo $apoderado->direccion->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $apoderado->SortUrl($apoderado->direccion) ?>',2);"><div id="elh_apoderado_direccion" class="apoderado_direccion">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $apoderado->direccion->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($apoderado->direccion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($apoderado->direccion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2498,12 +2498,12 @@ $apoderado_list->ListOptions->Render("header", "left");
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
-<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-	<?php if ($apoderado->SortUrl($apoderado->ocupaciF3n) == "") { ?>
-		<th data-name="ocupaciF3n" class="<?php echo $apoderado->ocupaciF3n->HeaderCellClass() ?>"><div id="elh_apoderado_ocupaciF3n" class="apoderado_ocupaciF3n"><div class="ewTableHeaderCaption"><?php echo $apoderado->ocupaciF3n->FldCaption() ?></div></div></th>
+<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+	<?php if ($apoderado->SortUrl($apoderado->ocupacion) == "") { ?>
+		<th data-name="ocupacion" class="<?php echo $apoderado->ocupacion->HeaderCellClass() ?>"><div id="elh_apoderado_ocupacion" class="apoderado_ocupacion"><div class="ewTableHeaderCaption"><?php echo $apoderado->ocupacion->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="ocupaciF3n" class="<?php echo $apoderado->ocupaciF3n->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $apoderado->SortUrl($apoderado->ocupaciF3n) ?>',2);"><div id="elh_apoderado_ocupaciF3n" class="apoderado_ocupaciF3n">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $apoderado->ocupaciF3n->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($apoderado->ocupaciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($apoderado->ocupaciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
+		<th data-name="ocupacion" class="<?php echo $apoderado->ocupacion->HeaderCellClass() ?>"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $apoderado->SortUrl($apoderado->ocupacion) ?>',2);"><div id="elh_apoderado_ocupacion" class="apoderado_ocupacion">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $apoderado->ocupacion->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($apoderado->ocupacion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($apoderado->ocupacion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span></div>
 		</div></div></th>
 	<?php } ?>
 <?php } ?>
@@ -2645,11 +2645,11 @@ $apoderado_list->ListOptions->Render("body", "left", $apoderado_list->RowCnt);
 </span>
 </td>
 	<?php } ?>
-	<?php if ($apoderado->direcciF3n->Visible) { // dirección ?>
-		<td data-name="direcciF3n"<?php echo $apoderado->direcciF3n->CellAttributes() ?>>
-<span id="el<?php echo $apoderado_list->RowCnt ?>_apoderado_direcciF3n" class="apoderado_direcciF3n">
-<span<?php echo $apoderado->direcciF3n->ViewAttributes() ?>>
-<?php echo $apoderado->direcciF3n->ListViewValue() ?></span>
+	<?php if ($apoderado->direccion->Visible) { // direccion ?>
+		<td data-name="direccion"<?php echo $apoderado->direccion->CellAttributes() ?>>
+<span id="el<?php echo $apoderado_list->RowCnt ?>_apoderado_direccion" class="apoderado_direccion">
+<span<?php echo $apoderado->direccion->ViewAttributes() ?>>
+<?php echo $apoderado->direccion->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>
@@ -2661,11 +2661,11 @@ $apoderado_list->ListOptions->Render("body", "left", $apoderado_list->RowCnt);
 </span>
 </td>
 	<?php } ?>
-	<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-		<td data-name="ocupaciF3n"<?php echo $apoderado->ocupaciF3n->CellAttributes() ?>>
-<span id="el<?php echo $apoderado_list->RowCnt ?>_apoderado_ocupaciF3n" class="apoderado_ocupaciF3n">
-<span<?php echo $apoderado->ocupaciF3n->ViewAttributes() ?>>
-<?php echo $apoderado->ocupaciF3n->ListViewValue() ?></span>
+	<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+		<td data-name="ocupacion"<?php echo $apoderado->ocupacion->CellAttributes() ?>>
+<span id="el<?php echo $apoderado_list->RowCnt ?>_apoderado_ocupacion" class="apoderado_ocupacion">
+<span<?php echo $apoderado->ocupacion->ViewAttributes() ?>>
+<?php echo $apoderado->ocupacion->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>

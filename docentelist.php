@@ -2520,7 +2520,7 @@ $docente_list->RenderRow();
 		<span class="ewSearchOperator"><?php echo $Language->Phrase("LIKE") ?><input type="hidden" name="z_unidadeducativa" id="z_unidadeducativa" value="LIKE"></span>
 		<span class="ewSearchField">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_unidadeducativa"><?php echo (strval($docente->unidadeducativa->AdvancedSearch->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->unidadeducativa->AdvancedSearch->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_unidadeducativa"><?php echo (strval($docente->unidadeducativa->AdvancedSearch->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $docente->unidadeducativa->AdvancedSearch->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($docente->unidadeducativa->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_unidadeducativa',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($docente->unidadeducativa->ReadOnly || $docente->unidadeducativa->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="docente" data-field="x_unidadeducativa" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $docente->unidadeducativa->DisplayValueSeparatorAttribute() ?>" name="x_unidadeducativa" id="x_unidadeducativa" value="<?php echo $docente->unidadeducativa->AdvancedSearch->SearchValue ?>"<?php echo $docente->unidadeducativa->EditAttributes() ?>>

@@ -326,7 +326,7 @@ class creferencia_delete extends creferencia {
 		$this->id_medio->SetVisibility();
 		$this->nombrescompleto->SetVisibility();
 		$this->nombrescentromedico->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -511,7 +511,7 @@ class creferencia_delete extends creferencia {
 		$this->id_medio->setDbValue($row['id_medio']);
 		$this->nombrescompleto->setDbValue($row['nombrescompleto']);
 		$this->nombrescentromedico->setDbValue($row['nombrescentromedico']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->telefono->setDbValue($row['telefono']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -523,7 +523,7 @@ class creferencia_delete extends creferencia {
 		$row['id_medio'] = NULL;
 		$row['nombrescompleto'] = NULL;
 		$row['nombrescentromedico'] = NULL;
-		$row['dirección'] = NULL;
+		$row['direccion'] = NULL;
 		$row['telefono'] = NULL;
 		$row['id_centro'] = NULL;
 		return $row;
@@ -538,7 +538,7 @@ class creferencia_delete extends creferencia {
 		$this->id_medio->DbValue = $row['id_medio'];
 		$this->nombrescompleto->DbValue = $row['nombrescompleto'];
 		$this->nombrescentromedico->DbValue = $row['nombrescentromedico'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->telefono->DbValue = $row['telefono'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -557,7 +557,7 @@ class creferencia_delete extends creferencia {
 		// id_medio
 		// nombrescompleto
 		// nombrescentromedico
-		// dirección
+		// direccion
 		// telefono
 		// id_centro
 
@@ -599,9 +599,9 @@ class creferencia_delete extends creferencia {
 		$this->nombrescentromedico->ViewValue = $this->nombrescentromedico->CurrentValue;
 		$this->nombrescentromedico->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// telefono
 		$this->telefono->ViewValue = $this->telefono->CurrentValue;
@@ -627,10 +627,10 @@ class creferencia_delete extends creferencia {
 			$this->nombrescentromedico->HrefValue = "";
 			$this->nombrescentromedico->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// telefono
 			$this->telefono->LinkCustomAttributes = "";
@@ -887,8 +887,8 @@ $referencia_delete->ShowMessage();
 <?php if ($referencia->nombrescentromedico->Visible) { // nombrescentromedico ?>
 		<th class="<?php echo $referencia->nombrescentromedico->HeaderCellClass() ?>"><span id="elh_referencia_nombrescentromedico" class="referencia_nombrescentromedico"><?php echo $referencia->nombrescentromedico->FldCaption() ?></span></th>
 <?php } ?>
-<?php if ($referencia->direcciF3n->Visible) { // dirección ?>
-		<th class="<?php echo $referencia->direcciF3n->HeaderCellClass() ?>"><span id="elh_referencia_direcciF3n" class="referencia_direcciF3n"><?php echo $referencia->direcciF3n->FldCaption() ?></span></th>
+<?php if ($referencia->direccion->Visible) { // direccion ?>
+		<th class="<?php echo $referencia->direccion->HeaderCellClass() ?>"><span id="elh_referencia_direccion" class="referencia_direccion"><?php echo $referencia->direccion->FldCaption() ?></span></th>
 <?php } ?>
 <?php if ($referencia->telefono->Visible) { // telefono ?>
 		<th class="<?php echo $referencia->telefono->HeaderCellClass() ?>"><span id="elh_referencia_telefono" class="referencia_telefono"><?php echo $referencia->telefono->FldCaption() ?></span></th>
@@ -946,11 +946,11 @@ while (!$referencia_delete->Recordset->EOF) {
 </span>
 </td>
 <?php } ?>
-<?php if ($referencia->direcciF3n->Visible) { // dirección ?>
-		<td<?php echo $referencia->direcciF3n->CellAttributes() ?>>
-<span id="el<?php echo $referencia_delete->RowCnt ?>_referencia_direcciF3n" class="referencia_direcciF3n">
-<span<?php echo $referencia->direcciF3n->ViewAttributes() ?>>
-<?php echo $referencia->direcciF3n->ListViewValue() ?></span>
+<?php if ($referencia->direccion->Visible) { // direccion ?>
+		<td<?php echo $referencia->direccion->CellAttributes() ?>>
+<span id="el<?php echo $referencia_delete->RowCnt ?>_referencia_direccion" class="referencia_direccion">
+<span<?php echo $referencia->direccion->ViewAttributes() ?>>
+<?php echo $referencia->direccion->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

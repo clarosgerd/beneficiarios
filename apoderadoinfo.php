@@ -15,9 +15,9 @@ class capoderado extends cTable {
 	var $ci;
 	var $fechanacimiento;
 	var $sexo;
-	var $direcciF3n;
+	var $direccion;
 	var $celular;
-	var $ocupaciF3n;
+	var $ocupacion;
 	var $observaciones;
 	var $id_centro;
 
@@ -99,11 +99,11 @@ class capoderado extends cTable {
 		$this->sexo->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['sexo'] = &$this->sexo;
 
-		// dirección
-		$this->direcciF3n = new cField('apoderado', 'apoderado', 'x_direcciF3n', 'dirección', '`dirección`', '`dirección`', 200, -1, FALSE, '`dirección`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->direcciF3n->Sortable = TRUE; // Allow sort
-		$this->direcciF3n->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['dirección'] = &$this->direcciF3n;
+		// direccion
+		$this->direccion = new cField('apoderado', 'apoderado', 'x_direccion', 'direccion', '`direccion`', '`direccion`', 200, -1, FALSE, '`direccion`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->direccion->Sortable = TRUE; // Allow sort
+		$this->direccion->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['direccion'] = &$this->direccion;
 
 		// celular
 		$this->celular = new cField('apoderado', 'apoderado', 'x_celular', 'celular', '`celular`', '`celular`', 3, -1, FALSE, '`celular`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
@@ -111,10 +111,10 @@ class capoderado extends cTable {
 		$this->celular->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
 		$this->fields['celular'] = &$this->celular;
 
-		// ocupación
-		$this->ocupaciF3n = new cField('apoderado', 'apoderado', 'x_ocupaciF3n', 'ocupación', '`ocupación`', '`ocupación`', 200, -1, FALSE, '`ocupación`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->ocupaciF3n->Sortable = TRUE; // Allow sort
-		$this->fields['ocupación'] = &$this->ocupaciF3n;
+		// ocupacion
+		$this->ocupacion = new cField('apoderado', 'apoderado', 'x_ocupacion', 'ocupacion', '`ocupacion`', '`ocupacion`', 200, -1, FALSE, '`ocupacion`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->ocupacion->Sortable = TRUE; // Allow sort
+		$this->fields['ocupacion'] = &$this->ocupacion;
 
 		// observaciones
 		$this->observaciones = new cField('apoderado', 'apoderado', 'x_observaciones', 'observaciones', '`observaciones`', '`observaciones`', 200, -1, FALSE, '`observaciones`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
@@ -672,9 +672,9 @@ class capoderado extends cTable {
 		$this->ci->setDbValue($rs->fields('ci'));
 		$this->fechanacimiento->setDbValue($rs->fields('fechanacimiento'));
 		$this->sexo->setDbValue($rs->fields('sexo'));
-		$this->direcciF3n->setDbValue($rs->fields('dirección'));
+		$this->direccion->setDbValue($rs->fields('direccion'));
 		$this->celular->setDbValue($rs->fields('celular'));
-		$this->ocupaciF3n->setDbValue($rs->fields('ocupación'));
+		$this->ocupacion->setDbValue($rs->fields('ocupacion'));
 		$this->observaciones->setDbValue($rs->fields('observaciones'));
 		$this->id_centro->setDbValue($rs->fields('id_centro'));
 	}
@@ -695,9 +695,9 @@ class capoderado extends cTable {
 		// ci
 		// fechanacimiento
 		// sexo
-		// dirección
+		// direccion
 		// celular
-		// ocupación
+		// ocupacion
 		// observaciones
 		// id_centro
 
@@ -740,17 +740,17 @@ class capoderado extends cTable {
 		}
 		$this->sexo->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// celular
 		$this->celular->ViewValue = $this->celular->CurrentValue;
 		$this->celular->ViewCustomAttributes = "";
 
-		// ocupación
-		$this->ocupaciF3n->ViewValue = $this->ocupaciF3n->CurrentValue;
-		$this->ocupaciF3n->ViewCustomAttributes = "";
+		// ocupacion
+		$this->ocupacion->ViewValue = $this->ocupacion->CurrentValue;
+		$this->ocupacion->ViewCustomAttributes = "";
 
 		// observaciones
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
@@ -800,20 +800,20 @@ class capoderado extends cTable {
 		$this->sexo->HrefValue = "";
 		$this->sexo->TooltipValue = "";
 
-		// dirección
-		$this->direcciF3n->LinkCustomAttributes = "";
-		$this->direcciF3n->HrefValue = "";
-		$this->direcciF3n->TooltipValue = "";
+		// direccion
+		$this->direccion->LinkCustomAttributes = "";
+		$this->direccion->HrefValue = "";
+		$this->direccion->TooltipValue = "";
 
 		// celular
 		$this->celular->LinkCustomAttributes = "";
 		$this->celular->HrefValue = "";
 		$this->celular->TooltipValue = "";
 
-		// ocupación
-		$this->ocupaciF3n->LinkCustomAttributes = "";
-		$this->ocupaciF3n->HrefValue = "";
-		$this->ocupaciF3n->TooltipValue = "";
+		// ocupacion
+		$this->ocupacion->LinkCustomAttributes = "";
+		$this->ocupacion->HrefValue = "";
+		$this->ocupacion->TooltipValue = "";
 
 		// observaciones
 		$this->observaciones->LinkCustomAttributes = "";
@@ -886,11 +886,11 @@ class capoderado extends cTable {
 		$this->sexo->EditCustomAttributes = "";
 		$this->sexo->EditValue = $this->sexo->Options(TRUE);
 
-		// dirección
-		$this->direcciF3n->EditAttrs["class"] = "form-control";
-		$this->direcciF3n->EditCustomAttributes = "";
-		$this->direcciF3n->EditValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+		// direccion
+		$this->direccion->EditAttrs["class"] = "form-control";
+		$this->direccion->EditCustomAttributes = "";
+		$this->direccion->EditValue = $this->direccion->CurrentValue;
+		$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 		// celular
 		$this->celular->EditAttrs["class"] = "form-control";
@@ -898,11 +898,11 @@ class capoderado extends cTable {
 		$this->celular->EditValue = $this->celular->CurrentValue;
 		$this->celular->PlaceHolder = ew_RemoveHtml($this->celular->FldCaption());
 
-		// ocupación
-		$this->ocupaciF3n->EditAttrs["class"] = "form-control";
-		$this->ocupaciF3n->EditCustomAttributes = "";
-		$this->ocupaciF3n->EditValue = $this->ocupaciF3n->CurrentValue;
-		$this->ocupaciF3n->PlaceHolder = ew_RemoveHtml($this->ocupaciF3n->FldCaption());
+		// ocupacion
+		$this->ocupacion->EditAttrs["class"] = "form-control";
+		$this->ocupacion->EditCustomAttributes = "";
+		$this->ocupacion->EditValue = $this->ocupacion->CurrentValue;
+		$this->ocupacion->PlaceHolder = ew_RemoveHtml($this->ocupacion->FldCaption());
 
 		// observaciones
 		$this->observaciones->EditAttrs["class"] = "form-control";
@@ -951,9 +951,9 @@ class capoderado extends cTable {
 					if ($this->ci->Exportable) $Doc->ExportCaption($this->ci);
 					if ($this->fechanacimiento->Exportable) $Doc->ExportCaption($this->fechanacimiento);
 					if ($this->sexo->Exportable) $Doc->ExportCaption($this->sexo);
-					if ($this->direcciF3n->Exportable) $Doc->ExportCaption($this->direcciF3n);
+					if ($this->direccion->Exportable) $Doc->ExportCaption($this->direccion);
 					if ($this->celular->Exportable) $Doc->ExportCaption($this->celular);
-					if ($this->ocupaciF3n->Exportable) $Doc->ExportCaption($this->ocupaciF3n);
+					if ($this->ocupacion->Exportable) $Doc->ExportCaption($this->ocupacion);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
@@ -964,9 +964,9 @@ class capoderado extends cTable {
 					if ($this->ci->Exportable) $Doc->ExportCaption($this->ci);
 					if ($this->fechanacimiento->Exportable) $Doc->ExportCaption($this->fechanacimiento);
 					if ($this->sexo->Exportable) $Doc->ExportCaption($this->sexo);
-					if ($this->direcciF3n->Exportable) $Doc->ExportCaption($this->direcciF3n);
+					if ($this->direccion->Exportable) $Doc->ExportCaption($this->direccion);
 					if ($this->celular->Exportable) $Doc->ExportCaption($this->celular);
-					if ($this->ocupaciF3n->Exportable) $Doc->ExportCaption($this->ocupaciF3n);
+					if ($this->ocupacion->Exportable) $Doc->ExportCaption($this->ocupacion);
 					if ($this->observaciones->Exportable) $Doc->ExportCaption($this->observaciones);
 				}
 				$Doc->EndExportRow();
@@ -1007,9 +1007,9 @@ class capoderado extends cTable {
 						if ($this->ci->Exportable) $Doc->ExportField($this->ci);
 						if ($this->fechanacimiento->Exportable) $Doc->ExportField($this->fechanacimiento);
 						if ($this->sexo->Exportable) $Doc->ExportField($this->sexo);
-						if ($this->direcciF3n->Exportable) $Doc->ExportField($this->direcciF3n);
+						if ($this->direccion->Exportable) $Doc->ExportField($this->direccion);
 						if ($this->celular->Exportable) $Doc->ExportField($this->celular);
-						if ($this->ocupaciF3n->Exportable) $Doc->ExportField($this->ocupaciF3n);
+						if ($this->ocupacion->Exportable) $Doc->ExportField($this->ocupacion);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
 					} else {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
@@ -1020,9 +1020,9 @@ class capoderado extends cTable {
 						if ($this->ci->Exportable) $Doc->ExportField($this->ci);
 						if ($this->fechanacimiento->Exportable) $Doc->ExportField($this->fechanacimiento);
 						if ($this->sexo->Exportable) $Doc->ExportField($this->sexo);
-						if ($this->direcciF3n->Exportable) $Doc->ExportField($this->direcciF3n);
+						if ($this->direccion->Exportable) $Doc->ExportField($this->direccion);
 						if ($this->celular->Exportable) $Doc->ExportField($this->celular);
-						if ($this->ocupaciF3n->Exportable) $Doc->ExportField($this->ocupaciF3n);
+						if ($this->ocupacion->Exportable) $Doc->ExportField($this->ocupacion);
 						if ($this->observaciones->Exportable) $Doc->ExportField($this->observaciones);
 					}
 					$Doc->EndExportRow($RowCnt);

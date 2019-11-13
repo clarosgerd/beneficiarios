@@ -325,7 +325,7 @@ class creferencia_addopt extends creferencia {
 		$this->id_medio->SetVisibility();
 		$this->nombrescompleto->SetVisibility();
 		$this->nombrescentromedico->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 		$this->id_centro->SetVisibility();
 
@@ -442,7 +442,7 @@ class creferencia_addopt extends creferencia {
 					$row["x_id_medio"] = $this->id_medio->DbValue;
 					$row["x_nombrescompleto"] = ew_ConvertToUtf8($this->nombrescompleto->DbValue);
 					$row["x_nombrescentromedico"] = ew_ConvertToUtf8($this->nombrescentromedico->DbValue);
-					$row["x_direcciF3n"] = $this->direcciF3n->DbValue;
+					$row["x_direccion"] = $this->direccion->DbValue;
 					$row["x_telefono"] = $this->telefono->DbValue;
 					$row["x_id_centro"] = $this->id_centro->DbValue;
 					if (!EW_DEBUG_ENABLED && ob_get_length())
@@ -479,8 +479,8 @@ class creferencia_addopt extends creferencia {
 		$this->nombrescompleto->OldValue = $this->nombrescompleto->CurrentValue;
 		$this->nombrescentromedico->CurrentValue = NULL;
 		$this->nombrescentromedico->OldValue = $this->nombrescentromedico->CurrentValue;
-		$this->direcciF3n->CurrentValue = NULL;
-		$this->direcciF3n->OldValue = $this->direcciF3n->CurrentValue;
+		$this->direccion->CurrentValue = NULL;
+		$this->direccion->OldValue = $this->direccion->CurrentValue;
 		$this->telefono->CurrentValue = NULL;
 		$this->telefono->OldValue = $this->telefono->CurrentValue;
 		$this->id_centro->CurrentValue = SESSION["centro"];
@@ -500,8 +500,8 @@ class creferencia_addopt extends creferencia {
 		if (!$this->nombrescentromedico->FldIsDetailKey) {
 			$this->nombrescentromedico->setFormValue(ew_ConvertFromUtf8($objForm->GetValue("x_nombrescentromedico")));
 		}
-		if (!$this->direcciF3n->FldIsDetailKey) {
-			$this->direcciF3n->setFormValue(ew_ConvertFromUtf8($objForm->GetValue("x_direcciF3n")));
+		if (!$this->direccion->FldIsDetailKey) {
+			$this->direccion->setFormValue(ew_ConvertFromUtf8($objForm->GetValue("x_direccion")));
 		}
 		if (!$this->telefono->FldIsDetailKey) {
 			$this->telefono->setFormValue(ew_ConvertFromUtf8($objForm->GetValue("x_telefono")));
@@ -517,7 +517,7 @@ class creferencia_addopt extends creferencia {
 		$this->id_medio->CurrentValue = ew_ConvertToUtf8($this->id_medio->FormValue);
 		$this->nombrescompleto->CurrentValue = ew_ConvertToUtf8($this->nombrescompleto->FormValue);
 		$this->nombrescentromedico->CurrentValue = ew_ConvertToUtf8($this->nombrescentromedico->FormValue);
-		$this->direcciF3n->CurrentValue = ew_ConvertToUtf8($this->direcciF3n->FormValue);
+		$this->direccion->CurrentValue = ew_ConvertToUtf8($this->direccion->FormValue);
 		$this->telefono->CurrentValue = ew_ConvertToUtf8($this->telefono->FormValue);
 		$this->id_centro->CurrentValue = ew_ConvertToUtf8($this->id_centro->FormValue);
 	}
@@ -559,7 +559,7 @@ class creferencia_addopt extends creferencia {
 		$this->id_medio->setDbValue($row['id_medio']);
 		$this->nombrescompleto->setDbValue($row['nombrescompleto']);
 		$this->nombrescentromedico->setDbValue($row['nombrescentromedico']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->telefono->setDbValue($row['telefono']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -572,7 +572,7 @@ class creferencia_addopt extends creferencia {
 		$row['id_medio'] = $this->id_medio->CurrentValue;
 		$row['nombrescompleto'] = $this->nombrescompleto->CurrentValue;
 		$row['nombrescentromedico'] = $this->nombrescentromedico->CurrentValue;
-		$row['dirección'] = $this->direcciF3n->CurrentValue;
+		$row['direccion'] = $this->direccion->CurrentValue;
 		$row['telefono'] = $this->telefono->CurrentValue;
 		$row['id_centro'] = $this->id_centro->CurrentValue;
 		return $row;
@@ -587,7 +587,7 @@ class creferencia_addopt extends creferencia {
 		$this->id_medio->DbValue = $row['id_medio'];
 		$this->nombrescompleto->DbValue = $row['nombrescompleto'];
 		$this->nombrescentromedico->DbValue = $row['nombrescentromedico'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->telefono->DbValue = $row['telefono'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -606,7 +606,7 @@ class creferencia_addopt extends creferencia {
 		// id_medio
 		// nombrescompleto
 		// nombrescentromedico
-		// dirección
+		// direccion
 		// telefono
 		// id_centro
 
@@ -647,9 +647,9 @@ class creferencia_addopt extends creferencia {
 		$this->nombrescentromedico->ViewValue = $this->nombrescentromedico->CurrentValue;
 		$this->nombrescentromedico->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// telefono
 		$this->telefono->ViewValue = $this->telefono->CurrentValue;
@@ -693,10 +693,10 @@ class creferencia_addopt extends creferencia {
 			$this->nombrescentromedico->HrefValue = "";
 			$this->nombrescentromedico->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// telefono
 			$this->telefono->LinkCustomAttributes = "";
@@ -746,11 +746,11 @@ class creferencia_addopt extends creferencia {
 			$this->nombrescentromedico->EditValue = ew_HtmlEncode($this->nombrescentromedico->CurrentValue);
 			$this->nombrescentromedico->PlaceHolder = ew_RemoveHtml($this->nombrescentromedico->FldCaption());
 
-			// dirección
-			$this->direcciF3n->EditAttrs["class"] = "form-control";
-			$this->direcciF3n->EditCustomAttributes = "";
-			$this->direcciF3n->EditValue = ew_HtmlEncode($this->direcciF3n->CurrentValue);
-			$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+			// direccion
+			$this->direccion->EditAttrs["class"] = "form-control";
+			$this->direccion->EditCustomAttributes = "";
+			$this->direccion->EditValue = ew_HtmlEncode($this->direccion->CurrentValue);
+			$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 			// telefono
 			$this->telefono->EditAttrs["class"] = "form-control";
@@ -791,9 +791,9 @@ class creferencia_addopt extends creferencia {
 			$this->nombrescentromedico->LinkCustomAttributes = "";
 			$this->nombrescentromedico->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
 
 			// telefono
 			$this->telefono->LinkCustomAttributes = "";
@@ -824,8 +824,8 @@ class creferencia_addopt extends creferencia {
 		if (!$this->id_medio->FldIsDetailKey && !is_null($this->id_medio->FormValue) && $this->id_medio->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_medio->FldCaption(), $this->id_medio->ReqErrMsg));
 		}
-		if (!ew_CheckInteger($this->direcciF3n->FormValue)) {
-			ew_AddMessage($gsFormError, $this->direcciF3n->FldErrMsg());
+		if (!ew_CheckInteger($this->direccion->FormValue)) {
+			ew_AddMessage($gsFormError, $this->direccion->FldErrMsg());
 		}
 		if (!ew_CheckInteger($this->telefono->FormValue)) {
 			ew_AddMessage($gsFormError, $this->telefono->FldErrMsg());
@@ -866,8 +866,8 @@ class creferencia_addopt extends creferencia {
 		// nombrescentromedico
 		$this->nombrescentromedico->SetDbValueDef($rsnew, $this->nombrescentromedico->CurrentValue, NULL, FALSE);
 
-		// dirección
-		$this->direcciF3n->SetDbValueDef($rsnew, $this->direcciF3n->CurrentValue, NULL, FALSE);
+		// direccion
+		$this->direccion->SetDbValueDef($rsnew, $this->direccion->CurrentValue, NULL, FALSE);
 
 		// telefono
 		$this->telefono->SetDbValueDef($rsnew, $this->telefono->CurrentValue, NULL, FALSE);
@@ -1066,9 +1066,9 @@ freferenciaaddopt.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_medio");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $referencia->id_medio->FldCaption(), $referencia->id_medio->ReqErrMsg)) ?>");
-			elm = this.GetElements("x" + infix + "_direcciF3n");
+			elm = this.GetElements("x" + infix + "_direccion");
 			if (elm && !ew_CheckInteger(elm.value))
-				return this.OnError(elm, "<?php echo ew_JsEncode2($referencia->direcciF3n->FldErrMsg()) ?>");
+				return this.OnError(elm, "<?php echo ew_JsEncode2($referencia->direccion->FldErrMsg()) ?>");
 			elm = this.GetElements("x" + infix + "_telefono");
 			if (elm && !ew_CheckInteger(elm.value))
 				return this.OnError(elm, "<?php echo ew_JsEncode2($referencia->telefono->FldErrMsg()) ?>");
@@ -1120,7 +1120,7 @@ $referencia_addopt->ShowMessage();
 		<label class="col-sm-2 control-label ewLabel" for="x_id_medio"><?php echo $referencia->id_medio->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
 		<div class="col-sm-10">
 <span class="ewLookupList">
-	<span onclick="jQuery(this).parent().next(":not([disabled])").click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_medio"><?php echo (strval($referencia->id_medio->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $referencia->id_medio->ViewValue); ?></span>
+	<span onclick="jQuery(this).parent().next().click();" tabindex="-1" class="form-control ewLookupText" id="lu_x_id_medio"><?php echo (strval($referencia->id_medio->ViewValue) == "" ? $Language->Phrase("PleaseSelect") : $referencia->id_medio->ViewValue); ?></span>
 </span>
 <button type="button" title="<?php echo ew_HtmlEncode(str_replace("%s", ew_RemoveHtml($referencia->id_medio->FldCaption()), $Language->Phrase("LookupLink", TRUE))) ?>" onclick="ew_ModalLookupShow({lnk:this,el:'x_id_medio',m:0,n:10});" class="ewLookupBtn btn btn-default btn-sm"<?php echo (($referencia->id_medio->ReadOnly || $referencia->id_medio->Disabled) ? " disabled" : "")?>><span class="glyphicon glyphicon-search ewIcon"></span></button>
 <input type="hidden" data-table="referencia" data-field="x_id_medio" data-multiple="0" data-lookup="1" data-value-separator="<?php echo $referencia->id_medio->DisplayValueSeparatorAttribute() ?>" name="x_id_medio" id="x_id_medio" value="<?php echo $referencia->id_medio->CurrentValue ?>"<?php echo $referencia->id_medio->EditAttributes() ?>>
@@ -1143,11 +1143,11 @@ $referencia_addopt->ShowMessage();
 </div>
 	</div>
 <?php } ?>
-<?php if ($referencia->direcciF3n->Visible) { // dirección ?>
+<?php if ($referencia->direccion->Visible) { // direccion ?>
 	<div class="form-group">
-		<label class="col-sm-2 control-label ewLabel" for="x_direcciF3n"><?php echo $referencia->direcciF3n->FldCaption() ?></label>
+		<label class="col-sm-2 control-label ewLabel" for="x_direccion"><?php echo $referencia->direccion->FldCaption() ?></label>
 		<div class="col-sm-10">
-<input type="text" data-table="referencia" data-field="x_direcciF3n" name="x_direcciF3n" id="x_direcciF3n" size="30" placeholder="<?php echo ew_HtmlEncode($referencia->direcciF3n->getPlaceHolder()) ?>" value="<?php echo $referencia->direcciF3n->EditValue ?>"<?php echo $referencia->direcciF3n->EditAttributes() ?>>
+<input type="text" data-table="referencia" data-field="x_direccion" name="x_direccion" id="x_direccion" size="30" placeholder="<?php echo ew_HtmlEncode($referencia->direccion->getPlaceHolder()) ?>" value="<?php echo $referencia->direccion->EditValue ?>"<?php echo $referencia->direccion->EditAttributes() ?>>
 </div>
 	</div>
 <?php } ?>

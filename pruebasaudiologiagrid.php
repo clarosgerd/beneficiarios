@@ -490,7 +490,7 @@ $pruebasaudiologia_grid->ListOptions->Render("body", "left", $pruebasaudiologia_
 <?php
 
 // Render list options (body, right)
-$pruebasaudiologia_grid->ListOptions->Render("body", "right", $pruebasaudiologia_grid->RowIndex);
+$pruebasaudiologia_grid->ListOptions->Render("body", "right", $pruebasaudiologia_grid->RowCnt);
 ?>
 <script type="text/javascript">
 fpruebasaudiologiagrid.UpdateOpts(<?php echo $pruebasaudiologia_grid->RowIndex ?>);

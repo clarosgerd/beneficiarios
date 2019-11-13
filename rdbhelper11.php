@@ -24,7 +24,7 @@ class crbenificiaries_db extends crDbHelper {
 	var $Host = '';
 	var $Port = 3306;
 	var $Username = 'root';
-	var $Password = 'usbw';
+	var $Password = '';
 	var $DbName = 'benificiaries';
 	var $CharSet = "";
 

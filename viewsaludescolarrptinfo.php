@@ -9,13 +9,11 @@ $viewsaludescolar = NULL;
 class crviewsaludescolar extends crTableBase {
 	var $ShowGroupHeaderAsRow = FALSE;
 	var $ShowCompactSummaryFooter = FALSE;
+	var $nombrescompleto;
 	var $codigorude;
 	var $codigorude_es;
 	var $fecha;
 	var $unidad_eductiva;
-	var $apellidopaterno;
-	var $apellidomaterno;
-	var $nombres;
 	var $ci;
 	var $nrodiscapacidad;
 	var $fechanacimiento;
@@ -25,12 +23,12 @@ class crviewsaludescolar extends crTableBase {
 	var $tipo;
 	var $resultado;
 	var $resultadotamizaje;
-	var $nombre;
 	var $tapodonde;
 	var $repetirprueba;
 	var $observaciones;
 	var $parentesco;
-	var $nombrescompleto;
+	var $Nombreescolar;
+	var $nombretapon;
 
 	//
 	// Table class constructor
@@ -46,6 +44,14 @@ class crviewsaludescolar extends crTableBase {
 		$this->ExportAll = FALSE;
 		$this->ExportPageBreakCount = 0;
 		$this->ExportPageOrientation = "portrait"; // Page orientation (PDF only)
+
+		// nombrescompleto
+		$this->nombrescompleto = new crField('viewsaludescolar', 'viewsaludescolar', 'x_nombrescompleto', 'nombrescompleto', '`nombrescompleto`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nombrescompleto->Sortable = TRUE; // Allow sort
+		$this->nombrescompleto->DateFilter = "";
+		$this->nombrescompleto->SqlSelect = "";
+		$this->nombrescompleto->SqlOrderBy = "";
+		$this->fields['nombrescompleto'] = &$this->nombrescompleto;
 
 		// codigorude
 		$this->codigorude = new crField('viewsaludescolar', 'viewsaludescolar', 'x_codigorude', 'codigorude', '`codigorude`', 200, EWR_DATATYPE_STRING, -1);
@@ -79,30 +85,6 @@ class crviewsaludescolar extends crTableBase {
 		$this->unidad_eductiva->SqlSelect = "SELECT DISTINCT `unidad eductiva`, `unidad eductiva` AS `DispFld` FROM " . $this->getSqlFrom();
 		$this->unidad_eductiva->SqlOrderBy = "`unidad eductiva`";
 		$this->fields['unidad eductiva'] = &$this->unidad_eductiva;
-
-		// apellidopaterno
-		$this->apellidopaterno = new crField('viewsaludescolar', 'viewsaludescolar', 'x_apellidopaterno', 'apellidopaterno', '`apellidopaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->apellidopaterno->Sortable = TRUE; // Allow sort
-		$this->apellidopaterno->DateFilter = "";
-		$this->apellidopaterno->SqlSelect = "";
-		$this->apellidopaterno->SqlOrderBy = "";
-		$this->fields['apellidopaterno'] = &$this->apellidopaterno;
-
-		// apellidomaterno
-		$this->apellidomaterno = new crField('viewsaludescolar', 'viewsaludescolar', 'x_apellidomaterno', 'apellidomaterno', '`apellidomaterno`', 200, EWR_DATATYPE_STRING, -1);
-		$this->apellidomaterno->Sortable = TRUE; // Allow sort
-		$this->apellidomaterno->DateFilter = "";
-		$this->apellidomaterno->SqlSelect = "";
-		$this->apellidomaterno->SqlOrderBy = "";
-		$this->fields['apellidomaterno'] = &$this->apellidomaterno;
-
-		// nombres
-		$this->nombres = new crField('viewsaludescolar', 'viewsaludescolar', 'x_nombres', 'nombres', '`nombres`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombres->Sortable = TRUE; // Allow sort
-		$this->nombres->DateFilter = "";
-		$this->nombres->SqlSelect = "";
-		$this->nombres->SqlOrderBy = "";
-		$this->fields['nombres'] = &$this->nombres;
 
 		// ci
 		$this->ci = new crField('viewsaludescolar', 'viewsaludescolar', 'x_ci', 'ci', '`ci`', 200, EWR_DATATYPE_STRING, -1);
@@ -177,14 +159,6 @@ class crviewsaludescolar extends crTableBase {
 		$this->resultadotamizaje->SqlOrderBy = "";
 		$this->fields['resultadotamizaje'] = &$this->resultadotamizaje;
 
-		// nombre
-		$this->nombre = new crField('viewsaludescolar', 'viewsaludescolar', 'x_nombre', 'nombre', '`nombre`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombre->Sortable = TRUE; // Allow sort
-		$this->nombre->DateFilter = "";
-		$this->nombre->SqlSelect = "";
-		$this->nombre->SqlOrderBy = "";
-		$this->fields['nombre'] = &$this->nombre;
-
 		// tapodonde
 		$this->tapodonde = new crField('viewsaludescolar', 'viewsaludescolar', 'x_tapodonde', 'tapodonde', '`tapodonde`', 200, EWR_DATATYPE_STRING, -1);
 		$this->tapodonde->Sortable = TRUE; // Allow sort
@@ -217,13 +191,21 @@ class crviewsaludescolar extends crTableBase {
 		$this->parentesco->SqlOrderBy = "";
 		$this->fields['parentesco'] = &$this->parentesco;
 
-		// nombrescompleto
-		$this->nombrescompleto = new crField('viewsaludescolar', 'viewsaludescolar', 'x_nombrescompleto', 'nombrescompleto', '`nombrescompleto`', 200, EWR_DATATYPE_STRING, -1);
-		$this->nombrescompleto->Sortable = TRUE; // Allow sort
-		$this->nombrescompleto->DateFilter = "";
-		$this->nombrescompleto->SqlSelect = "";
-		$this->nombrescompleto->SqlOrderBy = "";
-		$this->fields['nombrescompleto'] = &$this->nombrescompleto;
+		// Nombreescolar
+		$this->Nombreescolar = new crField('viewsaludescolar', 'viewsaludescolar', 'x_Nombreescolar', 'Nombreescolar', '`Nombreescolar`', 201, EWR_DATATYPE_MEMO, -1);
+		$this->Nombreescolar->Sortable = TRUE; // Allow sort
+		$this->Nombreescolar->DateFilter = "";
+		$this->Nombreescolar->SqlSelect = "";
+		$this->Nombreescolar->SqlOrderBy = "";
+		$this->fields['Nombreescolar'] = &$this->Nombreescolar;
+
+		// nombretapon
+		$this->nombretapon = new crField('viewsaludescolar', 'viewsaludescolar', 'x_nombretapon', 'nombretapon', '`nombretapon`', 200, EWR_DATATYPE_STRING, -1);
+		$this->nombretapon->Sortable = TRUE; // Allow sort
+		$this->nombretapon->DateFilter = "";
+		$this->nombretapon->SqlSelect = "";
+		$this->nombretapon->SqlOrderBy = "";
+		$this->fields['nombretapon'] = &$this->nombretapon;
 	}
 
 	// Set Field Visibility
@@ -466,7 +448,17 @@ class crviewsaludescolar extends crTableBase {
 	// Sort URL
 	function SortUrl(&$fld) {
 		global $grDashboardReport;
-		return "";
+		if ($this->Export <> "" || $grDashboardReport ||
+			in_array($fld->FldType, array(128, 204, 205))) { // Unsortable data type
+				return "";
+		} elseif ($fld->Sortable) {
+
+			//$sUrlParm = "order=" . urlencode($fld->FldName) . "&ordertype=" . $fld->ReverseSort();
+			$sUrlParm = "order=" . urlencode($fld->FldName) . "&amp;ordertype=" . $fld->ReverseSort();
+			return ewr_CurrentPage() . "?" . $sUrlParm;
+		} else {
+			return "";
+		}
 	}
 
 	// Setup lookup filters of a field

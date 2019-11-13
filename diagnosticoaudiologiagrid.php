@@ -436,7 +436,7 @@ $diagnosticoaudiologia_grid->ListOptions->Render("body", "left", $diagnosticoaud
 <?php
 
 // Render list options (body, right)
-$diagnosticoaudiologia_grid->ListOptions->Render("body", "right", $diagnosticoaudiologia_grid->RowIndex);
+$diagnosticoaudiologia_grid->ListOptions->Render("body", "right", $diagnosticoaudiologia_grid->RowCnt);
 ?>
 <script type="text/javascript">
 fdiagnosticoaudiologiagrid.UpdateOpts(<?php echo $diagnosticoaudiologia_grid->RowIndex ?>);

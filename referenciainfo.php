@@ -11,7 +11,7 @@ class creferencia extends cTable {
 	var $id_medio;
 	var $nombrescompleto;
 	var $nombrescentromedico;
-	var $direcciF3n;
+	var $direccion;
 	var $telefono;
 	var $id_centro;
 
@@ -70,11 +70,11 @@ class creferencia extends cTable {
 		$this->nombrescentromedico->Sortable = TRUE; // Allow sort
 		$this->fields['nombrescentromedico'] = &$this->nombrescentromedico;
 
-		// dirección
-		$this->direcciF3n = new cField('referencia', 'referencia', 'x_direcciF3n', 'dirección', '`dirección`', '`dirección`', 3, -1, FALSE, '`dirección`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->direcciF3n->Sortable = TRUE; // Allow sort
-		$this->direcciF3n->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['dirección'] = &$this->direcciF3n;
+		// direccion
+		$this->direccion = new cField('referencia', 'referencia', 'x_direccion', 'direccion', '`direccion`', '`direccion`', 3, -1, FALSE, '`direccion`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->direccion->Sortable = TRUE; // Allow sort
+		$this->direccion->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['direccion'] = &$this->direccion;
 
 		// telefono
 		$this->telefono = new cField('referencia', 'referencia', 'x_telefono', 'telefono', '`telefono`', '`telefono`', 3, -1, FALSE, '`telefono`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
@@ -631,7 +631,7 @@ class creferencia extends cTable {
 		$this->id_medio->setDbValue($rs->fields('id_medio'));
 		$this->nombrescompleto->setDbValue($rs->fields('nombrescompleto'));
 		$this->nombrescentromedico->setDbValue($rs->fields('nombrescentromedico'));
-		$this->direcciF3n->setDbValue($rs->fields('dirección'));
+		$this->direccion->setDbValue($rs->fields('direccion'));
 		$this->telefono->setDbValue($rs->fields('telefono'));
 		$this->id_centro->setDbValue($rs->fields('id_centro'));
 	}
@@ -648,7 +648,7 @@ class creferencia extends cTable {
 		// id_medio
 		// nombrescompleto
 		// nombrescentromedico
-		// dirección
+		// direccion
 		// telefono
 		// id_centro
 
@@ -689,9 +689,9 @@ class creferencia extends cTable {
 		$this->nombrescentromedico->ViewValue = $this->nombrescentromedico->CurrentValue;
 		$this->nombrescentromedico->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// telefono
 		$this->telefono->ViewValue = $this->telefono->CurrentValue;
@@ -740,10 +740,10 @@ class creferencia extends cTable {
 		$this->nombrescentromedico->HrefValue = "";
 		$this->nombrescentromedico->TooltipValue = "";
 
-		// dirección
-		$this->direcciF3n->LinkCustomAttributes = "";
-		$this->direcciF3n->HrefValue = "";
-		$this->direcciF3n->TooltipValue = "";
+		// direccion
+		$this->direccion->LinkCustomAttributes = "";
+		$this->direccion->HrefValue = "";
+		$this->direccion->TooltipValue = "";
 
 		// telefono
 		$this->telefono->LinkCustomAttributes = "";
@@ -791,11 +791,11 @@ class creferencia extends cTable {
 		$this->nombrescentromedico->EditValue = $this->nombrescentromedico->CurrentValue;
 		$this->nombrescentromedico->PlaceHolder = ew_RemoveHtml($this->nombrescentromedico->FldCaption());
 
-		// dirección
-		$this->direcciF3n->EditAttrs["class"] = "form-control";
-		$this->direcciF3n->EditCustomAttributes = "";
-		$this->direcciF3n->EditValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->PlaceHolder = ew_RemoveHtml($this->direcciF3n->FldCaption());
+		// direccion
+		$this->direccion->EditAttrs["class"] = "form-control";
+		$this->direccion->EditCustomAttributes = "";
+		$this->direccion->EditValue = $this->direccion->CurrentValue;
+		$this->direccion->PlaceHolder = ew_RemoveHtml($this->direccion->FldCaption());
 
 		// telefono
 		$this->telefono->EditAttrs["class"] = "form-control";
@@ -838,14 +838,14 @@ class creferencia extends cTable {
 					if ($this->id_medio->Exportable) $Doc->ExportCaption($this->id_medio);
 					if ($this->nombrescompleto->Exportable) $Doc->ExportCaption($this->nombrescompleto);
 					if ($this->nombrescentromedico->Exportable) $Doc->ExportCaption($this->nombrescentromedico);
-					if ($this->direcciF3n->Exportable) $Doc->ExportCaption($this->direcciF3n);
+					if ($this->direccion->Exportable) $Doc->ExportCaption($this->direccion);
 					if ($this->telefono->Exportable) $Doc->ExportCaption($this->telefono);
 				} else {
 					if ($this->id->Exportable) $Doc->ExportCaption($this->id);
 					if ($this->id_medio->Exportable) $Doc->ExportCaption($this->id_medio);
 					if ($this->nombrescompleto->Exportable) $Doc->ExportCaption($this->nombrescompleto);
 					if ($this->nombrescentromedico->Exportable) $Doc->ExportCaption($this->nombrescentromedico);
-					if ($this->direcciF3n->Exportable) $Doc->ExportCaption($this->direcciF3n);
+					if ($this->direccion->Exportable) $Doc->ExportCaption($this->direccion);
 					if ($this->telefono->Exportable) $Doc->ExportCaption($this->telefono);
 				}
 				$Doc->EndExportRow();
@@ -882,14 +882,14 @@ class creferencia extends cTable {
 						if ($this->id_medio->Exportable) $Doc->ExportField($this->id_medio);
 						if ($this->nombrescompleto->Exportable) $Doc->ExportField($this->nombrescompleto);
 						if ($this->nombrescentromedico->Exportable) $Doc->ExportField($this->nombrescentromedico);
-						if ($this->direcciF3n->Exportable) $Doc->ExportField($this->direcciF3n);
+						if ($this->direccion->Exportable) $Doc->ExportField($this->direccion);
 						if ($this->telefono->Exportable) $Doc->ExportField($this->telefono);
 					} else {
 						if ($this->id->Exportable) $Doc->ExportField($this->id);
 						if ($this->id_medio->Exportable) $Doc->ExportField($this->id_medio);
 						if ($this->nombrescompleto->Exportable) $Doc->ExportField($this->nombrescompleto);
 						if ($this->nombrescentromedico->Exportable) $Doc->ExportField($this->nombrescentromedico);
-						if ($this->direcciF3n->Exportable) $Doc->ExportField($this->direcciF3n);
+						if ($this->direccion->Exportable) $Doc->ExportField($this->direccion);
 						if ($this->telefono->Exportable) $Doc->ExportField($this->telefono);
 					}
 					$Doc->EndExportRow($RowCnt);

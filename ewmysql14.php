@@ -1,12 +1,12 @@
 <?php
 /**
  * MySQL API for PHPMaker 2018
- * (C) 2002-2018 e.World Technology Limited
+ * (C) 2002-2017 e.World Technology Limited
  *
  * This script (ewmysql*.php) is based on:
  * V1.42 ADOdb Lite 11 January 2007 (C) 2005-2007 Mark Dickenson. Released LGPL.
  */
-$PHPMaker_vers = 'PHPMaker 2018 (C) 2002-2018 e.World Technology Limited';
+$PHPMaker_vers = 'PHPMaker 2018 (C) 2002-2017 e.World Technology Limited';
 if (!defined('ADODB_FETCH_DEFAULT')) define('ADODB_FETCH_DEFAULT', 0);
 if (!defined('ADODB_FETCH_NUM')) define('ADODB_FETCH_NUM', 1);
 if (!defined('ADODB_FETCH_ASSOC')) define('ADODB_FETCH_ASSOC', 2);

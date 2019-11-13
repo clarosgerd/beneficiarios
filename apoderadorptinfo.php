@@ -17,9 +17,9 @@ class crapoderado extends crTableBase {
 	var $ci;
 	var $fechanacimiento;
 	var $sexo;
-	var $direcciF3n;
+	var $direccion;
 	var $celular;
-	var $ocupaciF3n;
+	var $ocupacion;
 	var $observaciones;
 	var $id_centro;
 
@@ -105,13 +105,13 @@ class crapoderado extends crTableBase {
 		$this->sexo->SqlOrderBy = "";
 		$this->fields['sexo'] = &$this->sexo;
 
-		// dirección
-		$this->direcciF3n = new crField('apoderado', 'apoderado', 'x_direcciF3n', 'dirección', '`dirección`', 200, EWR_DATATYPE_STRING, -1);
-		$this->direcciF3n->Sortable = TRUE; // Allow sort
-		$this->direcciF3n->DateFilter = "";
-		$this->direcciF3n->SqlSelect = "";
-		$this->direcciF3n->SqlOrderBy = "";
-		$this->fields['dirección'] = &$this->direcciF3n;
+		// direccion
+		$this->direccion = new crField('apoderado', 'apoderado', 'x_direccion', 'direccion', '`direccion`', 200, EWR_DATATYPE_STRING, -1);
+		$this->direccion->Sortable = TRUE; // Allow sort
+		$this->direccion->DateFilter = "";
+		$this->direccion->SqlSelect = "";
+		$this->direccion->SqlOrderBy = "";
+		$this->fields['direccion'] = &$this->direccion;
 
 		// celular
 		$this->celular = new crField('apoderado', 'apoderado', 'x_celular', 'celular', '`celular`', 3, EWR_DATATYPE_NUMBER, -1);
@@ -122,13 +122,13 @@ class crapoderado extends crTableBase {
 		$this->celular->SqlOrderBy = "";
 		$this->fields['celular'] = &$this->celular;
 
-		// ocupación
-		$this->ocupaciF3n = new crField('apoderado', 'apoderado', 'x_ocupaciF3n', 'ocupación', '`ocupación`', 200, EWR_DATATYPE_STRING, -1);
-		$this->ocupaciF3n->Sortable = TRUE; // Allow sort
-		$this->ocupaciF3n->DateFilter = "";
-		$this->ocupaciF3n->SqlSelect = "";
-		$this->ocupaciF3n->SqlOrderBy = "";
-		$this->fields['ocupación'] = &$this->ocupaciF3n;
+		// ocupacion
+		$this->ocupacion = new crField('apoderado', 'apoderado', 'x_ocupacion', 'ocupacion', '`ocupacion`', 200, EWR_DATATYPE_STRING, -1);
+		$this->ocupacion->Sortable = TRUE; // Allow sort
+		$this->ocupacion->DateFilter = "";
+		$this->ocupacion->SqlSelect = "";
+		$this->ocupacion->SqlOrderBy = "";
+		$this->fields['ocupacion'] = &$this->ocupacion;
 
 		// observaciones
 		$this->observaciones = new crField('apoderado', 'apoderado', 'x_observaciones', 'observaciones', '`observaciones`', 200, EWR_DATATYPE_STRING, -1);

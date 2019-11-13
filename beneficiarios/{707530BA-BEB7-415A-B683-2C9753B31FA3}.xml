@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2019/11/11" author="e.World Technology Ltd.">
-  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\User\Desktop\xampp\htdocs\beneficiarios\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/11/11 16:14:24" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2019/11/13" author="e.World Technology Ltd.">
+  <project id="{707530BA-BEB7-415A-B683-2C9753B31FA3}" file="C:\Users\gerd claros\Desktop\xampp\htdocs\beneficiarios\proyecto\beneficiarios.prp" name="beneficiarios" product="PHPReportMaker" version="11.0" datetime="2019/11/13 16:17:33" languagefolder="phprptlang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="actividad" name="actividad" caption="actividad" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="apoderado" name="apoderado" caption="apoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="atencion" name="atencion" caption="atencion" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -62,6 +62,17 @@
     <table id="turno" name="turno" caption="turno" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="Dashboard2" name="Dashboard2" caption="Dashboard 2" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="viewmarcologicosummary" name="viewmarcologicosummary" caption="MARCO LOGICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
-    <table id="viewsaludescolar" name="viewsaludescolar" caption="viewsaludescolar" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludescolar" name="viewsaludescolar" caption="TA-ESCOLAR" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludotros" name="viewsaludotros" caption="TA-OTROS" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludneonatal" name="viewsaludneonatal" caption="TA-NEONATAL" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludservicios" name="viewsaludservicios" caption="SERVICIOS" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludoruebas" name="viewsaludoruebas" caption="PRUEBAS" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludtratamiento" name="viewsaludtratamiento" caption="TRATAMIENTO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaluddiagnostico" name="viewsaluddiagnostico" caption="DIAGNISTICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludderivacion" name="viewsaludderivacion" caption="DERIVACION" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludmarcologico" name="viewsaludmarcologico" caption="MARCO LOGICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludmarcologicosummary" name="viewsaludmarcologicosummary" caption="MARCO LOGICO" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsalsudapoderado" name="viewsalsudapoderado" caption="viewsalsudapoderado" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="viewsaludreferencia" name="viewsaludreferencia" caption="viewsaludreferencia" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

@@ -582,9 +582,9 @@ class crapoderado_rpt extends crapoderado {
 		$this->ci->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
 		$this->sexo->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->celular->SetVisibility();
-		$this->ocupaciF3n->SetVisibility();
+		$this->ocupacion->SetVisibility();
 		$this->observaciones->SetVisibility();
 		$this->id_centro->SetVisibility();
 
@@ -816,9 +816,9 @@ class crapoderado_rpt extends crapoderado {
 				$this->FirstRowData['ci'] = ewr_Conv($rs->fields('ci'), 200);
 				$this->FirstRowData['fechanacimiento'] = ewr_Conv($rs->fields('fechanacimiento'), 133);
 				$this->FirstRowData['sexo'] = ewr_Conv($rs->fields('sexo'), 3);
-				$this->FirstRowData['direcciF3n'] = ewr_Conv($rs->fields('dirección'), 200);
+				$this->FirstRowData['direccion'] = ewr_Conv($rs->fields('direccion'), 200);
 				$this->FirstRowData['celular'] = ewr_Conv($rs->fields('celular'), 3);
-				$this->FirstRowData['ocupaciF3n'] = ewr_Conv($rs->fields('ocupación'), 200);
+				$this->FirstRowData['ocupacion'] = ewr_Conv($rs->fields('ocupacion'), 200);
 				$this->FirstRowData['observaciones'] = ewr_Conv($rs->fields('observaciones'), 200);
 				$this->FirstRowData['id_centro'] = ewr_Conv($rs->fields('id_centro'), 3);
 		} else { // Get next row
@@ -833,9 +833,9 @@ class crapoderado_rpt extends crapoderado {
 			$this->ci->setDbValue($rs->fields('ci'));
 			$this->fechanacimiento->setDbValue($rs->fields('fechanacimiento'));
 			$this->sexo->setDbValue($rs->fields('sexo'));
-			$this->direcciF3n->setDbValue($rs->fields('dirección'));
+			$this->direccion->setDbValue($rs->fields('direccion'));
 			$this->celular->setDbValue($rs->fields('celular'));
-			$this->ocupaciF3n->setDbValue($rs->fields('ocupación'));
+			$this->ocupacion->setDbValue($rs->fields('ocupacion'));
 			$this->observaciones->setDbValue($rs->fields('observaciones'));
 			$this->id_centro->setDbValue($rs->fields('id_centro'));
 			$this->Val[1] = $this->id->CurrentValue;
@@ -846,9 +846,9 @@ class crapoderado_rpt extends crapoderado {
 			$this->Val[6] = $this->ci->CurrentValue;
 			$this->Val[7] = $this->fechanacimiento->CurrentValue;
 			$this->Val[8] = $this->sexo->CurrentValue;
-			$this->Val[9] = $this->direcciF3n->CurrentValue;
+			$this->Val[9] = $this->direccion->CurrentValue;
 			$this->Val[10] = $this->celular->CurrentValue;
-			$this->Val[11] = $this->ocupaciF3n->CurrentValue;
+			$this->Val[11] = $this->ocupacion->CurrentValue;
 			$this->Val[12] = $this->observaciones->CurrentValue;
 			$this->Val[13] = $this->id_centro->CurrentValue;
 		} else {
@@ -860,9 +860,9 @@ class crapoderado_rpt extends crapoderado {
 			$this->ci->setDbValue("");
 			$this->fechanacimiento->setDbValue("");
 			$this->sexo->setDbValue("");
-			$this->direcciF3n->setDbValue("");
+			$this->direccion->setDbValue("");
 			$this->celular->setDbValue("");
-			$this->ocupaciF3n->setDbValue("");
+			$this->ocupacion->setDbValue("");
 			$this->observaciones->setDbValue("");
 			$this->id_centro->setDbValue("");
 		}
@@ -1076,14 +1076,14 @@ class crapoderado_rpt extends crapoderado {
 			// sexo
 			$this->sexo->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->HrefValue = "";
 
 			// celular
 			$this->celular->HrefValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->HrefValue = "";
+			// ocupacion
+			$this->ocupacion->HrefValue = "";
 
 			// observaciones
 			$this->observaciones->HrefValue = "";
@@ -1128,17 +1128,17 @@ class crapoderado_rpt extends crapoderado {
 			$this->sexo->ViewValue = $this->sexo->CurrentValue;
 			$this->sexo->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// dirección
-			$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-			$this->direcciF3n->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+			// direccion
+			$this->direccion->ViewValue = $this->direccion->CurrentValue;
+			$this->direccion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// celular
 			$this->celular->ViewValue = $this->celular->CurrentValue;
 			$this->celular->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// ocupación
-			$this->ocupaciF3n->ViewValue = $this->ocupaciF3n->CurrentValue;
-			$this->ocupaciF3n->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+			// ocupacion
+			$this->ocupacion->ViewValue = $this->ocupacion->CurrentValue;
+			$this->ocupacion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// observaciones
 			$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
@@ -1172,14 +1172,14 @@ class crapoderado_rpt extends crapoderado {
 			// sexo
 			$this->sexo->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->HrefValue = "";
 
 			// celular
 			$this->celular->HrefValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->HrefValue = "";
+			// ocupacion
+			$this->ocupacion->HrefValue = "";
 
 			// observaciones
 			$this->observaciones->HrefValue = "";
@@ -1264,14 +1264,14 @@ class crapoderado_rpt extends crapoderado {
 			$LinkAttrs = &$this->sexo->LinkAttrs;
 			$this->Cell_Rendered($this->sexo, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// dirección
-			$CurrentValue = $this->direcciF3n->CurrentValue;
-			$ViewValue = &$this->direcciF3n->ViewValue;
-			$ViewAttrs = &$this->direcciF3n->ViewAttrs;
-			$CellAttrs = &$this->direcciF3n->CellAttrs;
-			$HrefValue = &$this->direcciF3n->HrefValue;
-			$LinkAttrs = &$this->direcciF3n->LinkAttrs;
-			$this->Cell_Rendered($this->direcciF3n, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+			// direccion
+			$CurrentValue = $this->direccion->CurrentValue;
+			$ViewValue = &$this->direccion->ViewValue;
+			$ViewAttrs = &$this->direccion->ViewAttrs;
+			$CellAttrs = &$this->direccion->CellAttrs;
+			$HrefValue = &$this->direccion->HrefValue;
+			$LinkAttrs = &$this->direccion->LinkAttrs;
+			$this->Cell_Rendered($this->direccion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// celular
 			$CurrentValue = $this->celular->CurrentValue;
@@ -1282,14 +1282,14 @@ class crapoderado_rpt extends crapoderado {
 			$LinkAttrs = &$this->celular->LinkAttrs;
 			$this->Cell_Rendered($this->celular, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// ocupación
-			$CurrentValue = $this->ocupaciF3n->CurrentValue;
-			$ViewValue = &$this->ocupaciF3n->ViewValue;
-			$ViewAttrs = &$this->ocupaciF3n->ViewAttrs;
-			$CellAttrs = &$this->ocupaciF3n->CellAttrs;
-			$HrefValue = &$this->ocupaciF3n->HrefValue;
-			$LinkAttrs = &$this->ocupaciF3n->LinkAttrs;
-			$this->Cell_Rendered($this->ocupaciF3n, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+			// ocupacion
+			$CurrentValue = $this->ocupacion->CurrentValue;
+			$ViewValue = &$this->ocupacion->ViewValue;
+			$ViewAttrs = &$this->ocupacion->ViewAttrs;
+			$CellAttrs = &$this->ocupacion->CellAttrs;
+			$HrefValue = &$this->ocupacion->HrefValue;
+			$LinkAttrs = &$this->ocupacion->LinkAttrs;
+			$this->Cell_Rendered($this->ocupacion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// observaciones
 			$CurrentValue = $this->observaciones->CurrentValue;
@@ -1328,9 +1328,9 @@ class crapoderado_rpt extends crapoderado {
 		if ($this->ci->Visible) $this->DtlColumnCount += 1;
 		if ($this->fechanacimiento->Visible) $this->DtlColumnCount += 1;
 		if ($this->sexo->Visible) $this->DtlColumnCount += 1;
-		if ($this->direcciF3n->Visible) $this->DtlColumnCount += 1;
+		if ($this->direccion->Visible) $this->DtlColumnCount += 1;
 		if ($this->celular->Visible) $this->DtlColumnCount += 1;
-		if ($this->ocupaciF3n->Visible) $this->DtlColumnCount += 1;
+		if ($this->ocupacion->Visible) $this->DtlColumnCount += 1;
 		if ($this->observaciones->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_centro->Visible) $this->DtlColumnCount += 1;
 	}
@@ -1385,9 +1385,9 @@ class crapoderado_rpt extends crapoderado {
 			$this->ci->setSort("");
 			$this->fechanacimiento->setSort("");
 			$this->sexo->setSort("");
-			$this->direcciF3n->setSort("");
+			$this->direccion->setSort("");
 			$this->celular->setSort("");
-			$this->ocupaciF3n->setSort("");
+			$this->ocupacion->setSort("");
 			$this->observaciones->setSort("");
 			$this->id_centro->setSort("");
 
@@ -1778,19 +1778,19 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->direcciF3n->Visible) { ?>
+<?php if ($Page->direccion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="direcciF3n"><div class="apoderado_direcciF3n"><span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span></div></td>
+	<td data-field="direccion"><div class="apoderado_direccion"><span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span></div></td>
 <?php } else { ?>
-	<td data-field="direcciF3n">
-<?php if ($Page->SortUrl($Page->direcciF3n) == "") { ?>
-		<div class="ewTableHeaderBtn apoderado_direcciF3n">
-			<span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span>
+	<td data-field="direccion">
+<?php if ($Page->SortUrl($Page->direccion) == "") { ?>
+		<div class="ewTableHeaderBtn apoderado_direccion">
+			<span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer apoderado_direcciF3n" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direcciF3n) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->direcciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->direcciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		<div class="ewTableHeaderBtn ewPointer apoderado_direccion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direccion) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->direccion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->direccion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1814,19 +1814,19 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->ocupaciF3n->Visible) { ?>
+<?php if ($Page->ocupacion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="ocupaciF3n"><div class="apoderado_ocupaciF3n"><span class="ewTableHeaderCaption"><?php echo $Page->ocupaciF3n->FldCaption() ?></span></div></td>
+	<td data-field="ocupacion"><div class="apoderado_ocupacion"><span class="ewTableHeaderCaption"><?php echo $Page->ocupacion->FldCaption() ?></span></div></td>
 <?php } else { ?>
-	<td data-field="ocupaciF3n">
-<?php if ($Page->SortUrl($Page->ocupaciF3n) == "") { ?>
-		<div class="ewTableHeaderBtn apoderado_ocupaciF3n">
-			<span class="ewTableHeaderCaption"><?php echo $Page->ocupaciF3n->FldCaption() ?></span>
+	<td data-field="ocupacion">
+<?php if ($Page->SortUrl($Page->ocupacion) == "") { ?>
+		<div class="ewTableHeaderBtn apoderado_ocupacion">
+			<span class="ewTableHeaderCaption"><?php echo $Page->ocupacion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer apoderado_ocupaciF3n" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ocupaciF3n) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->ocupaciF3n->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->ocupaciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ocupaciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		<div class="ewTableHeaderBtn ewPointer apoderado_ocupacion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ocupacion) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->ocupacion->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->ocupacion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ocupacion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1918,17 +1918,17 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<td data-field="sexo"<?php echo $Page->sexo->CellAttributes() ?>>
 <span<?php echo $Page->sexo->ViewAttributes() ?>><?php echo $Page->sexo->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->direcciF3n->Visible) { ?>
-		<td data-field="direcciF3n"<?php echo $Page->direcciF3n->CellAttributes() ?>>
-<span<?php echo $Page->direcciF3n->ViewAttributes() ?>><?php echo $Page->direcciF3n->ListViewValue() ?></span></td>
+<?php if ($Page->direccion->Visible) { ?>
+		<td data-field="direccion"<?php echo $Page->direccion->CellAttributes() ?>>
+<span<?php echo $Page->direccion->ViewAttributes() ?>><?php echo $Page->direccion->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->celular->Visible) { ?>
 		<td data-field="celular"<?php echo $Page->celular->CellAttributes() ?>>
 <span<?php echo $Page->celular->ViewAttributes() ?>><?php echo $Page->celular->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->ocupaciF3n->Visible) { ?>
-		<td data-field="ocupaciF3n"<?php echo $Page->ocupaciF3n->CellAttributes() ?>>
-<span<?php echo $Page->ocupaciF3n->ViewAttributes() ?>><?php echo $Page->ocupaciF3n->ListViewValue() ?></span></td>
+<?php if ($Page->ocupacion->Visible) { ?>
+		<td data-field="ocupacion"<?php echo $Page->ocupacion->CellAttributes() ?>>
+<span<?php echo $Page->ocupacion->ViewAttributes() ?>><?php echo $Page->ocupacion->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->observaciones->Visible) { ?>
 		<td data-field="observaciones"<?php echo $Page->observaciones->CellAttributes() ?>>

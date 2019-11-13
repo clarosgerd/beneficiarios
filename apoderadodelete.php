@@ -330,9 +330,9 @@ class capoderado_delete extends capoderado {
 		$this->ci->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
 		$this->sexo->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->celular->SetVisibility();
-		$this->ocupaciF3n->SetVisibility();
+		$this->ocupacion->SetVisibility();
 		$this->observaciones->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -521,9 +521,9 @@ class capoderado_delete extends capoderado {
 		$this->ci->setDbValue($row['ci']);
 		$this->fechanacimiento->setDbValue($row['fechanacimiento']);
 		$this->sexo->setDbValue($row['sexo']);
-		$this->direcciF3n->setDbValue($row['dirección']);
+		$this->direccion->setDbValue($row['direccion']);
 		$this->celular->setDbValue($row['celular']);
-		$this->ocupaciF3n->setDbValue($row['ocupación']);
+		$this->ocupacion->setDbValue($row['ocupacion']);
 		$this->observaciones->setDbValue($row['observaciones']);
 		$this->id_centro->setDbValue($row['id_centro']);
 	}
@@ -539,9 +539,9 @@ class capoderado_delete extends capoderado {
 		$row['ci'] = NULL;
 		$row['fechanacimiento'] = NULL;
 		$row['sexo'] = NULL;
-		$row['dirección'] = NULL;
+		$row['direccion'] = NULL;
 		$row['celular'] = NULL;
-		$row['ocupación'] = NULL;
+		$row['ocupacion'] = NULL;
 		$row['observaciones'] = NULL;
 		$row['id_centro'] = NULL;
 		return $row;
@@ -560,9 +560,9 @@ class capoderado_delete extends capoderado {
 		$this->ci->DbValue = $row['ci'];
 		$this->fechanacimiento->DbValue = $row['fechanacimiento'];
 		$this->sexo->DbValue = $row['sexo'];
-		$this->direcciF3n->DbValue = $row['dirección'];
+		$this->direccion->DbValue = $row['direccion'];
 		$this->celular->DbValue = $row['celular'];
-		$this->ocupaciF3n->DbValue = $row['ocupación'];
+		$this->ocupacion->DbValue = $row['ocupacion'];
 		$this->observaciones->DbValue = $row['observaciones'];
 		$this->id_centro->DbValue = $row['id_centro'];
 	}
@@ -585,9 +585,9 @@ class capoderado_delete extends capoderado {
 		// ci
 		// fechanacimiento
 		// sexo
-		// dirección
+		// direccion
 		// celular
-		// ocupación
+		// ocupacion
 		// observaciones
 		// id_centro
 
@@ -631,17 +631,17 @@ class capoderado_delete extends capoderado {
 		}
 		$this->sexo->ViewCustomAttributes = "";
 
-		// dirección
-		$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-		$this->direcciF3n->ViewCustomAttributes = "";
+		// direccion
+		$this->direccion->ViewValue = $this->direccion->CurrentValue;
+		$this->direccion->ViewCustomAttributes = "";
 
 		// celular
 		$this->celular->ViewValue = $this->celular->CurrentValue;
 		$this->celular->ViewCustomAttributes = "";
 
-		// ocupación
-		$this->ocupaciF3n->ViewValue = $this->ocupaciF3n->CurrentValue;
-		$this->ocupaciF3n->ViewCustomAttributes = "";
+		// ocupacion
+		$this->ocupacion->ViewValue = $this->ocupacion->CurrentValue;
+		$this->ocupacion->ViewCustomAttributes = "";
 
 		// observaciones
 		$this->observaciones->ViewValue = $this->observaciones->CurrentValue;
@@ -687,20 +687,20 @@ class capoderado_delete extends capoderado {
 			$this->sexo->HrefValue = "";
 			$this->sexo->TooltipValue = "";
 
-			// dirección
-			$this->direcciF3n->LinkCustomAttributes = "";
-			$this->direcciF3n->HrefValue = "";
-			$this->direcciF3n->TooltipValue = "";
+			// direccion
+			$this->direccion->LinkCustomAttributes = "";
+			$this->direccion->HrefValue = "";
+			$this->direccion->TooltipValue = "";
 
 			// celular
 			$this->celular->LinkCustomAttributes = "";
 			$this->celular->HrefValue = "";
 			$this->celular->TooltipValue = "";
 
-			// ocupación
-			$this->ocupaciF3n->LinkCustomAttributes = "";
-			$this->ocupaciF3n->HrefValue = "";
-			$this->ocupaciF3n->TooltipValue = "";
+			// ocupacion
+			$this->ocupacion->LinkCustomAttributes = "";
+			$this->ocupacion->HrefValue = "";
+			$this->ocupacion->TooltipValue = "";
 
 			// observaciones
 			$this->observaciones->LinkCustomAttributes = "";
@@ -969,14 +969,14 @@ $apoderado_delete->ShowMessage();
 <?php if ($apoderado->sexo->Visible) { // sexo ?>
 		<th class="<?php echo $apoderado->sexo->HeaderCellClass() ?>"><span id="elh_apoderado_sexo" class="apoderado_sexo"><?php echo $apoderado->sexo->FldCaption() ?></span></th>
 <?php } ?>
-<?php if ($apoderado->direcciF3n->Visible) { // dirección ?>
-		<th class="<?php echo $apoderado->direcciF3n->HeaderCellClass() ?>"><span id="elh_apoderado_direcciF3n" class="apoderado_direcciF3n"><?php echo $apoderado->direcciF3n->FldCaption() ?></span></th>
+<?php if ($apoderado->direccion->Visible) { // direccion ?>
+		<th class="<?php echo $apoderado->direccion->HeaderCellClass() ?>"><span id="elh_apoderado_direccion" class="apoderado_direccion"><?php echo $apoderado->direccion->FldCaption() ?></span></th>
 <?php } ?>
 <?php if ($apoderado->celular->Visible) { // celular ?>
 		<th class="<?php echo $apoderado->celular->HeaderCellClass() ?>"><span id="elh_apoderado_celular" class="apoderado_celular"><?php echo $apoderado->celular->FldCaption() ?></span></th>
 <?php } ?>
-<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-		<th class="<?php echo $apoderado->ocupaciF3n->HeaderCellClass() ?>"><span id="elh_apoderado_ocupaciF3n" class="apoderado_ocupaciF3n"><?php echo $apoderado->ocupaciF3n->FldCaption() ?></span></th>
+<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+		<th class="<?php echo $apoderado->ocupacion->HeaderCellClass() ?>"><span id="elh_apoderado_ocupacion" class="apoderado_ocupacion"><?php echo $apoderado->ocupacion->FldCaption() ?></span></th>
 <?php } ?>
 <?php if ($apoderado->observaciones->Visible) { // observaciones ?>
 		<th class="<?php echo $apoderado->observaciones->HeaderCellClass() ?>"><span id="elh_apoderado_observaciones" class="apoderado_observaciones"><?php echo $apoderado->observaciones->FldCaption() ?></span></th>
@@ -1066,11 +1066,11 @@ while (!$apoderado_delete->Recordset->EOF) {
 </span>
 </td>
 <?php } ?>
-<?php if ($apoderado->direcciF3n->Visible) { // dirección ?>
-		<td<?php echo $apoderado->direcciF3n->CellAttributes() ?>>
-<span id="el<?php echo $apoderado_delete->RowCnt ?>_apoderado_direcciF3n" class="apoderado_direcciF3n">
-<span<?php echo $apoderado->direcciF3n->ViewAttributes() ?>>
-<?php echo $apoderado->direcciF3n->ListViewValue() ?></span>
+<?php if ($apoderado->direccion->Visible) { // direccion ?>
+		<td<?php echo $apoderado->direccion->CellAttributes() ?>>
+<span id="el<?php echo $apoderado_delete->RowCnt ?>_apoderado_direccion" class="apoderado_direccion">
+<span<?php echo $apoderado->direccion->ViewAttributes() ?>>
+<?php echo $apoderado->direccion->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>
@@ -1082,11 +1082,11 @@ while (!$apoderado_delete->Recordset->EOF) {
 </span>
 </td>
 <?php } ?>
-<?php if ($apoderado->ocupaciF3n->Visible) { // ocupación ?>
-		<td<?php echo $apoderado->ocupaciF3n->CellAttributes() ?>>
-<span id="el<?php echo $apoderado_delete->RowCnt ?>_apoderado_ocupaciF3n" class="apoderado_ocupaciF3n">
-<span<?php echo $apoderado->ocupaciF3n->ViewAttributes() ?>>
-<?php echo $apoderado->ocupaciF3n->ListViewValue() ?></span>
+<?php if ($apoderado->ocupacion->Visible) { // ocupacion ?>
+		<td<?php echo $apoderado->ocupacion->CellAttributes() ?>>
+<span id="el<?php echo $apoderado_delete->RowCnt ?>_apoderado_ocupacion" class="apoderado_ocupacion">
+<span<?php echo $apoderado->ocupacion->ViewAttributes() ?>>
+<?php echo $apoderado->ocupacion->ListViewValue() ?></span>
 </span>
 </td>
 <?php } ?>

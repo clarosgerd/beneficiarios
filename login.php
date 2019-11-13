@@ -652,6 +652,9 @@ $login->ShowMessage();
 	<div class="form-group">
 		<div><input type="password" name="password" id="password" class="form-control ewControl" placeholder="<?php echo ew_HtmlEncode($Language->Phrase("Password")) ?>"></div>
 	</div>
+	<div class="checkbox">
+		<label for="rememberme"><input type="checkbox" name="type" id="rememberme" value="a"<?php if ($login->LoginType == "a") { ?> checked<?php } ?>><?php echo $Language->Phrase("RememberMe") ?></label>
+	</div>
 	<button class="btn btn-primary ewButton" name="btnsubmit" id="btnsubmit" type="submit"><?php echo $Language->Phrase("Login") ?></button>
 <?php
 

@@ -31,7 +31,7 @@ class cbenificiaries_db extends cDbHelper {
 	var $Host = 'localhost';
 	var $Port = 3306;
 	var $Username = 'root';
-	var $Password = 'usbw';
+	var $Password = '';
 	var $DbName = 'benificiaries';
 	var $CharSet = "utf-8";
 

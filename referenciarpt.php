@@ -578,7 +578,7 @@ class crreferencia_rpt extends crreferencia {
 		$this->id_medio->SetVisibility();
 		$this->nombrescompleto->SetVisibility();
 		$this->nombrescentromedico->SetVisibility();
-		$this->direcciF3n->SetVisibility();
+		$this->direccion->SetVisibility();
 		$this->telefono->SetVisibility();
 		$this->id_centro->SetVisibility();
 
@@ -806,7 +806,7 @@ class crreferencia_rpt extends crreferencia {
 				$this->FirstRowData['id_medio'] = ewr_Conv($rs->fields('id_medio'), 3);
 				$this->FirstRowData['nombrescompleto'] = ewr_Conv($rs->fields('nombrescompleto'), 200);
 				$this->FirstRowData['nombrescentromedico'] = ewr_Conv($rs->fields('nombrescentromedico'), 200);
-				$this->FirstRowData['direcciF3n'] = ewr_Conv($rs->fields('dirección'), 3);
+				$this->FirstRowData['direccion'] = ewr_Conv($rs->fields('direccion'), 3);
 				$this->FirstRowData['telefono'] = ewr_Conv($rs->fields('telefono'), 3);
 				$this->FirstRowData['id_centro'] = ewr_Conv($rs->fields('id_centro'), 3);
 		} else { // Get next row
@@ -817,14 +817,14 @@ class crreferencia_rpt extends crreferencia {
 			$this->id_medio->setDbValue($rs->fields('id_medio'));
 			$this->nombrescompleto->setDbValue($rs->fields('nombrescompleto'));
 			$this->nombrescentromedico->setDbValue($rs->fields('nombrescentromedico'));
-			$this->direcciF3n->setDbValue($rs->fields('dirección'));
+			$this->direccion->setDbValue($rs->fields('direccion'));
 			$this->telefono->setDbValue($rs->fields('telefono'));
 			$this->id_centro->setDbValue($rs->fields('id_centro'));
 			$this->Val[1] = $this->id->CurrentValue;
 			$this->Val[2] = $this->id_medio->CurrentValue;
 			$this->Val[3] = $this->nombrescompleto->CurrentValue;
 			$this->Val[4] = $this->nombrescentromedico->CurrentValue;
-			$this->Val[5] = $this->direcciF3n->CurrentValue;
+			$this->Val[5] = $this->direccion->CurrentValue;
 			$this->Val[6] = $this->telefono->CurrentValue;
 			$this->Val[7] = $this->id_centro->CurrentValue;
 		} else {
@@ -832,7 +832,7 @@ class crreferencia_rpt extends crreferencia {
 			$this->id_medio->setDbValue("");
 			$this->nombrescompleto->setDbValue("");
 			$this->nombrescentromedico->setDbValue("");
-			$this->direcciF3n->setDbValue("");
+			$this->direccion->setDbValue("");
 			$this->telefono->setDbValue("");
 			$this->id_centro->setDbValue("");
 		}
@@ -1034,8 +1034,8 @@ class crreferencia_rpt extends crreferencia {
 			// nombrescentromedico
 			$this->nombrescentromedico->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->HrefValue = "";
 
 			// telefono
 			$this->telefono->HrefValue = "";
@@ -1063,9 +1063,9 @@ class crreferencia_rpt extends crreferencia {
 			$this->nombrescentromedico->ViewValue = $this->nombrescentromedico->CurrentValue;
 			$this->nombrescentromedico->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// dirección
-			$this->direcciF3n->ViewValue = $this->direcciF3n->CurrentValue;
-			$this->direcciF3n->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+			// direccion
+			$this->direccion->ViewValue = $this->direccion->CurrentValue;
+			$this->direccion->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// telefono
 			$this->telefono->ViewValue = $this->telefono->CurrentValue;
@@ -1087,8 +1087,8 @@ class crreferencia_rpt extends crreferencia {
 			// nombrescentromedico
 			$this->nombrescentromedico->HrefValue = "";
 
-			// dirección
-			$this->direcciF3n->HrefValue = "";
+			// direccion
+			$this->direccion->HrefValue = "";
 
 			// telefono
 			$this->telefono->HrefValue = "";
@@ -1137,14 +1137,14 @@ class crreferencia_rpt extends crreferencia {
 			$LinkAttrs = &$this->nombrescentromedico->LinkAttrs;
 			$this->Cell_Rendered($this->nombrescentromedico, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// dirección
-			$CurrentValue = $this->direcciF3n->CurrentValue;
-			$ViewValue = &$this->direcciF3n->ViewValue;
-			$ViewAttrs = &$this->direcciF3n->ViewAttrs;
-			$CellAttrs = &$this->direcciF3n->CellAttrs;
-			$HrefValue = &$this->direcciF3n->HrefValue;
-			$LinkAttrs = &$this->direcciF3n->LinkAttrs;
-			$this->Cell_Rendered($this->direcciF3n, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+			// direccion
+			$CurrentValue = $this->direccion->CurrentValue;
+			$ViewValue = &$this->direccion->ViewValue;
+			$ViewAttrs = &$this->direccion->ViewAttrs;
+			$CellAttrs = &$this->direccion->CellAttrs;
+			$HrefValue = &$this->direccion->HrefValue;
+			$LinkAttrs = &$this->direccion->LinkAttrs;
+			$this->Cell_Rendered($this->direccion, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// telefono
 			$CurrentValue = $this->telefono->CurrentValue;
@@ -1179,7 +1179,7 @@ class crreferencia_rpt extends crreferencia {
 		if ($this->id_medio->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombrescompleto->Visible) $this->DtlColumnCount += 1;
 		if ($this->nombrescentromedico->Visible) $this->DtlColumnCount += 1;
-		if ($this->direcciF3n->Visible) $this->DtlColumnCount += 1;
+		if ($this->direccion->Visible) $this->DtlColumnCount += 1;
 		if ($this->telefono->Visible) $this->DtlColumnCount += 1;
 		if ($this->id_centro->Visible) $this->DtlColumnCount += 1;
 	}
@@ -1230,7 +1230,7 @@ class crreferencia_rpt extends crreferencia {
 			$this->id_medio->setSort("");
 			$this->nombrescompleto->setSort("");
 			$this->nombrescentromedico->setSort("");
-			$this->direcciF3n->setSort("");
+			$this->direccion->setSort("");
 			$this->telefono->setSort("");
 			$this->id_centro->setSort("");
 
@@ -1549,19 +1549,19 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->direcciF3n->Visible) { ?>
+<?php if ($Page->direccion->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="direcciF3n"><div class="referencia_direcciF3n"><span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span></div></td>
+	<td data-field="direccion"><div class="referencia_direccion"><span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span></div></td>
 <?php } else { ?>
-	<td data-field="direcciF3n">
-<?php if ($Page->SortUrl($Page->direcciF3n) == "") { ?>
-		<div class="ewTableHeaderBtn referencia_direcciF3n">
-			<span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span>
+	<td data-field="direccion">
+<?php if ($Page->SortUrl($Page->direccion) == "") { ?>
+		<div class="ewTableHeaderBtn referencia_direccion">
+			<span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer referencia_direcciF3n" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direcciF3n) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->direcciF3n->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->direcciF3n->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->direcciF3n->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		<div class="ewTableHeaderBtn ewPointer referencia_direccion" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->direccion) ?>',0);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->direccion->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->direccion->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->direccion->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -1637,9 +1637,9 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<td data-field="nombrescentromedico"<?php echo $Page->nombrescentromedico->CellAttributes() ?>>
 <span<?php echo $Page->nombrescentromedico->ViewAttributes() ?>><?php echo $Page->nombrescentromedico->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->direcciF3n->Visible) { ?>
-		<td data-field="direcciF3n"<?php echo $Page->direcciF3n->CellAttributes() ?>>
-<span<?php echo $Page->direcciF3n->ViewAttributes() ?>><?php echo $Page->direcciF3n->ListViewValue() ?></span></td>
+<?php if ($Page->direccion->Visible) { ?>
+		<td data-field="direccion"<?php echo $Page->direccion->CellAttributes() ?>>
+<span<?php echo $Page->direccion->ViewAttributes() ?>><?php echo $Page->direccion->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->telefono->Visible) { ?>
 		<td data-field="telefono"<?php echo $Page->telefono->CellAttributes() ?>>

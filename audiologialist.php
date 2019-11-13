@@ -2314,7 +2314,7 @@ class caudiologia_list extends caudiologia {
 		case "x_id_especialista":
 			$sSqlWrk = "";
 				$sSqlWrk = "SELECT `id`, `nombres` AS `DispFld`, `apellidopaterno` AS `Disp2Fld`, `apellidomaterno` AS `Disp3Fld`, `especialidad` AS `Disp4Fld` FROM `especialista`";
-				$sWhereWrk = "`nombres` LIKE '{query_value}%' OR CONCAT(COALESCE(`nombres`, ''),'" . ew_ValueSeparator(1, $this->id_especialista) . "',COALESCE(`apellidopaterno`,''),'" . ew_ValueSeparator(2, $this->id_especialista) . "',COALESCE(`apellidomaterno`,''),'" . ew_ValueSeparator(3, $this->id_especialista) . "',COALESCE(`especialidad`,'')) LIKE '{query_value}%'";
+				$sWhereWrk = "`nombres` LIKE '{query_value}%' OR CONCAT(`nombres`,'" . ew_ValueSeparator(1, $this->id_especialista) . "',`apellidopaterno`,'" . ew_ValueSeparator(2, $this->id_especialista) . "',`apellidomaterno`,'" . ew_ValueSeparator(3, $this->id_especialista) . "',`especialidad`) LIKE '{query_value}%'";
 				$fld->LookupFilters = array();
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "");
 			$sSqlWrk = "";
@@ -2338,7 +2338,7 @@ class caudiologia_list extends caudiologia {
 		case "x_id_neonato":
 			$sSqlWrk = "";
 				$sSqlWrk = "SELECT `id`, `nombre` AS `DispFld`, `apellidopaterno` AS `Disp2Fld`, `apellidomaterno` AS `Disp3Fld` FROM `neonatal`";
-				$sWhereWrk = "`nombre` LIKE '{query_value}%' OR CONCAT(COALESCE(`nombre`, ''),'" . ew_ValueSeparator(1, $this->id_neonato) . "',COALESCE(`apellidopaterno`,''),'" . ew_ValueSeparator(2, $this->id_neonato) . "',COALESCE(`apellidomaterno`,'')) LIKE '{query_value}%'";
+				$sWhereWrk = "`nombre` LIKE '{query_value}%' OR CONCAT(`nombre`,'" . ew_ValueSeparator(1, $this->id_neonato) . "',`apellidopaterno`,'" . ew_ValueSeparator(2, $this->id_neonato) . "',`apellidomaterno`) LIKE '{query_value}%'";
 				$fld->LookupFilters = array();
 			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "");
 			$sSqlWrk = "";

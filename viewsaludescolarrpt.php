@@ -354,19 +354,19 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		// Printer friendly
 		$item = &$this->ExportOptions->Add("print");
 		$item->Body = "<a class=\"ewrExportLink ewPrint\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("PrinterFriendly", TRUE)) . "\" href=\"" . $this->ExportPrintUrl . "\">" . $ReportLanguage->Phrase("PrinterFriendly") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["print"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPrint") : "";
 
 		// Export to Excel
 		$item = &$this->ExportOptions->Add("excel");
 		$item->Body = "<a class=\"ewrExportLink ewExcel\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToExcel", TRUE)) . "\" href=\"" . $this->ExportExcelUrl . "\">" . $ReportLanguage->Phrase("ExportToExcel") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["excel"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormExcel") : "";
 
 		// Export to Word
 		$item = &$this->ExportOptions->Add("word");
 		$item->Body = "<a class=\"ewrExportLink ewWord\" title=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" data-caption=\"" . ewr_HtmlEncode($ReportLanguage->Phrase("ExportToWord", TRUE)) . "\" href=\"" . $this->ExportWordUrl . "\">" . $ReportLanguage->Phrase("ExportToWord") . "</a>";
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		$ReportTypes["word"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormWord") : "";
 
 		// Export to Pdf
@@ -375,7 +375,7 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		$item->Visible = FALSE;
 
 		// Uncomment codes below to show export to Pdf link
-//		$item->Visible = FALSE;
+//		$item->Visible = TRUE;
 
 		$ReportTypes["pdf"] = $item->Visible ? $ReportLanguage->Phrase("ReportFormPdf") : "";
 
@@ -388,7 +388,7 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		$ReportOptions["ReportTypes"] = $ReportTypes;
 
 		// Drop down button for export
-		$this->ExportOptions->UseDropDownButton = FALSE;
+		$this->ExportOptions->UseDropDownButton = TRUE;
 		$this->ExportOptions->UseButtonGroup = TRUE;
 		$this->ExportOptions->UseImageAndText = $this->ExportOptions->UseDropDownButton;
 		$this->ExportOptions->DropDownButtonPhrase = $ReportLanguage->Phrase("ButtonExport");
@@ -576,13 +576,11 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		global $grDashboardReport;
 
 		// Set field visibility for detail fields
+		$this->nombrescompleto->SetVisibility();
 		$this->codigorude->SetVisibility();
 		$this->codigorude_es->SetVisibility();
 		$this->fecha->SetVisibility();
 		$this->unidad_eductiva->SetVisibility();
-		$this->apellidopaterno->SetVisibility();
-		$this->apellidomaterno->SetVisibility();
-		$this->nombres->SetVisibility();
 		$this->ci->SetVisibility();
 		$this->nrodiscapacidad->SetVisibility();
 		$this->fechanacimiento->SetVisibility();
@@ -592,18 +590,17 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		$this->tipo->SetVisibility();
 		$this->resultado->SetVisibility();
 		$this->resultadotamizaje->SetVisibility();
-		$this->nombre->SetVisibility();
 		$this->tapodonde->SetVisibility();
 		$this->repetirprueba->SetVisibility();
 		$this->observaciones->SetVisibility();
 		$this->parentesco->SetVisibility();
-		$this->nombrescompleto->SetVisibility();
+		$this->nombretapon->SetVisibility();
 
 		// Aggregate variables
 		// 1st dimension = no of groups (level 0 used for grand total)
 		// 2nd dimension = no of fields
 
-		$nDtls = 23;
+		$nDtls = 20;
 		$nGrps = 1;
 		$this->Val = &ewr_InitArray($nDtls, 0);
 		$this->Cnt = &ewr_Init2DArray($nGrps, $nDtls, 0);
@@ -616,7 +613,7 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		$this->GrandMx = &ewr_InitArray($nDtls, NULL);
 
 		// Set up array if accumulation required: array(Accum, SkipNullOrZero)
-		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
+		$this->Col = array(array(FALSE, FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE), array(FALSE,FALSE));
 
 		// Set up groups per page dynamically
 		$this->SetUpDisplayGrps();
@@ -844,13 +841,11 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			return;
 		if ($opt == 1) { // Get first row
 				$this->FirstRowData = array();
+				$this->FirstRowData['nombrescompleto'] = ewr_Conv($rs->fields('nombrescompleto'), 200);
 				$this->FirstRowData['codigorude'] = ewr_Conv($rs->fields('codigorude'), 200);
 				$this->FirstRowData['codigorude_es'] = ewr_Conv($rs->fields('codigorude_es'), 200);
 				$this->FirstRowData['fecha'] = ewr_Conv($rs->fields('fecha'), 133);
 				$this->FirstRowData['unidad_eductiva'] = ewr_Conv($rs->fields('unidad eductiva'), 200);
-				$this->FirstRowData['apellidopaterno'] = ewr_Conv($rs->fields('apellidopaterno'), 200);
-				$this->FirstRowData['apellidomaterno'] = ewr_Conv($rs->fields('apellidomaterno'), 200);
-				$this->FirstRowData['nombres'] = ewr_Conv($rs->fields('nombres'), 200);
 				$this->FirstRowData['ci'] = ewr_Conv($rs->fields('ci'), 200);
 				$this->FirstRowData['nrodiscapacidad'] = ewr_Conv($rs->fields('nrodiscapacidad'), 200);
 				$this->FirstRowData['fechanacimiento'] = ewr_Conv($rs->fields('fechanacimiento'), 133);
@@ -860,23 +855,20 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 				$this->FirstRowData['tipo'] = ewr_Conv($rs->fields('tipo'), 200);
 				$this->FirstRowData['resultado'] = ewr_Conv($rs->fields('resultado'), 200);
 				$this->FirstRowData['resultadotamizaje'] = ewr_Conv($rs->fields('resultadotamizaje'), 200);
-				$this->FirstRowData['nombre'] = ewr_Conv($rs->fields('nombre'), 200);
 				$this->FirstRowData['tapodonde'] = ewr_Conv($rs->fields('tapodonde'), 200);
 				$this->FirstRowData['repetirprueba'] = ewr_Conv($rs->fields('repetirprueba'), 200);
 				$this->FirstRowData['observaciones'] = ewr_Conv($rs->fields('observaciones'), 200);
 				$this->FirstRowData['parentesco'] = ewr_Conv($rs->fields('parentesco'), 200);
-				$this->FirstRowData['nombrescompleto'] = ewr_Conv($rs->fields('nombrescompleto'), 200);
+				$this->FirstRowData['nombretapon'] = ewr_Conv($rs->fields('nombretapon'), 200);
 		} else { // Get next row
 			$rs->MoveNext();
 		}
 		if (!$rs->EOF) {
+			$this->nombrescompleto->setDbValue($rs->fields('nombrescompleto'));
 			$this->codigorude->setDbValue($rs->fields('codigorude'));
 			$this->codigorude_es->setDbValue($rs->fields('codigorude_es'));
 			$this->fecha->setDbValue($rs->fields('fecha'));
 			$this->unidad_eductiva->setDbValue($rs->fields('unidad eductiva'));
-			$this->apellidopaterno->setDbValue($rs->fields('apellidopaterno'));
-			$this->apellidomaterno->setDbValue($rs->fields('apellidomaterno'));
-			$this->nombres->setDbValue($rs->fields('nombres'));
 			$this->ci->setDbValue($rs->fields('ci'));
 			$this->nrodiscapacidad->setDbValue($rs->fields('nrodiscapacidad'));
 			$this->fechanacimiento->setDbValue($rs->fields('fechanacimiento'));
@@ -886,42 +878,37 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$this->tipo->setDbValue($rs->fields('tipo'));
 			$this->resultado->setDbValue($rs->fields('resultado'));
 			$this->resultadotamizaje->setDbValue($rs->fields('resultadotamizaje'));
-			$this->nombre->setDbValue($rs->fields('nombre'));
 			$this->tapodonde->setDbValue($rs->fields('tapodonde'));
 			$this->repetirprueba->setDbValue($rs->fields('repetirprueba'));
 			$this->observaciones->setDbValue($rs->fields('observaciones'));
 			$this->parentesco->setDbValue($rs->fields('parentesco'));
-			$this->nombrescompleto->setDbValue($rs->fields('nombrescompleto'));
-			$this->Val[1] = $this->codigorude->CurrentValue;
-			$this->Val[2] = $this->codigorude_es->CurrentValue;
-			$this->Val[3] = $this->fecha->CurrentValue;
-			$this->Val[4] = $this->unidad_eductiva->CurrentValue;
-			$this->Val[5] = $this->apellidopaterno->CurrentValue;
-			$this->Val[6] = $this->apellidomaterno->CurrentValue;
-			$this->Val[7] = $this->nombres->CurrentValue;
-			$this->Val[8] = $this->ci->CurrentValue;
-			$this->Val[9] = $this->nrodiscapacidad->CurrentValue;
-			$this->Val[10] = $this->fechanacimiento->CurrentValue;
-			$this->Val[11] = $this->sexo->CurrentValue;
-			$this->Val[12] = $this->curso->CurrentValue;
-			$this->Val[13] = $this->discapcidad->CurrentValue;
-			$this->Val[14] = $this->tipo->CurrentValue;
-			$this->Val[15] = $this->resultado->CurrentValue;
-			$this->Val[16] = $this->resultadotamizaje->CurrentValue;
-			$this->Val[17] = $this->nombre->CurrentValue;
-			$this->Val[18] = $this->tapodonde->CurrentValue;
-			$this->Val[19] = $this->repetirprueba->CurrentValue;
-			$this->Val[20] = $this->observaciones->CurrentValue;
-			$this->Val[21] = $this->parentesco->CurrentValue;
-			$this->Val[22] = $this->nombrescompleto->CurrentValue;
+			$this->Nombreescolar->setDbValue($rs->fields('Nombreescolar'));
+			$this->nombretapon->setDbValue($rs->fields('nombretapon'));
+			$this->Val[1] = $this->nombrescompleto->CurrentValue;
+			$this->Val[2] = $this->codigorude->CurrentValue;
+			$this->Val[3] = $this->codigorude_es->CurrentValue;
+			$this->Val[4] = $this->fecha->CurrentValue;
+			$this->Val[5] = $this->unidad_eductiva->CurrentValue;
+			$this->Val[6] = $this->ci->CurrentValue;
+			$this->Val[7] = $this->nrodiscapacidad->CurrentValue;
+			$this->Val[8] = $this->fechanacimiento->CurrentValue;
+			$this->Val[9] = $this->sexo->CurrentValue;
+			$this->Val[10] = $this->curso->CurrentValue;
+			$this->Val[11] = $this->discapcidad->CurrentValue;
+			$this->Val[12] = $this->tipo->CurrentValue;
+			$this->Val[13] = $this->resultado->CurrentValue;
+			$this->Val[14] = $this->resultadotamizaje->CurrentValue;
+			$this->Val[15] = $this->tapodonde->CurrentValue;
+			$this->Val[16] = $this->repetirprueba->CurrentValue;
+			$this->Val[17] = $this->observaciones->CurrentValue;
+			$this->Val[18] = $this->parentesco->CurrentValue;
+			$this->Val[19] = $this->nombretapon->CurrentValue;
 		} else {
+			$this->nombrescompleto->setDbValue("");
 			$this->codigorude->setDbValue("");
 			$this->codigorude_es->setDbValue("");
 			$this->fecha->setDbValue("");
 			$this->unidad_eductiva->setDbValue("");
-			$this->apellidopaterno->setDbValue("");
-			$this->apellidomaterno->setDbValue("");
-			$this->nombres->setDbValue("");
 			$this->ci->setDbValue("");
 			$this->nrodiscapacidad->setDbValue("");
 			$this->fechanacimiento->setDbValue("");
@@ -931,12 +918,12 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$this->tipo->setDbValue("");
 			$this->resultado->setDbValue("");
 			$this->resultadotamizaje->setDbValue("");
-			$this->nombre->setDbValue("");
 			$this->tapodonde->setDbValue("");
 			$this->repetirprueba->setDbValue("");
 			$this->observaciones->setDbValue("");
 			$this->parentesco->setDbValue("");
-			$this->nombrescompleto->setDbValue("");
+			$this->Nombreescolar->setDbValue("");
+			$this->nombretapon->setDbValue("");
 		}
 	}
 
@@ -1365,6 +1352,9 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		if ($this->RowType == EWR_ROWTYPE_TOTAL && !($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER)) { // Summary row
 			ewr_PrependClass($this->RowAttrs["class"], ($this->RowTotalType == EWR_ROWTOTAL_PAGE || $this->RowTotalType == EWR_ROWTOTAL_GRAND) ? "ewRptGrpAggregate" : ""); // Set up row class
 
+			// nombrescompleto
+			$this->nombrescompleto->HrefValue = "";
+
 			// codigorude
 			$this->codigorude->HrefValue = "";
 
@@ -1376,15 +1366,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 
 			// unidad eductiva
 			$this->unidad_eductiva->HrefValue = "";
-
-			// apellidopaterno
-			$this->apellidopaterno->HrefValue = "";
-
-			// apellidomaterno
-			$this->apellidomaterno->HrefValue = "";
-
-			// nombres
-			$this->nombres->HrefValue = "";
 
 			// ci
 			$this->ci->HrefValue = "";
@@ -1413,9 +1394,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			// resultadotamizaje
 			$this->resultadotamizaje->HrefValue = "";
 
-			// nombre
-			$this->nombre->HrefValue = "";
-
 			// tapodonde
 			$this->tapodonde->HrefValue = "";
 
@@ -1428,12 +1406,16 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			// parentesco
 			$this->parentesco->HrefValue = "";
 
-			// nombrescompleto
-			$this->nombrescompleto->HrefValue = "";
+			// nombretapon
+			$this->nombretapon->HrefValue = "";
 		} else {
 			if ($this->RowTotalType == EWR_ROWTOTAL_GROUP && $this->RowTotalSubType == EWR_ROWTOTAL_HEADER) {
 			} else {
 			}
+
+			// nombrescompleto
+			$this->nombrescompleto->ViewValue = $this->nombrescompleto->CurrentValue;
+			$this->nombrescompleto->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// codigorude
 			$this->codigorude->ViewValue = $this->codigorude->CurrentValue;
@@ -1451,18 +1433,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			// unidad eductiva
 			$this->unidad_eductiva->ViewValue = $this->unidad_eductiva->CurrentValue;
 			$this->unidad_eductiva->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// apellidopaterno
-			$this->apellidopaterno->ViewValue = $this->apellidopaterno->CurrentValue;
-			$this->apellidopaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// apellidomaterno
-			$this->apellidomaterno->ViewValue = $this->apellidomaterno->CurrentValue;
-			$this->apellidomaterno->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
-			// nombres
-			$this->nombres->ViewValue = $this->nombres->CurrentValue;
-			$this->nombres->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
 			// ci
 			$this->ci->ViewValue = $this->ci->CurrentValue;
@@ -1501,10 +1471,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$this->resultadotamizaje->ViewValue = $this->resultadotamizaje->CurrentValue;
 			$this->resultadotamizaje->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
-			// nombre
-			$this->nombre->ViewValue = $this->nombre->CurrentValue;
-			$this->nombre->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
-
 			// tapodonde
 			$this->tapodonde->ViewValue = $this->tapodonde->CurrentValue;
 			$this->tapodonde->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
@@ -1521,9 +1487,12 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$this->parentesco->ViewValue = $this->parentesco->CurrentValue;
 			$this->parentesco->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
 
+			// nombretapon
+			$this->nombretapon->ViewValue = $this->nombretapon->CurrentValue;
+			$this->nombretapon->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+
 			// nombrescompleto
-			$this->nombrescompleto->ViewValue = $this->nombrescompleto->CurrentValue;
-			$this->nombrescompleto->CellAttrs["class"] = ($this->RecCount % 2 <> 1) ? "ewTableAltRow" : "ewTableRow";
+			$this->nombrescompleto->HrefValue = "";
 
 			// codigorude
 			$this->codigorude->HrefValue = "";
@@ -1536,15 +1505,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 
 			// unidad eductiva
 			$this->unidad_eductiva->HrefValue = "";
-
-			// apellidopaterno
-			$this->apellidopaterno->HrefValue = "";
-
-			// apellidomaterno
-			$this->apellidomaterno->HrefValue = "";
-
-			// nombres
-			$this->nombres->HrefValue = "";
 
 			// ci
 			$this->ci->HrefValue = "";
@@ -1573,9 +1533,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			// resultadotamizaje
 			$this->resultadotamizaje->HrefValue = "";
 
-			// nombre
-			$this->nombre->HrefValue = "";
-
 			// tapodonde
 			$this->tapodonde->HrefValue = "";
 
@@ -1588,13 +1545,22 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			// parentesco
 			$this->parentesco->HrefValue = "";
 
-			// nombrescompleto
-			$this->nombrescompleto->HrefValue = "";
+			// nombretapon
+			$this->nombretapon->HrefValue = "";
 		}
 
 		// Call Cell_Rendered event
 		if ($this->RowType == EWR_ROWTYPE_TOTAL) { // Summary row
 		} else {
+
+			// nombrescompleto
+			$CurrentValue = $this->nombrescompleto->CurrentValue;
+			$ViewValue = &$this->nombrescompleto->ViewValue;
+			$ViewAttrs = &$this->nombrescompleto->ViewAttrs;
+			$CellAttrs = &$this->nombrescompleto->CellAttrs;
+			$HrefValue = &$this->nombrescompleto->HrefValue;
+			$LinkAttrs = &$this->nombrescompleto->LinkAttrs;
+			$this->Cell_Rendered($this->nombrescompleto, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// codigorude
 			$CurrentValue = $this->codigorude->CurrentValue;
@@ -1631,33 +1597,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$HrefValue = &$this->unidad_eductiva->HrefValue;
 			$LinkAttrs = &$this->unidad_eductiva->LinkAttrs;
 			$this->Cell_Rendered($this->unidad_eductiva, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// apellidopaterno
-			$CurrentValue = $this->apellidopaterno->CurrentValue;
-			$ViewValue = &$this->apellidopaterno->ViewValue;
-			$ViewAttrs = &$this->apellidopaterno->ViewAttrs;
-			$CellAttrs = &$this->apellidopaterno->CellAttrs;
-			$HrefValue = &$this->apellidopaterno->HrefValue;
-			$LinkAttrs = &$this->apellidopaterno->LinkAttrs;
-			$this->Cell_Rendered($this->apellidopaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// apellidomaterno
-			$CurrentValue = $this->apellidomaterno->CurrentValue;
-			$ViewValue = &$this->apellidomaterno->ViewValue;
-			$ViewAttrs = &$this->apellidomaterno->ViewAttrs;
-			$CellAttrs = &$this->apellidomaterno->CellAttrs;
-			$HrefValue = &$this->apellidomaterno->HrefValue;
-			$LinkAttrs = &$this->apellidomaterno->LinkAttrs;
-			$this->Cell_Rendered($this->apellidomaterno, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
-			// nombres
-			$CurrentValue = $this->nombres->CurrentValue;
-			$ViewValue = &$this->nombres->ViewValue;
-			$ViewAttrs = &$this->nombres->ViewAttrs;
-			$CellAttrs = &$this->nombres->CellAttrs;
-			$HrefValue = &$this->nombres->HrefValue;
-			$LinkAttrs = &$this->nombres->LinkAttrs;
-			$this->Cell_Rendered($this->nombres, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
 			// ci
 			$CurrentValue = $this->ci->CurrentValue;
@@ -1740,15 +1679,6 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$LinkAttrs = &$this->resultadotamizaje->LinkAttrs;
 			$this->Cell_Rendered($this->resultadotamizaje, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// nombre
-			$CurrentValue = $this->nombre->CurrentValue;
-			$ViewValue = &$this->nombre->ViewValue;
-			$ViewAttrs = &$this->nombre->ViewAttrs;
-			$CellAttrs = &$this->nombre->CellAttrs;
-			$HrefValue = &$this->nombre->HrefValue;
-			$LinkAttrs = &$this->nombre->LinkAttrs;
-			$this->Cell_Rendered($this->nombre, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
-
 			// tapodonde
 			$CurrentValue = $this->tapodonde->CurrentValue;
 			$ViewValue = &$this->tapodonde->ViewValue;
@@ -1785,14 +1715,14 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$LinkAttrs = &$this->parentesco->LinkAttrs;
 			$this->Cell_Rendered($this->parentesco, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 
-			// nombrescompleto
-			$CurrentValue = $this->nombrescompleto->CurrentValue;
-			$ViewValue = &$this->nombrescompleto->ViewValue;
-			$ViewAttrs = &$this->nombrescompleto->ViewAttrs;
-			$CellAttrs = &$this->nombrescompleto->CellAttrs;
-			$HrefValue = &$this->nombrescompleto->HrefValue;
-			$LinkAttrs = &$this->nombrescompleto->LinkAttrs;
-			$this->Cell_Rendered($this->nombrescompleto, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
+			// nombretapon
+			$CurrentValue = $this->nombretapon->CurrentValue;
+			$ViewValue = &$this->nombretapon->ViewValue;
+			$ViewAttrs = &$this->nombretapon->ViewAttrs;
+			$CellAttrs = &$this->nombretapon->CellAttrs;
+			$HrefValue = &$this->nombretapon->HrefValue;
+			$LinkAttrs = &$this->nombretapon->LinkAttrs;
+			$this->Cell_Rendered($this->nombretapon, $CurrentValue, $ViewValue, $ViewAttrs, $CellAttrs, $HrefValue, $LinkAttrs);
 		}
 
 		// Call Row_Rendered event
@@ -1805,13 +1735,11 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		$this->GrpColumnCount = 0;
 		$this->SubGrpColumnCount = 0;
 		$this->DtlColumnCount = 0;
+		if ($this->nombrescompleto->Visible) $this->DtlColumnCount += 1;
 		if ($this->codigorude->Visible) $this->DtlColumnCount += 1;
 		if ($this->codigorude_es->Visible) $this->DtlColumnCount += 1;
 		if ($this->fecha->Visible) $this->DtlColumnCount += 1;
 		if ($this->unidad_eductiva->Visible) $this->DtlColumnCount += 1;
-		if ($this->apellidopaterno->Visible) $this->DtlColumnCount += 1;
-		if ($this->apellidomaterno->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombres->Visible) $this->DtlColumnCount += 1;
 		if ($this->ci->Visible) $this->DtlColumnCount += 1;
 		if ($this->nrodiscapacidad->Visible) $this->DtlColumnCount += 1;
 		if ($this->fechanacimiento->Visible) $this->DtlColumnCount += 1;
@@ -1821,12 +1749,11 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		if ($this->tipo->Visible) $this->DtlColumnCount += 1;
 		if ($this->resultado->Visible) $this->DtlColumnCount += 1;
 		if ($this->resultadotamizaje->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombre->Visible) $this->DtlColumnCount += 1;
 		if ($this->tapodonde->Visible) $this->DtlColumnCount += 1;
 		if ($this->repetirprueba->Visible) $this->DtlColumnCount += 1;
 		if ($this->observaciones->Visible) $this->DtlColumnCount += 1;
 		if ($this->parentesco->Visible) $this->DtlColumnCount += 1;
-		if ($this->nombrescompleto->Visible) $this->DtlColumnCount += 1;
+		if ($this->nombretapon->Visible) $this->DtlColumnCount += 1;
 	}
 
 	// Set up Breadcrumb
@@ -1842,7 +1769,7 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		global $ReportLanguage, $ReportOptions;
 		$ReportTypes = $ReportOptions["ReportTypes"];
 		$item =& $this->ExportOptions->GetItem("pdf");
-		$item->Visible = FALSE;
+		$item->Visible = TRUE;
 		if ($item->Visible)
 			$ReportTypes["pdf"] = $ReportLanguage->Phrase("ReportFormPdf");
 		$exportid = session_id();
@@ -2968,13 +2895,11 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 		if ($bResetSort) {
 			$this->setOrderBy("");
 			$this->setStartGroup(1);
+			$this->nombrescompleto->setSort("");
 			$this->codigorude->setSort("");
 			$this->codigorude_es->setSort("");
 			$this->fecha->setSort("");
 			$this->unidad_eductiva->setSort("");
-			$this->apellidopaterno->setSort("");
-			$this->apellidomaterno->setSort("");
-			$this->nombres->setSort("");
 			$this->ci->setSort("");
 			$this->nrodiscapacidad->setSort("");
 			$this->fechanacimiento->setSort("");
@@ -2984,22 +2909,104 @@ class crviewsaludescolar_rpt extends crviewsaludescolar {
 			$this->tipo->setSort("");
 			$this->resultado->setSort("");
 			$this->resultadotamizaje->setSort("");
-			$this->nombre->setSort("");
 			$this->tapodonde->setSort("");
 			$this->repetirprueba->setSort("");
 			$this->observaciones->setSort("");
 			$this->parentesco->setSort("");
-			$this->nombrescompleto->setSort("");
+			$this->nombretapon->setSort("");
 
 		// Check for an Order parameter
 		} elseif ($orderBy <> "") {
 			$this->CurrentOrder = $orderBy;
 			$this->CurrentOrderType = $orderType;
+			$this->UpdateSort($this->nombrescompleto); // nombrescompleto
+			$this->UpdateSort($this->codigorude); // codigorude
+			$this->UpdateSort($this->codigorude_es); // codigorude_es
+			$this->UpdateSort($this->fecha); // fecha
+			$this->UpdateSort($this->unidad_eductiva); // unidad eductiva
+			$this->UpdateSort($this->ci); // ci
+			$this->UpdateSort($this->nrodiscapacidad); // nrodiscapacidad
+			$this->UpdateSort($this->fechanacimiento); // fechanacimiento
+			$this->UpdateSort($this->sexo); // sexo
+			$this->UpdateSort($this->curso); // curso
+			$this->UpdateSort($this->discapcidad); // discapcidad
+			$this->UpdateSort($this->tipo); // tipo
+			$this->UpdateSort($this->resultado); // resultado
+			$this->UpdateSort($this->resultadotamizaje); // resultadotamizaje
+			$this->UpdateSort($this->tapodonde); // tapodonde
+			$this->UpdateSort($this->repetirprueba); // repetirprueba
+			$this->UpdateSort($this->observaciones); // observaciones
+			$this->UpdateSort($this->parentesco); // parentesco
+			$this->UpdateSort($this->nombretapon); // nombretapon
 			$sSortSql = $this->SortSql();
 			$this->setOrderBy($sSortSql);
 			$this->setStartGroup(1);
 		}
 		return $this->getOrderBy();
+	}
+
+	// Export to HTML
+	function ExportHtml($html, $options = array()) {
+
+		//global $gsExportFile;
+		//header('Content-Type: text/html' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+		//header('Content-Disposition: attachment; filename=' . $gsExportFile . '.html');
+
+		$folder = @$this->GenOptions["folder"];
+		$fileName = @$this->GenOptions["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+
+		// Save generate file for print
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+			$baseTag = "<base href=\"" . ewr_BaseUrl() . "\">";
+			$html = preg_replace('/<head>/', '<head>' . $baseTag, $html);
+			ewr_SaveFile($folder, $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file")
+			echo $html;
+		return $saveToFile;
+	}
+
+	// Export to WORD
+	function ExportWord($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-word' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.doc');
+			echo $html;
+		}
+		return $saveToFile;
+	}
+
+	// Export to EXCEL
+	function ExportExcel($html, $options = array()) {
+		global $gsExportFile;
+		$folder = @$options["folder"];
+		$fileName = @$options["filename"];
+		$responseType = @$options["responsetype"];
+		$saveToFile = "";
+		if ($folder <> "" && $fileName <> "" && ($responseType == "json" || $responseType == "file" && EWR_REPORT_SAVE_OUTPUT_ON_SERVER)) {
+		 	ewr_SaveFile(ewr_PathCombine(ewr_AppRoot(), $folder, TRUE), $fileName, $html);
+			$saveToFile = ewr_UploadPathEx(FALSE, $folder) . $fileName;
+		}
+		if ($saveToFile == "" || $responseType == "file") {
+			header('Set-Cookie: fileDownload=true; path=/');
+			header('Content-Type: application/vnd.ms-excel' . (EWR_CHARSET <> '' ? ';charset=' . EWR_CHARSET : ''));
+			header('Content-Disposition: attachment; filename=' . $gsExportFile . '.xls');
+			echo $html;
+		}
+		return $saveToFile;
 	}
 
 	// Export PDF
@@ -3147,6 +3154,7 @@ $Page->Page_Render();
 <?php include_once "header.php" ?>
 <?php include_once "phprptinc/header.php" ?>
 <?php } ?>
+<?php if ($Page->Export == "" || $Page->Export == "print" || $Page->Export == "email" && @$gsEmailContentType == "url") { ?>
 <script type="text/javascript">
 
 // Create page object
@@ -3156,7 +3164,8 @@ var viewsaludescolar_rpt = new ewr_Page("viewsaludescolar_rpt");
 viewsaludescolar_rpt.PageID = "rpt"; // Page ID
 var EWR_PAGE_ID = viewsaludescolar_rpt.PageID;
 </script>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Form object
@@ -3209,7 +3218,7 @@ fviewsaludescolarrpt.Lists["sv_curso"] = {"LinkField":"sv_curso","Ajax":true,"Di
 fviewsaludescolarrpt.Lists["sv_discapcidad"] = {"LinkField":"sv_discapcidad","Ajax":true,"DisplayFields":["sv_discapcidad","","",""],"ParentFields":[],"FilterFields":[],"Options":[],"Template":""};
 </script>
 <?php } ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your client script here, no need to add script tags.
@@ -3243,8 +3252,10 @@ if (!$Page->DrillDownInPanel) {
 <div id="ewCenter" class="col-sm-12 ewCenter">
 <?php } ?>
 <!-- Summary Report begins -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="report_summary">
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <!-- Search form (begin) -->
 <form name="fviewsaludescolarrpt" id="fviewsaludescolarrpt" class="form-inline ewForm ewExtFilterForm" action="<?php echo ewr_CurrentPage() ?>">
 <?php $SearchPanelClass = ($Page->Filter <> "") ? " in" : " in"; ?>
@@ -3301,8 +3312,6 @@ fviewsaludescolarrpt.Lists["sv_unidad_eductiva"].Options = <?php echo ewr_ArrayT
 </script>
 </span>
 </div>
-</div>
-<div id="r_2" class="ewRow">
 <div id="c_fechanacimiento" class="ewCell form-group">
 	<label for="sv_fechanacimiento" class="ewSearchCaption ewLabel"><?php echo $Page->fechanacimiento->FldCaption() ?></label>
 	<span class="ewSearchOperator"><?php echo $ReportLanguage->Phrase("="); ?><input type="hidden" name="so_fechanacimiento" id="so_fechanacimiento" value="="></span>
@@ -3311,6 +3320,8 @@ fviewsaludescolarrpt.Lists["sv_unidad_eductiva"].Options = <?php echo ewr_ArrayT
 <input type="text" data-table="viewsaludescolar" data-field="x_fechanacimiento" id="sv_fechanacimiento" name="sv_fechanacimiento" placeholder="<?php echo $Page->fechanacimiento->PlaceHolder ?>" value="<?php echo ewr_HtmlEncode($Page->fechanacimiento->SearchValue) ?>" data-calendar='true' data-options='{"ignoreReadonly":true,"useCurrent":false,"format":0}'<?php echo $Page->fechanacimiento->EditAttributes() ?>>
 </span>
 </div>
+</div>
+<div id="r_2" class="ewRow">
 <div id="c_sexo" class="ewCell form-group">
 	<label for="sv_sexo" class="ewSearchCaption ewLabel"><?php echo $Page->sexo->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -3349,8 +3360,6 @@ fviewsaludescolarrpt.Lists["sv_sexo[]"].Options = <?php echo ewr_ArrayToJson($Pa
 </script>
 </span>
 </div>
-</div>
-<div id="r_3" class="ewRow">
 <div id="c_curso" class="ewCell form-group">
 	<label for="sv_curso" class="ewSearchCaption ewLabel"><?php echo $Page->curso->FldCaption() ?></label>
 	<span class="ewSearchField">
@@ -3469,17 +3478,39 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 
 	if ($Page->ShowHeader) {
 ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewsaludescolar" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <thead>
 	<!-- Table header -->
 	<tr class="ewTableHeader">
+<?php if ($Page->nombrescompleto->Visible) { ?>
+<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
+	<td data-field="nombrescompleto"><div class="viewsaludescolar_nombrescompleto"><span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span></div></td>
+<?php } else { ?>
+	<td data-field="nombrescompleto">
+<?php if ($Page->SortUrl($Page->nombrescompleto) == "") { ?>
+		<div class="ewTableHeaderBtn viewsaludescolar_nombrescompleto">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span>
+		</div>
+<?php } else { ?>
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nombrescompleto" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombrescompleto) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->nombrescompleto->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombrescompleto->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		</div>
+<?php } ?>
+	</td>
+<?php } ?>
+<?php } ?>
 <?php if ($Page->codigorude->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
 	<td data-field="codigorude"><div class="viewsaludescolar_codigorude"><span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span></div></td>
@@ -3490,7 +3521,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_codigorude" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_codigorude" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->codigorude->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->codigorude->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3508,7 +3539,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude_es->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_codigorude_es" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude_es) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_codigorude_es" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->codigorude_es) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->codigorude_es->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->codigorude_es->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->codigorude_es->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3529,7 +3560,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_fecha" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_fecha" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fecha) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->fecha->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->fecha->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fecha->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
@@ -3553,66 +3584,12 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_unidad_eductiva" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidad_eductiva) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_unidad_eductiva" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->unidad_eductiva) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->unidad_eductiva->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->unidad_eductiva->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->unidad_eductiva->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
 			<a class="ewTableHeaderPopup" title="<?php echo $ReportLanguage->Phrase("Filter"); ?>" onclick="ewr_ShowPopup.call(this, event, { name: 'viewsaludescolar_unidad_eductiva', range: false, from: '<?php echo $Page->unidad_eductiva->RangeFrom; ?>', to: '<?php echo $Page->unidad_eductiva->RangeTo; ?>', url: 'viewsaludescolarrpt.php' });" id="x_unidad_eductiva<?php echo $Page->Cnt[0][0]; ?>"><span class="icon-filter"></span></a>
 	<?php } ?>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->apellidopaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="apellidopaterno"><div class="viewsaludescolar_apellidopaterno"><span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="apellidopaterno">
-<?php if ($Page->SortUrl($Page->apellidopaterno) == "") { ?>
-		<div class="ewTableHeaderBtn viewsaludescolar_apellidopaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_apellidopaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidopaterno) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidopaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->apellidopaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidopaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->apellidomaterno->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="apellidomaterno"><div class="viewsaludescolar_apellidomaterno"><span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="apellidomaterno">
-<?php if ($Page->SortUrl($Page->apellidomaterno) == "") { ?>
-		<div class="ewTableHeaderBtn viewsaludescolar_apellidomaterno">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_apellidomaterno" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->apellidomaterno) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->apellidomaterno->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->apellidomaterno->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->apellidomaterno->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->nombres->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombres"><div class="viewsaludescolar_nombres"><span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="nombres">
-<?php if ($Page->SortUrl($Page->nombres) == "") { ?>
-		<div class="ewTableHeaderBtn viewsaludescolar_nombres">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nombres" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombres) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombres->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombres->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombres->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -3628,7 +3605,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_ci" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->ci) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->ci->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->ci->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->ci->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3646,7 +3623,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nrodiscapacidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nrodiscapacidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->nrodiscapacidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->nrodiscapacidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nrodiscapacidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3667,7 +3644,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_fechanacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fechanacimiento) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_fechanacimiento" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->fechanacimiento) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->fechanacimiento->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->fechanacimiento->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->fechanacimiento->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
@@ -3691,7 +3668,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_sexo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->sexo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->sexo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->sexo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->sexo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
@@ -3715,7 +3692,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_curso" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->curso) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_curso" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->curso) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->curso->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->curso->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->curso->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
@@ -3739,7 +3716,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	<?php } ?>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_discapcidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapcidad) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_discapcidad" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->discapcidad) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->discapcidad->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->discapcidad->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->discapcidad->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 	<?php if (!$grDashboardReport) { ?>
@@ -3760,7 +3737,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipo->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_tipo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipo) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_tipo" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tipo) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->tipo->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->tipo->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->tipo->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3778,7 +3755,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->resultado->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_resultado" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->resultado) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_resultado" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->resultado) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->resultado->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->resultado->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->resultado->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3796,27 +3773,9 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->resultadotamizaje->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_resultadotamizaje" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->resultadotamizaje) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_resultadotamizaje" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->resultadotamizaje) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->resultadotamizaje->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->resultadotamizaje->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->resultadotamizaje->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
-		</div>
-<?php } ?>
-	</td>
-<?php } ?>
-<?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-<?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombre"><div class="viewsaludescolar_nombre"><span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span></div></td>
-<?php } else { ?>
-	<td data-field="nombre">
-<?php if ($Page->SortUrl($Page->nombre) == "") { ?>
-		<div class="ewTableHeaderBtn viewsaludescolar_nombre">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
-		</div>
-<?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nombre" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombre) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombre->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombre->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombre->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -3832,7 +3791,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->tapodonde->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_tapodonde" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tapodonde) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_tapodonde" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->tapodonde) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->tapodonde->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->tapodonde->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->tapodonde->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3850,7 +3809,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->repetirprueba->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_repetirprueba" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->repetirprueba) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_repetirprueba" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->repetirprueba) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->repetirprueba->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->repetirprueba->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->repetirprueba->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3868,7 +3827,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_observaciones" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->observaciones) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_observaciones" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->observaciones) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->observaciones->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->observaciones->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->observaciones->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3886,7 +3845,7 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 			<span class="ewTableHeaderCaption"><?php echo $Page->parentesco->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_parentesco" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->parentesco) ?>',0);">
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_parentesco" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->parentesco) ?>',1);">
 			<span class="ewTableHeaderCaption"><?php echo $Page->parentesco->FldCaption() ?></span>
 			<span class="ewTableHeaderSort"><?php if ($Page->parentesco->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->parentesco->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
@@ -3894,19 +3853,19 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 	</td>
 <?php } ?>
 <?php } ?>
-<?php if ($Page->nombrescompleto->Visible) { ?>
+<?php if ($Page->nombretapon->Visible) { ?>
 <?php if ($Page->Export <> "" || $Page->DrillDown) { ?>
-	<td data-field="nombrescompleto"><div class="viewsaludescolar_nombrescompleto"><span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span></div></td>
+	<td data-field="nombretapon"><div class="viewsaludescolar_nombretapon"><span class="ewTableHeaderCaption"><?php echo $Page->nombretapon->FldCaption() ?></span></div></td>
 <?php } else { ?>
-	<td data-field="nombrescompleto">
-<?php if ($Page->SortUrl($Page->nombrescompleto) == "") { ?>
-		<div class="ewTableHeaderBtn viewsaludescolar_nombrescompleto">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span>
+	<td data-field="nombretapon">
+<?php if ($Page->SortUrl($Page->nombretapon) == "") { ?>
+		<div class="ewTableHeaderBtn viewsaludescolar_nombretapon">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombretapon->FldCaption() ?></span>
 		</div>
 <?php } else { ?>
-		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nombrescompleto" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombrescompleto) ?>',0);">
-			<span class="ewTableHeaderCaption"><?php echo $Page->nombrescompleto->FldCaption() ?></span>
-			<span class="ewTableHeaderSort"><?php if ($Page->nombrescompleto->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombrescompleto->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
+		<div class="ewTableHeaderBtn ewPointer viewsaludescolar_nombretapon" onclick="ewr_Sort(event,'<?php echo $Page->SortUrl($Page->nombretapon) ?>',1);">
+			<span class="ewTableHeaderCaption"><?php echo $Page->nombretapon->FldCaption() ?></span>
+			<span class="ewTableHeaderSort"><?php if ($Page->nombretapon->getSort() == "ASC") { ?><span class="caret ewSortUp"></span><?php } elseif ($Page->nombretapon->getSort() == "DESC") { ?><span class="caret"></span><?php } ?></span>
 		</div>
 <?php } ?>
 	</td>
@@ -3930,6 +3889,10 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		$Page->RenderRow();
 ?>
 	<tr<?php echo $Page->RowAttributes(); ?>>
+<?php if ($Page->nombrescompleto->Visible) { ?>
+		<td data-field="nombrescompleto"<?php echo $Page->nombrescompleto->CellAttributes() ?>>
+<span<?php echo $Page->nombrescompleto->ViewAttributes() ?>><?php echo $Page->nombrescompleto->ListViewValue() ?></span></td>
+<?php } ?>
 <?php if ($Page->codigorude->Visible) { ?>
 		<td data-field="codigorude"<?php echo $Page->codigorude->CellAttributes() ?>>
 <span<?php echo $Page->codigorude->ViewAttributes() ?>><?php echo $Page->codigorude->ListViewValue() ?></span></td>
@@ -3945,18 +3908,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <?php if ($Page->unidad_eductiva->Visible) { ?>
 		<td data-field="unidad_eductiva"<?php echo $Page->unidad_eductiva->CellAttributes() ?>>
 <span<?php echo $Page->unidad_eductiva->ViewAttributes() ?>><?php echo $Page->unidad_eductiva->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->apellidopaterno->Visible) { ?>
-		<td data-field="apellidopaterno"<?php echo $Page->apellidopaterno->CellAttributes() ?>>
-<span<?php echo $Page->apellidopaterno->ViewAttributes() ?>><?php echo $Page->apellidopaterno->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->apellidomaterno->Visible) { ?>
-		<td data-field="apellidomaterno"<?php echo $Page->apellidomaterno->CellAttributes() ?>>
-<span<?php echo $Page->apellidomaterno->ViewAttributes() ?>><?php echo $Page->apellidomaterno->ListViewValue() ?></span></td>
-<?php } ?>
-<?php if ($Page->nombres->Visible) { ?>
-		<td data-field="nombres"<?php echo $Page->nombres->CellAttributes() ?>>
-<span<?php echo $Page->nombres->ViewAttributes() ?>><?php echo $Page->nombres->ListViewValue() ?></span></td>
 <?php } ?>
 <?php if ($Page->ci->Visible) { ?>
 		<td data-field="ci"<?php echo $Page->ci->CellAttributes() ?>>
@@ -3994,10 +3945,6 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<td data-field="resultadotamizaje"<?php echo $Page->resultadotamizaje->CellAttributes() ?>>
 <span<?php echo $Page->resultadotamizaje->ViewAttributes() ?>><?php echo $Page->resultadotamizaje->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->nombre->Visible) { ?>
-		<td data-field="nombre"<?php echo $Page->nombre->CellAttributes() ?>>
-<span<?php echo $Page->nombre->ViewAttributes() ?>><?php echo $Page->nombre->ListViewValue() ?></span></td>
-<?php } ?>
 <?php if ($Page->tapodonde->Visible) { ?>
 		<td data-field="tapodonde"<?php echo $Page->tapodonde->CellAttributes() ?>>
 <span<?php echo $Page->tapodonde->ViewAttributes() ?>><?php echo $Page->tapodonde->ListViewValue() ?></span></td>
@@ -4014,9 +3961,9 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 		<td data-field="parentesco"<?php echo $Page->parentesco->CellAttributes() ?>>
 <span<?php echo $Page->parentesco->ViewAttributes() ?>><?php echo $Page->parentesco->ListViewValue() ?></span></td>
 <?php } ?>
-<?php if ($Page->nombrescompleto->Visible) { ?>
-		<td data-field="nombrescompleto"<?php echo $Page->nombrescompleto->CellAttributes() ?>>
-<span<?php echo $Page->nombrescompleto->ViewAttributes() ?>><?php echo $Page->nombrescompleto->ListViewValue() ?></span></td>
+<?php if ($Page->nombretapon->Visible) { ?>
+		<td data-field="nombretapon"<?php echo $Page->nombretapon->CellAttributes() ?>>
+<span<?php echo $Page->nombretapon->ViewAttributes() ?>><?php echo $Page->nombretapon->ListViewValue() ?></span></td>
 <?php } ?>
 	</tr>
 <?php
@@ -4034,27 +3981,37 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <tfoot>
 	</tfoot>
 <?php } elseif (!$Page->ShowHeader && TRUE) { // No header displayed ?>
+<?php if ($Page->Export <> "pdf") { ?>
 <?php if ($Page->Export == "word" || $Page->Export == "excel") { ?>
 <div class="ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } else { ?>
 <div class="box ewBox ewGrid"<?php echo $Page->ReportTableStyle ?>>
 <?php } ?>
+<?php } ?>
 <!-- Report grid (begin) -->
+<?php if ($Page->Export <> "pdf") { ?>
 <div id="gmp_viewsaludescolar" class="<?php if (ewr_IsResponsiveLayout()) { echo "table-responsive "; } ?>ewGridMiddlePanel">
+<?php } ?>
 <table class="<?php echo $Page->ReportTableClass ?>">
 <?php } ?>
 <?php if ($Page->TotalGrps > 0 || TRUE) { // Show footer ?>
 </table>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
-<?php if (!($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !($Page->DrillDown && $Page->TotalGrps > 0)) { ?>
 <div class="box-footer ewGridLowerPanel">
 <?php include "viewsaludescolarrptpager.php" ?>
 <div class="clearfix"></div>
 </div>
 <?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
 <?php } ?>
+<?php } ?>
+<?php if ($Page->Export <> "pdf") { ?>
 </div>
+<?php } ?>
 <!-- Summary Report Ends -->
 <?php if ($Page->Export == "" && !$grDashboardReport) { ?>
 </div>
@@ -4079,7 +4036,7 @@ if (EWR_DEBUG_ENABLED)
 if ($rsgrp) $rsgrp->Close();
 if ($rs) $rs->Close();
 ?>
-<?php if (!$Page->DrillDown && !$grDashboardReport) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
 <script type="text/javascript">
 
 // Write your table-specific startup script here

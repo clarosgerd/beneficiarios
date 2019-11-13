@@ -206,7 +206,7 @@ class cinstitucionesdesalud extends cTable {
 	function getSqlSelectList() { // Select for List page
 		$select = "";
 		$select = "SELECT * FROM (" .
-			"SELECT *, (SELECT DISTINCT CONCAT(COALESCE(`nombre`, ''),'" . ew_ValueSeparator(1, $this->id_persona) . "',COALESCE(`apellidopaterno`,''),'" . ew_ValueSeparator(2, $this->id_persona) . "',COALESCE(`apellidomaterno`,'')) FROM `persona` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `institucionesdesalud`.`id_persona` LIMIT 1) AS `EV__id_persona` FROM `institucionesdesalud`" .
+			"SELECT *, (SELECT DISTINCT CONCAT(`nombre`,'" . ew_ValueSeparator(1, $this->id_persona) . "',`apellidopaterno`,'" . ew_ValueSeparator(2, $this->id_persona) . "',`apellidomaterno`) FROM `persona` `EW_TMP_LOOKUPTABLE` WHERE `EW_TMP_LOOKUPTABLE`.`id` = `institucionesdesalud`.`id_persona` LIMIT 1) AS `EV__id_persona` FROM `institucionesdesalud`" .
 			") `EW_TMP_TABLE`";
 		return ($this->_SqlSelectList <> "") ? $this->_SqlSelectList : $select;
 	}

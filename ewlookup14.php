@@ -43,7 +43,7 @@ class cewlookup {
 		$rs = NULL;
 		$sql = preg_replace('/\/\*BeginOrderBy\*\/[\s\S]+\/\*EndOrderBy\*\//', "", $sql); // Remove ORDER BY clause (MSSQL)
 		$pattern = '/^SELECT\s([\s\S]+)\sFROM\s/i';
-		if (preg_match($pattern, $sql) && !preg_match('/^\s*select\s+distinct\s+/i', $sql)) {
+		if (preg_match($pattern, $sql)) {
 			$sqlwrk = "SELECT COUNT(*) FROM " . preg_replace($pattern, "", $sql);
 			$rs = $this->Connection->Execute($sqlwrk);
 		}

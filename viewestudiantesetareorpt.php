@@ -3326,6 +3326,39 @@ while ($rs && !$rs->EOF && $Page->GrpCount <= $Page->DisplayGrps || $Page->ShowH
 <!-- /.row -->
 <?php } ?>
 <?php if ($Page->Export == "" && !$grDashboardReport) { ?>
+<!-- Bottom Container -->
+<div class="row">
+<div id="ewBottom" class="<?php echo $viewestudiantesetareo_rpt->BottomContentClass ?>">
+<?php } ?>
+<?php
+if (!$grDashboardReport) {
+
+// Set up page break
+if (($Page->Export == "print" || $Page->Export == "pdf" || $Page->Export == "email" || $Page->Export == "excel" && defined("EWR_USE_PHPEXCEL") || $Page->Export == "word" && defined("EWR_USE_PHPWORD")) && $Page->ExportChartPageBreak) {
+
+	// Page_Breaking server event
+	$Page->Page_Breaking($Page->ExportChartPageBreak, $Page->PageBreakContent);
+	$viewestudiantesetareo->chardemo->PageBreakType = "before"; // Page break type
+	$viewestudiantesetareo->chardemo->PageBreak = $Table->ExportChartPageBreak;
+	$viewestudiantesetareo->chardemo->PageBreakContent = $Table->PageBreakContent;
+}
+
+// Set up chart drilldown
+$viewestudiantesetareo->chardemo->DrillDownInPanel = $Page->DrillDownInPanel;
+?>
+<?php include_once "viewestudiantesetareo_chardemochart.php" ?>
+<?php if ($Page->Export <> "email" && !$Page->DrillDown) { ?>
+<?php if ($Page->Export == "" && !$Page->DrillDown && !$grDashboardReport) { ?>
+<a href="javascript:void(0);" class="ewTopLink" onclick="$(document).scrollTop($('#top').offset().top);"><?php echo $ReportLanguage->Phrase("Top") ?></a>
+<?php } ?>
+<?php } ?>
+<?php } ?>
+<?php if ($Page->Export == "" && !$grDashboardReport) { ?>
+</div>
+</div>
+<!-- /#ewBottom -->
+<?php } ?>
+<?php if ($Page->Export == "" && !$grDashboardReport) { ?>
 </div>
 <!-- /.ewContainer -->
 <?php } ?>
